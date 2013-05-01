@@ -1,0 +1,40 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="Note_Drag.js"></script>
+<style>
+.activeClass{color:purple;
+  background:gray;
+  }
+</style>
+<div class="note">
+ hello world
+</div>
+<div class="note">
+ jay_li@intfocus.com
+</div>
+<div class="note">
+ ruby on rails
+</div>
+<script>
+
+$(".note").NoteDrag();
+/*$(".note").Drags({zIndex:10000,opacity:0.7,direction:"x"});
+$(".note").css("text-align","center");
+$(".note").hover(
+  function(){$(this).css("border","solid 1px purple");},
+  function(){$(this).css("border","none");}
+  );
+$(".note").each(function(){
+  $(this).click(function(){
+    if($(this).text()==$(".note").last().text())
+      alert($(".note").first().text());
+    else{
+      var self_top=$(this).offset().top;
+      var next_height=$(this).next().height();
+      alert(next_height);
+      $(this).next().offset.top=self_top;
+      $(this).offset.top=self_top+next_height;
+    }
+    
+  });
+});*/
+</script>
