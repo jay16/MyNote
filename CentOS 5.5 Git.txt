@@ -97,6 +97,14 @@ git rm file1.txt
 git commit -m "remove file1.txt"
 
 
+My "c:\Documents and Settings\xxx.gitconfig" file is
+
+[http]
+    proxy = 
+[user]
+    name = xxxx
+    email = xxx@xxx.com
+
 [root@localhost FocusMail_SOP]# git --help
 ”√∑®£∫git [--version] [--help] [-c name=value]
            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]

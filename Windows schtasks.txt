@@ -1,3 +1,94 @@
+C:\Documents and Settings\Administrator>schtasks /?
+
+SCHTASKS /parameter [arguments]
+
+描述:
+    允许管理员创建、删除、查询、更改、运行和中止
+    本地或远程系统上的计划系统。替代 AT.exe。
+
+参数列表:
+    /Create         创建新计划任务。
+
+    /Delete         删除计划任务。
+
+    /Query          显示所有计划任务。
+
+    /Change         更改计划任务属性。
+
+    /Run            立即运行计划任务。
+
+    /End            中止当前正在运行的计划任务。
+
+    /?              显示帮助/用法。
+
+示例:
+    SCHTASKS
+    SCHTASKS /?
+    SCHTASKS /Run /?
+    SCHTASKS /End /?
+    SCHTASKS /Create /?
+    SCHTASKS /Delete /?
+    SCHTASKS /Query  /?
+    SCHTASKS /Change /?
+
+C:\Documents and Settings\Administrator>schtasks /query
+
+任务名                               下次运行时间             状态
+==================================== ======================== ===============
+PMTask                               在空闲时间
+C:\Documents and Settings\Administrator>schtasks /query
+
+任务名                               下次运行时间             状态
+==================================== ======================== ===============
+PMTask                               在空闲时间
+Security Script                      23:15:00, 2013-5-3
+
+C:\Documents and Settings\Administrator>schtasks /delete
+错误: 无效语法。缺少强制选项 '/tn'。
+键入 "SCHTASKS /DELETE /?" 以了解用法。
+
+C:\Documents and Settings\Administrator>schtasks /delete /?
+
+SCHTASKS /Delete [/S system [/U username [/P password]]] /TN taskname
+  [/F]
+
+描述:
+    删除一个或多个计划任务。
+
+参数列表:
+    /S         system       指定要连接到的远程系统。
+    /U         username     指定要执行的命令的用户上下文。
+    /P         password     指定给定用户上下文的密码。
+    /TN        taskname     指定要删除的计划任务。要删除所有任务，必须使用通配符 "*"。
+    /F                      (强制) 删除此任务，如果指定任务当前正在运行则取消警告。
+    /?                      显示帮助/用法。
+
+示例:
+    SCHTASKS /Delete /TN * /F
+    SCHTASKS /Delete /TN "Backup and Restore"
+    SCHTASKS /Delete /S system /U user /P password /TN "Start Restore"
+    SCHTASKS /Delete /S system /U user /P password /TN "Start Backup" /F
+
+C:\Documents and Settings\Administrator>schtasks /delete /tn * /F
+成功: 计划的任务 "PMTask" 被成功删除。
+成功: 计划的任务 "Security Script" 被成功删除。
+
+C:\Documents and Settings\Administrator>schtasks /query
+
+任务名                               下次运行时间             状态
+==================================== ======================== ===============
+createFile Timly                     00:04:00, 2013-5-4       未能启动
+
+C:\Documents and Settings\Administrator>schtasks /run /tn "createFile Timly"
+成功: 尝试运行 "createFile Timly"。
+
+C:\Documents and Settings\Administrator>schtasks /query
+
+任务名                               下次运行时间             状态
+==================================== ======================== ===============
+createFile Timly                     00:04:00, 2013-5-4       未能启动
+
+C:\Documents and Settings\Administrator>
 Schtasks
 
 安排命令和程序定期运行或在指定时间内运行。从计划表中添加和删除任务，按需要启动和停止任务，显示和更改计划任务。
@@ -115,6 +206,7 @@ TaskName                    Next Run Time              Status===================
 schtasks create hourly
 
 语法
+
 
 schtasks /create /tn TaskName /tr TaskRun /sc hourly [/mo {1 - 365}] [/st StartTime] [/sd StartDate] [/ed EndDate] [/s computer [/u [domain]user /p password]] [/ru {[Domain]User | "System"} [/rp Password]]
 
