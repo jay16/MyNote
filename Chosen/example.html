@@ -1,6 +1,66 @@
 
 <link href="chosen.css" type="text/css" rel="stylesheet" />
 <body>
+<table>
+<tr>
+<td>Week:</td>
+<td id="chozn_week"></td>
+<td>Amount:</td>
+<td id="chozn_amount"></td>
+<td>Currency:</td>
+<td id="chozn_currency"></td>
+<td>Tax:</td>
+<td>
+<input name="tax" type="checkbox" value="C_Tax" onClick='handleChange(this);' style="width:15px;">
+</td>
+<td>
+Campare: 
+</td>
+<td>
+<input name="campare" type="checkbox" value="C_CampareFlag" onClick='handleChange(this);' style="width:15px;">
+</td>
+<td><a class="btn" onclick="promptButtonFinish()">submit</a></td>
+</tr>
+</table>
+
+<div>
+<div style="">
+  <select class="clsSelectControl pv " id="PRMT_SV_N17052840x13A3DBE4_NS_1"
+    style="width: 150px;">
+        <option>
+            p_weekid
+        </option>
+
+        <option>
+            --------------------------------------------
+        </option>
+
+        <option value="104671">
+           a
+        </option>
+
+        <option value="104670">
+          b
+        </option>
+
+        <option value="104669">
+            c
+        </option>
+
+        <option value="104668">
+           e
+        </option>
+
+        <option value="104667">
+            d
+        </option>
+
+    </select>
+    </div>
+    </div>
+
+    <div style="float:right;">
+    <div>
   <select class="clsSelectControl pv " id="PRMT_SV_N17052840x13A3DBE4_NS_"
     style="width: 150px;">
         <option>
@@ -12,45 +72,36 @@
         </option>
 
         <option value="104671">
-            2012&nbsp;Week&nbsp;47
+            1
         </option>
 
         <option value="104670">
-            2012&nbsp;Week&nbsp;46
+           2
         </option>
 
         <option value="104669">
-            2012&nbsp;Week&nbsp;45
+            3
         </option>
 
         <option value="104668">
-            2012&nbsp;Week&nbsp;44
+            4
         </option>
 
         <option value="104667">
-            2012&nbsp;Week&nbsp;43
+          5
         </option>
 
         <option value="104666">
-            2012&nbsp;Week&nbsp;42
+           6
         </option>
 
         <option value="104665">
-            2012&nbsp;Week&nbsp;41
+           7
         </option>
 
-        <option value="104664">
-            2012&nbsp;Week&nbsp;40
-        </option>
-
-        <option value="104663">
-            2012&nbsp;Week&nbsp;39
-        </option>
-
-        <option value="104662">
-            2012&nbsp;Week&nbsp;38
-        </option>
     </select>
+    </div>
+  </div>
 </body>
 
 
@@ -61,7 +112,6 @@
 
 
 var cognos_chozn = function() {
-     
   var select_id     = "",//对像select的id
       chozn_id      = "",//构建div下拉框的id
       chozn_anc     = "",//构建好div下拉框的对象
@@ -100,21 +150,97 @@ var cognos_chozn = function() {
         }
         return ret;
       },
-      //点击显示框时，显示下拉框
-      zhozn_a_onclick=function(chozn_anc,chozn_a,chozn_drop){
-        chozn_anc.className = chozn_anc.className + " chzn-container-active";
-        chozn_a.className = chozn_a.className + " chzn-single-with-drop";
-        chozn_a.style.tabindex = -1;
-        chozn_drop.style.left = 0;
+      //点击显示框时，显示下拉框 zhozn_a_span_onclick/zhozn_a_b_onclick
+      zhozn_a_x_onclick=function(e){
+        var chozn_a_x = e.srcElement;  
+        if(!chozn_a_x) {  
+            chozn_a_x = e.target;  
+        } 
+        var select_id  = "";
+        if(chozn_a_x.id.indexOf("_chozn_a_span")!=-1){
+          select_id = chozn_a_x.id.replace("_chozn_a_span","");
+          //alert("span");
+        }else if(chozn_a_x.id.indexOf("_chozn_a_b")!=-1){
+          select_id = chozn_a_x.id.replace("_chozn_a_b","");
+          //alert("b");
+        }else{
+          select_id = chozn_a_x.id.replace("_chozn_a","");
+        }
+        
+        var chozn_id         = select_id + "_chozn",
+            chozn_a_id       = chozn_id + "_a",
+            chozn_a_span_id  = chozn_id + "_a_span",
+            chozn_drop_id    = chozn_id + "_drop",
+            chozn_results_id = chozn_id + "_results",
+            chozn_li_id      = chozn_id + "_li_";
+        var chozn_anc     = document.getElementById(chozn_id);
+        var chozn_a       = document.getElementById(chozn_a_id);
+        var chozn_drop    = document.getElementById(chozn_drop_id);
+         //alert(chozn_drop.style.left);
+        var drop_left = parseInt(chozn_drop.style.left.replace("px",""),10) ;
+        if(drop_left >= 0){
+           chozn_anc.className = chozn_anc.className.replace("chzn-container-active","");
+           chozn_a.className = chozn_a.className.replace("chzn-single-with-drop","");
+           chozn_a.style.tabindex = 0;
+           chozn_drop.style.left = -9999;
+        }else{
+           chozn_anc.className = chozn_anc.className + " chzn-container-active";
+           chozn_a.className = chozn_a.className + " chzn-single-with-drop";
+           chozn_a.style.tabindex = -1;
+           chozn_drop.style.left = 0;
+        }
+      },
+      //鼠标进出提示框时，事件
+      zhozn_a_onmouse=function(e,statu){
+        var chozn_a_x = e.srcElement;  
+        if(!chozn_a_x) {  
+            chozn_a_x = e.target;  
+        } 
+        var select_id  = "";
+        if(chozn_a_x.id.indexOf("_chozn_a_span")!=-1){
+          select_id = chozn_a_x.id.replace("_chozn_a_span","");
+          //alert("span");
+        }else if(chozn_a_x.id.indexOf("_chozn_a_b")!=-1){
+          select_id = chozn_a_x.id.replace("_chozn_a_b","");
+          //alert("b");
+        }else{
+          select_id = chozn_a_x.id.replace("_chozn_a","");
+        }
+        var chozn_id         = select_id + "_chozn",
+            chozn_a_id       = chozn_id + "_a",
+            chozn_a_span_id  = chozn_id + "_a_span",
+            chozn_drop_id    = chozn_id + "_drop",
+            chozn_results_id = chozn_id + "_results",
+            chozn_li_id      = chozn_id + "_li_";
+        var chozn_anc     = document.getElementById(chozn_id);
+        var chozn_a       = document.getElementById(chozn_a_id);
+        var chozn_a_span       = document.getElementById(chozn_a_span_id);
+        var chozn_drop    = document.getElementById(chozn_drop_id);
+        var drop_left = parseInt(chozn_drop.style.left.replace("px",""),10) ;
+        
+        chozn_a.style.textDecoration='none';
+        chozn_a_span.style.textDecoration='none';
+
+        if(statu==1 && drop_left < 0){
+         //zhozn_a_x_onclick(e);
+        }else if(statu==0 && drop_left < 0){
+
+         //do nothing
+         chozn_a_blur(chozn_anc,chozn_a,chozn_drop);
+        }
       },
       //点击显示框时，显示下拉框事件
-      zhozn_onclick_event=function(){//chozn_a
+      zhozn_a_event=function(){//chozn_a
         //not Mozilla
         if(chozn_a.attachEvent) {  
-            chozn_a.attachEvent("onclick",function(){zhozn_a_onclick(chozn_anc,chozn_a,chozn_drop)});  
+            chozn_a.attachEvent("onclick",function(event){zhozn_a_x_onclick(event)});  
+            chozn_a.attachEvent("mouseover",function(event){zhozn_a_onmouse(event,1)});  
+            chozn_a.attachEvent("mouseout",function(event){zhozn_a_onmouse(event,0)});  
 
         } else {  
-            chozn_a.addEventListener("click",function(){zhozn_a_onclick(chozn_anc,chozn_a,chozn_drop)});  
+            chozn_a.addEventListener("click",function(event){zhozn_a_x_onclick(event)}); 
+            chozn_a.addEventListener("mouseover",function(event){zhozn_a_onmouse(event,1)}); 
+            chozn_a.addEventListener("mouseout",function(event){zhozn_a_onmouse(event,0)});             
 
         } 
       },
@@ -126,17 +252,30 @@ var cognos_chozn = function() {
        chozn_drop.style.left = -9999;
      },
      //点击div下拉框中li选项时，同步选中select选项
-     anync_select_event=function(sel_index){
+     anync_select_event=function(select_id,sel_index){
        var select = document.getElementById(select_id);
        select.options[sel_index].selected = true;
      },
      //下拉框中li点击效果
-     li_onclick=function(e,chozn_li,chozn_a_span,chozn_anc,chozn_a,chozn_drop){
+     li_onclick=function(e){
         var li = e.srcElement;  
         if(!li) {  
             li = e.target;  
         }  
-        //alert(li.innerHTML);
+        
+        var chozn_results_id = li.parentNode.id;
+        var select_id        = chozn_results_id.replace("_chozn_results","");
+        var chozn_id         = select_id + "_chozn",
+            chozn_a_id       = chozn_id + "_a",
+            chozn_a_span_id  = chozn_id + "_a_span",
+            chozn_drop_id    = chozn_id + "_drop",
+            chozn_li_id      = chozn_id + "_li_";
+        var chozn_anc     = document.getElementById(chozn_id);
+        var chozn_a       = document.getElementById(chozn_a_id);
+        var chozn_a_span  = document.getElementById(chozn_a_span_id);
+        var chozn_drop    = document.getElementById(chozn_drop_id);
+        var chozn_results = li.parentNode;
+        var chozn_li      = chozn_results.childNodes;
         //all li remove selected class
        for(var j=0;j<chozn_li.length;j++){
           var l = chozn_li[j];
@@ -149,15 +288,29 @@ var cognos_chozn = function() {
        //同步select选中项
        var sel_index = parseInt(li.id.split("_").pop());
        //alert(sel_index);
-       anync_select_event(sel_index);
+       anync_select_event(select_id,sel_index);
        chozn_a_blur(chozn_anc,chozn_a,chozn_drop)
      },
      //鼠标在下拉框中移动时，进入Li中添加高亮效果
-     li_onmouseover=function(e,chozn_li){
+     li_onmouseover=function(e){
         var li = e.srcElement;  
         if(!li) {  
             li = e.target;  
         }  
+        
+        var chozn_results_id = li.parentNode.id;
+        var select_id        = chozn_results_id.replace("_chozn_results","");
+        var chozn_id         = select_id + "_chozn",
+            chozn_a_id       = chozn_id + "_a",
+            chozn_a_span_id  = chozn_id + "_a_span",
+            chozn_drop_id    = chozn_id + "_drop",
+            chozn_li_id      = chozn_id + "_li_";
+        var chozn_anc     = document.getElementById(chozn_id);
+        var chozn_a       = document.getElementById(chozn_a_id);
+        var chozn_a_span  = document.getElementById(chozn_a_span_id);
+        var chozn_drop    = document.getElementById(chozn_drop_id);
+        var chozn_results = li.parentNode;
+        var chozn_li      = chozn_results.childNodes;
        //处理高亮前，把所有li的高亮class移除
        for(var j=0;j<chozn_li.length;j++){
           var l = chozn_li[j];
@@ -165,14 +318,29 @@ var cognos_chozn = function() {
             l.className = l.className.replace("highlighted","");
           }
        }
+       
        li.className = li.className + " highlighted"
      },
      //鼠标在下拉框中移动时，移出Li中移除高亮效果
-     li_onmouseout=function(e,chozn_li){
+     li_onmouseout=function(e){
         var li = e.srcElement;  
         if(!li) {  
             li = e.target;  
         }  
+        
+        var chozn_results_id = li.parentNode.id;
+        var select_id        = chozn_results_id.replace("_chozn_results","");
+        var chozn_id         = select_id + "_chozn",
+            chozn_a_id       = chozn_id + "_a",
+            chozn_a_span_id  = chozn_id + "_a_span",
+            chozn_drop_id    = chozn_id + "_drop",
+            chozn_li_id      = chozn_id + "_li_";
+        var chozn_anc     = document.getElementById(chozn_id);
+        var chozn_a       = document.getElementById(chozn_a_id);
+        var chozn_a_span  = document.getElementById(chozn_a_span_id);
+        var chozn_drop    = document.getElementById(chozn_drop_id);
+        var chozn_results = li.parentNode;
+        var chozn_li      = chozn_results.childNodes;
        //all li remove highlighted class
        for(var j=0;j<chozn_li.length;j++){
           var l = chozn_li[j];
@@ -182,8 +350,55 @@ var cognos_chozn = function() {
        }
        // li.className = li.className.replace("highlighted","");
      },
+     ul_onmouseover=function(e){
+        var ul = e.srcElement;  
+        if(!ul) {  
+            ul = e.target;  
+        }
+
+        if(ul.id.indexOf("_chozn_results")!=-1){
+          var select_id        = ul.id.replace("_chozn_results","");
+          var chozn_id         = select_id + "_chozn",
+              chozn_a_id       = chozn_id + "_a",
+              chozn_a_span_id  = chozn_id + "_a_span",
+              chozn_drop_id    = chozn_id + "_drop",
+              chozn_li_id      = chozn_id + "_li_";
+          var chozn_anc     = document.getElementById(chozn_id);
+          var chozn_a       = document.getElementById(chozn_a_id);
+          var chozn_a_span  = document.getElementById(chozn_a_span_id);
+          var chozn_drop    = document.getElementById(chozn_drop_id);
+          if(chozn_anc.className.indexOf("isIn")!=-1){
+          }else{
+            chozn_anc.className = chozn_anc.className + " isIn";
+          }
+        }
+     },
+     ul_onmouseout=function(e){
+        var ul = e.srcElement;  
+        if(!ul) {  
+            ul = e.target;  
+        }
+
+        if(ul.id.indexOf("_chozn_results")!=-1){
+          alert("out");
+          var select_id        = ul.id.replace("_chozn_results","");
+          var chozn_id         = select_id + "_chozn",
+              chozn_a_id       = chozn_id + "_a",
+              chozn_a_span_id  = chozn_id + "_a_span",
+              chozn_drop_id    = chozn_id + "_drop",
+              chozn_li_id      = chozn_id + "_li_";
+          var chozn_anc     = document.getElementById(chozn_id);
+          var chozn_a       = document.getElementById(chozn_a_id);
+          var chozn_a_span  = document.getElementById(chozn_a_span_id);
+          var chozn_drop    = document.getElementById(chozn_drop_id);
+          if(chozn_anc.className.indexOf("isIn")!=-1){
+             chozn_anc.className.replace("isIn","");
+          }
+        }
+     },
      //初始化每li点击、鼠标进入、鼠标移出事件
      chozn_ul_event=function(){//chozn_li,chozn_a_span,chozn_anc,chozn_a,chozn_drop
+        var ul = chozn_li[0].parentNode;
         for(var i=0;i<chozn_li.length;i++){
           var li = chozn_li[i];
 
@@ -198,54 +413,73 @@ var cognos_chozn = function() {
             
              //not Mozilla
              if(li.attachEvent) {  
-                 li.attachEvent("onclick",function(event){li_onclick(event,chozn_li,chozn_a_span,chozn_anc,chozn_a,chozn_drop)});  
-                 li.attachEvent("onmouseover",function(event){li_onmouseover(event,chozn_li)}); 
-                 li.attachEvent("onmouseout",function(event){li_onmouseout(event,chozn_li)});   
+                 li.attachEvent("onclick",    function(event){li_onclick(event)});  
+                 li.attachEvent("onmouseover",function(event){li_onmouseover(event)}); 
+                 li.attachEvent("onmouseout", function(event){li_onmouseout(event)}); 
+                 ul.attachEvent("onmouseover",function(event){ul_onmouseover(event)}); 
+                 ul.attachEvent("onmouseout", function(event){ul_onmouseout(event)});   
              } else {  
-                 li.addEventListener("click",function(event){li_onclick(event,chozn_li,chozn_a_span,chozn_anc,chozn_a,chozn_drop)});  
-                 li.addEventListener("mouseover",function(event){li_onmouseover(event,chozn_li)}); 
-                 li.addEventListener("mouseout",function(event){li_onmouseout(event,chozn_li)});    
+                 li.addEventListener("click",    function(event){li_onclick(event)});  
+                 li.addEventListener("mouseover",function(event){li_onmouseover(event)}); 
+                 li.addEventListener("mouseout", function(event){li_onmouseout(event)});
+                 ul.addEventListener("mouseover",function(event){ul_onmouseover(event)}); 
+                 ul.addEventListener("mouseout", function(event){ul_onmouseout(event)});
              } 
 
           }
         }
      },
     //根据select构建div下拉框
-    chozn_div_build=function(){
+    chozn_div_build=function(c_id){
       var ul_li = new Array;
       var select = document.getElementById(select_id)
       var options = select.options;
+
+      var chozn_a_id       = chozn_id + "_a",
+          chozn_a_span_id  = chozn_id + "_a_span",
+          chozn_a_b_id  = chozn_id + "_a_b",
+          chozn_drop_id    = chozn_id + "_drop",
+          chozn_results_id = chozn_id + "_results",
+          chozn_li_id      = chozn_id + "_li_";
       for(var i=0;i<options.length;i++){
-        ul_li.push('<li class="active-result" id="' + select_id +'_o_'+ String(i) + '">' + options[i].innerHTML +'</li>')
+        ul_li.push('<li class="active-result" id="' + chozn_li_id + String(i) + '">' + options[i].innerHTML +'</li>')
       }
-      var chozn_str =''+
-       '    <div class="chzn-container chzn-container-single" id="'+chozn_id+'" style="width: 186px;">' +
-       '       <a class="chzn-single" href="javascript:void(0)" tabindex="0"><span>2012&nbsp;Week&nbsp;47</span>'+
-       '         <div><b></b></div>'+
+      var chozn_html =''+
+       //'    <div class="chzn-container chzn-container-single" id="'+chozn_id+'" style="width: 186px;">' +
+       '       <a class="chzn-single" href="javascript:void(0)" tabindex="0" id="'+chozn_a_id+'" >'+
+       '          <span id="'+chozn_a_span_id+'">dddd</span>'+
+       '         <div>'+
+       '            <b id="'+chozn_a_b_id+'"></b>'+
+       '         </div>'+
        '       </a>'+
-       '       <div class="chzn-drop" style="left: -9000px; width: 184px; top: 26px;">'+
+       '       <div class="chzn-drop" style="left: -9000px; width: 150px; top: 26px;" id="'+chozn_drop_id+'">'+
        '          <div class="chzn-search">'+
        '             <input autocomplete="off" style="width: 149px;" tabindex="-1" type="text">'+
        '          </div>'+
-      '           <ul class="chzn-results">'+
+      '           <ul class="chzn-results" id="'+chozn_results_id+'">'+
                    ul_li.join("")+
       '           </ul>'+
-      '        </div>   '+
-      '      </div>';
-      var new_div = document.createElement("div");
-      new_div.innerHTML =chozn_str;
-      select.parentNode.insertBefore(new_div,select);
+      '        </div>   ';
+      var chozn_con         = document.createElement("div");
+      chozn_con.className   = "chzn-container chzn-container-single";
+      chozn_con.id          = chozn_id;
+      chozn_con.style.width = "150px";
+      chozn_con.innerHTML   = chozn_html;
+      //var parent            = select.parentNode;
+      //var ancestor          = parent.parentNode;
+      var parent = document.getElementById(c_id);
+      parent.insertBefore(chozn_con,null);
     };
      
      
     //对外接口api
     return{
      
-     build: function(s_id){
+     build: function(s_id,c_id){
         select_id = s_id;
         chozn_id  = select_id + "_chozn";
         
-        chozn_div_build();//构建div下拉框
+        chozn_div_build(c_id);//构建div下拉框
         
         //对构建好的div下拉处理
         chozn_anc     = document.getElementById(chozn_id),
@@ -255,17 +489,16 @@ var cognos_chozn = function() {
         chozn_result  = getChildByClassName(chozn_drop,"chzn-results"),
         chozn_li      = getChildrenByClassName(chozn_result,"active-result"),
         
-        zhozn_onclick_event(); //赋予点击事件
-        chozn_ul_event();      //赋予点击后对ul的事件处理
+        zhozn_a_event();       //赋予对提示框a的事件处理
+        chozn_ul_event();      //赋予对下拉框ul的事件处理
      }
    }
-
-      
-      
+  
 }();
 
 
-cognos_chozn.build("PRMT_SV_N17052840x13A3DBE4_NS_");
+cognos_chozn.build("PRMT_SV_N17052840x13A3DBE4_NS_","chozn_week");
+cognos_chozn.build("PRMT_SV_N17052840x13A3DBE4_NS_1","chozn_amount");
 </script>
  
    

@@ -15,6 +15,7 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   root = this;
   $ = jQuery;
+  //扩展
   $.fn.extend({
     chosen: function(data, options) {
       return $(this).each(function(input_field) {
@@ -24,6 +25,7 @@
       });
     }
   });
+  //创建Chosen
   Chosen = (function() {
     function Chosen(elmn) {
       this.set_default_values();
@@ -36,6 +38,7 @@
       this.register_observers();
       this.form_field_jq.addClass("chzn-done");
     }
+    //设置默认值，在没有点击情况下，状态
     Chosen.prototype.set_default_values = function() {
       this.click_test_action = __bind(function(evt) {
         return this.test_active_click(evt);
@@ -47,6 +50,7 @@
       this.result_single_selected = null;
       return this.choices = 0;
     };
+    //创建div下拉框
     Chosen.prototype.set_up_html = function() {
       var container_div, dd_top, dd_width, sf_width;
       this.container_id = this.form_field.id.length ? this.form_field.id.replace(/(:|\.)/g, '_') : this.generate_field_id();
@@ -88,9 +92,11 @@
           "width": sf_width + "px"
         });
       }
+      //下拉框下拉列表ul创建
       this.results_build();
       return this.set_tab_index();
     };
+    //注册
     Chosen.prototype.register_observers = function() {
       this.container.click(__bind(function(evt) {
         return this.container_click(evt);

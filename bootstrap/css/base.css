@@ -1,0 +1,116 @@
+body,h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ul,ol,li,form,button,input,textarea,th,td{margin:0;padding:0;}
+img{ -ms-interpolation-mode: bicubic;border:0}
+ol,ul,li{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+input,button,textarea,select{font-size:inherit;*font-size:100%;font-family:inherit; vertical-align:middle; margin:0; padding:0;outline:none;}
+i,em,b,code{font-style:normal;font-weight:normal;}
+label{ cursor:pointer}
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+/*-------------end reset------------*/
+.wrap{width:960px; margin:0 auto}
+body{font-size:12px; line-height:22px}
+
+
+/*下面是tips需要加入的css*/
+.tips{ position:absolute}
+.tips .tipBd{ padding:2px 5px 0; position:relative; z-index:0}
+.tips .ico{position: absolute; display: inline-block; font-size: 0; background:url(../i/sprite.gif) no-repeat; z-index:1}
+.tipHd, .tipHd b, .tipFt, .tipFt b {background:url(../i/sprite.gif) no-repeat; font-size: 0; height: 4px}
+.tipHd b,.tipFt b{float: right; padding-right: 4px}
+
+.blue_tipBd{background:#F5FAFF;  border-left: 1px solid #56BCDB; border-right: 1px solid #56BCDB}
+.blue_tipHd{background-position:-200px 0px}
+.blue_tipHd b{background-position:right 0px}
+.blue_tipFt{background-position:-200px -4px}
+.blue_tipFt b{background-position:right -4px}
+
+
+.blue_up{ padding-top:4px}
+.blue_up .ico{ width:9px;height:5px; background-position:0 0; margin-left:-5px; top:0}
+.blue_lt{ padding-left:4px}
+.blue_lt .ico{ width:5px;height:9px; background-position:-100px 0; margin-top:-5px; left:0}
+.blue_rt{ padding-right:4px}
+.blue_rt .ico{ width:5px;height:9px; background-position:-150px 0; margin-top:-5px; right:0}
+.blue_dn{ padding-bottom:4px}
+.blue_dn .ico{ width:9px;height:5px; background-position:-50px 0; margin-left:-5px; bottom:0}
+
+.blue_tipBd{background:#F5FAFF;  border-left: 1px solid #56BCDB; border-right: 1px solid #56BCDB}
+.blue_tipHd{background-position:-200px 0px}
+.blue_tipHd b{background-position:right 0px}
+.blue_tipFt{background-position:-200px -4px}
+.blue_tipFt b{background-position:right -4px}
+
+
+
+.red_tipBd{background:#fffaf5;  border-left: 1px solid #ff6031; border-right: 1px solid #ff6031}
+.red_tipHd{background-position:-200px -10px}
+.red_tipHd b{background-position:right -10px}
+.red_tipFt{background-position:-200px -14px}
+.red_tipFt b{background-position:right -14px}
+
+
+.red_up{ padding-top:4px}
+.red_up .ico{ width:9px;height:5px; background-position:0 -10px; left:50%; margin-left:-5px; top:0}
+.red_lt{ padding-left:4px}
+.red_lt .ico{ width:5px;height:9px; background-position:-100px -10px;top:50%; margin-top:-5px; left:0}
+.red_rt{ padding-right:4px}
+.red_rt .ico{ width:5px;height:9px; background-position:-150px -10px;top:50%; margin-top:-5px; right:0}
+.red_dn{ padding-bottom:4px}
+.red_dn .ico{ width:9px;height:5px; background-position:-50px -10px;left:50%; margin-left:-5px; bottom:0}
+
+
+
+
+
+.green_tipBd{background:#f5fff7;  border-left: 1px solid #47FF32; border-right: 1px solid #47FF32}
+.green_tipHd{background-position:-200px -20px}
+.green_tipHd b{background-position:right -20px}
+.green_tipFt{background-position:-200px -24px}
+.green_tipFt b{background-position:right -24px}
+
+
+.green_up{ padding-top:4px}
+.green_up .ico{ width:9px;height:5px; background-position:0 -20px; margin-left:-5px; top:0}
+.green_lt{ padding-left:4px}
+.green_lt .ico{ width:5px;height:9px; background-position:-100px -20px; margin-top:-5px; left:0}
+.green_rt{ padding-right:4px}
+.green_rt .ico{ width:5px;height:9px; background-position:-150px -20px; margin-top:-5px; right:0}
+.green_dn{ padding-bottom:4px}
+.green_dn .ico{ width:9px;height:5px; background-position:-50px -20px; margin-left:-5px; bottom:0}
+
+
+.black_tipBd{background:#030000; color:#fff}
+.black_tipHd{background-position:-200px -30px}
+.black_tipHd b{background-position:right -30px}
+.black_tipFt{background-position:-200px -34px}
+.black_tipFt b{background-position:right -34px}
+
+.black_up{ padding-top:4px}
+.black_up .ico{ width:9px;height:5px; background-position:0 -30px; margin-left:-5px; top:0}
+.black_lt{ padding-left:4px}
+.black_lt .ico{ width:5px;height:9px; background-position:-100px -30px; margin-top:-5px; left:0}
+.black_rt{ padding-right:4px}
+.black_rt .ico{ width:5px;height:9px; background-position:-150px -30px; margin-top:-5px; right:0}
+.black_dn{ padding-bottom:4px}
+.black_dn .ico{ width:9px;height:5px; background-position:-50px -30px; margin-left:-5px; bottom:0}
+
+
+
+.close-ico{
+    background:url(../i/sprite.gif) no-repeat -160px 0;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    right: 5px;
+	margin-left:5px;
+    text-indent: -900px;
+    top: 2px;
+    width: 16px;
+}
+.close-ico:hover { background-position:-160px -16px; }
+
+
+
+
