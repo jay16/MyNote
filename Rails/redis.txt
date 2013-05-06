@@ -1,4 +1,0 @@
-/etc/redis/redis.conf
-linkÓ³Éä
-src/redis-server
-src/redis-cli
