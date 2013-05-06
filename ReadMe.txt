@@ -16,4 +16,10 @@ Git-1.7.0.2-utf8-20100725.exe from http://tmurakam.org/git/,
 https://github.com/tmurakam/4msysgit-utf8-filepath
 
 在下次的推送或者拉取时，输入用户名和密码即可本地存储用户名密码。不用每次都输入。
+With git version before 1.7.9 
+
 git config --global credential.helper 'store'
+
+With git version 1.7.9 and later
+
+git config --global credential.helper 'cache --timeout=xx'
