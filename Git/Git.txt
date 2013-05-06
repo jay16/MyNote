@@ -1,0 +1,10 @@
+git status
+#查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等。
+#建议每次commit前都要通过该命令确认库状态。 
+
+git log
+#查看历史日志，包含每次的版本变化。每次版本变化对应一个commit id
+Git log -1
+#-1的意思是只显示一个commit，如果想显示5个，就-5。不指定的话，git log会从该commit一直往后显示。 
+git log --stat –summary 
+#（显示每次版本的详细变化） 

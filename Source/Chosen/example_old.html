@@ -1,0 +1,274 @@
+ <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="chosen.jquery.js"></script>
+<link href="chosen.css" type="text/css" rel="stylesheet" />
+
+
+
+ <div class="chzn-container chzn-container-single" id="chosen_test" style="width: 186px;">
+        <a class="chzn-single" href="javascript:void(0)" tabindex=
+        "0"><span>2012&nbsp;Week&nbsp;47</span>
+
+        <div>
+            <b></b>
+        </div></a>
+
+        <div class="chzn-drop" style="left: -9000px; width: 184px; top: 26px;">
+            <div class="chzn-search">
+                <input autocomplete="off" style="width: 149px;" tabindex="-1"
+                type="text">
+            </div>
+
+            <ul class="chzn-results">
+                <li class="active-result result-selected" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_0">
+                2012&nbsp;Week&nbsp;47</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_1">
+                2012&nbsp;Week&nbsp;46</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_2">
+                2012&nbsp;Week&nbsp;45</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_3">
+                2012&nbsp;Week&nbsp;44</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_4">
+                2012&nbsp;Week&nbsp;43</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_5">
+                2012&nbsp;Week&nbsp;42</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_6">
+                2012&nbsp;Week&nbsp;41</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_7">
+                2012&nbsp;Week&nbsp;40</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_8">
+                2012&nbsp;Week&nbsp;39</li>
+
+                <li class="active-result" id=
+                "PRMT_SV_N116B4280x15D6DBE4_NS__chzn_o_9">
+                2012&nbsp;Week&nbsp;38</li>
+            </ul>
+        </div>
+    </div>
+   
+<script language="javascript">
+//通过class名获取对象
+function getChildByClassName(anc,cn){
+  var child = anc.childNodes;
+  for(var i=0;i<child.length;i++){
+    if(child[i].className && child[i].className.indexOf(cn) != -1){
+       return child[i];
+    }
+  }
+}
+//通过tag名获取对象
+function getChildByTagName(anc,tn){
+  var child = anc.childNodes;
+  for(var i=0;i<child.length;i++){
+    if(child[i].nodeName.toLowerCase == tn.toLowerCase){
+       return child[i];
+    }
+  }
+}
+//通过class名获取对象数组
+function getChildrenByClassName(anc,cn){
+  var ret = new Array;
+  var child = anc.childNodes;
+  for(var i=0;i<child.length;i++){
+    if(child[i].className && child[i].className.indexOf(cn) != -1){
+       ret.push(child[i])
+    }
+  }
+  return ret;
+}
+//祖先
+var chozn_anc  = document.getElementById("chosen_test");
+//显示框
+var chozn_a    = getChildByClassName(chozn_anc,"chzn-single");
+//下拉框被选择内容显示 
+var chozn_a_span   = getChildByTagName(chozn_a,"span");
+//alert(chozn_a_span.innerHTML);
+//下拉框
+var chozn_drop = getChildByClassName(chozn_anc,"chzn-drop");
+//下拉内容框
+var chozn_result = getChildByClassName(chozn_drop,"chzn-results");
+//下拉内容每条li
+var chozn_li     = getChildrenByClassName(chozn_result,"active-result");
+//alert(chozn_li.length);
+//点击显示框，显示下拉效果
+chozn_a.onclick = function(){
+  chozn_anc.className = chozn_anc.className + " chzn-container-active";
+  chozn_a.className = chozn_a.className + " chzn-single-with-drop";
+  chozn_a.style.tabindex = -1;
+  chozn_drop.style.left = 0;
+};
+//get focus
+chozn_a.onfocus = function(){
+  chozn_anc.className = chozn_anc.className + " chzn-container-active";
+  chozn_a.className = chozn_a.className + " chzn-single-with-drop";
+  chozn_a.style.tabindex = -1;
+  chozn_drop.style.left = 0;
+};
+function chozn_a_blur(){
+  chozn_anc.className = chozn_anc.className.replace("chzn-container-active","");
+  chozn_a.className = chozn_a.className.replace("chzn-single-with-drop","");
+  chozn_a.style.tabindex = 0;
+  chozn_drop.style.left = -9999;
+};
+/*lose focus
+chozn_a.onblur = function(){
+  chozn_anc.className = chozn_anc.className.replace("chzn-container-active","");
+  chozn_a.className = chozn_a.className.replace("chzn-single-with-drop","");
+  chozn_a.style.tabindex = 0;
+  chozn_drop.style.left = -9999;
+};
+*/
+//点击效果
+function li_onclick(e){
+   var li = e.srcElement;  
+   if(!li) {  
+       li = e.target;  
+   }  
+   //alert(li.innerHTML);
+   //all li remove selected class
+  for(var j=0;j<chozn_li.length;j++){
+     var l = chozn_li[j];
+     if(l.nodeName == "LI" && l.className.indexOf("active-result") != -1){
+       l.className = l.className.replace("result-selected","");
+     }
+  }
+  li.className = li.className + " result-selected"
+  chozn_a_span.innerHTML = li.innerHTML;
+  chozn_a_blur();
+}
+//鼠标在下拉框中移动时，进入Li中添加高亮效果
+function li_onmouseover(e){
+   var li = e.srcElement;  
+   if(!li) {  
+       li = e.target;  
+   }  
+  //处理高亮前，把所有li的高亮class移除
+  for(var j=0;j<chozn_li.length;j++){
+     var l = chozn_li[j];
+     if(l.nodeName == "LI" && l.className.indexOf("highlighted") != -1){
+       l.className = l.className.replace("highlighted","");
+     }
+  }
+  li.className = li.className + " highlighted"
+}
+//鼠标在下拉框中移动时，移出Li中移除高亮效果
+function li_onmouseout(e){
+   var li = e.srcElement;  
+   if(!li) {  
+       li = e.target;  
+   }  
+  //all li remove highlighted class
+  for(var j=0;j<chozn_li.length;j++){
+     var l = chozn_li[j];
+     if(l.nodeName == "LI" && l.className.indexOf("highlighted") != -1){
+       l.className = l.className.replace("highlighted","");
+     }
+  }
+  // li.className = li.className.replace("highlighted","");
+}
+//初始化每li点击、鼠标进入、鼠标移出事件
+function initUlClick(){
+   for(var i=0;i<chozn_li.length;i++){
+     var li = chozn_li[i];
+
+     if(li.nodeName == "LI" && li.className.indexOf("active-result") != -1){
+       //alert(chozn_li[i].nodeName);
+       li.onmouseover = function(){
+         li.className = li.className + " highlighted"
+       }
+       li.onmouseout = function(){
+         li.className = li.className.replace("highlighted","");
+       }
+       
+        //not Mozilla
+        if(li.attachEvent) {  
+            li.attachEvent("onclick",li_onclick);  
+            li.attachEvent("onmouseover",li_onmouseover); 
+            li.attachEvent("onmouseout",li_onmouseout);   
+        } else {  
+            li.addEventListener("click",li_onclick);  
+            li.addEventListener("mouseover",li_onmouseover); 
+            li.addEventListener("mouseout",li_onmouseout);    
+        } 
+
+     }
+   }
+}
+function initUlFocus(){
+
+}
+initUlClick()
+
+//result-selected
+//highlighted
+</script>
+ 
+     <select class="clsSelectControl pv chzn-select " id="PRMT_SV_N17052840x13A3DBE4_NS_"
+    style="width: 150px;">
+        <option>
+            p_weekid
+        </option>
+
+        <option>
+            --------------------------------------------
+        </option>
+
+        <option value="104671">
+            2012&nbsp;Week&nbsp;47
+        </option>
+
+        <option value="104670">
+            2012&nbsp;Week&nbsp;46
+        </option>
+
+        <option value="104669">
+            2012&nbsp;Week&nbsp;45
+        </option>
+
+        <option value="104668">
+            2012&nbsp;Week&nbsp;44
+        </option>
+
+        <option value="104667">
+            2012&nbsp;Week&nbsp;43
+        </option>
+
+        <option value="104666">
+            2012&nbsp;Week&nbsp;42
+        </option>
+
+        <option value="104665">
+            2012&nbsp;Week&nbsp;41
+        </option>
+
+        <option value="104664">
+            2012&nbsp;Week&nbsp;40
+        </option>
+
+        <option value="104663">
+            2012&nbsp;Week&nbsp;39
+        </option>
+
+        <option value="104662">
+            2012&nbsp;Week&nbsp;38
+        </option>
+    </select>
+<script>
+    $(".chzn-select").chosen();
+</script>

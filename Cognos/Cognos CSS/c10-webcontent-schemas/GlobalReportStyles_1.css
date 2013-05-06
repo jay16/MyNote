@@ -1,0 +1,939 @@
+@charset "UTF-8";
+
+/*
+	Licensed Materials - Property of IBM
+	IBM Cognos Products: rstyles
+	(C) Copyright IBM Corp. 2003, 2011
+	US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*/
+
+/*
+	Copyright (C) 2008 Cognos ULC, an IBM Company. All rights reserved.
+	Cognos (R) is a trademark of Cognos ULC, (formerly Cognos Incorporated).
+*/
+
+/* ======================================================
+	Named styles:
+
+	Page styles
+	-----------
+	pg	: page
+	pb	: page body
+	ph	: page header
+	pf	: page footer
+
+	Title styles
+	------------
+	ta	: report title area (container of the report title text)
+	tt	: report title text
+	ts	: subtitle area
+	ft	: filter subtitle area
+	fi	: filter subtitle icon
+
+	List styles
+	-----------
+	ls	: list table
+	lt	: list column title cell
+	lc	: list column body cell
+	lm	: list column body measure cell
+	lh	: list header cell
+	lf	: list footer cell
+	ih	: inner header cell
+	if	: inner footer cell
+	is	: inner sumnmary cell
+	oh	: outer header cell
+	of	: outer footer cell
+	os	: outer sumnmary cell
+
+	Section styles
+	--------------
+	sc	: section list
+	sb	: section body
+	sh	: section header cell
+	sf	: section footer cell
+	sg	: section summary cell
+	sk	: section inner header cell
+	so	: section inner footer cell
+	sp	: section inner summary cell
+	ss	: section summary text
+	
+	Crosstab styles
+	---------------
+	xt	: crosstab table
+	xm	: crosstab default measure label cell
+	ml	: member label cell
+	mv	: member value cell
+	cl	: calculated member label cell
+	cv	: calculated member value cell
+	sl	: subtotal (items) label cell
+	sv	: subtotal (items) value cell
+	hl	: subtotal (more + hidden) label cell
+	hv	: subtotal (more + hidden) value cell
+	nl	: subtotal (included) label cell
+	nv	: subtotal (included) value cell
+	xl	: subtotal (excluded) label cell
+	xv	: subtotal (excluded) value cell
+	il	: inner total (nested) label cell
+	iv	: inner total (nested) value cell
+	ol	: outer total (not nested) total label cell
+	ov	: outer total (not nested) total value cell
+	dm	: drillable member label text
+	xs	: crosstab spacer
+	
+	Chart styles
+	------------
+	ct	: chart title
+	cb	: chart body
+	cn	: chart note
+	cs	: chart subtitle
+	cf	: chart footer
+	lx	: chart legend title
+	lg	: chart legend
+	at	: chart axis title
+	al	: chart axis labels
+	ch	: chart
+
+	Prompt styles
+	-------------
+	pp	: prompt page
+	hp	: prompt page header
+	fp	: prompt page footer
+	py	: prompt page body
+	bp	: prompt button
+
+	Repeater styles
+	---------------
+	rt	: repeater table
+	rc	: repeater table cell
+
+	Other styles
+	------------
+	dp	: default container padding
+	hy	: hyperlink
+	bt	: button
+	fs	: field set
+	tb	: table
+	np	: no print (do not render element in printable output)
+	
+	Conditional styles
+	------------------
+	zc	: list column (Replace lc when used for conditional styles. This is to fix padding when using background-color.)
+	zb	: conditional block
+	z1  : canned style (excellent)
+	z2  : canned style (good)
+	z3  : canned style (average)
+	z4  : canned style (below average)
+	z5  : canned style (poor)
+
+	Custom Content styles
+	------------------------------
+	cca	: table title
+	ccb	: table
+	ccc	: cell heading
+	ccd	: general cell data
+	cce	: Custom Content
+	ccf	: footer index
+	ccg	: footer text
+	cch	: heading text
+	cci	: image
+	ccj	: numeric cell data
+	cck	: table caption
+	ccl	: section heading
+	ccm	: RichTextSection css style if rendered as <table>
+	ccn	: table dividing line
+	cco	: last <tr> elemnt of <table>
+	ccp	: table inside "section heading div"
+	ccq	: first <tr> of <table>  "section heading div", to create a black line across page
+	ccr	: second <tr> of <table>  "section heading div", containing the table heading text
+	ccs	: first table of RichTextSection
+	cct	: RichTextSection css style if rendered as <div>
+	ccu	: footnote div
+	
+ ====================================================== */
+
+/* =====================================================
+	1.x -> 2.x Mappings
+
+	Page styles
+	-----------
+	page -> pg
+	pageBody -> pb
+	pageHeader -> ph
+	pageFooter -> pf
+
+	Title styles
+	------------
+	reportTitle -> ta
+	reportTitleText -> tt
+	reportSubTitle -> ts
+	filterSubtitle -> ft
+	filterSubtitleIcon -> fi
+
+	List styles
+	-----------
+	list -> ls
+	listColumn -> lc
+	listColumnTitle -> lt
+	inlineHeader -> ih
+	inlineFooter -> if
+	innerHeader -> sk
+	innerFooter -> so
+	innerSummary -> sp
+	outerHeader -> sh
+	outerFooter -> sf
+	outerSummary -> sg
+	sectionHeader -> sh
+	sectionFooter -> sf
+	sectionBody -> sb
+
+	Crosstab styles
+	---------------
+	crosstab -> xt
+	crosstabCorner -> xm
+	crosstabLevel -> ml
+	crosstabMember -> ml
+	levelHeader -> ol
+	levelFooter -> ol
+	levelCells -> iv
+
+	Chart styles
+	------------
+	chart -> ch
+	chartAxisLabel -> al
+	chartBody -> cb
+	chartNoteText -> cn
+	chartTitle -> ct
+	chartSubtitle -> cs
+	chartFooter -> cf
+	chartLegend -> lg
+	chartLegendTitle -> lx
+	chartAxisTitle -> at
+
+	Other Styles
+	------------
+	hyperlink -> hy
+	button -> bt
+	promptButton -> bp
+	fieldSet -> fs
+	repeater -> rt
+	table -> tb
+	dontPrint -> np
+
+	Conditional styles
+	------------------
+
+	pd_1 : Excellent
+	pd_2 : Very good
+	pd_3 : Average
+	pd_4 : Below average
+	pd_5 : Poor
+
+*/
+
+
+/* Default Font for the Report */
+/* --------------------------- */
+
+.pg /* page */,
+.pp /* prompt page */,
+.ch /* chart */
+{
+	font-family: 'Arial Unicode MS', 'Andale WT', Tahoma, Arial, 'MS UI Gothic', Gulim, SimSun, PMingLiU, Raghu8, sans-serif;
+}
+
+.pg *,
+.pp *
+{
+	-moz-box-sizing: border-box;
+}
+
+IMG
+{
+	-moz-box-sizing: content-box !important;
+}
+
+/*
+A bug in IE prevents TABLE elements from properly inheriting text properties.
+These properties include color, font-size, font-weight, font-style,
+font-variant, text-decoration, text-transform, letter-spacing, and line-height.
+All of the text properties of TABLE elements, except font-family, are inherited
+from the BODY element otherwise setting these on the page would be enough.
+ */
+.pg /* page */,
+.pp /* prompt page */,
+.tb /* table */,
+.rt /* repeaterTable */,
+.sc /* section list */,
+.ls /* list */,
+.xt /* crosstab */
+{
+	font-size: 10pt;
+	color: #000000;
+}
+
+/* Page Styles */
+/* ----------- */
+
+.pg /* page */
+{
+	width: 100%;
+	height: 100%;
+}
+
+.pb /* page body */
+{
+	height: 100%;
+	vertical-align: top;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.ph /* page header */,
+.pf /* page footer */
+{
+	vertical-align: top;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+/* Title Styles */
+/* ----------- */
+
+.ta /* 	report title area (container of the report title text) */
+{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 14pt;
+	font-weight: bold;
+	text-align: center;
+	color: #000000;
+}
+
+.tt /* report title text */
+{
+	text-decoration: underline;
+}
+
+.ts /* subtitle area */
+{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 10pt;
+	text-align: center;
+	color: #9999CC;
+}
+
+
+.ft /* filter subtitle area */
+{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 10pt;
+	color: #9999CC;
+}
+
+
+.fi /* filter subtitle icon */
+{
+	vertical-align: middle;
+	margin-right: 4px;
+	border: 0px;
+}
+
+/* List Styles */
+/* ----------- */
+
+.ls /* list */
+{
+}
+
+.lt /* list column title cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	vertical-align: top;
+	text-align: center;
+	background-color: #E3E3FC;
+	font-weight: bold;
+}
+
+.lc /* list column body cell */,
+.lm /* list column body measure cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	vertical-align: top;
+}
+
+.lh /* list header cell */,
+.lf /* list footer cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	vertical-align: top;
+}
+
+.ih /* inner header cell */,
+.if /* inner footer cell */,
+.oh /* outer header cell */,
+.of /* outer footer cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	color: #999999;
+}
+
+.is /* inner sumnmary cell */,
+.os /* outer sumnmary cell */
+{
+	padding: 3px;
+	border: 1px solid #CCCCCC;
+	font-weight: bold;
+}
+
+/* Section Styles */
+/* -------------- */
+
+.sb /* section body */
+{
+	padding: 3px 5px;
+}
+
+.sh /* section header cell */
+{
+	padding: 3px 5px;
+	font-size: 10pt;
+	font-weight: bold;
+	border-bottom: 2px solid black;
+	padding-top: 8px;
+}
+
+.sf /* section footer cell */
+{
+	padding: 3px 5px;
+ 	border-top: 2px solid #999999;
+	color: #999999;
+}
+
+.sg /* section summary cell */
+{
+	padding: 3px;
+ 	border-top: 2px solid #999999;
+	font-weight: bold;
+}
+
+.sk /* section inner header cell */
+{
+	padding: 3px 5px;
+	font-weight: bold;
+	padding-top: 8px;
+}
+
+.so /* section inner footer cell */
+{
+	padding: 3px 5px;
+	color: #999999;
+}
+
+.sp /* section inner summary cell */
+{
+	padding: 3px 5px;
+	font-weight: bold;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.ss /* section summary text */
+{
+	padding: 3px;
+ 	border-top: 2px solid #999999;
+	font-weight: bold;
+}
+
+/* Crosstab Styles */
+/* --------------- */
+
+.xt /* crosstab */
+{
+}
+
+.xm /* crosstab default measure label cell */
+{
+	padding: 3px 5px;
+	vertical-align: top;
+	font-weight: bold;
+	color: #CCCCCC;
+}
+
+.ml /* member label cell */,
+.cl /* calculated member label cell */,
+.sl /* subtotal (items) label cell */,
+.hl /* subtotal (more + hidden) label cell */,
+.nl /* subtotal (included) label cell */,
+.xl /* subtotal (excluded) label cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	vertical-align: top;
+	background-color: #E3E3FC;
+	font-weight: bold;
+}
+
+.mv /* member value cell */,
+.cv /* calculated member value cell */,
+.sv /* subtotal (items) value cell */,
+.hv /* subtotal (more + hidden) value cell */,
+.nv /* subtotal (included) value cell */,
+.xv /* subtotal (excluded) value cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.il /* inner total (nested) label cell */,
+.ol /* outer total (not nested) total label cell */
+{
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	vertical-align: top;
+	background-color: #E3E3FC;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.iv /* inner total (nested) value cell */,
+.ov /* outer total (not nested) total value cell */
+{
+	padding: 3px;
+	border: 1px solid #CCCCCC;
+	text-align: right;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.dm /* drillable member label text */
+{
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.xs /* crosstab spacer */
+{
+	vertical-align: top;
+	border: 1px solid #93B1CD;
+	padding: 3px 5px;
+}
+
+/* Chart Styles */
+/* ------------ */
+
+.ch /* chart */
+{
+	padding: 5px;
+}
+
+.cb
+{
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+.cn /* chart note */
+{
+	font-size: 10pt;
+	text-align: center;
+	font-weight: normal;
+}
+
+.ct /* chart title */
+{
+	font-size: 12pt;
+	text-align: center;
+	font-weight: bold;
+}
+
+.cs /* chart subtitle */,
+.cf /* chart footer */
+{
+	font-size: 10pt;
+	text-align: center;
+	font-weight: normal;
+}
+
+.lx /* chart legend title */
+{
+	font-size: 10pt;
+	font-weight: bold;
+	text-align: left;
+}
+
+.lg /* chart legend */
+{
+	font-size: 10pt;
+	font-weight: normal;
+	text-align: left;
+}
+
+
+.at /* chart axis title */
+{
+	font-size: 10pt;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+.al /* chart axis labels */
+{
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+/* Prompt Styles */
+/* ----------- */
+
+.pp /* prompt page */
+{
+	width: 100%;
+	height: 100%;
+}
+
+.py /* prompt page body */
+{
+	height: 100%;
+	vertical-align: top;
+	padding: 3px 5px;
+}
+
+.hp /* prompt page header */
+{
+	vertical-align: top;
+	padding: 3px 5px;
+}
+
+.fp /* prompt page footer */
+{
+	vertical-align: top;
+	padding: 3px 5px;
+}
+
+
+.bp /* prompt button */
+{
+	font-size: 90%;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 3px;
+	padding-top: 2px;
+	margin-right: 7px;
+	background-color: #FFFFFF;
+	border: 1px solid #999999;
+}
+
+/* Repeater Styles */
+/* --------------- */
+
+.rc /* repeaterTableCell */
+{
+}
+
+/* Other Styles */
+/* ------------ */
+
+.dp /* default container padding */
+{
+	padding: 3px 5px;
+}
+
+.hy /* hyperlink */
+{
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.bt /* button */
+{
+	border: 2px outset threedhighlight;
+	background-color: buttonface;
+	color: buttontext;
+	padding: 2px;
+	text-align: center;
+	font-size: 10pt;
+}
+
+.fs /* field set */
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	display: inline;
+	text-align: left;
+}
+/*
+	Firefox doesn't support display:inline on <fieldset>.
+	The workaround is to use -moz-inline-block, which is ignored by IE as long as it's in a different block.
+*/
+.fs /* field set */
+{
+	display: -moz-inline-block;
+}
+
+@media print
+{
+	.np /* no print (do not render element in printable output) */
+	{
+		display: none;
+	}
+}
+
+/*
+	Using the language specific font list below can help to workaround the following rendering issues on Browsers:
+	1. The Japanese Yen and Korean Won sign appears as the "backslash" when they are represented by the code point "U+005C".
+	2. Browser fails to supply a reasonable fall-back font support based on the font list in the "generic fonts" section.
+
+	Also, these font lists will be useful for rendering some of the Unified Han ideographs to the form and shape which is
+	typographically preferred by different Asian writing scripts.
+*/
+
+/* For Japanese:
+.pg,
+.pp,
+.ch
+{
+	font-family: 'MS UI Gothic', Tahoma, arial, geneva, helvetica, sans-serif, 'Andale WT J';
+}
+*/
+
+/* For Simplified Chinese:
+.pg,
+.pp,
+.ch
+{
+	font-family: SimSun, Tahoma, arial, geneva, helvetica, sans-serif, 'Andale WT';
+}
+*/
+
+/* For Traditional Chinese:
+.pg,
+.pp,
+.ch
+{
+	font-family: MingLiU, Tahoma, arial, geneva, helvetica, sans-serif, 'Andale WT';
+}
+*/
+
+/* For Korean:
+.pg,
+.pp,
+.ch
+{
+	font-family: Gulim, Tahoma, arial, geneva, helvetica, sans-serif, 'Andale WT K';
+}
+*/
+
+.lt /* list column title cell */,
+.lc /* list column body cell */,
+.lm /* list column body measure cell */,
+.lh /* list header cell */,
+.lf /* list footer cell */,
+.xm /* crosstab default measure label cell */,
+.ml /* member label cell */,
+.cl /* calculated member label cell */,
+.sl /* subtotal (items) label cell */,
+.hl /* subtotal (more + hidden) label cell */,
+.nl /* subtotal (included) label cell */,
+.xl /* subtotal (excluded) label cell */,
+.il /* inner total (nested) label cell */,
+.ol /* outer total (not nested) total label cell */,
+.xs /* crosstab spacer */
+{
+	line-break: strict;
+}
+
+/* Conditional Styles */
+/* --------------- */
+
+.pd_1 /* Excellent */
+{
+	background-color: #009933;
+	color: #FFFFFF;
+}
+
+.pd_2 /* Very good */
+{
+	background-color: #FFFFFF;
+	color: #009933;
+}
+
+.pd_3 /* Average */
+{
+	background-color: #FFFFFF;
+	color: #CC9900;
+}
+
+.pd_4 /* Below average */
+{
+	background-color: #FFFFFF;
+	color: #990000;
+}
+
+.pd_5 /* Poor */
+{
+	background-color: #990000;
+	color: #FFFFFF;
+}
+
+
+/*	Custom Content styles */
+/* ------------------------------ */
+.cca  /*table title */
+{
+	font-size: 14pt;
+	font-weight: bold;
+	color: #000000;
+	white-space: nowrap;
+	margin-bottom: 6px;
+}
+
+.ccb /* table ( other than first table of RichTextSection) */
+{
+	font-size: 10pt;
+	border-collapse: collapse;
+	empty-cells: show;
+	margin-top: 23px;
+}
+
+.ccc /*cell heading*/
+{
+	font-size: 10pt;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+	vertical-align: top;
+	padding: 3px 5px;
+	background-color: #E3E3FC;
+	border: 1px solid #CCCCCC;
+	white-space: nowrap;
+}
+
+.ccd /*cell data*/
+{
+	font-size: 10pt;
+	font-weight: bold;
+	color: #000000;
+	vertical-align: top;
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	white-space: nowrap;
+}
+
+.cce /* Custom Content */
+{
+
+}
+
+.ccf /* footer index */
+{
+	font-size: 9pt;
+	color: #AA0000;
+	font-weight: bold;
+	vertical-align: super;
+}
+
+.ccg /* footer text*/
+{
+	font-size: 9pt;
+}
+
+.cch /* header text */
+{
+	font-weight: bold;
+}
+
+.cci /* image */
+{
+
+}
+
+.ccj /* numeric cell data*/
+{
+	font-size: 10pt;
+	font-weight: normal;
+	color: #000000;
+	vertical-align: top;
+	padding: 3px 5px;
+	border: 1px solid #CCCCCC;
+	white-space: nowrap;
+}
+
+.cck  /*table caption */
+{
+	text-align: left;
+	white-space: nowrap;
+	margin-bottom: 3px;
+}
+
+.ccl  /*section heading div style*/
+{
+
+}
+
+.ccm /*RichTextSection css style if rendered as <table>*/
+{
+	
+}
+
+.ccn /* table dividing line*/
+{
+	background-color: Transparent;
+	height: 1px;
+}
+
+.cco /* last <tr> elemnt of <table>*/
+{
+	background-color: #F4F4F4;
+}
+
+.ccp /* table inside "section heading div" */
+{
+	width: 100%;
+}
+
+.ccq /* first <tr> of <table>  "section heading div", to create a black line across page*/
+{
+	background-color: Transparent;
+	height: 1px;
+}
+
+.ccr /* second <tr> of <table>  "section heading div", containing the table heading text*/
+{
+	font-size: 10pt;
+	color: #336699;
+	font-weight: bold;
+}
+
+.ccs /*first table of RichTextSection*/
+{
+	font-size: 10pt;
+	border-collapse: collapse;
+	empty-cells: show;
+	border: 0px;
+}
+
+.cct /*RichTextSection css style if rendered as <div>*/
+{
+}
+
+.ccu /* footnote div*/
+{
+	margin-bottom: 4px;
+}
+
+.ccv /* cell heading for warning table  -- embedded as div within ccc, so just override those values */
+{
+	text-align: left;
+}

@@ -1,0 +1,28 @@
+Git的Windows版本Msysgit对中文的支持不够好
+当使用时，会出现以下三种情况的中文乱码：
+
+1.ls不能显示中文目录
+解决办法：在git/git-completion.bash中增加一行：
+alias ls='ls --show-control-chars --color=auto'
+
+
+2.git commit不能提交中文注释
+解决办法：修改git/inputrc中对应的行：
+
+set output-meta on
+set convert-meta off
+
+
+3.git log无法显示中文注释
+解决办法：在git/profile中增加一行：
+
+export LESSCHARSET=iso8859 
+
+
+
+通过看git的源码，找到了解决方案：
+
+git config core.quotepath false
+git config --system core.quotepath false  
+
+core.quotepath设为false的话，就不会对0x80以上的字符进行quote。中文显示正常

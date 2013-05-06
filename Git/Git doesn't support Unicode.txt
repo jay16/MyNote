@@ -1,0 +1,12 @@
+常见问题：
+
+    warning: Your console font probably doesn't support Unicode.
+   If you experience strange characters in the output, consider switching
+   to a TrueType font such as Lucida Console!
+
+解决办法：
+
+    $ git config --global core.autocrlf true
+
+
+执行后需要重启git bash
