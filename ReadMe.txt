@@ -22,7 +22,9 @@ git config --global credential.helper 'store'
 
 With git version 1.7.9 and later
 
+.git/config
 git config credential.helper cache
+~/.gitconfig
 git config --global credential.helper 'cache --timeout=xx'
 
 
