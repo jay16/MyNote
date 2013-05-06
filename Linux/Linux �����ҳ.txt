@@ -1,0 +1,1 @@
+以下是在liux模式下用linux命令浏览网页的方法，可以用linux命令：lynx，links浏览web，linux命令：lftp,wget,curl等上传/下载软件。

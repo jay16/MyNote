@@ -1,0 +1,11 @@
+1.app/controller/clickinfo#display_email_job
+return [source.lstrip.to_s.gsub('210.14.76.206','192.168.0.128'),alink]
+
+2.app/helper/application_helper.rb#get_dashboard_data
+代码修正，以此为准
+
+3.app/model/template.rb#dog_logger 243
+ #FocusMail::GmTest::gradetest(@Template.id, self.user_email, self.name)
+
+4.修改app/public/file权限
+chmod -R 777 /home/work/focus_mail/app/public

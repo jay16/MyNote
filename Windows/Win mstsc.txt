@@ -1,0 +1,15 @@
+
+
+在XP SP3中，mstsc /console已经被/admin取代。
+
+默认win2k3支持两个remote desktop远程会话和一个console会话。
+
+人坐在机器前登录和使用mstsc /admin远程登录都算是console会话。
+
+如果在用mstsc /admin登录时已经有人物理的坐在电脑前登录的话，此时物理的登录会被/admin会话所取代，并且此时用/admin参数登入之后可以看到之前使用console登录的画面，比如他之前在运行的程序。
+
+能用mstsc /admin登录成功的前提为使用的用户必须是远程计算机上的本地管理员和remote desktop users组的成员。
+
+win2003中可以用一个账户去创建两个远程桌面会话，2008则只能以后账户创建一个会话。
+
+windows2008中默认两个登陆，且不同账户，mstsc /admin能够保留其他用户之前桌面，mstsc则是先注销原来账户，再登陆。
