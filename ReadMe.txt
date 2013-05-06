@@ -14,3 +14,6 @@ http://utf8-git-on-windows.googlecode.com/files/Git-1.7.3.2-utf8-20110213.exe
 Git-1.7.0.2-utf8-20100725.exe from http://tmurakam.org/git/,
 它的开源项目在：
 https://github.com/tmurakam/4msysgit-utf8-filepath
+
+
+git config --global credential.helper 'store'
