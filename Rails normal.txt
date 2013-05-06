@@ -1,2 +1,0 @@
-如果"1.jpg"放在app/assets/images下面，那就image_tag("1.jpg")就行了~~
-如果"1.jpg"放在public下面，应该是image_tag("/1.jpg")，有一个斜杠的区别~~
