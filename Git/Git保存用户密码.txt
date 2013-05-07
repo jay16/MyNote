@@ -2,7 +2,27 @@
 由于window上git上传对中文支持不好，使用的git版本是经牛人修改过的。但由于版本过低，和原先对git的不合理配置，导致git没有保存用户名与密码，每次git push都要输入用户名与密码。
 
 主要注意几点：
-1. .git/config中对remote的配置使用ssh方式。.git文件夹为隐藏类型。具体的ssh方式查看githup上，上面分别有HHTP与SSH
+
+1. .git/config中对remote的配置使用ssh方式。.git文件夹为隐藏类型。具体的ssh方式查看githup上，上面分别有HHTP与SSH。
+
 [remote "origin"]
  url = git@github.com:jay16/MyNote.git
  fetch = +refs/heads/*:refs/remotes/origin/*
+
+2.配置中设置保存用户密码
+1.7.3版本
+git config --global credential.helper store
+1.7.9版本或更新
+git config --global credential.helper cache   
+
+3.C:\Documents and Settings\Administrator\.ssh\config中添写下文
+在git bash中使用ssh -vT git@githup.com测试，很奇怪我这测试提示bad file number,但上传时已经不需要输入用户名与密码了。
+说明此步非必须。
+
+Host github.com
+User git
+Hostname ssh.github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa
+Port 443
+
