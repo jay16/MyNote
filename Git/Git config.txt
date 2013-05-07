@@ -1,3 +1,6 @@
+命令中含--global时，信息读取或保存在C:\Documents and Settings\Administrator\.ssh\config中
+    不含--global时，信息读取或保存在Git仓库的隐藏文件.git\config中
+
  
 # 全局提交用户名与邮箱
 git config --global user.name "Yuchen Deng"

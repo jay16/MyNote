@@ -1,0 +1,8 @@
+本人使用的git版本是1.7.3，系统环境是WindowsXP。
+由于window上git上传对中文支持不好，使用的git版本是经牛人修改过的。但由于版本过低，和原先对git的不合理配置，导致git没有保存用户名与密码，每次git push都要输入用户名与密码。
+
+主要注意几点：
+1. .git/config中对remote的配置使用ssh方式。.git文件夹为隐藏类型。具体的ssh方式查看githup上，上面分别有HHTP与SSH
+[remote "origin"]
+ url = git@github.com:jay16/MyNote.git
+ fetch = +refs/heads/*:refs/remotes/origin/*
