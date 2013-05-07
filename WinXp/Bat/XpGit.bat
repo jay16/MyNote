@@ -5,9 +5,15 @@ set commit= %sDate%_%time%
 
 cd E:\MyWork\MyNote\
 
-C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git init""
-C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A .""
-C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%""
-C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master""
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git init"
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A ."
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%"
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master"
+
+rem old idea
+rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git init""
+rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A .""
+rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%""
+rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master""
 
 pause
