@@ -1,7 +1,6 @@
 @echo off
 
 for /f "tokens=1,2,3 delims=- " %%A in ('date /t') do set sDate=%%A-%%B-%%C
-set sTime=%time:~0,2%:%time:~3,2% 
 set commit= %sDate%_%time%
 
 cd E:\MyWork\MyNote\
