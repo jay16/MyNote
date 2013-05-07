@@ -5,10 +5,10 @@ set commit= %sDate%_%time%
 
 cd E:\MyWork\MyNote\
 
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git init"
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A ."
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%"
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master"
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git init | git add -A . | git commit -a -m %commit% | git push origin master"
+rem "D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A ."
+rem "D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%"
+rem "D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master"
 
 rem old idea
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git init""
