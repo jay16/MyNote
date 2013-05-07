@@ -33,14 +33,14 @@
   //创建Chosen
   Chosen = (function() {
     function Chosen(elmn) {
-      this.set_default_values();
+      this.set_default_values(); //设置默认值，在没有点击情况下，状态                          
       this.form_field = elmn;
       this.form_field_jq = $(this.form_field);
-      this.is_multiple = this.form_field.multiple;
+      this.is_multiple = this.form_field.multiple; //是否允许多选，默认是单选
       this.is_rtl = this.form_field_jq.hasClass("chzn-rtl");
-      this.default_text_default = this.form_field.multiple ? "Select Some Options" : "Select an Option";
-      this.set_up_html();
-      this.register_observers();
+      this.default_text_default = this.form_field.multiple ? "Select Some Options" : "Select an Option"; //默认提示文件
+      this.set_up_html(); //创建div下拉框框架
+      this.register_observers(); //注册监视器，关联点击提示框，下拉框的关系
       this.form_field_jq.addClass("chzn-done");
     }
     //设置默认值，在没有点击情况下，状态
@@ -107,33 +107,42 @@
     };
     //注册
     Chosen.prototype.register_observers = function() {
+      //点击div最外层container
       this.container.click(__bind(function(evt) {
         return this.container_click(evt);
       }, this));
+      //鼠标进入div最外层container
       this.container.mouseenter(__bind(function(evt) {
         return this.mouse_enter(evt);
       }, this));
+      //鼠标离开div最外层container
       this.container.mouseleave(__bind(function(evt) {
         return this.mouse_leave(evt);
       }, this));
+      //鼠标点击搜索框div
       this.search_results.click(__bind(function(evt) {
         return this.search_results_click(evt);
       }, this));
+      //鼠标进入搜索框div
       this.search_results.mouseover(__bind(function(evt) {
         return this.search_results_mouseover(evt);
       }, this));
+      //鼠标离开搜索框div
       this.search_results.mouseout(__bind(function(evt) {
         return this.search_results_mouseout(evt);
       }, this));
       this.form_field_jq.bind("liszt:updated", __bind(function(evt) {
         return this.results_update_field(evt);
       }, this));
+      //索框div失去焦点
       this.search_field.blur(__bind(function(evt) {
         return this.input_blur(evt);
       }, this));
+      //鼠标点击搜索框keyup
       this.search_field.keyup(__bind(function(evt) {
         return this.keyup_checker(evt);
       }, this));
+      //鼠标点击搜索框keydown
       this.search_field.keydown(__bind(function(evt) {
         return this.keydown_checker(evt);
       }, this));
@@ -150,6 +159,7 @@
         }, this));
       }
     };
+    //鼠标点击div最外层container
     Chosen.prototype.container_click = function(evt) {
       if (evt && evt.type === "click") {
         evt.stopPropagation();
@@ -159,7 +169,9 @@
           if (this.is_multiple) {
             this.search_field.val("");
           }
+          //启动click_test_action
           $(document).click(this.click_test_action);
+          //显示下拉框
           this.results_show();
         } else if (!this.is_multiple && evt && ($(evt.target) === this.selected_item || $(evt.target).parents("a.chzn-single").length)) {
           evt.preventDefault();
@@ -170,39 +182,57 @@
         return this.pending_destroy_click = false;
       }
     };
+    //鼠标进入div最外层container
     Chosen.prototype.mouse_enter = function() {
       return this.mouse_on_container = true;
     };
+    //鼠标离开div最外层container
     Chosen.prototype.mouse_leave = function() {
       return this.mouse_on_container = false;
     };
+    //搜索框Input 取得焦点
     Chosen.prototype.input_focus = function(evt) {
       if (!this.active_field) {
+        //定时0.05s后点击div最外层container
         return setTimeout((__bind(function() {
           return this.container_click();
         }, this)), 50);
       }
     };
+    //搜索框Input 失去焦点
     Chosen.prototype.input_blur = function(evt) {
+      //鼠标同时也没有在div最外层container内
       if (!this.mouse_on_container) {
+        //设置active_field为false
         this.active_field = false;
+        //定时0.1s后blur_test
         return setTimeout((__bind(function() {
           return this.blur_test();
         }, this)), 100);
       }
     };
+    //测试是否失去焦点
     Chosen.prototype.blur_test = function(evt) {
+      //active_field为false说明鼠标已经离开div最外层container,
+      //但这时container中还含有chzn-container-active类,若没有这个类，说明container压根没有激活过
       if (!this.active_field && this.container.hasClass("chzn-container-active")) {
+        //关闭下拉框div
         return this.close_field();
       }
     };
+    //关闭下拉框div
     Chosen.prototype.close_field = function() {
+      //关闭click_test_action，在点击container时激活的
       $(document).unbind("click", this.click_test_action);
+      //单选模式
       if (!this.is_multiple) {
         this.selected_item.attr("tabindex", this.search_field.attr("tabindex"));
+        //搜索框input的tabindex置-1，平时置0
         this.search_field.attr("tabindex", -1);
       }
+      //active_field置false
       this.active_field = false;
+      //隐藏下拉框
       this.results_hide();
       this.container.removeClass("chzn-container-active");
       this.winnow_results_clear();
