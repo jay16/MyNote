@@ -1,0 +1,161 @@
+﻿centos 5.5
+1. 安装gcc
+
+[root@localhost ~]#  yum install gcc - c++ 
+[root@localhost ~]#  yum install gcc - g77 
+[root@localhost ~]#  yum install flex autoconf zlib curl zlib-devel curl-devel bzip2 bzip2-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel 
+
+
+sqlite
+
+这里gcc -g77 会出现nothing to do, 不要奇怪, 我运行也如此, :) 
+
+2. 下载ruby    
+#wget ftp://ftp.ruby-lang.org//pub/ruby/1.9/ruby-1.9.2-p180.tar.gz 
+#tar -xvzf ruby-1.9.2-p180.tar.gz
+#cd ruby-1.9.2-p0/
+
+[root@localhost ~]#  wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p0.tar.gz
+[root@localhost ~]#  tar -xvzf ruby-1.9.3-p0.tar.gz 
+[root@localhost ~]#  cd ruby-1.9.3-p0/
+[root@localhost  ruby-1.9.3-p0]# ./configure
+[root@localhost  ruby-1.9.3-p0]# make
+[root@localhost  ruby-1.9.3-p0]# sudo make install
+#make 是编译，这一步不需要 sudo ，仅仅make就可以了
+#make install 这个是将编译后的文件安装到系统，需要root权限所以需要使用 sudo 来完成。
+
+
+3. 检查Ruby安装情况
+
+[root@localhost ~]# ruby -v
+
+4.  安装过后更新 gem 
+
+[root@localhost ~]# gem update --system   
+[root@localhost ~]# gem update  
+
+5. 安装rails
+
+[root@localhost ~]# gem rails -v=3.2.3
+
+6. 查看Gems版本
+
+[root@localhost ~]# gem list
+
+7.安装MySQL的Ruby绑定
+
+[root@localhost ~]# gem install mysql-ruby
+
+在办公室局域网内拷贝FocusMail相关文件
+\\192.168.0.132\install source\FocusMailBk\
+focusmailsql.tar.gz
+focus_mail_206.tar.gz
+解压至/home/tools/下，focus_mail_206.tar.gz解压后文件夹复制到/home/work/下
+下面会引用到该路径
+
+8.配置MySQL
+
+ a 修改登陆密码
+
+ [root@localhost ~]# mysqladmin -u root password Focus_Mail
+
+ b创建mail_206数据库
+
+  登陆MySQL：
+
+  [root@localhost ~]# mysql -uroot -pFocus_Mail
+
+  创建mail_206数据库：
+
+  mysql> create database mail_206;
+
+  切换至mail_206: 
+
+  mysql> use mail_206;
+
+  导入数据库内容: 
+
+  mysql> source /home/tools/focusmailsql/mail206_bk.sql
+
+9.启动FocusMail
+ a.进入focus_mail文件夹下执行
+
+ [root@localhost focus_mail]# cd /home/work/focus_mail
+ [root@localhost focus_mail]# bundle install
+
+ b.修改config/database.yml
+
+ 把文件中210.14.76.206修改为平台ip
+
+ c.配置邮件内容评分测试环境
+
+  /mailgates/mg/bin/mbf_client
+ （若位置有变，修改/home/work/focus_mail/lib/gm_test.rb第8行）
+
+ d.启动FocusMail，进入focus_mail文件夹下执行
+
+ [root@localhost focus_mail]# cd /home/work/focus_mail
+ [root@localhost focus_mail]# rails s
+
+浏览器中输入http://平台ip:300,若出现登陆页，表示已启动
+
+10.安装配置nginx/passenger
+
+[root@localhost ~]# gem install passenge
+[root@localhost ~]# passenger-install-nginx-module
+
+安装过程中需要输入：直接回车就可以!
+
+Enter your choice (1 or 2) or press Ctrl-C to abort: 1
+Please specify a prefix directory [/opt/nginx]: /opt/nginx
+
+配置nginx
+
+[root@localhost sbin]# cd /opt/nginx/conf/
+[root@localhost sbin]# vi nginx.conf
+
+与文件中其他server并行添加
+
+    server {
+        listen       80;
+        server_name 192.168.0.138;
+        root /home/work/focus_mail/public;
+        passenger_enabled on;
+    }
+
+ngins测试、启动
+
+[root@localhost sbin]# /opt/nginx/sbin/nginx -t
+[root@localhost sbin]# /opt/nginx/sbin/nginx
+
+关闭防火墙
+
+[root@localhost sbin]# service iptables stop
+
+11安装配置resque
+
+redis 安装
+server client config-link
+
+$ git clone git://github.com/defunkt/resque.git
+$ cd resque
+$ rake redis:install dtach:install
+$ rake redis:start
+
+启动redis
+
+$ find / -name redis-server
+/usr/local/redis/src/redis-server
+$ nohup /usr/local/redis/src/redis-server &
+
+查看redis是否运行
+
+$ ps -ef | grep redis
+
+启动resque
+
+$ nohup rake resque:workers COUNT=4 QUEUE=* VERBOSE=1 &
+
+查看redis是否运行
+
+$ ps -ef | grep resque

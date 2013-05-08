@@ -1,0 +1,10 @@
+1. config/readfile.yml 
+#生成信位置
+sendmail: /home/webmail/mailtem/
+#生成信中追踪信链接中Ip
+sendip: 220.248.30.60
+sendport: 80
+reply: adm@online-edm.com
+mgtest: /home/work/focus_mail/lib/gm_test/
+#MailGates位置
+filepath: /webmail/

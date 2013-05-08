@@ -1,0 +1,31 @@
+查看几个启动软件安装位置
+[root@localhost ~]# whereis service
+service: /sbin/service /usr/share/man/man8/service.8.gz
+[root@localhost ~]# whereis passenger
+passenger: /usr/local/bin/passenger
+[root@localhost ~]# whereis nohup
+nohup: /usr/bin/nohup /usr/share/man/man1/nohup.1.gz /usr/share/man/man1p/nohup.1p.gz
+[root@localhost ~]$ whereis rake
+rake: /usr/local/bin/rake
+[root@localhost c]# whereis sh
+sh: /bin/sh /usr/share/man/man1/sh.1.gz /usr/share/man/man1p/sh.1p.gz
+
+
+在/etc/rc.d/rc.local文件中追加以下内容
+
+#start mysql
+/sbin/service mysqld start
+
+#stop iptables
+/sbin/service iptables stop
+
+#start focus_mail
+cd /home/work/focus_mail
+/usr/local/bin/passenger start -p 80 -d --user webmail
+
+#start resque
+su webmail
+cd /home/work/focus_mail
+
+/usr/bin/nohup /usr/local/bin/rake resque:workers COUNT=4 QUEUE=* VERBOSE=1 &
+/usr/bin/nohup /usr/local/bin/rake resque:scheduler &
