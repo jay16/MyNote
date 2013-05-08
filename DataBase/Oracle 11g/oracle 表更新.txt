@@ -1,3 +1,5 @@
+/home/work/kettle_jobs/Import_Member_CSV
+/home/work/upload_files
 
 export NLS_LANG=AMERICAN_AMERICA.UTF8
 
@@ -10,7 +12,7 @@ grant connect,resource to intfocus;
 SYS身份 查看用户所创建的表
 SQL> select table_name from dba_tables where owner = 'INTFOCUS';
 普通用户身份 查看用户所创建的表
-SQL> select table_name from all_tables where owner='TEST';
+SQL> select table_name from all_tables where owner='INTFOCUS';
 修改密码
 SQL> select username,password from dba_users;
 SQL> alter user test identified by intfocus; 
