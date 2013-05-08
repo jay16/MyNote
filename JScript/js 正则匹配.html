@@ -1,12 +1,47 @@
 <body style="width:100%;height:100%;background:gray;">
 </body>
 <script>
-alert(":he.ll&0".replace(/(:|\.|&)/g, '_'));
+ //alert(":he.ll&0".replace(/(:|\.|&)/g, '_'));
   function generate_random_char(){
       var chars, newchar, rand;
       chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
       rand = Math.floor(Math.random() * chars.length);
       return newchar = chars.substring(rand, rand + 1);
   }
-document.getElementsByTagName("body")[0].onclick = function(){alert("yes");};
+//document.getElementsByTagName("body")[0].onclick = function(){alert("yes");};
+
+var Person = function(firstName, lastName, age) {
+   this.firstName = firstName;
+   this.lastName = lastName;
+   this.age = age;
+};
+
+Person.prototype.country = "China";
+Person.prototype.greet = function() {
+   alert("Hello, I am " + this.firstName + " " + this.lastName);
+};
+
+var p1 = new Person("Hub", "John", 30);
+var p2 = new Person("Mock", "William", 23);
+console.log(p1.fistName == p2.firstName);   // false
+console.log(p1.country == p2.country);   // true
+console.log(p1.greet == p2.greet);   // true
+
+
+var Driver = function(firstName, lastName, age) {
+   this.firstName = firstName;
+   this.lastName = lastName;
+   this.age = age;
+};
+
+Driver.prototype = new Person();   // 1
+Driver.constructor = Driver;
+Driver.prototype.drive = function() {
+   alert("I'm driving. ");
+};
+
+var myDriver = new Driver("Butter", "John", 28);
+//myDriver.greet();
+//myDriver.drive();
+alert(myDriver.country);
 </script>

@@ -1,0 +1,627 @@
+ PS：本人非前端开发人员，此文为业余兴趣之作，转载请注明出处，谢谢：http://my.oschina.net/feichexia/blog/122217
+
+    JavaScript这门编程语言发展至今已经非常流行了，各种名词也层出不穷，我们随便列举下就有一大堆，比如Node.js、jQuery、JavaScript MVC、Backbone.js、AMD、CommonJS、RequireJS、CoffeScript、Flexigrid、Highchart、Script Loader、Script Minifier、JSLint、JSON、Ajax......这么多的东西席卷我们的脑海，无疑让人头晕目眩。但本质的东西总是不变的，而所谓本质就是一些核心的基础概念。这里的基础不是指JavaScript的表达式、数据类型、函数API等基础知识，而是指支撑上面这么一大堆JavaScript名词背后东西的基础。我知道这样会让我这篇文章很难写下去，因为那将包含太多主题，所以本文只打算管中窥豹：本文将先讲一些概念，然后讲一些实践指导原则，最后涉及一些工具的讨论。
+
+   在正式开始这篇博客之前，我们需要问自己为什么代码可维护性值得我们关注。相信只要你写过相当量的代码后，都已经发现了这点：Fix Bug比写代码困难得多。花三个小时写的代码，而之后为了Fix其中的一个Bug花两三天时间，这种情况并不少见。再加上Fix Bug的人很可能不是代码原作者，这无疑更雪上加霜。所以代码可维护性是一个非常值得探讨的话题，提高代码可维护性就一定程度上能节省Fix Bug的时间，节省Fix Bug的时间进而就节省了人力成本。
+
+
+No 1. 将代码组织成模块
+
+   基本任何一门编程语言都认为模块化能提升代码可维护性。我们知道软件工程的核心在于控制复杂度，而模块化本质上是分离关注点，从而分解复杂度。
+
+IIFE模块模式
+
+    当我们最开始学习编写JavaSript代码时，基本都会写下面这样的代码：
+
+1	var myVar = 10;
+2	var myFunc = function() {
+3	   // ...
+4	};
+
+    这样的代码本身没有什么问题，但是当这样的代码越来越多时，会给代码维护带来沉重的负担。原因是这样导致myVar和myFunc暴露给全局命名空间，从而污染了全局命名空间。以我个人经验来看，一般当某个页面中的JavaScript代码达到200行左右时就开始要考虑这个问题了，尤其是在企业项目中。那么我们该怎么办呢？
+
+   最简单的解决方法是采用IIFE（Immediate Invoked Function Expression，立即执行函数表达式）来解决（注意这里是函数表达式，而不是函数声明，函数声明类似 var myFunc = function() { // ... }），如下：
+
+1	(function() {
+2	   var myVar = 10;
+3	   var myFunc = function() {
+4	      // ...
+5	   };
+6	}) ();
+
+    现在myVar和myFunc的作用域范围就被锁定在这个函数表达式内部，而不会污染全局命名空间了。这有点类似”沙盒机制“（也是提供了一个安全的执行上下文）。我们知道JavaScript中没有块级作用域，能产生作用域只能借助函数，正如上面这个例子一样。
+
+   但是现在myVar、myFunc只能在函数表达式内部被使用，如果它需要向外提供一些借口或功能（像大部分JavaScript框架或JavaScript库一样），那么该怎么办呢？我们会采用下面的做法：
+
+1	(function(window, $, undefined) {
+2	   var myFunc = function() {
+3	      // ...
+4	   }
+5	 
+6	   window.myFunc = myFuc;
+7	}) (window, jQuery);
+
+    我们来简单分析下，代码很简单：首先将window对象和jQuery对象作为立即执行函数表达式的参数，$只是传入的jQuery对象的别名；其次我们并未传递第三个参数，但是函数却有一个名为undefined的参数，这是一个小技巧，正因为没有传第三个参数，所以这里第三个参数undefined的值始终是undefined，就保证内部能放心使用undefined，而不用担心其他地方修改undefined的值；最后通过window.myFunc导出要暴露给外部的函数。
+
+    比如我们看一个实际JavaScript类库的例子，比如 Validate.js，我们可以看到它是这样导出函数的：
+
+1	(function(window, document, undefined) {
+2	   var FormValidator = function(formName, fields, callback) {
+3	      // ...
+4	   };
+5	 
+6	   window.FormValidator = FormValidator;
+7	}) (window, document);
+
+    是不是与前面说的基本一样？另一个例子是jQuery插件的编写范式中的一种，如下：
+
+1	(function($) {    
+2	   $.fn.pluginName = function() {  
+3	     // plugin implementation code
+4	   };  
+5	})(jQuery);
+
+     既然jQuery插件都来了，那再来一个jQuery源码的例子也无妨：
+
+1	(function( window, undefined ) {
+2	   var jQuery = function( selector, context ) {   // The jQuery object is actually just the init constructor 'enhanced'
+3	      return new jQuery.fn.init( selector, context, rootjQuery );
+4	   },
+5	 
+6	   // Expose jQuery to the global object
+7	   window.jQuery = window.$ = jQuery;
+8	})( window );
+
+    上面这样写使得我们调用jQuery函数既可以用$("body")，又可以用jQuery("body")。
+
+
+命名空间（Namespace）
+
+    虽然使用IIEF模块模式让我们的代码组织成一个个模块，维护性提升了，但如果代码规模进一步增大，比如达到2000-10000级别，这时前面方法的局限性又体现出来了？
+
+    怎么说呢？观察下前面的代码，所有函数都是通过作为window对象属性的方式导出的，这样如果有很多个开发人员同时在开发，那么就显得不太优雅了。尤其是有的模块与模块之间可能存在层级关系，这时候我们需要借助“命名空间”了，命名空间可以用来对函数进行分组。
+
+    我们可以这样写：
+
+1	(function(myApp, $, undefined) {
+2	   // ...
+3	}) (window.myApp = window.myApp || {}, jQuery);
+
+    或者这样：
+
+1	var myApp = (function(myApp, $, undefined) {
+2	   ...
+3	   return myApp;
+4	}) (window.myApp || {}, jQuery);
+
+    现在我们不再往立即执行函数表达式传递window对象，而是传递挂载在window对象上的命名空间对象。第二段代码中的 || 是为了避免在多个地方使用myApp变量时重复创建对象。
+
+
+Revealing Module Pattern
+
+    这种模块模式的主要作用是区分出私有变量/函数和公共变量/函数，达到将私有变量/函数隐藏在函数内部，而将公有变量/函数暴露给外部的目的。
+
+    代码示例如下：
+
+01	var myModule = (function(window, $, undefined) {
+02	   var _myPrivateVar1 = "";
+03	   var _myPrivateVar2 = "";
+04	   var _myPrivateFunc = function() {
+05	      return _myPrivateVar1 + _myPrivateVar2;
+06	   };
+07	 
+08	   return {
+09	      getMyVar1: function() { return _myPrivateVar1; },
+10	      setMyVar1: function(val) { _myPrivateVar1 = val; },
+11	      someFunc: _myPrivateFunc
+12	   };
+13	}) (window, jQuery);
+
+    myPrivateVar1、myPrivateVar2是私有变量，myPrivateFunc是私有函数。而getMyVar1（public getter）、getMyVar1（public setter）、someFunc是公共函数。是不是有点类似普通的Java Bean？
+
+    或者我们可以写成这种形式（换汤不换药）：
+
+01	var myModule = (function(window, $, undefined) {
+02	   var my= {};
+03	 
+04	   var _myPrivateVar1 = "";
+05	   var _myPrivateVar2 = "";
+06	   var _myPrivateFunc = function() {
+07	      return _myPrivateVar1 + _myPrivateVar2;
+08	   };
+09	 
+10	   my.getMyVar1 = function() {
+11	      return _myPrivateVar1;
+12	   };
+13	    
+14	   my.setMyVar1 = function(val) {
+15	      _myPrivateVar1 = val;
+16	   };
+17	 
+18	   my.someFunc = _myPrivateFunc;
+19	 
+20	   return my;
+21	}) (window, jQuery);
+
+
+模块扩展（Module Augmentation）
+
+    有时候我们想为某个已有模块添加额外功能，可以像下面这样：
+
+1	var MODULE = (function (my) {
+2	    my.anotherMethod = function () {
+3	        // added method...
+4	    };
+5	 
+6	    return my;
+7	}(MODULE  || {}));
+
+
+Tight Augmentation
+
+    上面的例子传入的MODULE可能是undefined，也就是说它之前可以不存在。与之对应Tight Augmentation模式要求传入的MODULE一定存在并且已经被加载进来。
+
+1	var MODULE = (function (my) {
+2	    var old_moduleMethod = my.moduleMethod;
+3	 
+4	    my.moduleMethod = function () {
+5	        // method override, has access to old through old_moduleMethod...
+6	    };
+7	 
+8	    return my;
+9	}(MODULE));
+
+    代码意图很明显：实现了重写原模块的moduleMethod函数，并且可以在重写的函数中调用od_moduleMethod。但这种写法不够灵活，因为它假定了一个先决条件：MODULE模块一定存在并且被加载进来了，且它包含moduleMethod函数。
+
+
+子模块模式
+
+    这个模式非常简单，比如我们为现有模块MODULE创建一个子模块如下：
+
+1	MODULE.sub = (function () {
+2	    var my = {};
+3	    // ...
+4	 
+5	    return my;
+6	}());
+
+
+No 2. 利用OO
+
+构造函数模式（Constructor Pattern）
+
+    JavaScript没有类的概念，所以我们不可以通过类来创建对象，但是可以通过函数来创建对象。比如下面这样：
+
+01	var Person = function(firstName, lastName, age) {
+02	   this.firstName = firstName;
+03	   this.lastName = lastName;
+04	   this.age = age;
+05	};
+06	 
+07	Person.prototype.country = "China";
+08	Person.prototype.greet = function() {
+09	   alert("Hello, I am " + this.firstName + " " + this.lastName);
+10	};
+
+    这里firstName、lastName、age可以类比为Java类中的实例变量，每个对象有专属于自己的一份。而country可以类比为Java类中的静态变量，greet函数类比为Java类中的静态方法，所有对象共享一份。我们通过下面的代码验证下（在Chrome的控制台输）：
+
+01	var Person = function(firstName, lastName, age) {
+02	   this.firstName = firstName;
+03	   this.lastName = lastName;
+04	   this.age = age;
+05	};
+06	 
+07	Person.prototype.country = "China";
+08	Person.prototype.greet = function() {
+09	   alert("Hello, I am " + this.firstName + " " + this.lastName);
+10	};
+11	 
+12	var p1 = new Person("Hub", "John", 30);
+13	var p2 = new Person("Mock", "William", 23);
+14	console.log(p1.fistName == p2.firstName);   // false
+15	console.log(p1.country == p2.country);   // true
+16	console.log(p1.greet == p2.greet);   // true
+    但是如果你继续测下面的代码，你得不到你可能预期的p2.country也变为UK：
+
+1	p1.country = "UK";
+2	console.log(p2.country);   // China
+
+    这与作用域链有关，后面我会详细阐述。继续回到这里。既然类得以通过函数模拟，那么我们如何模拟类的继承呢？
+
+    比如我们现在需要一个司机类，让它继承Person，我们可以这样：
+
+01	var Driver = function(firstName, lastName, age) {
+02	   this.firstName = firstName;
+03	   this.lastName = lastName;
+04	   this.age = age;
+05	};
+06	 
+07	Driver.prototype = new Person();   // 1
+08	Driver.constructor = Driver;
+09	Driver.prototype.drive = function() {
+10	   alert("I'm driving. ");
+11	};
+12	 
+13	var myDriver = new Driver("Butter", "John", 28);
+14	myDriver.greet();
+15	myDriver.drive();
+
+    代码行1是实现继承的关键，这之后Driver又定义了它扩展的只属于它自己的函数drive，这样它既可以调用从Person继承的greet函数，又可以调用自己的drive函数了。
+
+PS:本节未完，周末补全(使用对象字面量管理配置选项)
+
+No3. 遵循一些实践指导原则
+
+    下面是一些指导编写高可维护性JavaScript代码的实践原则的不完整总结。
+
+尽量避免全局变量
+
+    JavaScript使用函数来管理作用域。每个全局变量都会成为Global对象的属性。你也许不熟悉Global对象，那我们先来说说Global对象。ECMAScript中的Global对象在某种意义上是作为一个终极的“兜底儿”对象来定义的：即所有不属于任何其他对象的属性和方法最终都是它的属性和方法。所有在全局作用域中定义的变量和函数都是Global对象的属性。像escape()、encodeURIComponent()、undefined都是Global对象的方法或属性。
+
+   事实上有一个我们更熟悉的对象指向Global对象，那就是window对象。下面的代码演示了定义全局对象和访问全局对象：
+
+1	myglobal = "hello"; // antipattern
+2	console.log(myglobal); // "hello"
+3	console.log(window.myglobal); // "hello"
+4	console.log(window["myglobal"]); // "hello"
+5	console.log(this.myglobal); // "hello"
+    使用全局变量的缺点是：
+
+    全局变量被应用中所有代码共享，所以很容易导致不同页面出现命名冲突（尤其是包含第三方代码时）
+    全局变量可能与宿主环境的变量冲突
+
+1	function sum(x, y) {
+2	   // antipattern: implied global
+3	   result = x + y;
+4	   return result;
+5	}
+    result现在就是一个全局变量。要改正也很简单，如下：
+
+1	function sum(x, y) {
+2	   var result = x + y;
+3	   return result;
+4	}
+    另外通过var声明创建的全局变量与未通过var声明隐式创建的全局变量有下面的不同之处：
+
+    通过var声明创建的全局变量无法被delete
+    而隐式创建的全局变量可以被delete
+
+    delete操作符运算后返回true或false，标识是否删除成功，如下：
+
+01	// define three globals
+02	var global_var = 1;
+03	global_novar = 2; // antipattern
+04	(function () {
+05	   global_fromfunc = 3; // antipattern
+06	}());
+07	 
+08	// attempt to delete
+09	delete global_var; // false
+10	delete global_novar; // true
+11	delete global_fromfunc; // true
+12	 
+13	// test the deletion
+14	typeof global_var; // "number"
+15	typeof global_novar; // "undefined"
+16	typeof global_fromfunc; // "undefined"
+    推荐使用Single Var Pattern来避免全局变量如下：
+
+1	function func() {
+2	   var a = 1,
+3	       b = 2,
+4	       sum = a + b,
+5	       myobject = {},
+6	       i,
+7	       j;
+8	   // function body...
+9	}
+
+    上面只用了一个var关键词就让a、b、sum等变量全部成为局部变量了。并且为每个变量都设定了初始值，这可以避免将来可能出现的逻辑错误，并提高可读性（设定初始值意味着能很快看出变量保存的到底是一个数值还是字符串或者是一个对象）。
+
+    局部变量相对于全局变量的另一个优势在于性能，在函数内部从函数本地作用域查找一个变量毫无疑问比去查找一个全局变量快。
+
+
+避免变量提升（hoisting）陷阱
+
+    你很可能已经看到过很多次下面这段代码，这段代码经常用来考察变量提升的概念:
+1	myName = "global";
+2	function func() {
+3	   console.log(myName);   // undefined
+4	   var myName = "local";
+5	   console.log(myName);   // local
+6	}
+7	 
+8	func();
+    这段代码输出什么呢？JavaScript的变量提升会让这段代码的效果等价于下面的代码：
+1	myName = "global";
+2	function func() {
+3	   var myName;
+4	   console.log(myName);   // undefined
+5	   myName = "local";
+6	   console.log(myName);   // local
+7	}
+8	 
+9	func();
+    所以输出为undefined、local就不难理解了。变量提升不是ECMAScript标准，但是却被普遍采用
+
+
+对非数组对象用for-in，而对数组对象用普通for循环
+
+    虽然技术上for-in可以对任何对象的属性进行遍历，但是不推荐对数组对象用for-in，理由如下：
+
+    如果数组对象包含扩展函数，可能导致逻辑错误
+    for-in不能保证输出顺序
+    for-in遍历数组对象性能较差，因为会沿着原型链一直向上查找所指向的原型对象上的属性
+
+    jQuery.each()的实现也体现了这条原则：
+
+01	if ( isArray ) {
+02	   for ( ; i < length; i++ ) {
+03	      value = callback.call( obj[ i ], i, obj[ i ] );
+04	      if ( value === false ) {
+05	         break;
+06	      }
+07	   }
+08	} else {
+09	   for ( i in obj ) {
+10	      value = callback.call( obj[ i ], i, obj[ i ] );
+11	      if ( value === false ) {
+12	         break;
+13	      }
+14	   }
+15	}
+
+    所以推荐对数组对象用普通的for循环，而对非数组对象用for-in。但是对非数组对象使用for-in时常常需要利用hasOwnProperty()来滤除从原型链继承的属性（而一般不是你想要列出来的），比如下面这个例子：
+
+01	// the object
+02	var man = {
+03	   hands: 2,
+04	   legs: 2,
+05	   heads: 1
+06	};
+07	 
+08	// somewhere else in the code
+09	// a method was added to all objects
+10	if (typeof Object.prototype.clone === "undefined") {
+11	   Object.prototype.clone = function () {};
+12	}
+13	 
+14	for(var i  in man) {
+15	   console.log(i, ": ", man[i]);
+16	}
+    输出如下：
+
+1	hands :  2
+2	legs :  2
+3	heads :  1
+4	clone :  function () {}
+
+    即多了clone，这个可能是另外一个开发者在Object的原型对象上定义的函数，却影响到了我们现在的代码，所以规范的做法有两点。第一坚决不允许在原生对象的原型对象上扩展函数或者属性 （如果你和你同事都在Array.prototype上定义了一个map函数那将导致混乱）。 第二将代码改写为类似下面这种：
+
+1	for(var i  in man) {
+2	   if(man.hasOwnProperty(i)) {
+3	      console.log(i, ": ", man[i]);
+4	   }
+5	}
+
+    进一步我们可以改写代码如下：
+
+1	for (var i in man) {
+2	   if (Object.prototype.hasOwnProperty.call(man, i)) { // filter
+3	      console.log(i, ":", man[i]);
+4	   }
+5	}
+
+    这样有啥好处呢？第一点防止man对象重写了hasOwnProperty函数的情况；第二点性能上提升了，主要是原型链查找更快了。
+
+    进一步缓存Object.prototype.hasOwnProperty函数，代码变成下面这样：
+
+1	var i, hasOwn = Object.prototype.hasOwnProperty;
+2	for (i in man) {
+3	    if (hasOwn.call(man, i)) { // filter
+4	        console.log(i, ":", man[i]);
+5	    }
+6	}
+
+避免隐式类型转换
+
+    隐式类型转换可能导致一些微妙的逻辑错误。我们知道下面的代码返回的是true：
+
+1	0 == false
+2	0 == ""
+
+    建议做法是始终使用恒等于和恒不等于，即===和!===。
+
+    而对于下面的代码：
+
+1	null == false
+2	undefined == false
+
+    我们常常期望它返回true的，但却返回的是false。
+
+    那么我们可以用下面的代码来将其强制转换为布尔类型后比较：
+
+1	!!null === false
+2	!!undefined === false
+
+避免eval()
+
+    eval()接受任意字符串并将其作为JavaScript代码进行执行，最初常用于执行动态生成的代码，但是eval()是有害的，比如可能导致XSS漏洞，如果根据某个可变属性名访问属性值，可以用[]取代eval()，如下：
+
+1	// antipattern
+2	var property = "name";
+3	alert(eval("obj." + property));
+4	 
+5	// preferred
+6	var property = "name";
+7	alert(obj[property]);
+
+    注意传递字符串给setTimeout()、setInterval()和Function()也类似eval()，也应该避免。比如下面：
+
+1	// antipatterns
+2	setTimeout("myFunc()", 1000);
+3	setTimeout("myFunc(1, 2, 3)", 1000);
+4	 
+5	// preferred
+6	setTimeout(myFunc, 1000);
+7	setTimeout(function () {
+8	   myFunc(1, 2, 3);
+9	}, 1000);
+
+    如果你遇到非要使用eval()不可的场景，用new Function()替代，因为eval()的字符串参数中即使通过var声明变量，它也会成为一个全局变量，而new Function()则不会，如下：
+
+1	eval("var myName='jxq'");
+
+    则myName成了全局变量，而用newFunction()如下：
+
+1	var a = new Function("firstName, lastName", "var myName = firstName+lastName");
+
+    实际上a现在是一个匿名函数：
+
+1	function anonymous(firstName, lastName) {
+2	    var myName = firstName+lastName
+3	}
+
+    则myName现在就不是全局变量了。当然如果还坚持用eval()，可以用一个立即执行函数表达式将eval()包起来：
+
+1	(function() {
+2	   eval("var myName='jxq';");
+3	}) ();   // jxq
+4	 
+5	console.log(typeof myName);   // undefined
+
+     另外一个eval()和Function()的区别是前者会影响作用域链，而后者不会，如下：
+
+1	(function() {
+2	   var local = 1;
+3	   eval("console.log(typeof local);");
+4	})();   // number
+5	 
+6	(function() {
+7	   var local = 1;
+8	   Function("console.log(typeof local);");
+9	})();   // undefined
+
+
+使用parseInt()时，指定第二个进制参数
+
+    这个不用多提，相信大家也都知道了
+
+
+使用脚本引擎，让JavaScript解析数据生成HTML
+
+    传说中的12306在查询车票时返回的是下面这么一大串（我已无力吐槽，这个是我今天刚截的，实际大概100来行）：
+
+1	<span id='id_240000G13502' class='base_txtdiv' onmouseover=javascript:onStopHover('240000G13502#VNP#AOH') onmouseout='onStopOut()'>G135</span>,<img src='/otsweb/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京南&nbsp;&nbsp;&nbsp;&nbsp;
+2	<br>
+3	&nbsp;&nbsp;&nbsp;&nbsp;12:40,<img src='/otsweb/images/tips/last.gif'>&nbsp;&nbsp;上海虹桥&nbsp;&nbsp;
+4	<br>
+5	&nbsp;&nbsp;&nbsp;&nbsp;18:04,05:24,8,--,<font color='#008800'>有</font>,<font color='#008800'>有</font>,--,--,--,--,--,--,--,<a name='btn130_2' class='btn130_2' style='text-decoration:none;' onclick=javascript:getSelected('G135#05:24#12:40#240000G13502#VNP#AOH#18:04#北京南#上海虹桥#01#08#O*****0072M*****00629*****0008#8A72A4AD8B70A5E0FF02AC9290DDB39C6E0B6D5A0F8A9A8FB305FB11#P2')>预&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订</a>\n1,<span id='id_240000G13705' class='base_txtdiv' onmouseover=javascript:onStopHover('240000G13705#VNP#AOH') onmouseout='onStopOut()'>G137</span>,<img src='/otsweb/images/tips/first.gif'>&nbsp;&nbsp;&nbsp;&nbsp;北京南&nbsp;&nbsp;&nbsp;&nbsp;
+6	<br>
+7	&nbsp;&nbsp;&nbsp;&nbsp;12:45,<img src='/otsweb/images/tips/last.gif'>&nbsp;&nbsp;上海虹桥&nbsp;&nbsp;
+     为什么不能只返回数据（比如用JSON），然后利用JavaScript模板引擎解析数据呢？比如下面这样（使用了jQuery tmpl模板引擎，详细参考我的代码 JavaScript模板引擎使用）：
+
+01	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+02	"http://www.w3.org/TR/html4/loose.dtd">
+03	<html xmlns="http://www.w3.org/1999/xhtml">
+04	    <head>
+05	        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+06	        <title>JavaScript tmpl Use Demo</title>
+07	        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+08	        <script src="./tmpl.js" type="text/javascript"></script>
+09	                <!-- 下面是模板user_tmpl -->
+10	        <script type="text/html" id="user_tmpl">
+11	            <% for ( var i = 0; i < users.length; i++ ) { %>
+12	            <li><a href="<%=users[i].url%>"><%=users[i].name%></a></li>
+13	            <% } %>
+14	        </script>
+15	        <script type="text/javascript">
+16	                        // 用来填充模板的数据
+17	            var users = [
+18	                { url: "http://baidu.com", name: "jxq"},
+19	                { url: "http://google.com", name: "william"},
+20	            ];
+21	             
+22	            $(function() {
+23	                               // 调用模板引擎函数将数据填充到模板获得最终内容
+24	                $("#myUl").html(tmpl("user_tmpl", users));
+25	            });
+26	        </script>
+27	    </head>
+28	    <body>
+29	        <div>
+30	            <ul id="myUl">
+31	            </ul>
+32	        </div>
+33	    </body>
+34	</html>
+
+    使用模板引擎可以将数据和HTML内容完全分离，这样有几个好处：
+
+    修改HTML结构时几乎可以不修改返回的数据的结构
+    只返回纯粹的数据，节省了网络带宽（网络带宽就是钱）
+
+
+使用对象字面量来集中管理配置信息
+
+    随意地将配置信息分散在多个单独变量中会让代码非常难以维护，更好的做法是使用对象字面量来集中管理，比如下面是Validate.js的配置信息：
+
+01	var defaults = {
+02	   messages: {
+03	      required: 'The %s field is required.',
+04	      matches: 'The %s field does not match the %s field.',
+05	      valid_email: 'The %s field must contain a valid email address.',
+06	      // ...
+07	   },
+08	   callback: function(errors) {
+09	 
+10	   }
+11	};
+
+
+采用一致的命名规范
+
+    构造函数首字母大写。
+
+    而非构造函数的首字母小写，标识它们不应该通过new操作符被调用。
+
+    常量名称应该全大写。
+
+    命名注意区分原生JavaScript对象与jQuery对象，比如jQuery对象的名称一般以$开头。
+
+    私有变量或私有函数名称前带上下划线，如下：
+
+01	var person = {
+02	    getName: function () {
+03	        return this._getFirst() + ' ' + this._getLast();
+04	    },
+05	 
+06	    _getFirst: function () {
+07	        // ...
+08	    },
+09	    _getLast: function () {
+10	        // ...
+11	    }
+12	};
+
+
+不吝啬注释，但也不要胡乱注释
+
+    为一些相对艰涩些的代码（比如算法实现）添加注释。
+
+    为函数的功能、参数和返回值添加注释。
+
+    不要对一些常识性的代码进行注释，也不要像下面这样多此一举地注释：
+
+1	var myName = "jxq";   // 声明字符串变量myName，其值为"jxq"
+
+
+No4. 合理高效地使用工具
+
+    这里的工具包括JavaScript框架、JavaScript类库以及一些平时自己积累的Code Snippet。
+
+    使用JavaScript框架的好处是框架为我们提供了一种合理的组织代码方式，比如Backbone.js、Knockout.js这种框架能让我们更好地将代码按MVC或者MVP模式分离。
+
+    而使用JavaScript类库可以避免重复造轮子（而且往往造出一些不那么好的轮子），也可以让我们更专注于整体业务流程而不是某个函数的具体实现。一些通用的功能如日期处理、金额数值处理最好用现有的成熟类库。
+
+    最后使用自己平时积累的Code Snippet可以提高我们的编码效率，并且最重要的是可以提供多种参考解决方案。 
