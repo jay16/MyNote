@@ -60,16 +60,28 @@ Copyright (c) 1982, 2009, Oracle.  All rights reserved.
 
 SQL> connect / as sysdba;
 Connected to an idle instance.
-SQL> startup mount;
+SQL> startup
 ORACLE instance started.
 
 Total System Global Area 1657225216 bytes
 Fixed Size                  1336904 bytes
-Variable Size            1124075960 bytes
-Database Buffers          520093696 bytes
+Variable Size             956303800 bytes
+Database Buffers          687865856 bytes
 Redo Buffers               11718656 bytes
 Database mounted.
-SQL> Alter database open ;
+Database opened.
+SQL>  select * from student;
+ select * from student
+               *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+测试select命令，查看当前实例名
+SQL> select instance_name from v$instance;
+
+INSTANCE_NAME
+----------------
+hello
 
 查看监听状态
 lsnrctl status

@@ -1,0 +1,10 @@
+现象：
+SQL> startup
+ORA-01078: failure in processing system parameters
+LRM-00109: could not open parameter file '/home/work/oracle/product/11.2.0/db_1/dbs/inithello.ora'
+
+解决方案：
+$ORACLE_SID=hello
+$ORACLE_BASE=/home/work/oracle/
+
+cp /home/work/oracle/admin/hello/pfile/init.ora /home/work/oracle/product/11.2.0/db_1/dbs/inithello.ora
