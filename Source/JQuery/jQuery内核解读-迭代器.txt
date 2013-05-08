@@ -1,0 +1,160 @@
+jQuery对象就是对象和数组的混合体，但是它不拥有数组的方法，因为它的结构是人为附加的，也就是说它不是Array数据类型，而是Object数据型。那么如何实现在jQuery对象上调用html()方法，并实现操作jQuery对象所有的DOM元素呢？
+
+jQuery定义了一个each()工具函数，利用这个工具可以遍历jQuery对象中所有的DOM元素，并把所需要操作的内容封装到一个回调函数中，然后通过每个DOIM元素上调用这个回调函数。
+view plain复制代码print?
+
+    <SPAN></SPAN>  
+     <SPAN></SPAN>  
+    <SPAN></SPAN>  
+    <SPAN></SPAN>  
+
+
+
+
+
+view plain复制代码print?
+
+    var $=jQuery=function(selector,context){   
+        return new jQuery.fn.init(selector,context);//定义选择器的实例   
+    }   
+    jQuery.fn=jQuery.prototype={//jQuery类的原型对象   
+        init:function(selector,context){//定义选择器构造器   
+            selector = selector || document;//设置默认值为document   
+            context = context || document;//设置默认值为document   
+            if( selector.nodeType ){ //如果选择符为节点对象   
+                this[0] = selector;//把参数节点传递给实例对象的数组   
+                this.length = 1;//并设置实例对象的length属性，定义包含的元素个数   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+            if( typeof selector==='string'){   
+                var e = context.getElementsByTagName(selector); //获取指定名称的元素   
+                for(var i =0;i<e.length;i++){//遍历元素集合，并把所有元素填入当前实例数组中   
+                    this[i] = e[i];   
+                }   
+                this.length = e.length;//设置实例的length属性，即定义包含的元素个数   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+            else{   
+                this.length = 0;//否则设置实例的length属性值为0   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+        },   
+        jQuery:"1.3.2",   
+        size:function(){   
+            return this.length;   
+        },   
+        html:function(val){   
+            jQuery.each(this,function(val){   
+                this.innerHTML = val;   
+            }, val);   
+        }   
+    };   
+    jQuery.fn.init.prototype=jQuery.fn;   
+      
+    //扩展jQuery工具函数   
+    jQuery.each=function(object, callback, args){   
+        for(var i=0; i<object.length; i++){   
+            callback.call(object[i],args);   
+        }   
+        return object;   
+    }   
+    $('span').html('1');  
+
+var $=jQuery=function(selector,context){
+	return new jQuery.fn.init(selector,context);//定义选择器的实例
+}
+jQuery.fn=jQuery.prototype={//jQuery类的原型对象
+	init:function(selector,context){//定义选择器构造器
+		selector = selector || document;//设置默认值为document
+		context = context || document;//设置默认值为document
+		if( selector.nodeType ){ //如果选择符为节点对象
+			this[0] = selector;//把参数节点传递给实例对象的数组
+			this.length = 1;//并设置实例对象的length属性，定义包含的元素个数
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+		if( typeof selector==='string'){
+			var e = context.getElementsByTagName(selector); //获取指定名称的元素
+			for(var i =0;i<e.length;i++){//遍历元素集合，并把所有元素填入当前实例数组中
+				this[i] = e[i];
+			}
+			this.length = e.length;//设置实例的length属性，即定义包含的元素个数
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+		else{
+			this.length = 0;//否则设置实例的length属性值为0
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+	},
+	jQuery:"1.3.2",
+	size:function(){
+		return this.length;
+	},
+	html:function(val){
+		jQuery.each(this,function(val){
+			this.innerHTML = val;
+		}, val);
+	}
+};
+jQuery.fn.init.prototype=jQuery.fn;
+
+//扩展jQuery工具函数
+jQuery.each=function(object, callback, args){
+	for(var i=0; i<object.length; i++){
+		callback.call(object[i],args);
+	}
+	return object;
+}
+$('span').html('1');
+
+注意：代码中，each()函数的当前作用对象是jQuery对象，故this指向当前jQuery对象，即this表示一个集合对象；而在html()方法中，由于each()函数是指定DOM元素上执行的，所以该函数内的this指针指向的是当前DOM元素对象，即this表示一个元素。 这只是简单的实现了jQuery函数的each迭代。实际在jQuery中，它封装的each()函数的功能就很强大。
+view plain复制代码print?
+
+    jQuery.each=function(object, callback, args){   
+        var name, i=0, length=object.length;   
+        if(args){//如果存在回调函数的参数数组   
+            if( length===undefined){//如果object不是jQuery对象   
+                for(name in object){   
+                    if(callback.apply( object[name],args)===false) //在对象上调用回调函数，如果返回值为false，则跳出循环   
+                    break;   
+                }   
+            }else{   
+                if(length===undefined){//如果object不是jQuery对象   
+                    for(name in object){   
+                        if(callback.apply( object[name],nam,object[name])===false) //在对象上调用回调函数，如果返回值为false，则跳出循环   
+                        break;   
+                    }   
+                }else{   
+                    for(var value=object[0];i<length&&callback.call(value,i value)!===false;value=object[++i]){}   
+                }   
+            }   
+            return object;//返回jQuery对象   
+        }   
+    }  
+
+jQuery.each=function(object, callback, args){
+	var name, i=0, length=object.length;
+	if(args){//如果存在回调函数的参数数组
+		if( length===undefined){//如果object不是jQuery对象
+			for(name in object){
+				if(callback.apply( object[name],args)===false) //在对象上调用回调函数，如果返回值为false，则跳出循环
+				break;
+			}
+		}else{
+			if(length===undefined){//如果object不是jQuery对象
+				for(name in object){
+					if(callback.apply( object[name],nam,object[name])===false) //在对象上调用回调函数，如果返回值为false，则跳出循环
+					break;
+				}
+			}else{
+				for(var value=object[0];i<length&&callback.call(value,i value)!===false;value=object[++i]){}
+			}
+		}
+		return object;//返回jQuery对象
+	}
+}

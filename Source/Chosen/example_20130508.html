@@ -179,9 +179,15 @@ var cognos_chozn = function() {
          //alert(chozn_drop.style.left);
         var drop_left = parseInt(chozn_drop.style.left.replace("px",""),10) ;
         if(drop_left >= 0){
-           chozn_a_blur(chozn_anc,chozn_a,chozn_drop);
+           chozn_anc.className = chozn_anc.className.replace("chzn-container-active","");
+           chozn_a.className = chozn_a.className.replace("chzn-single-with-drop","");
+           chozn_a.style.tabindex = 0;
+           chozn_drop.style.left = -9999;
         }else{
-           chozn_a_focus(chozn_anc,chozn_a,chozn_drop);
+           chozn_anc.className = chozn_anc.className + " chzn-container-active";
+           chozn_a.className = chozn_a.className + " chzn-single-with-drop";
+           chozn_a.style.tabindex = -1;
+           chozn_drop.style.left = 0;
         }
       },
       //鼠标进出提示框时，事件
@@ -212,8 +218,6 @@ var cognos_chozn = function() {
         var chozn_drop    = document.getElementById(chozn_drop_id);
         var drop_left = parseInt(chozn_drop.style.left.replace("px",""),10) ;
         
-        setFocus(chozn_a_span_id);
-        
         chozn_a.style.textDecoration='none';
         chozn_a_span.style.textDecoration='none';
 
@@ -225,8 +229,6 @@ var cognos_chozn = function() {
          chozn_a_blur(chozn_anc,chozn_a,chozn_drop);
         }
       },
-      zhozn_input_onfocus=function(){
-      },
       //点击显示框时，显示下拉框事件
       zhozn_a_event=function(){//chozn_a
         //not Mozilla
@@ -234,9 +236,6 @@ var cognos_chozn = function() {
             chozn_a.attachEvent("onclick",function(event){zhozn_a_x_onclick(event)});  
             chozn_a.attachEvent("mouseover",function(event){zhozn_a_onmouse(event,1)});  
             chozn_a.attachEvent("mouseout",function(event){zhozn_a_onmouse(event,0)});  
-            chozn_a_span.attachEvent("focus",function(event){zhozn_input_onfocus(event,0)});  
-            chozn_a_span.attachEvent("blur",function(event){zhozn_input_onblur(event,0)});  
-            
 
         } else {  
             chozn_a.addEventListener("click",function(event){zhozn_a_x_onclick(event)}); 
@@ -245,13 +244,6 @@ var cognos_chozn = function() {
 
         } 
       },
-      //显示框得到焦点时，显示
-     chozn_a_focus=function(chozn_anc,chozn_a,chozn_drop){
-           chozn_anc.className = chozn_anc.className + " chzn-container-active";
-           chozn_a.className = chozn_a.className + " chzn-single-with-drop";
-           chozn_a.style.tabindex = -1;
-           chozn_drop.style.left = 0;
-     },
      //显示框失去焦点时，隐藏
      chozn_a_blur=function(chozn_anc,chozn_a,chozn_drop){
        chozn_anc.className = chozn_anc.className.replace("chzn-container-active","");
@@ -461,6 +453,9 @@ var cognos_chozn = function() {
        '         </div>'+
        '       </a>'+
        '       <div class="chzn-drop" style="left: -9000px; width: 150px; top: 26px;" id="'+chozn_drop_id+'">'+
+       '          <div class="chzn-search">'+
+       '             <input autocomplete="off" style="width: 149px;" tabindex="-1" type="text">'+
+       '          </div>'+
       '           <ul class="chzn-results" id="'+chozn_results_id+'">'+
                    ul_li.join("")+
       '           </ul>'+
@@ -474,10 +469,6 @@ var cognos_chozn = function() {
       //var ancestor          = parent.parentNode;
       var parent = document.getElementById(c_id);
       parent.insertBefore(chozn_con,null);
-    },
-    setFocus=function(id){
-      document.getElementById(id).focus();
-      alert(id);
     };
      
      

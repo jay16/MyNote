@@ -1,0 +1,255 @@
+用过javascript的朋友都会明白，在javascript脚本中到处都是函数，函数可以把独立功能封装在一个函数包中。函数也可以实现类，这个类是面线对象编程中最基本的概念。也是最高抽象，定义一个类就相当于制作了一个模型，然后借助这个模型复制很多个实例。 对象：数据+操作这些数据的方法类：具有类似功能的对象的集就是类 所有类都有最基本的功能：继承、派生、重写 Javascript通过所有函数绑定一个prototype属性，这个属性指向一个原型对象，原型对象中可以定义类的属性和方法
+view plain复制代码print?
+
+    var $=jQuery=function(){}   
+    jQuery.fn=jQuery.prototype={   
+        jQuery:"1.3.2",    
+        size:function(){   
+            return this.length;   
+        }   
+    };  
+
+var $=jQuery=function(){}
+jQuery.fn=jQuery.prototype={
+	jQuery:"1.3.2",
+	size:function(){
+		return this.length;
+	}
+};
+
+也许你会采用如下方法调用：
+view plain复制代码print?
+
+    var my$=new $();//实例化   
+    alert(my$.jQuery);//调用属性，返回1.3.2  
+
+var my$=new $();//实例化
+alert(my$.jQuery);//调用属性，返回1.3.2
+
+但是，jQuery不是这样调用的：
+view plain复制代码print?
+
+    $().jQuery;  
+
+$().jQuery;
+
+如果你这样些代码：
+view plain复制代码print?
+
+    alert($().jQuery);  
+
+alert($().jQuery);
+
+浏览器会显示错误，那jQuery是怎么做的呢 你会发现jQuery没有使用new运算符将jQuery实例化，而是直接调用jQuery函数然后在这个函数后直接调用jQuery的原型方法。怎么实现的呢？ 猜测下：我们应给把jQuery看作一个类，同时也要把他视为一个普通的函数，并让这个函数返回jQuery的实例。
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return new jQuery();//返回jQuery的实例   
+    }   
+    jQuery.fn=jQuery.prototype={   
+        jQuery:"1.3.2",   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+      
+    alert($().jQuery);  
+
+var $=jQuery=function(){
+	return new jQuery();//返回jQuery的实例
+}
+jQuery.fn=jQuery.prototype={
+	jQuery:"1.3.2",
+	size:function(){
+		return this.length;
+	}
+};
+
+alert($().jQuery);
+
+但是浏览器会弹出“ttack overflow at line 8”内存溢出的错误，说明程序出现了死循环引用 回一下，当使用var my$=new $();创建jQuery类的实例时，this关键字就指向my$对象，所以my$对象就获得了jQuery.prototype包含的原型属性和方法，这些方法的关键字就会自动指向my$实例对象。（this关键字总是指向类的实例） 因此我们可以做如下的尝试：在jQuery中使用一个工厂方法来创建一个实例，把这个方法放在原型对象jQuery.prototype中，然后在jQuery函数中返回这个原型方法的调用。
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return jQuery.fn.init();//返回原型方法init();   
+    }   
+    jQuery.fn=jQuery.prototype={   
+        init:function(){//在初始化原型方法中返回实例的引用   
+         return this;   
+        },   
+        jQuery:"1.3.2",   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+      
+    alert($().jQuery);  
+
+var $=jQuery=function(){
+	return jQuery.fn.init();//返回原型方法init();
+}
+jQuery.fn=jQuery.prototype={
+	init:function(){//在初始化原型方法中返回实例的引用
+	 return this;
+	},
+	jQuery:"1.3.2",
+	size:function(){
+		return this.length;
+	}
+};
+
+alert($().jQuery);
+
+这时就可以成功的显示1.3.2的预期结果了。 继续思考：init()方法返回的是this关键字，该关键字引用的是jQuery类的实例，如果在init函数中继续使用this关键字this。这个this怎么处理呢？ 例如：jQuery原型对象包含一个length属性，同时init()从一个普通的函数转变成一个构造器，它可以包含一个length属性和test()方法。运行该实例我们可以看到this引用了init函数作用域所在的对象，此时它访问length属性时，返回0.而this关键字也能够访问上一级对象jQuery.fn对象的作用域，$().jQuery返回“1.3.2”。但是调用$().size()方法时，返回的是0而不是1。
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return jQuery.fn.init();//返回原型方法init();   
+    }   
+    jQuery.fn=jQuery.prototype={   
+        init:function(){//在初始化原型方法中返回实例的引用   
+            this.length=0;   
+            this.test=function(){   
+                return this.length;   
+            };   
+            return this;   
+        },   
+        jQuery:"1.3.2",   
+        length:1,   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+      
+    alert($().jQuery);   
+    alert($().test());   
+    alert($().size());  
+
+var $=jQuery=function(){
+	return jQuery.fn.init();//返回原型方法init();
+}
+jQuery.fn=jQuery.prototype={
+	init:function(){//在初始化原型方法中返回实例的引用
+		this.length=0;
+		this.test=function(){
+			return this.length;
+		};
+		return this;
+	},
+	jQuery:"1.3.2",
+	length:1,
+	size:function(){
+		return this.length;
+	}
+};
+
+alert($().jQuery);
+alert($().test());
+alert($().size());
+
+我们可以看到jQuery是通过下面的方法调用init初始化构造函数的：
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return new jQuery.fn.init();//返回原型方法init();   
+    }  
+
+var $=jQuery=function(){
+	return new jQuery.fn.init();//返回原型方法init();
+}
+
+这样就可以把init构造器中的this关键字和jQuery.fn中的关键字this分隔开来，避免了相互混淆。但是问题是：无法反问jQuery.fn对象的属性和方法！
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return jQuery.fn.init();//返回原型方法init();   
+    }   
+    jQuery.fn=jQuery.prototype={   
+        init:function(){//在初始化原型方法中返回实例的引用   
+            this.length=0;   
+            this.test=function(){   
+                return this.length;   
+            };   
+            return this;   
+        },   
+        jQuery:"1.3.2",   
+        length:1,   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+      
+    alert($().jQuery);//返回undefined   
+    alert($().test());//返回0   
+    alert($().size());//抛出异常  
+
+var $=jQuery=function(){
+	return jQuery.fn.init();//返回原型方法init();
+}
+jQuery.fn=jQuery.prototype={
+	init:function(){//在初始化原型方法中返回实例的引用
+		this.length=0;
+		this.test=function(){
+			return this.length;
+		};
+		return this;
+	},
+	jQuery:"1.3.2",
+	length:1,
+	size:function(){
+		return this.length;
+	}
+};
+
+alert($().jQuery);//返回undefined
+alert($().test());//返回0
+alert($().size());//抛出异常
+
+如何做到既能分割初始化构造器函数与jQuery对象的作用域，又能够在返回的实例中访问jQuery原型对象呢？
+view plain复制代码print?
+
+    var $=jQuery=function(){   
+        return new jQuery.fn.init();//返回原型方法init();   
+    }   
+    jQuery.fn=jQuery.prototype={   
+        init:function(){//在初始化原型方法中返回实例的引用   
+            this.length=0;   
+            this.test=function(){   
+                return this.length;   
+            };   
+            return this;   
+        },   
+        jQuery:"1.3.2",   
+        length:1,   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+    jQuery.fn.init.prototype=jQuery.fn;   
+    alert($().jQuery);   
+    alert($().test());   
+    alert($().size());  
+
+var $=jQuery=function(){
+	return new jQuery.fn.init();//返回原型方法init();
+}
+jQuery.fn=jQuery.prototype={
+	init:function(){//在初始化原型方法中返回实例的引用
+		this.length=0;
+		this.test=function(){
+			return this.length;
+		};
+		return this;
+	},
+	jQuery:"1.3.2",
+	length:1,
+	size:function(){
+		return this.length;
+	}
+};
+jQuery.fn.init.prototype=jQuery.fn;
+alert($().jQuery);
+alert($().test());
+alert($().size());
+
+jQuery巧妙的通过原型传递解决了这个问题，它把jQuery.fn传递给jQuery.fn.init.prototype，也就用jQuery的原型对象覆盖init构造器的圆形对象，从而实现跨域访问

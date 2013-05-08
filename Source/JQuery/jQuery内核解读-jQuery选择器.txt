@@ -1,0 +1,87 @@
+接着《jQuery内核解读-原型继承》，下面来看看怎么实现为jQuery函数传递一个参数，并让它返回一个jQuery对象。 读一读jQuery源码会发现jQuery()函数包含两个参数selector和context，其中selector表示选择器，而content表示选择器内容范围，它表示一个DOM元素。先来做个简单的实验，只限定在获取标签选择器：
+view plain复制代码print?
+
+    <SPAN></SPAN>  
+    <SPAN></SPAN>  
+    <SPAN></SPAN>  
+    <SPAN></SPAN>  
+
+
+
+
+
+view plain复制代码print?
+
+    var $=jQuery=function(selector,context){   
+        return new jQuery.fn.init(selector,context);//定义选择器的实例   
+    }   
+    jQuery.fn=jQuery.prototype={//jQuery类的原型对象   
+        init:function(selector,context){//定义选择器构造器   
+            selector = selector || document;//设置默认值为document   
+            context = context || document;//设置默认值为document   
+            if( selector.nodeType ){ //如果选择符为节点对象   
+                this[0] = selector;//把参数节点传递给实例对象的数组   
+                this.length = 1;//并设置实例对象的length属性，定义包含的元素个数   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+            if( typeof selector==='string'){   
+                var e = context.getElementsByTagName(selector); //获取指定名称的元素   
+                for(var i =0;i<e.length;i++){//遍历元素集合，并把所有元素填入当前实例数组中   
+                    this[i] = e[i];   
+                }   
+                this.length = e.length;//设置实例的length属性，即定义包含的元素个数   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+            else{   
+                this.length = 0;//否则设置实例的length属性值为0   
+                this.context = selector;//设置实例的属性，返回选择范围   
+                return this;//返回当前实例   
+            }   
+        },   
+        jQuery:"1.3.2",   
+        size:function(){   
+            return this.length;   
+        }   
+    };   
+    jQuery.fn.init.prototype=jQuery.fn;   
+      
+    alert($('span').size());//返回4  
+
+var $=jQuery=function(selector,context){
+	return new jQuery.fn.init(selector,context);//定义选择器的实例
+}
+jQuery.fn=jQuery.prototype={//jQuery类的原型对象
+	init:function(selector,context){//定义选择器构造器
+		selector = selector || document;//设置默认值为document
+		context = context || document;//设置默认值为document
+		if( selector.nodeType ){ //如果选择符为节点对象
+			this[0] = selector;//把参数节点传递给实例对象的数组
+			this.length = 1;//并设置实例对象的length属性，定义包含的元素个数
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+		if( typeof selector==='string'){
+			var e = context.getElementsByTagName(selector); //获取指定名称的元素
+			for(var i =0;i<e.length;i++){//遍历元素集合，并把所有元素填入当前实例数组中
+				this[i] = e[i];
+			}
+			this.length = e.length;//设置实例的length属性，即定义包含的元素个数
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+		else{
+			this.length = 0;//否则设置实例的length属性值为0
+			this.context = selector;//设置实例的属性，返回选择范围
+			return this;//返回当前实例
+		}
+	},
+	jQuery:"1.3.2",
+	size:function(){
+		return this.length;
+	}
+};
+jQuery.fn.init.prototype=jQuery.fn;
+
+alert($('span').size());//返回4
