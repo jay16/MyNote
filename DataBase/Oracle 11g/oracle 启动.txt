@@ -1,11 +1,27 @@
-
 登陆步骤
 
-su  oracle;
+1 切换用户，并刷新变量
+[oracle@oracle11g root]$ su  oracle;
 [oracle@oracle11g root]$ source ~/.bash_profile
 
-#开启监听
+2 修改oratab
+[oracle@oracle11g ~]$ vi /etc/oratab 
 
+选择要启动的数据库实例名
+hello:/home/work/oracle/product/11.2.0/db_1:Y
+mail:/home/work/oracle/product/11.2.0/db_1:N
+
+3 声明ORACLE_SID实例名
+[oracle@oracle11g root]$ echo $ORACLE_SID
+mail
+[oracle@oracle11g root]$ export ORACLE_SID=hello;
+
+4 启动oralce数据库
+[oracle@oracle11g root]$ dbstart
+Processing Database instance "hello": log file /home/work/oracle/product/11.2.0/db_1/startup.log
+
+
+5 开启监听
 [oracle@oracle11g root]$ lsnrctl start
 
 LSNRCTL for Linux: Version 11.2.0.1.0 - Production on 06-MAY-2013 22:26:03
@@ -39,19 +55,7 @@ Service "mail" has 1 instance(s).
 The command completed successfully
 
 
-声明数据库实例名并启动
-
-查看是否已经声明ORACLE_SID实例名
-[oracle@oracle11g root]$ echo $ORACLE_SID
-mail
-若没有，配置ORACLE_SID实例名
-[oracle@oracle11g root]$ export ORACLE_SID=mail;
-
-启动oralce数据库
-[oracle@oracle11g root]$ dbstart
-Processing Database instance "mail": log file /home/work/oracle/product/11.2.0/db_1/startup.log
-
-sqlplus登陆oracle
+6 sqlplus登陆oracle
 [oracle@oracle11g root]$ sqlplus /nolog;     
 
 SQL*Plus: Release 11.2.0.1.0 Production on Mon May 6 22:34:43 2013
@@ -70,11 +74,6 @@ Database Buffers          687865856 bytes
 Redo Buffers               11718656 bytes
 Database mounted.
 Database opened.
-SQL>  select * from student;
- select * from student
-               *
-ERROR at line 1:
-ORA-00942: table or view does not exist
 
 测试select命令，查看当前实例名
 SQL> select instance_name from v$instance;
@@ -82,6 +81,9 @@ SQL> select instance_name from v$instance;
 INSTANCE_NAME
 ----------------
 hello
+
+
+
 
 查看监听状态
 lsnrctl status
@@ -94,25 +96,9 @@ startup mount;
 
 
 
-　通过dbstart脚本可以在Linux和Unix下设置Oracle数据库是否自动启动，但是使用前需要进行一些设置.
 
-下面是一些设置的步骤：
+dbstart/dbshut命令：
 
-　　1、修改$ORACLE_HOME/bin下的dbstart/dbshut文件中下面的条目
-
+修改$ORACLE_HOME/bin下的dbstart/dbshut文件中下面的条目
 ORACLE_HOME_LISTNER=$ORACLE_HOME
-
-
-　　2、修改/etc/oratab文件，注意在rac环境下有可能实例名并不正确，需要修改为正确的实例名(格式为：$ORACLE_SID:$ORACLE_HOME:Y/N)
-
-+ASM1:/home/oracle/product/10.2.0/db_1:Y
-orcl1:/home/oracle/product/10.2.0/db_1:Y
-
-
-　　3、这样就可以运行dbstart启动数据库和监听了，并可以通过下面的log查看是不是有问题
-
-[oracle@rac1 ~]$ dbstart
-Processing ASM instance "+ASM1": log file /home/oracle/product/10.2.0/db_1/startup.log
-Processing Database instance "orcl1": log file /home/oracle/product/10.2.0/db_1/startup.log
-
 
