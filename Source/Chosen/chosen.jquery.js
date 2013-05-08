@@ -33,8 +33,8 @@
   //创建Chosen
   Chosen = (function() {
     function Chosen(elmn) {
-      this.set_default_values(); //设置默认值，在没有点击情况下，状态                          
-      this.form_field = elmn;
+      this.set_default_values(); //设置默认值，在没有点击情况下，状态            
+      this.form_field = elmn;    //form_field 与 form_field_jq 都引用elmn
       this.form_field_jq = $(this.form_field);
       this.is_multiple = this.form_field.multiple; //是否允许多选，默认是单选
       this.is_rtl = this.form_field_jq.hasClass("chzn-rtl");
@@ -62,9 +62,11 @@
           dd_top,       //
           dd_width, 
           sf_width;
+      //生成div最外层container id
       this.container_id = this.form_field.id.length ? this.form_field.id.replace(/(:|\.)/g, '_') : this.generate_field_id();
       this.container_id += "_chzn";
       this.f_width = this.form_field_jq.width();
+      //默认选中项为显示内容
       this.default_text = this.form_field_jq.data('placeholder') ? this.form_field_jq.data('placeholder') : this.default_text_default;
       container_div = $("<div />", {
         id: this.container_id,
@@ -77,9 +79,13 @@
         container_div.html('<a href="javascript:void(0)" class="chzn-single"><span>' + this.default_text + '</span><div><b></b></div></a><div class="chzn-drop" style="left:-9000px;"><div class="chzn-search"><input type="text" autocomplete="off" /></div><ul class="chzn-results"></ul></div>');
       }
       this.form_field_jq.hide().after(container_div);
+      //div最外层container句柄
       this.container = $('#' + this.container_id);
+      //默认单选
       this.container.addClass("chzn-container-" + (this.is_multiple ? "multi" : "single"));
+      //下拉框列表
       this.dropdown = this.container.find('div.chzn-drop').first();
+      //显示框高度，下拉框在container下方显示
       dd_top = this.container.height();
       dd_width = this.f_width - get_side_border_padding(this.dropdown);
       this.dropdown.css({
@@ -234,9 +240,12 @@
       this.active_field = false;
       //隐藏下拉框
       this.results_hide();
+      //div最外层container移除类chzn-container-active
       this.container.removeClass("chzn-container-active");
+      //移除旧选中项
       this.winnow_results_clear();
       this.clear_backstroke();
+      //加载选中项
       this.show_search_field_default();
       return this.search_field_scale();
     };
