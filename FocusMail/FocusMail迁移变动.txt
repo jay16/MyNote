@@ -8,3 +8,11 @@ reply: adm@online-edm.com
 mgtest: /home/work/focus_mail/lib/gm_test/
 #MailGates位置
 filepath: /webmail/
+
+2. app/models/sendmail_job.rb
+
+修改ips数组
+
+3. app/models/sendmail_job.rb
+
+find_toemailname
