@@ -79,3 +79,28 @@ ORACLE instance started;
 shutdown immediate;
 挂起
 startup mount;
+
+
+
+　通过dbstart脚本可以在Linux和Unix下设置Oracle数据库是否自动启动，但是使用前需要进行一些设置.
+
+下面是一些设置的步骤：
+
+　　1、修改$ORACLE_HOME/bin下的dbstart/dbshut文件中下面的条目
+
+ORACLE_HOME_LISTNER=$ORACLE_HOME
+
+
+　　2、修改/etc/oratab文件，注意在rac环境下有可能实例名并不正确，需要修改为正确的实例名(格式为：$ORACLE_SID:$ORACLE_HOME:Y/N)
+
++ASM1:/home/oracle/product/10.2.0/db_1:Y
+orcl1:/home/oracle/product/10.2.0/db_1:Y
+
+
+　　3、这样就可以运行dbstart启动数据库和监听了，并可以通过下面的log查看是不是有问题
+
+[oracle@rac1 ~]$ dbstart
+Processing ASM instance "+ASM1": log file /home/oracle/product/10.2.0/db_1/startup.log
+Processing Database instance "orcl1": log file /home/oracle/product/10.2.0/db_1/startup.log
+
+
