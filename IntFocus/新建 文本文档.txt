@@ -1,0 +1,7 @@
+OS: CentOS 5.9 x64
+CPU: 2 cores
+RAM: 4gb
+HD: 50gb
+”√ªß√˚/√‹¬Î: root / k0HL1md40lC
+IP(s): [ifcfg-eth0(Linux)] =166.63.126.33
+ADDITIONAL IP(s)= 166.63.15.48 - 166.63.15.62 
