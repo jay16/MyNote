@@ -1,6 +1,10 @@
+参考网址：http://zhidao.baidu.com/question/257843306.html
+
 在Redhat上安装Oracle 10g没有设定字符集，采用的是操作系统默认字符集：WE8ISO8859P1，将字符集修改为：ZHS16GBK。由于过程不可逆，首先需要备份数据库。
 
-sysdba查看当前字符集
+1 备份数据库
+
+2 sysdba查看当前字符集
 
 SQL> Select userenv('language') from dual;
 
@@ -14,14 +18,14 @@ PARAMETER                                VALUE
 ---------------------------------------- ----------------------------------------
 NLS_CHARACTERSET                         WE8ISO8859P1
 
-关闭数据库
+3 关闭数据库
 
 SQL> shutdown immediate;
 Database closed.
 Database dismounted.
 ORACLE instance shut down.
 
-启动数据库到mount状态
+4 启动数据库到mount状态
 
 SQL> startup mount;
 ORACLE instance started.
@@ -33,61 +37,68 @@ Database Buffers          687865856 bytes
 Redo Buffers               11718656 bytes
 Database mounted.
 
-限制session
+5 限制session
 
 SQL> alter system enable restricted session;
 
 System altered.
 
+6 查询相关参数并修改
+
 SQL> show parameter job_queue_processes;  
 
-NAME                                 TYPE
------------------------------------- ----------------------
-VALUE
-------------------------------
-job_queue_processes                  integer
-1000
+NAME                                 TYPE                   VALUE
+------------------------------------ ----------------------------------------------------
+job_queue_processes                  integer                1000
 SQL>  show parameter aq_tm_processes; 
 
-NAME                                 TYPE
------------------------------------- ----------------------
-VALUE
-------------------------------
-aq_tm_processes                      integer
-0
-SQL>  alter system set job_queue_processes=0;
+NAME                                 TYPE                   VALUE
+------------------------------------ ----------------------------------------------------
+aq_tm_processes                      integer                   0
+
+
+SQL> alter system set job_queue_processes=0;
 
 System altered.
+
+7 打开数据库
 
 SQL> alter database open;
 
 Database altered.
+
+8 修改字符集
 
 SQL>  alter database character set ZHS16GBK;
  alter database character set ZHS16GBK
 *
 ERROR at line 1:
 ORA-12716: Cannot ALTER DATABASE CHARACTER SET when CLOB data exists
-
+出现类似错误直接使用下面sql alter
 
 SQL> alter database character set internal_use ZHS16GBK;
 
 Database altered.
 
+
+9 查询当前字符集
+
 SQL> select * from nls_database_parameters where parameter='NLS_CHARACTERSET';
 
-PARAMETER
-------------------------------
-VALUE
---------------------------------------------------------------------------------
-NLS_CHARACTERSET
-ZHS16GBK
+PARAMETER                       VALUE
+--------------------------------------------------------------------------------------------------------------
+NLS_CHARACTERSET               ZHS16GBK
 
+
+10 闭关数据库
 
 SQL> shutdown immediate
 Database closed.
 Database dismounted.
 ORACLE instance shut down.
+
+11 启动数据库到Mount状态
+
 SQL>  startup mount
 ORACLE instance started.
 
@@ -97,9 +108,14 @@ Variable Size             956303800 bytes
 Database Buffers          687865856 bytes
 Redo Buffers               11718656 bytes
 Database mounted.
+
+12 将相关参数改回原来值
+
 SQL> alter system set job_queue_processes=1000;
 
 System altered.
+
+13 打开数据库
 
 SQL> alter database open;
 
