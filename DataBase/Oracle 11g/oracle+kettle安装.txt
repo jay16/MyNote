@@ -1,0 +1,233 @@
+kettle安装
+unzip pdi-ce-4.3.0-stable.zip -d /home/work/kettle
+cd /home/work/kettle/data-integration
+chmod +x *.sh
+./kitchen.sh 有帮助信息表示kettle环境部署成功
+
+cron是一个linux下 的定时执行工具，可以在无需人工干预的情况下运行作业。由于Cron 是Linux的内置服务，但它不自动起来，可以用以下的方法启动、关闭这个服务：
+　　/sbin/service crond start    //启动服务
+　　/sbin/service crond stop     //关闭服务
+　　/sbin/service crond restart  //重启服务
+　　/sbin/service crond reload   //重新载入配置
+　　/sbin/service crond status   //查看服务状态
+    service crond status
+
+
+Oracle11gR2安装
+一、安装包
+java安装
+[root@localhost tools]$ wget -c http://download.oracle.com/otn-pub/java/jdk/7u9-b05/jdk-7u9-linux-i586.tar.gz?AuthParam=1353847286_f4981599ef681c359d47228c07196531
+[root@localhost tools]$ mkdir /usr/lib/jvm
+[root@localhost tools]$ tar -zxvf ./jdk-7u2-linux-i586.tar.gz -C /usr/lib/jvm
+[root@localhost tools]$ cd /usr/lib/jvm
+[root@localhost jvm]$ mv jdk1.7.0 /java-7-sun
+[root@localhost jvm]$ vi ~/.bashrc 添加
+export JAVA_HOME=/usr/lib/jvm/java-7-sun  
+export JRE_HOME=${JAVA_HOME}/jre  
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
+export PATH=${JAVA_HOME}/bin:$PATH
+
+[root@localhost jvm]$ source ~/.bashrc
+[root@localhost jvm]$ java -version
+
+[root@localhost ~]$ rpm -q unzip binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel elfutils-libelf-devel-static glibc glibc-common glibc-devel gcc gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh numactl-devel glibc-headers pcre-devel
+[root@localhost ~]$ yum -y install unzip binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel elfutils-libelf-devel-static glibc glibc-common glibc-devel gcc gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh numactl-devel glibc-headers pcre-devel
+二、运行环境
+[root@localhost ~]$ vi /etc/hosts //增加主机名oracle11g
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 oracle11g
+210.14.76.206 oracle11g
+[root@oracle11g ~]$ hostname oracle11g
+[root@oracle11g ~]$ vi /etc/selinux/config
+设置SELINUX=disabled
+
+[root@oracle11g ~]$ setenforce 0   //关闭selinux
+[root@oracle11g ~]$ service iptables stop //临时关闭防火墙
+三、调整内核参数
+[root@oracle11g ~]$ vi /etc/sysctl.conf//在最后添加
+fs.file-max = 6815744
+kernel.shmall = 2097152
+kernel.shmmax = 536870912
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+net.ipv4.ip_local_port_range = 9000 65500
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+fs.aio-max-nr = 1048576
+
+[root@oracle11g ~]$ sysctl -p //让内核参数生效
+
+[root@oracle11g ~]$ vi /etc/security/limits.conf //在最后添加
+oracle soft nproc 2047
+oracle hard nproc 16384
+oracle soft nofile 1024
+oracle hard nofile 65536
+
+
+[root@oracle11g ~]$ cp /etc/redhat-release /etc/redhat-release.bk //修改系统版本
+[root@oracle11g ~]$ vi /etc/redhat-release //修改内容为
+Red Hat Enterprise Linux AS release 5 (Taroon)
+
+[root@oracle11g ~]$ vi /etc/pam.d/login //添加内容
+session required /lib/security/pam_limits.so
+session required pam_limits.so
+
+
+[root@oracle11g ~]$ vi /etc/profile //添加内容
+if [ $USER = "oracle" ]; then
+   if [ $SHELL = "/bin/ksh" ]; then
+      ulimit -p 16384
+      ulimit -n 65536
+   else
+      ulimit -u 16384 -n 65536
+   fi
+fi
+
+[root@oracle11g ~]$ vi /etc/csh.login //添加内容
+if ( $USER == "oracle" ) then
+     limit maxproc 16384
+     limit deors 65536
+endif
+
+
+[root@oracle11g ~]$ cd /home/tools/oracle
+[root@oracle11g ~]$ unip linux.x64_11gR2_database_1of2.zip
+[root@oracle11g ~]$ unip linux.x64_11gR2_database_2of2.zip
+//解压后会增加一个database目录
+
+四、创建oracle用户
+[root@oracle11g ~]$ groupadd oinstall
+[root@oracle11g ~]$ groupadd dba
+[root@oracle11g ~]$ useradd -g oinstall -G dba oracle
+[root@oracle11g ~]$ passwd oracle //为oracle用户创建密码
+
+[root@oracle11g ~]$ su - oracle
+Enter Password:
+[oracle@oracle11g ~]$ vi .bash_profile
+ORACLE_SID=ora11g;export ORACLE_SID
+ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
+
+ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
+ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
+
+PATH=$PATH:$ORACLE_HOME/bin:$HOME/bin;export PATH
+
+umask 022
+[oracle@oracle11g ~]$ source .bash_profile
+
+[oracle@oracle11g ~]$ exit
+[root@oracle11g ~]$ mkdir -p /home/work/oracle
+[root@oracle11g ~]$ mkdir -p /home/work/oracle/inventory
+[root@oracle11g ~]$ chown -R oracle:oinstall /home/work/oracle
+[root@oracle11g ~]$ chown -R oracle:oinstall /home/tools //oracle安装包所在文件夹
+[root@oracle11g ~]$ chmod -R 775 /home/work/oracle
+
+五、编辑静默安装响应文件
+[root@oracle11g ~]$ su - oracle
+[oracle@oracle11g ~]$ cp -R /home/tools/oracle/database/response /home/work/oracle
+[oracle@oracle11g ~]$ cd /home/work/oracle/response
+[oracle@oracle11g ~]$ vi db_install.rsp //修改信息
+oracle.install.option=INSTALL_DB_SWONLY
+ORACLE_HOSTNAME=oracle11g //与/etc/hosts添加内容相同
+UNIX_GROUP_NAME=oinstall
+INVENTORY_LOCATION=/home/work/oracle/inventory
+SELECTED_LANGUAGES=en,zh_CN
+ORACLE_HOME=/home/work/oracle/product/11.2.0/db_1
+ORACLE_BASE=/home/work/oracle
+oracle.install.db.InstallEdition=EE
+oracle.install.db.isCustomInstall=true //手工安装的组件下面会默认给出
+oracle.install.db.customComponents=oracle.server:11.2.0.1.0,oracle.sysman.ccr:10.2.7.0.0,oracle.xdk:11.2.0.1.0,oracle.rdbms.oci:11.2.0.1.0,oracle.network:11.2.0.1.0,oracle.network.listener:11.2.0.1.0,oracle.rdbms:11.2.0.1.0,oracle.options:11.2.0.1.0,oracle.rdbms.partitioning:11.2.0.1.0,oracle.oraolap:11.2.0.1.0,oracle.rdbms.dm:11.2.0.1.0,oracle.rdbms.dv:11.2.0.1.0,orcle.rdbms.lbac:11.2.0.1.0,oracle.rdbms.rat:11.2.0.1.0
+oracle.install.db.DBA_GROUP=dba
+oracle.install.db.OPER_GROUP=oinstall
+oracle.install.db.config.starterdb.type=GENERAL_PURPOSE
+oracle.install.db.config.starterdb.globalDBName=ora11g
+oracle.install.db.config.starterdb.SID=ora11g
+oracle.install.db.config.starterdb.characterSet=AL32UTF8
+oracle.install.db.config.starterdb.memoryOption=true
+oracle.install.db.config.starterdb.memoryLimit=512
+oracle.install.db.config.starterdb.installExampleSchemas=true
+oracle.install.db.config.starterdb.enableSecuritySettings=true
+oracle.install.db.config.starterdb.password.ALL=123456 //所有初始密码都为123456
+oracle.install.db.config.starterdb.control=DB_CONTROL
+DECLINE_SECURITY_UPDATES=true
+
+六、根据响应文件安装oracle
+[oracle@oracle11g ~]$ cd /home/tools/oracle/database
+[oracle@oracle11g database]$ ./runInstaller -silent -ignoreSysPrereqs -responseFile /home/work/oracle/response/db_install.rsp
+//安装过程中，如果提示[WARNING]不必理会，此时安装程序仍在进行，如果出现[FATAL]，则安装程序已经停止了
+//安装完成后会提示
+以下配置脚本需要以 "root" 用户的身份执行。
+   #!/bin/sh
+   #要运行的 Root 脚本
+
+  /home/work/oracle/inventory/orainstRoot.sh
+  /opt/work/oracle/11.2.0/db_1/root.sh
+  要执行配置脚本, 请执行以下操作:
+     1. 打开一个终端窗口
+     2. 以 "root" 身份登录
+     3. 运行脚本
+     4. 返回此窗口并按 "Enter" 键继续
+
+[oracle@oracle11g database]$ exit //退回到root或su - root
+[root@oracle11g ~]$ /home/work/oracle/inventory/orainstRoot.sh
+[root@oracle11g ~]$ /home/work/oracle/product/11.2.0/db_1/root.sh
+
+七、配置静默监听
+[root@oracle11g ~]$ su - oracle //切换到oracle
+//在32位系统中需要安装补丁p8670579_112010_LINUX.zip
+[root@oracle11g ~]$ cd /home/tools //进入补丁所在目录
+[root@oracle11g tools]$ unzip p8670579_112010_LINUX.zip 生成8670579目录
+[root@oracle11g ~]$ cd 8670579
+[oracle@oracle11g 8670579]$ $ORACLE_HOME/OPatch/opatch apply -invPtrLoc $ORACLE_HOME/oraInst.loc
+//补丁安装完毕
+[oracle@oracle11g 8670579]$ $ORACLE_HOME/bin/netca /silent /responsefile /home/work/oracle/response/netca.rsp
+
+八、建立新库
+[root@oracle11g ~]$ vi /home/work/oracle/response/dbca.rsp
+RESPONSEFILE_VERSION = "11.2.0"  //不能更改
+ OPERATION_TYPE = "createDatabase"
+ GDBNAME = "intfocus"  //数据库的名字
+ SID = "mail"    //对应的实例名字
+ TEMPLATENAME = "General_Purpose.dbc" //建库用的模板文件
+ SYSPASSWORD = "123456"   //SYS管理员密码
+ SYSTEMPASSWORD = "123456"  //SYSTEM管理员密码
+ DATAFILEDESTINATION = /home/work/oracle/oracle_data //数据文件存放目录
+ RECOVERYAREADESTINATION=/home/work/oracle/oradata_back //恢复数据存放目录
+ CHARACTERSET = "ZHS16GBK"   //字符集，重要!!! 建库后一般不能更改，所以建库前要确定清楚。
+ TOTALMEMORY = "5120"    //oracle内存5120MB
+[oracle@oracle11g ~]$ $ORACLE_HOME/bin/dbca -silent -responseFile /home/work/oracle/response/dbca.rsp
+
+九、修改数据库为归档模式(归档模式才能热备份，增量备份)
+[oracle@oracle11g ~]$ export ORACLE_SID=hello
+[oracle@oracle11g ~]$ sqlplus / as sysdba
+SQL>shutdown immediate;
+SQL>startup mount;
+SQL>alter database archivelog;
+SQL> alter database flashback on;
+SQL> alter database open;
+SQL> execute utl_recomp.recomp_serial();
+SQL> alter system archive log current;
+SQL> exit
+china_sh@openfind
+十、修改oracle启动配置文件
+[oracle@oracle11g ~]$ vi /etc/oratab
+hello:/home/work/oracle/prodcut/11.2.0:Y
+[oracle@oracle11g ~]$ dbshut /home/work/oracle/product/11.2.0
+[oracle@oracle11g ~]$ dbstart /home/work/oracle/product/11.2.0
+[oracle@oracle11g ~]$ lsnrctl status
+
+十一、建立表空是及用户
+[oracle@oracle11g ~]$ export ORACLE_SID=mail;
+[oracle@oracle11g ~]$ sqlplus / as sysdba;
+//创建临时表空间
+SQL> create temporary tablespace user_temp tempfile '/webmail/work/oracle/oracle_data/intfocus/user_temp.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;
+//创建数据表空间
+SQL> create tablespace user_data logging datafile   '/webmail/work/oracle/oracle_data/intfocus/user_data.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;  
+//创建用户并指定表空间
+SQL> create user intfocus identified by 123456 default tablespace user_data temporary tablespace user_temp;  
+SQL> grant connect,resource to intfocus;
+SQL> create table STUDENT(ID int, NAME varchar(20));
+SQL> insert into STUDENT values(1, 'intfocus');
+SQL> select * from student;
+SQL> exit

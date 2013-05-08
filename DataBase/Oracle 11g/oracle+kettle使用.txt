@@ -1,0 +1,120 @@
+kettle使用
+安装路径
+114 /home/work/kettle/data-integration
+206 /webmail/work/kettle/data-integration
+302 E:\install source\Kettle\pdi-ce-4.3.0-stable\data-integration
+
+命令(进入kettle安装路径)
+SPOON 允许你通过图形界面来设计ETTL转换过程（Transformation）.PAN 允许你批量运行由Spoon设计的ETL转换 (例如使用一个时间调度器)。CHEF 允许你创建任务（Job）。KITCHEN 允许你批量使用由Chef设计的任务 。
+windows下执行spoon.bat;linux下执行spoon.sh
+点击目录下面的kettle或者spoon.bat即可启动kettle，在启动kettle的时候，会弹出对话框，让用户选择建立一个资源库。资源库是用来保存转换任务的，用户通过图形界面创建的的转换任务可以保存在资源库中。资源库可以是各种常见的数据库，用户通过用户名/密码来访问资源库中的资源，默认的用户名/密码是admin/admin.资源库并不是必须的，如果没有资源库，用户还可以把转换任务保存在 xml 文件中
+
+执行transformation:
+$ ./pan.sh -file=****.ktr -debug=debug -log=****.log
+(-file说明你要运行的transformation文件所在的路径；-debug说明日志输出的级别；-log说明日志输出的路径)
+执行job:
+$ ./kitchen.sh -file=****.ktr -debug=debug -log=****.log
+
+定时执行任务
+查看crontab状态：service crond status
+启动crontab服务：service crond start
+加入开机自动启动:chkconfig --level 35 crond on
+基本格式 :
+*   *　 *　 *　 *　　command
+分　时　日　月　周　 命令
+实例
+*/30 * * * * kettle-job命令
+每半小时执行
+* */1 * * * kettle-job命令
+每一小时执行
+* 7-19/1 * * * kettle-job命令
+早上7点到晚上7点之间，每隔一小时执行
+0 24 * * 5 kettle-job命令
+每星期五晚上12点执行
+30 21 * * * kettle-job命令
+每晚的21:30执行
+45 23 1,10,22 * * kettle-job命令
+每月1、10、22日的23:45执行
+10 23 * * 6,0 kettle-job命令
+每周六、周日的1 : 10重启apache。
+
+oracle使用
+sqlplus远程连接
+sqlplus usr/pwd@//host:port/sid
+sqlplus test/test@192.168.0.114:1521/mail
+connect test/test@//192.168.0.114:1521/mail
+
+登陆步骤
+su  oracle;
+source ~/.bash_profile
+#开启监听
+lsnrctl start
+#声明数据库实例名并启动
+export ORACLE_SID=mail;
+dbstart
+
+sqlplus /nolog;
+connect / as sysdba; 
+#startup
+
+
+查看监听状态
+lsnrctl status
+开启实例
+ORACLE instance started;
+关闭
+shutdown immediate;
+挂起
+startup mount;
+
+查看当前数据库
+show parameter db_name;
+select name from v$database;
+查看实例名
+select instance_name from v$instance;
+查看用户
+select username from dba_users;
+select * from all_users;
+select * from user_users;
+先启动监听 lsnrctl start
+启动实例  dbstart
+查看database打开状态
+SQL> select open_mode from v$database;
+OPEN_MODE----------
+MOUNTED
+SQL> alter database open;
+Database altered.
+查看当前用户
+SQL> show user;
+USER is "SYS"
+
+查看service_name
+show parameter service_name;
+查看用户系统权限
+select * from dba_sys_privs;
+select * from user_sys_privs;
+查看用户对象权限
+select * from dba_tab_privs;
+select * from all_tab_privs;
+select * from user_tab_privs;
+查看所有角色
+select * from dba_roles;
+查看用户所拥有的角色
+select * from dba_role_privs;
+select * from user_role_privs;
+查看当前用户的缺省表空间
+select username,default_tablespace from user_users;
+查看表
+select table_name from user_tables; //当前用户的表       
+select table_name from all_tables; //所有用户的表   
+select table_name from dba_tables; //包括系统表
+select table_name from dba_tables where owner='用户名'
+查看表结构
+desc table_name;
+修改字符集
+Alter database character set zhs16gbk; 
+
+
+插入列
+SQL> alter table student add email varchar(50);
+Table altered.
