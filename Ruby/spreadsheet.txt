@@ -1,0 +1,59 @@
+读取
+require "rubygems"  
+require "spreadsheet"  
+  
+Spreadsheet.client_encoding = "UTF-8"  
+  
+book = Spreadsheet.open("test.xls")  
+  
+# 得到第一个表格  
+sheet1 = book.worksheet(0)  
+  
+test_file = File.open("test.txt", "w")  
+  
+sheet1.each do |row|  
+    row.collect do |value|  
+        test_file.write("#{value}\t")  
+    end  
+    test_file.write("\r\n")  
+end  
+  
+test_file.close() 
+
+定入
+
+    # 引入spreadsheet插件  
+    require "rubygems"  
+    require "spreadsheet"  
+      
+    # 声明Spreadsheet处理Excel文件组时的编码  
+    Spreadsheet.client_encoding = "UTF-8"  
+      
+    # 创建一个Spreadsheet对象，它相当于Excel文件  
+    book = Spreadsheet::Workbook.new  
+    # 创建Excel文件中的一个表格，并命名为 "Test Excel"  
+    sheet1 = book.create_worksheet :name => "Test Excel"  
+      
+    # 设置一个Excel文件的格式  
+    default_format = Spreadsheet::Format.new(:weight => :bold, :size => 14,   
+                                 :align => :merge, :color=>"red", :border=>1,   
+                                 :border_color=>"black", :pattern => 1 ,  
+                                 :pattern_fg_color => "yellow" )  
+      
+    data = "测试标题"  
+      
+    # 指定一个在表格中的第一行对象  
+    test_row = sheet1.row(0)  
+      
+    # 为第一行的前5个列指定格式  
+    5.times do |i|  
+        test_row.set_format(i, default_format)  
+    end  
+      
+      
+      
+    # 为第一行的第一列指定值  
+    test_row[0] = data  
+      
+    # 将创建的Spreadsheet对象写入文件，形成电子表格  
+    book.write 'book2.xls'  
