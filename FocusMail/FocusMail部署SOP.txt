@@ -1,4 +1,4 @@
-系统环境：centos 5.5
+/系统环境：centos 5.5
 
 需要文件：
 sqlite-amalgamation-3.6.16.tar.gz (sqlite安装包）
@@ -330,6 +330,8 @@ Phusion Passenger Standalone is running on PID 4555, according to PID file /home
 启动redis
 
 [root@localhost redis-2.4.16]# redis-server /etc/redis.conf 
+或
+[root@localhost redis-2.4.16]# ./src/redis-server /etc/redis/redis.conf 
 
 查看redis是否运行
 
