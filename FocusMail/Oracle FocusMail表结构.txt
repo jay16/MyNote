@@ -1,0 +1,358 @@
+mysql> show tables;
++----------------------+
+| Tables_in_mail_206   |
++----------------------+
+| action_logs          |
+| campaign_entries     |
+| campaign_lists       |
+| campaigns            |
+| categories           |
+| cemail_logs          |
+| clicks               |
+| entries              |
+| errors               |
+| hhh                  |
+| integrated_data      |
+| kxwords              |
+| links                |
+| lists                |
+| lists_members        |
+| log_anas             |
+| mail_logs            |
+| member_count_orgs    |
+| member_org_objects   |
+| member_orgs          |
+| members              |
+| schema_migrations    |
+| send_states          |
+| send_states_back     |
+| sendmail_log_numbers |
+| sendmail_logs        |
+| smtplists            |
+| t1                   |
+| temp_mail            |
+| templates            |
+| tracks               |
+| user_org_objects     |
+| user_orgs            |
+| useradmins           |
+| users                |
++----------------------+
+35 rows in set (0.01 sec)
+mysql> desc members;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(255) | YES  |     | NULL    |                |
+| email       | varchar(255) | YES  |     | NULL    |                |
+| created_at  | datetime     | NO   |     | NULL    |                |
+| updated_at  | datetime     | NO   |     | NULL    |                |
+| week_number | int(11)      | YES  |     | NULL    |                |
+| type_email  | int(11)      | YES  |     | NULL    |                |
+| parameter1  | varchar(100) | YES  |     | NULL    |                |
+| parameter2  | varchar(100) | YES  |     | NULL    |                |
+| parameter3  | varchar(100) | YES  |     | NULL    |                |
+| parameter4  | varchar(100) | YES  |     | NULL    |                |
+| parameter5  | varchar(100) | YES  |     | NULL    |                |
+| parameter6  | varchar(100) | YES  |     | NULL    |                |
+| parameter7  | varchar(100) | YES  |     | NULL    |                |
+| parameter8  | varchar(100) | YES  |     | NULL    |                |
+| parameter9  | varchar(100) | YES  |     | NULL    |                |
+| parameter10 | varchar(100) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+17 rows in set (0.01 sec)
+
+create table members(id number(10),name varchar(255),email varchar(255),created_at timestamp,updated_at timestamp,week_number number(10),type_email number(10),parameter1 varchar(100),parameter2 varchar(100),parameter3 varchar(100),parameter4 varchar(100),parameter5 varchar(100),parameter6 varchar(100),parameter7 varchar(100),parameter8 varchar(100),parameter9 varchar(100),parameter10 varchar(100))
+
+
+SQL> create table members(id number(10),name varchar(255),email varchar(255),created_at timestamp,updated_at timestamp,week_number number(10),type_email number(10),parameter1 varchar(100),parameter2 varchar(100),parameter3 varchar(100),parameter4 varchar(100),parameter5 varchar(100),parameter6 varchar(100),parameter7 varchar(100),parameter8 varchar(100),parameter9 varchar(100),parameter10 varchar(100));
+
+Table created.
+
+SQL> desc members;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ NAME                                               VARCHAR2(255)
+ EMAIL                                              VARCHAR2(255)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+ WEEK_NUMBER                                        NUMBER(10)
+ TYPE_EMAIL                                         NUMBER(10)
+ PARAMETER1                                         VARCHAR2(100)
+ PARAMETER2                                         VARCHAR2(100)
+ PARAMETER3                                         VARCHAR2(100)
+ PARAMETER4                                         VARCHAR2(100)
+ PARAMETER5                                         VARCHAR2(100)
+ PARAMETER6                                         VARCHAR2(100)
+ PARAMETER7                                         VARCHAR2(100)
+ PARAMETER8                                         VARCHAR2(100)
+ PARAMETER9                                         VARCHAR2(100)
+ PARAMETER10                                        VARCHAR2(100)
+
+
+mysql> desc campaigns;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(255) | YES  |     | NULL    |                |
+| from_name   | varchar(255) | YES  |     | NULL    |                |
+| from_email  | varchar(255) | YES  |     | NULL    |                |
+| subject     | varchar(255) | YES  |     | NULL    |                |
+| template_id | int(11)      | YES  |     | NULL    |                |
+| created_at  | datetime     | NO   |     | NULL    |                |
+| updated_at  | datetime     | NO   |     | NULL    |                |
+| from_time   | datetime     | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+create table campaigns(id number(10),name varchar(255),from_name varchar(255),from_email varchar(255),subject varchar(255),template_id number(10),created_at timestamp,updated_at timestamp,from_time timestamp)
+
+SQL> create table campaigns(id number(10),name varchar(255),from_name varchar(255),from_email varchar(255),subject varchar(255),template_id number(10),created_at timestamp,updated_at timestamp,from_time timestamp);
+
+Table created.
+
+SQL> desc campaigns;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ NAME                                               VARCHAR2(255)
+ FROM_NAME                                          VARCHAR2(255)
+ FROM_EMAIL                                         VARCHAR2(255)
+ SUBJECT                                            VARCHAR2(255)
+ TEMPLATE_ID                                        NUMBER(10)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+ FROM_TIME                                          TIMESTAMP(6)
+
+
+
+mysql> desc campaign_lists;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| campaign_id | int(11)      | YES  |     | NULL    |                |
+| list_id     | varchar(255) | YES  |     | NULL    |                |
+| created_at  | datetime     | NO   |     | NULL    |                |
+| updated_at  | datetime     | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+create table campaign_lists(id number(10),campaign_id number(10),list_id varchar(255),created_at timestamp,updated_at timestamp)
+
+SQL> create table campaign_lists(id number(10),campaign_id number(10),list_id varchar(255),created_at timestamp,updated_at timestamp);
+
+Table created.
+
+SQL> desc campaign_lists;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ CAMPAIGN_ID                                        NUMBER(10)
+ LIST_ID                                            VARCHAR2(255)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+
+mysql> desc clicks;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| member_id   | int(11)  | YES  |     | NULL    |                |
+| campaign_id | int(11)  | YES  |     | NULL    |                |
+| link_id     | int(11)  | YES  |     | NULL    |                |
+| created_at  | datetime | NO   |     | NULL    |                |
+| updated_at  | datetime | NO   |     | NULL    |                |
++-------------+----------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+create table clicks(id number(10),member_id number(10),campaign_id number(10),link_id number(10),created_at timestamp,updated_at timestamp)
+
+
+SQL> create table clicks(id number(10),member_id number(10),campaign_id number(10),link_id number(10),created_at timestamp,updated_at timestamp);
+
+Table created.
+
+SQL> desc clicks;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ MEMBER_ID                                          NUMBER(10)
+ CAMPAIGN_ID                                        NUMBER(10)
+ LINK_ID                                            NUMBER(10)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+
+
+
+mysql> desc lists;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(255) | YES  |     | NULL    |                |
+| created_at   | datetime     | NO   |     | NULL    |                |
+| updated_at   | datetime     | NO   |     | NULL    |                |
+| data_type    | int(11)      | YES  |     | NULL    |                |
+| member_count | varchar(100) | YES  |     | NULL    |                |
+| is_used      | tinyint(1)   | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+create table lists(id number(10),name varchar(255),created_at timestamp,updated_at timestamp,data_type number(10),member_count varchar(100),is_used varchar(1))
+
+SQL> create table lists(id number(10),name varchar(255),created_at timestamp,updated_at timestamp,data_type number(10),member_count varchar(100),is_used varchar(1));
+
+Table created.
+
+SQL> desc lists;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ NAME                                               VARCHAR2(255)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+ DATA_TYPE                                          NUMBER(10)
+ MEMBER_COUNT                                       VARCHAR2(100)
+ IS_USED                                            VARCHAR2(1)
+
+mysql> desc lists_members;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| list_id     | int(11)  | YES  |     | NULL    |                |
+| member_id   | int(11)  | YES  |     | NULL    |                |
+| created_at  | datetime | NO   |     | NULL    |                |
+| updated_at  | datetime | NO   |     | NULL    |                |
+| week_number | int(11)  | YES  |     | 3       |                |
++-------------+----------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+create table lists_members(id number(10),list_id number(10),member_id number(10),created_at timestamp,updated_at timestamp,week_number number(10))
+
+SQL> create table lists_members(id number(10),list_id number(10),member_id number(10),created_at timestamp,updated_at timestamp,week_number number(10));
+
+Table created.
+
+SQL> desc lists_members;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ LIST_ID                                            NUMBER(10)
+ MEMBER_ID                                          NUMBER(10)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+ WEEK_NUMBER                                        NUMBER(10)
+
+
+mysql> desc templates;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255) | YES  |     | NULL    |                |
+| file_name  | varchar(255) | YES  |     | NULL    |                |
+| created_at | datetime     | NO   |     | NULL    |                |
+| updated_at | datetime     | NO   |     | NULL    |                |
+| img_url    | int(11)      | YES  |     | 2       |                |
+| zip_url    | varchar(100) | YES  |     | NULL    |                |
+| zip_name   | varchar(100) | YES  |     | NULL    |                |
+| grade      | float        | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+create table templates(id number(10),name varchar(255),file_name varchar(255),created_at timestamp,updated_at timestamp,img_url number(11),zip_url varchar(100),zip_name varchar(100),grade number(10,8))
+
+
+
+SQL> create table templates(id number(10),name varchar(255),file_name varchar(255),created_at timestamp,updated_at timestamp,img_url number(11),zip_url varchar(100),zip_name varchar(100),grade number(10,8));
+
+Table created.
+
+SQL> desc templates;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ NAME                                               VARCHAR2(255)
+ FILE_NAME                                          VARCHAR2(255)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+ IMG_URL                                            NUMBER(11)
+ ZIP_URL                                            VARCHAR2(100)
+ ZIP_NAME                                           VARCHAR2(100)
+ GRADE                                              NUMBER(10,8)
+
+mysql> desc tracks;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| id          | int(11)  | NO   | PRI | NULL    | auto_increment |
+| member_id   | int(11)  | YES  |     | NULL    |                |
+| campaign_id | int(11)  | YES  |     | NULL    |                |
+| created_at  | datetime | NO   |     | NULL    |                |
+| updated_at  | datetime | NO   |     | NULL    |                |
++-------------+----------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+create table tracks(id number(10),member_id number(10),campaign_id number(10),created_at timestamp,updated_at timestamp)
+
+SQL> create table tracks(id number(10),member_id number(10),campaign_id number(10),created_at timestamp,updated_at timestamp);
+
+Table created.
+
+SQL> desc tracks;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ MEMBER_ID                                          NUMBER(10)
+ CAMPAIGN_ID                                        NUMBER(10)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+
+
+mysql> desc links;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| url        | varchar(255) | YES  |     | NULL    |                |
+| created_at | datetime     | NO   |     | NULL    |                |
+| updated_at | datetime     | NO   |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+create table links(id number(10),url varchar(255),created_at timestamp,updated_at timestamp)
+
+SQL> create table links(id number(10),url varchar(255),created_at timestamp,updated_at timestamp);
+
+Table created.
+
+
+SQL> desc links;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(10)
+ URL                                                VARCHAR2(255)
+ CREATED_AT                                         TIMESTAMP(6)
+ UPDATED_AT                                         TIMESTAMP(6)
+
+
+SQL> select table_name from all_tables where owner='INTFOCUS';
+
+TABLE_NAME
+------------------------------
+MEMBERS
+CAMPAIGNS
+CAMPAIGN_LISTS
+CLICKS
+LISTS
+LISTS_MEMBERS
+TEMPLATES
+TRACKS
+LINKS
+
+9 rows selected.

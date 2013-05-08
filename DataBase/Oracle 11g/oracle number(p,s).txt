@@ -1,0 +1,429 @@
+ORACLE NUMBER数据类型！
+
+网上关于number的资料很多了，学习总结了下，如果问题及不足，欢迎指正。
+
+一、oracle的number类型精度、刻度范围
+
+number(p,s)
+
+p:1---38
+s:-84---127
+
+有效数位：从左边第一个不为0的数算起，小数点和负号不计入有效位数。
+
+p>0，对s分2种情况：
+
+1. s>0
+
+精确到小数点右边s位，并四舍五入。然后检验有效数位是否<=p；
+
+ZWF.YUDONG>create table t_n(id number(5,2));
+
+Table created.
+
+ZWF.YUDONG>insert into t_n values(123.45);
+
+1 row created.
+
+ZWF.YUDONG>insert into t_n values(123.455);
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+123.45
+123.46
+
+2 rows selected.
+
+ZWF.YUDONG>insert into t_n values(1.234);
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+123.45
+123.46
+   1.23
+
+3 rows selected.
+
+ZWF.YUDONG>insert into t_n values(.001);
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+123.45
+123.46
+   1.23
+      0
+
+4 rows selected.
+
+ZWF.YUDONG>insert into t_n values(1234.56);
+insert into t_n values(1234.56)
+                      *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+如果s>p，小数点右边至少有s-p个0填充。
+
+ZWF.YUDONG>create table t_n(id number(4,5));
+
+Table created.
+
+ZWF.YUDONG>insert into t_n values(1);
+insert into t_n values(1)
+                      *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+ZWF.YUDONG>insert into t_n values(.1);
+insert into t_n values(.1)
+                      *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+0
+
+    回复
+
+    1楼
+    2009-06-06 15:01
+
+    举报 |
+
+    fan8888	
+    核心会员
+    6
+
+
+
+ZWF.YUDONG>insert into t_n values(.01);
+
+1 row created.
+
+ZWF.YUDONG>commit;
+
+Commit complete.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+   .01
+
+1 row selected.
+
+ZWF.YUDONG>insert into t_n values(.001);
+
+1 row created.
+
+ZWF.YUDONG>insert into t_n values(.0001);
+
+1 row created.
+
+ZWF.YUDONG>insert into t_n values(.00001);
+
+1 row created.
+
+ZWF.YUDONG>insert into t_n values(.000001); --超过刻度存储0
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+   .01
+   .001
+    .0001
+.00001
+      0
+
+
+10 rows selected.
+
+ZWF.YUDONG>col dp for a50
+ZWF.YUDONG>select id,dump(id) dp,length(id),vsize(id) from t_n;   --vsize和dump的是字节数，length是数值实际位数（含小数点）
+
+       ID DP                                              LENGTH(ID)   VSIZE(ID)
+---------- -------------------------------------------------- ---------- ----------
+   .01 Typ=2 Len=2: 192,2                                        3       2
+   .001 Typ=2 Len=2: 191,11                                         4       2
+    .0001 Typ=2 Len=2: 191,2                                        5       2
+.00001 Typ=2 Len=2: 190,11                                         6       2
+
+回复
+
+    2楼
+    2009-06-06 15:01
+
+    举报 |
+
+    fan8888	
+    核心会员
+    6
+
+      0 Typ=2 Len=1: 128                                            1       1
+
+5 rows selected.
+
+
+2. s<0
+
+精确到小数点左边s位，并四舍五入。然后检验有效数位是否<=p+|s|
+
+ZWF.YUDONG>create table t_n(id number(5,-2));
+
+Table created.
+
+ZWF.YUDONG>insert into t_n values(12345);
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+    12300
+
+1 row selected.
+
+ZWF.YUDONG>insert into t_n values(123456);
+
+1 row created.
+
+ZWF.YUDONG>insert into t_n values(1234567);
+
+1 row created.
+
+ZWF.YUDONG>select * from t_n;
+
+       ID
+----------
+    12300
+123500
+1234600
+
+3 rows selected.
+
+ZWF.YUDONG>insert into t_n values(12345678);
+insert into t_n values(12345678)
+                      *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+二、oracle的number类型存储结构：
+
+oracle采用变长存储number数据类型（按一定规则进行转换成2进制编码格式存储）。
+
+oracle数据库中存储的number类型包含3个部分: HEAD部分, DATA部分, 符号位。
+
+对正数来说, 符号位省略, 对0来说, oracle存储的是X80（128）。
+
+ZWF.YUDONG>select dump(0) from dual;
+
+DUMP(0)
+----------------
+Typ=2 Len=1: 128
+
+1 row selected.
+
+ZWF.YUDONG>select dump(1) from dual;
+
+DUMP(1)
+------------------
+Typ=2 Len=2: 193,2
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-1) from dual;
+
+DUMP(-1)
+-----------------------
+Typ=2 Len=3: 62,100,102 
+
+1 row selected.
+
+HEAD部分为一个字节8位, 就是前面看到的128, 193，62。由该部分我们可以看出number类型的基本信息，因为设计这种存储格式的时候, oracle希望以十六进制00-FF来表示所有
+的number, 所以为了编码的对称, 首先将number分为正负, 所以以00-FF的中间位置80, 也就是十进制的128来表示0, HEAD部分小于80,即为负数,大于80即为正数。ORACLE再次对
+00-80, 80-FF进行对分：
+
+00-3E 表示: number <= -1
+3F-7F 表示: -1 < number < 0
+
+回复
+
+    3楼
+    2009-06-06 15:01
+
+    举报 |
+
+    fan8888	
+    核心会员
+    6
+
+81-C0 表示: 0 < number < 1
+C1-FF 表示：number >= 1 
+
+从HEAD部分我们可以也看出数据的位数信息，是否含有小数，可以根据HEAD的信息判断小数点的位置。由于数据部分低位2的n次方位个0是不被存储的，数据展现的时候oracle
+根据HEAD的信息给补充末位的0。
+
+ZWF.YUDONG>select dump(123456789) from dual;
+
+DUMP(123456789)
+------------------------------
+Typ=2 Len=6: 197,2,24,46,68,90 --197（C5）的含义：表示数字123456789大于1，197-193(数字1占用2个字节该值为193) = 4 ，所以该数字占用6（2+4）个字节。
+
+1 row selected.
+
+
+然后,我们再来看数据部分, ORACLE对十进制的数字(整数部分,小数部分正好相反)是两位两位进行存储的(从右往左的顺序), 例如对1234, ORACLE会分别对12, 34进行存储. 
+所以只需要对(+-)1-99进行编码
+
+1 --- 99 分别用十六进制2-64表示，就是2-100,
+
+-1--- -99 用十六进制64-2表示，就是100-2
+
+ZWF.YUDONG>select dump(12345) from dual;
+
+DUMP(12345)
+------------------------
+Typ=2 Len=4: 195,2,24,46   --数据部分2,24,46 表示 （2-1=1，24-1=23，46-1=45）；HEAD部分表示12345 >= 1,占用195-193+2=4字节。
+
+1 row selected.
+
+
+SYS.YUDONG>select dump(1100) from dual;  
+
+DUMP(1100)
+-------------------
+Typ=2 Len=2: 194,12    --如果从右边起，连续2的n次方位为0，oracle一次排触（不存储）只是位数加1。可以对比dump(11)的情况看看。
+
+1 row selected.
+
+SYS.YUDONG>select dump(11) from dual;
+
+DUMP(11)
+-------------------
+Typ=2 Len=2: 193,12        --这里数据部分和1100是一样的，末位的2个0没有实际存储，长度193比194小1。
+
+1 row selected.
+
+--对于含小数(负数、整数2种情况)的情况：
+
+1、负数
+
+SYS.YUDONG>select dump(-1.2) from dual;
+
+DUMP(-1.2)
+--------------------------
+Typ=2 Len=4: 62,100,81,102 --HEAD=62（3E）表示该数值小于等于-1;数据部分：整数部分的-1存储为100，小数部分从左往右2位一结合，不足2位后边补一个1。
+                           对应关系变为9，8...1表示1，2...9，看下面几个例子，如果足2位，还是按照上边说的规律（-1--- -99 用十六进制64-2表示，就是100-2）。
+
+1 row selected.
+
+
+ZWF.YUDONG>select dump(-2.1) from dual;
+
+DUMP(-2.1)
+-------------------------
+Typ=2 Len=4: 62,99,91,102
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-2.2) from dual;
+
+DUMP(-2.2)
+-------------------------
+Typ=2 Len=4: 62,99,81,102
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-2.9) from dual;
+
+回复
+
+    4楼
+    2009-06-06 15:01
+
+    举报 |
+
+    fan8888	
+    核心会员
+    6
+
+
+DUMP(-2.9)
+-------------------------
+Typ=2 Len=4: 62,99,11,102
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-2.12) from dual;
+
+DUMP(-2.12)
+-------------------------
+Typ=2 Len=4: 62,99,89,102
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-2.13) from dual;
+
+DUMP(-2.13)
+-------------------------
+Typ=2 Len=4: 62,99,88,102
+
+1 row selected.
+
+ZWF.YUDONG>select dump(-2.123) from dual;
+
+DUMP(-2.123)
+----------------------------
+Typ=2 Len=5: 62,99,89,71,102
+
+1 row selected.
+
+
+2、正数
+
+SYS.YUDONG>select dump(1.222) from dual;
+
+DUMP(1.222)
+------------------------
+Typ=2 Len=4: 193,2,23,21    --HEAD=193(C1)表示该数字大于等于1;数据部分:整数部分存储2(2-1=1),小数部分从左往右2位一结合,23(23-1=22)表示22,后边还剩下一个2,
+不足2位的末尾补充一个1,也就是等于1.2220
+
+1 row selected.
+
+ZWF.YUDONG>select dump(1.2220) from dual;
+
+DUMP(1.2220)
+------------------------
+Typ=2 Len=4: 193,2,23,21
+
+1 row selected.
+
+
+符号位： 用的是(+-)1-99都不可能用到的编码66(102)来表示，有资料说为了处理排序问题（未加考证）。根据HEAD部分可以做初步判断，根据我们说的HEAD部分的四个范围，
+如果2个数值不在一个范围，立即可以看出大小，如果在一个范围其实也可以根据其正负+绝对值来进行排序了，正数绝对值大的就大，负数则相反，为何还要用到这个符号位？
+
+
+三、相关bug：
+
+时间久了，也无从考证，写出来共享吧，也许有人会用到：
+
+03年用9i的时候，做税收会计余额累计，当时遇到number类型的bug，数据结构为number(20,2),进行数据累计的时候当余额等于1（也许是0，印象模糊了）的时候，出现03113
+错误，每次执行都一样，当时搜索了资料也说是oracle一个bug，后来采取了一些回避手段把金额先乘以100，换算完后再除以100，展现给用户，也就是利用了number(p,0)整数
+类型（不存储小数部分，减少产生溢出等bug的几率）来解决了当时的问题。供参
