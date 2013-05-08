@@ -1,0 +1,104 @@
+登陆步骤
+
+1 切换用户，并刷新变量
+[oracle@oracle11g root]$ su  oracle;
+[oracle@oracle11g root]$ source ~/.bash_profile
+
+2 修改oratab
+[oracle@oracle11g ~]$ vi /etc/oratab 
+
+选择要启动的数据库实例名
+hello:/home/work/oracle/product/11.2.0/db_1:Y
+mail:/home/work/oracle/product/11.2.0/db_1:N
+
+3 声明ORACLE_SID实例名
+[oracle@oracle11g root]$ echo $ORACLE_SID
+mail
+[oracle@oracle11g root]$ export ORACLE_SID=hello;
+
+4 启动oralce数据库
+[oracle@oracle11g root]$ dbstart
+Processing Database instance "hello": log file /home/work/oracle/product/11.2.0/db_1/startup.log
+
+
+5 开启监听
+[oracle@oracle11g root]$ lsnrctl start
+
+LSNRCTL for Linux: Version 11.2.0.1.0 - Production on 06-MAY-2013 22:26:03
+
+Copyright (c) 1991, 2009, Oracle.  All rights reserved.
+
+Starting /home/work/oracle/product/11.2.0/db_1/bin/tnslsnr: please wait...
+
+TNSLSNR for Linux: Version 11.2.0.1.0 - Production
+System parameter file is /home/work/oracle/product/11.2.0/db_1/network/admin/listener.ora
+Log messages written to /home/work/oracle/diag/tnslsnr/oracle11g/listener/alert/log.xml
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521)))
+
+Connecting to (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=1521))
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR for Linux: Version 11.2.0.1.0 - Production
+Start Date                06-MAY-2013 22:26:03
+Uptime                    0 days 0 hr. 0 min. 0 sec
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Listener Parameter File   /home/work/oracle/product/11.2.0/db_1/network/admin/listener.ora
+Listener Log File         /home/work/oracle/diag/tnslsnr/oracle11g/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521)))
+Services Summary...
+Service "mail" has 1 instance(s).
+  Instance "mail", status UNKNOWN, has 1 handler(s) for this service...
+The command completed successfully
+
+
+6 sqlplus登陆oracle
+[oracle@oracle11g root]$ sqlplus /nolog;     
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon May 6 22:34:43 2013
+
+Copyright (c) 1982, 2009, Oracle.  All rights reserved.
+
+SQL> connect / as sysdba;
+Connected to an idle instance.
+SQL> startup
+ORACLE instance started.
+
+Total System Global Area 1657225216 bytes
+Fixed Size                  1336904 bytes
+Variable Size             956303800 bytes
+Database Buffers          687865856 bytes
+Redo Buffers               11718656 bytes
+Database mounted.
+Database opened.
+
+测试select命令，查看当前实例名
+SQL> select instance_name from v$instance;
+
+INSTANCE_NAME
+----------------
+hello
+
+
+
+
+查看监听状态
+lsnrctl status
+开启实例
+ORACLE instance started;
+关闭
+shutdown immediate;
+挂起
+startup mount;
+
+
+
+
+dbstart/dbshut命令：
+
+修改$ORACLE_HOME/bin下的dbstart/dbshut文件中下面的条目
+ORACLE_HOME_LISTNER=$ORACLE_HOME
+
