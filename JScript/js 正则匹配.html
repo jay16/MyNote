@@ -1,3 +1,16 @@
 <script>
 alert(":he.ll&0".replace(/(:|\.|&)/g, '_'));
+  function generate_random_char(){
+      var chars, newchar, rand;
+      chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+      rand = Math.floor(Math.random() * chars.length);
+      return newchar = chars.substring(rand, rand + 1);
+  }
+      var string;
+      string = "sel" + generate_random_char() + generate_random_char() + generate_random_char();
+      alert(string);
+      while (document.getElementById(string).length > 0) {
+        string += generate_random_char();
+      }
+      alert(string);
 </script>

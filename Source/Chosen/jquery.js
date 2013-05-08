@@ -21,11 +21,11 @@ var document = window.document,
 	location = window.location;
 var jQuery = (function() {
 
-// Define a local copy of jQuery
-var jQuery = function( selector, context ) {
-		// The jQuery object is actually just the init constructor 'enhanced'
-		return new jQuery.fn.init( selector, context, rootjQuery );
-	},
+   // Define a local copy of jQuery
+   var jQuery = function( selector, context ) {
+     // The jQuery object is actually just the init constructor 'enhanced'
+     return new jQuery.fn.init( selector, context, rootjQuery );
+    },
 
 	// Map over jQuery in case of overwrite
 	_jQuery = window.jQuery,

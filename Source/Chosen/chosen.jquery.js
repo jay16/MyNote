@@ -92,7 +92,9 @@
         "width": dd_width + "px",
         "top": dd_top + "px"
       });
+      //搜索框
       this.search_field = this.container.find('input').first();
+      //选项项显示框
       this.search_results = this.container.find('ul.chzn-results').first();
       this.search_field_scale();
       this.search_no_results = this.container.find('li.no-results').first();
@@ -260,6 +262,7 @@
       return this.search_field.focus();
     };
     Chosen.prototype.test_active_click = function(evt) {
+      //点击在container范围内时active_field为true否则关闭下拉框
       if ($(evt.target).parents('#' + this.container_id).length) {
         return this.active_field = true;
       } else {
