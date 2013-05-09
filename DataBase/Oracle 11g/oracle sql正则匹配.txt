@@ -1,0 +1,134 @@
+oracle的正则表达式(regular expression)简单介绍
+
+目前，正则表达式已经在很多软件中得到广泛的应用，包括*nix（Linux, Unix等），HP等操作系统，PHP，C#，Java等开发环境。
+
+Oracle 10g正则表达式提高了SQL灵活性。有效的解决了数据有效性， 重复词的辨认, 无关的空白检测，或者分解多个正则组成
+的字符串等问题。
+
+Oracle 10g支持正则表达式的四个新函数分别是：REGEXP_LIKE、REGEXP_INSTR、REGEXP_SUBSTR、和REGEXP_REPLACE。
+它们使用POSIX 正则表达式代替了老的百分号（%）和通配符（_）字符。
+
+特殊字符：
+'^' 匹配输入字符串的开始位置，在方括号表达式中使用，此时它表示不接受该字符集合。
+'$' 匹配输入字符串的结尾位置。如果设置了 RegExp 对象的 Multiline 属性，则 $ 也匹配 'n' 或 'r'。
+'.' 匹配除换行符 n之外的任何单字符。
+'?' 匹配前面的子表达式零次或一次。
+'*' 匹配前面的子表达式零次或多次。
+'+' 匹配前面的子表达式一次或多次。
+'( )' 标记一个子表达式的开始和结束位置。
+'[]' 标记一个中括号表达式。
+'{m,n}' 一个精确地出现次数范围，m=<出现次数<=n，'{m}'表示出现m次，'{m,}'表示至少出现m次。
+'|' 指明两项之间的一个选择。例子'^([a-z]+|[0-9]+)$'表示所有小写字母或数字组合成的字符串。
+num 匹配 num，其中 num 是一个正整数。对所获取的匹配的引用。
+正则表达式的一个很有用的特点是可以保存子表达式以后使用， 被称为Backreferencing. 允许复杂的替换能力
+如调整一个模式到新的位置或者指示被代替的字符或者单词的位置. 被匹配的子表达式存储在临时缓冲区中，
+缓冲区从左到右编号, 通过数字符号访问。 下面的例子列出了把名字 aa bb cc 变成
+cc, bb, aa.
+Select REGEXP_REPLACE('aa bb cc','(.*) (.*) (.*)', '3, 2, 1') FROM dual；
+REGEXP_REPLACE('ELLENHILDISMIT
+cc, bb, aa
+'' 转义符。
+
+字符簇：
+[[:alpha:]] 任何字母。
+[[:digit:]] 任何数字。
+[[:alnum:]] 任何字母和数字。
+[[:space:]] 任何白字符。
+[[:upper:]] 任何大写字母。
+[[:lower:]] 任何小写字母。
+[[:punct:]] 任何标点符号。
+[[:xdigit:]] 任何16进制的数字，相当于[0-9a-fA-F]。
+
+各种操作符的运算优先级
+转义符
+(), (?:), (?=), [] 圆括号和方括号
+*, +, ?, {n}, {n,}, {n,m} 限定符
+^, $, anymetacharacter 位置和顺序
+| “或”操作 
+
+匹配邮箱
+
+select count(email)
+from YUNZU
+where  not regexp_like(email,'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$')
+regexp_like(email,'\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*' )
+
+
+REGEXP_LIKE(x,pattern[,match_option])用于在x中查找正则表达式pattern，该函数还可以提供一个可选的参数match_option字符串说明默认的匹配选项。match_option的取值如下：
+ ‘c’   说明在进行匹配时区分大小写（缺省值）；
+  'i'   说明在进行匹配时不区分大小写；
+  'n'   允许使用可以匹配任意字符的操作符；
+  'm'   将x作为一个包含多行的字符串。
+sql 代码
+ 
+
+    DECLARE   
+        V_FIRST_NAME VARCHAR2(50);  
+        V_DOB DATE ;  
+    BEGIN   
+        --返回1965－1968你出生的FIRST_NAME以‘J’开头的消费者    
+        SELECT  FIRST_NAME,DOB  INTO  V_FIRST_NAME,V_DOB  
+        FROM  CUSTOMERS  
+        WHERE  REGEXP_LIKE(TO_CHAR(DOB,'YYYY'),'^196[5-8]$')  AND  REGEXP_LIKE(FIRST_NAME,'^J');  
+          
+        DBMS_OUTPUT.PUT_LINE(V_FIRST_NAME);  
+          
+    END ;  
+
+
+
+3、REGEXP_INSTR(x,pattern[,start[,occurrence[,return_option[, match_option]]]])用于在x中查找pattern。返回pattern在x中出现的位置。匹配位置从1开始。可以参考字符串函数 INSTR()，参数相关：
+    'start'   开始查找的位置；
+    'occurrence'   说明应该返回第几次出现pattern的位置；
+    'eturn_option'   说明应该返回什么整数。若该参数为0，则说明要返回的整数是x中的一个字符的位置；若该参数为非0的整数，则说明要返回的整数为x中出现在pattern之后的字符的位置；
+    'match_option'   修改默认的匹配设置。
+sql 代码
+ 
+
+    DECLARE   
+        V_RESULT INTEGER ;  
+    BEGIN   
+        --返回17，找出l开头的 后跟4个任意字母的单词在第一个参数中第一次出现的位置，这里是light中l的位置    
+        SELECT  REGEXP_INSTR('But, soft! What light through yonder window breaks？','l[[:alpha:]]{4}',1,1,0)  INTO  V_RESULT  
+        FROM  DUAL;  
+          
+        DBMS_OUTPUT.PUT_LINE(V_RESULT);  
+          
+        --返回22，找出l开头的 后跟4个任意字母的单词在第一个参数中第一次出现的位置，这里是light中t的位置+1    
+        SELECT  REGEXP_INSTR('But, soft! What light through yonder window breaks？','l[[:alpha:]]{4}',1,1,1)  INTO  V_RESULT  
+        FROM  DUAL;  
+          
+        DBMS_OUTPUT.PUT_LINE(V_RESULT);  
+    END ;  
+
+
+4、REGEXP_REPLACE(x,pattern[,replace_string[,start[,occurrence[, match_option]]]])用于在x中查找pattern，并将其替换为replae_string。可以参考字符串函数 REPLACE()，参数同REGEXP_INSTR函数，参考第3
+sql 代码
+ 
+
+    DECLARE     
+        V_RESULT VARCHAR2(255);    
+    BEGIN     
+        --返回But, soft! What XXX through yonder window breaks？ 用‘XXX’代替‘light’    
+        SELECT  REGEXP_REPLACE('But, soft! What light through yonder window breaks？','l[[:alpha:]]{4}','XXX')  INTO  V_RESULT    
+        FROM  DUAL;          
+        DBMS_OUTPUT.PUT_LINE(V_RESULT);         
+    END ;   
+
+
+5、REGEXP_SUBSTR(x,pattern[,start[,occurrence[, match_option]]])用于在x中查找pattern并返回。可以参考字符串函数 SUBSTR()，参数同REGEXP_INSTR函数，参考第3
+sql 代码
+ 
+
+    DECLARE     
+        V_RESULT VARCHAR2(255);    
+    BEGIN     
+        --返回‘light’    
+        SELECT  REGEXP_SUBSTR('But, soft! What light through yonder window breaks？','l[[:alpha:]]{4}')  INTO  V_RESULT    
+        FROM  DUAL;          
+        DBMS_OUTPUT.PUT_LINE(V_RESULT);         
+    END ;   
+
+For Example:
+表里的一个字段description,如：getAllBpOfHierarchyTree转变成Get All Bp Of Hierarchy Tree
+SELECT description, initcap(REGEXP_REPLACE(description, '([[:upper:]][[:lower:]])',' \1')) as repleaseAll from TBLAC_ACTION_DESCRIPTION
