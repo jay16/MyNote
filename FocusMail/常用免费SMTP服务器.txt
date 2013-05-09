@@ -1,0 +1,16 @@
+SMTP是简单邮件传输协议（Simple Mail Transfer Protocol）的简称，是您发送Email所必须用到的。
+
+常用的*免费SMTP服务器*如下，
+
+Email的帐号对应
+ 	邮箱	对应的免费SMTP服务器
+01	@163.com	smtp.163.com
+02	@126.com	smtp.126.com
+03	Sina免费邮件	smtp.sina.com.cn
+04	Gmail	        smtp.gmail.com (SSL)
+05	@sohu.com	smtp.sohu.com
+06	21cn邮箱	smtp.21cn.com
+07	Yahoo中国免费邮 smtp.mail.yahoo.com.cn smtp.yahoo.cn
+08	@hotmail.com/@msn.com	不支持SMTP
+09	@qq.com	smtp.qq.com，需要到邮箱里先设置开通
+10	263电子邮局	smtp.263.net

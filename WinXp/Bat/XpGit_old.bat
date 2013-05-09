@@ -19,8 +19,8 @@ cd ..
 echo µ±Ç°Â·¾¶£º%cd%
 
 "D:\Program Files\Git\bin\sh.exe" --login -i -c "git init"
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A ."
-"D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%"
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git add ."
+"D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -m %commit%"
 "D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master"
 
 rem cd E:\MyWork\MyNote\
@@ -39,4 +39,4 @@ rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%""
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master""
 
-pause
+rem pause
