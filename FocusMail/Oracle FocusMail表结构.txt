@@ -268,7 +268,6 @@ mysql> desc templates;
 create table templates(id number(10),name varchar(255),file_name varchar(255),created_at timestamp,updated_at timestamp,img_url number(11),zip_url varchar(100),zip_name varchar(100),grade number(10,8))
 
 
-
 SQL> create table templates(id number(10),name varchar(255),file_name varchar(255),created_at timestamp,updated_at timestamp,img_url number(11),zip_url varchar(100),zip_name varchar(100),grade number(10,8));
 
 Table created.
@@ -356,3 +355,17 @@ TRACKS
 LINKS
 
 9 rows selected.
+
+
+
+处理发信日志信息相关表结构
+
+create table dog_day_org (content varchar(4000))
+
+create table dog_day_bi(to_email varchar(255),log_time varchar(255),eml_file varchar(255),mail_type varchar(255),campaign_id varchar(255),campaign_subject varchar(1000),log_cm varchar(255))
+
+create table dog_day_data_temp(campaign_id number(10),send_num number(10),send_ok number(10),time_tag varchar(255))
+
+create table dog_totle_bi(to_email varchar(255),log_time varchar(255),eml_file varchar(255),mail_type varchar(255),campaign_id varchar(255),campaign_subject varchar(1000),log_cm varchar(255))
+
+create table dog_totle_data(campaign_id number(10),send_num number(10),send_ok number(10),track_num number(10),track_peo number(10),click_num number(10),click_peo number(10))

@@ -1,4 +1,7 @@
-原网址：http://www.gnu.org/prep/standards/html_node/Makefile-Basics.html#Makefile-Basics
+原网址：
+http://www.gnu.org/software/make/
+http://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html#Makefile-Conventions
+http://www.gnu.org/prep/standards/html_node/Makefile-Basics.html#Makefile-Basics
 
 7.2.1 Makefiles的约定惯例
 
