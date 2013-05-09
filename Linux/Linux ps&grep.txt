@@ -1,0 +1,118 @@
+通过关键字查看pid及命令
+
+[root@emd mailtem]# ps -eo pid,command | grep resque | grep -v grep  
+14633 ruby /usr/local/bin/rake --trace resque:work RAILS_ENV=development VERBOSE=1 QUEUES=*
+
+显示grep命令
+
+[root@emd mailtem]# ps -ef | grep resque
+root     14633 14201 99 13:31 pts/1    00:02:25 ruby /usr/local/bin/rake --trace resque:work RAILS_ENV=development VERBOSE=1 QUEUES=*
+root     14697 14342  0 13:34 pts/2    00:00:00 grep resque
+
+不显示grep命令
+
+[root@emd mailtem]# ps -ef | grep resque | grep -v grep
+root     14633 14201 99 13:31 pts/1    00:02:45 ruby /usr/local/bin/rake --trace resque:work RAILS_ENV=development VERBOSE=1 QUEUES=*
+
+
+[root@emd mailtem]# ps --help
+********* simple selection *********  ********* selection by list *********
+-A all processes                      -C by command name
+-N negate selection                   -G by real group ID (supports names)
+-a all w/ tty except session leaders  -U by real user ID (supports names)
+-d all except session leaders         -g by session OR by effective group name
+-e all processes                      -p by process ID
+T  all processes on this terminal     -s processes in the sessions given
+a  all w/ tty, including other users  -t by tty
+g  OBSOLETE -- DO NOT USE             -u by effective user ID (supports names)
+r  only running processes             U  processes for specified users
+x  processes w/o controlling ttys     t  by tty
+*********** output format **********  *********** long options ***********
+-o,o user-defined  -f full            --Group --User --pid --cols --ppid
+-j,j job control   s  signal          --group --user --sid --rows --info
+-O,O preloaded -o  v  virtual memory  --cumulative --format --deselect
+-l,l long          u  user-oriented   --sort --tty --forest --version
+-F   extra full    X  registers       --heading --no-heading --context
+                    ********* misc options *********
+-V,V  show version      L  list format codes  f  ASCII art forest
+-m,m,-L,-T,H  threads   S  children in sum    -y change -l format
+-M,Z  security data     c  true command name  -c scheduling class
+-w,w  wide output       n  numeric WCHAN,UID  -H process hierarchy
+
+
+[root@emd mailtem]# grep --help
+用法: grep [选项]... PATTERN [FILE]...
+在每个 FILE 或是标准输入中查找 PATTERN。
+默认的 PATTERN 是一个基本正则表达式(缩写为 BRE)。
+例如: grep -i 'hello world' menu.h main.c
+
+  -v, --invert-match        select non-matching lines
+
+正则表达式选择与解释:
+  -E, --extended-regexp     PATTERN 是一个可扩展的正则表达式(缩写为 ERE)
+  -F, --fixed-strings       PATTERN 是一组由断行符分隔的定长字符串。
+  -G, --basic-regexp        PATTERN 是一个基本正则表达式(缩写为 BRE)
+  -P, --perl-regexp         PATTERN 是一个 Perl 正则表达式
+  -e, --regexp=PATTERN      用 PATTERN 来进行匹配操作
+  -f, --file=FILE           从 FILE 中取得 PATTERN
+  -i, --ignore-case         忽略大小写
+  -w, --word-regexp         强制 PATTERN 仅完全匹配字词
+  -x, --line-regexp         强制 PATTERN 仅完全匹配一行
+  -z, --null-data           一个 0 字节的数据行，但不是空行
+
+Miscellaneous:
+  -s, --no-messages         suppress error messages
+  -v, --invert-match        select non-matching lines
+  -V, --version             print version information and exit
+      --help                display this help and exit
+      --mmap                ignored for backwards compatibility
+
+Output control:
+  -m, --max-count=NUM       stop after NUM matches
+  -b, --byte-offset         print the byte offset with output lines
+  -n, --line-number         print line number with output lines
+      --line-buffered       flush output on every line
+  -H, --with-filename       print the filename for each match
+  -h, --no-filename         suppress the prefixing filename on output
+      --label=LABEL         print LABEL as filename for standard input
+  -o, --only-matching       show only the part of a line matching PATTERN
+  -q, --quiet, --silent     suppress all normal output
+      --binary-files=TYPE   assume that binary files are TYPE;
+                            TYPE is `binary', `text', or `without-match'
+  -a, --text                equivalent to --binary-files=text
+  -I                        equivalent to --binary-files=without-match
+  -d, --directories=ACTION  how to handle directories;
+                            ACTION is `read', `recurse', or `skip'
+  -D, --devices=ACTION      how to handle devices, FIFOs and sockets;
+                            ACTION is `read' or `skip'
+  -R, -r, --recursive       equivalent to --directories=recurse
+      --include=FILE_PATTERN  search only files that match FILE_PATTERN
+      --exclude=FILE_PATTERN  skip files and directories matching FILE_PATTERN
+      --exclude-from=FILE   skip files matching any file pattern from FILE
+      --exclude-dir=PATTERN  directories that match PATTERN will be skipped.
+  -L, --files-without-match  print only names of FILEs containing no match
+  -l, --files-with-matches  print only names of FILEs containing matches
+  -c, --count               print only a count of matching lines per FILE
+  -T, --initial-tab         make tabs line up (if needed)
+  -Z, --null                print 0 byte after FILE name
+
+Context control:
+  -B, --before-context=NUM  print NUM lines of leading context
+  -A, --after-context=NUM   print NUM lines of trailing context
+  -C, --context=NUM         print NUM lines of output context
+  -NUM                      same as --context=NUM
+      --color[=WHEN],
+      --colour[=WHEN]       use markers to highlight the matching strings;
+                            WHEN is `always', `never', or `auto'
+  -U, --binary              do not strip CR characters at EOL (MSDOS)
+  -u, --unix-byte-offsets   report offsets as if CRs were not there (MSDOS)
+
+‘egrep’即‘grep -E’。‘fgrep’即‘grep -F’。
+直接使用‘egrep’或是‘fgrep’均已不可行了。
+不带 FILE 参数，或是 FILE 为 -，将读取标准输入。如果少于两个 FILE 参数
+就要默认使用 -h 参数。如果选中任意一行，那退出状态为 0，否则为 1；
+如果有错误产生，且未指定 -q 参数，那退出状态为 2。
+
+Report bugs to: bug-grep@gnu.org
+GNU Grep 主页: <http://www.gnu.org/software/grep/>
+GNU 软件的通用帮助: <http://www.gnu.org/gethelp/>

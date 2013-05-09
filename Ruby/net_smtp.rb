@@ -32,4 +32,10 @@ MESSAGE_END
 from = '527130673@qq.com'
 to = ['solife_li@163.com']
 
-send_mail(from,message,to)
+#send_mail(from,message,to)
+
+
+Net::SMTP.start('smtp.163.com',25) do |smtp|
+  smtp.send_message message, 'solife_li@163.com', 
+                             '527130673@qq.com'
+end
