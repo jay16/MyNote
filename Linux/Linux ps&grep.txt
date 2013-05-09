@@ -14,6 +14,8 @@ root     14697 14342  0 13:34 pts/2    00:00:00 grep resque
 [root@emd mailtem]# ps -ef | grep resque | grep -v grep
 root     14633 14201 99 13:31 pts/1    00:02:45 ruby /usr/local/bin/rake --trace resque:work RAILS_ENV=development VERBOSE=1 QUEUES=*
 
+-e all processes   
+-o,o user-defined  -f full            --Group --User --pid --cols --ppid
 
 [root@emd mailtem]# ps --help
 ********* simple selection *********  ********* selection by list *********
