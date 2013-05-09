@@ -1,10 +1,14 @@
 passenger后台运行FocusMail
+
 [root@localhost focus_mail]# passenger start -p 80 -d --user webmail
 
-查看passenger是否启动
+查看passenger是否启动，需要指定端口号
+
 [root@localhost focus_mail]# passenger status -p 80
 
-如有需要重启passenger，需先暂停，然后再启动
+
+关闭passenger,需要到启动目录，并指定端口号
+
 [root@localhost focus_mail]# passenger stop -p 80
 
 --------------------------------------------------------
