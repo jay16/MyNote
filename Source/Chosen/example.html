@@ -227,7 +227,7 @@ var cognos_chozn = function() {
         }
       },
       zhozn_input_onfocus=function(e){
-        setTimeout("zhozn_a_x_onclick(e)",50);
+        setTimeout(function(){zhozn_a_x_onclick(e)},50);
       },
       zhozn_input_onblur=function(e){
         var chozn_a_x = e.srcElement;  

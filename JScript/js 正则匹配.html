@@ -41,7 +41,52 @@ Driver.prototype.drive = function() {
 };
 
 var myDriver = new Driver("Butter", "John", 28);
-//myDriver.greet();
-//myDriver.drive();
-alert(myDriver.country);
+myDriver.greet();
+myDriver.drive();
+//alert(myDriver.country);
+
+myName = "global";
+function func() {
+   console.log(myName);   // undefined
+   var myName = "local";
+   console.log(myName);   // local
+}
+
+func();
+
+// the object
+var man = {
+   hands: 2,
+   legs: 2,
+   heads: 1
+};
+
+// somewhere else in the code
+// a method was added to all objects
+if (typeof Object.prototype.clone === "undefined") {
+   Object.prototype.clone = function () {};
+}
+
+for(var i  in man) { 
+   console.log(i, ": ", man[i]); 
+}
+
+for(var i  in man) {
+   if(man.hasOwnProperty(i)) {
+      console.log(i, ": ", man[i]);
+   }
+}
+
+for (var i in man) {
+   if (Object.prototype.hasOwnProperty.call(man, i)) { // filter
+      console.log(i, ":", man[i]);
+   }
+}
+
+var i, hasOwn = Object.prototype.hasOwnProperty;
+for (i in man) {
+    if (hasOwn.call(man, i)) { // filter
+        console.log(i, ":", man[i]);
+    }
+}
 </script>
