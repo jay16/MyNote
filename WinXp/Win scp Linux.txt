@@ -1,0 +1,6 @@
+注意windows盘符问题，不可以写成E:\...而要写/e/...
+
+E:\MyWork\MyNote\Ruby>scp root@192.168.0.128:/home/webmail/mailtem/163/51414
+68083514.9290972.eml /e/
+root@192.168.0.128's password:
+514146_1368083514.9290972.eml                 100%   34KB  33.8KB/s   00:00
