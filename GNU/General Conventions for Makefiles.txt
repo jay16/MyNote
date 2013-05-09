@@ -1,0 +1,6 @@
+原网址：http://www.gnu.org/prep/standards/html_node/Makefile-Basics.html#Makefile-Basics
+
+7.2.1 Makefiles的约定惯例
+
+每个Makefiles都应该含这行代码：SHELL = /bin/sh ，来避免这样系统冲突：SHELL这个变量到底从那个环境变量继承过来。（GNU make从不会出现这样的问题）
+
