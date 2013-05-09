@@ -28,15 +28,10 @@ rem cd E:\MyWork\MyNote\
 rem 使用sh.exe调用git命令
 rem "D:\Program Files\Git\bin\sh.exe" --login -i -c "%current_str%\\GitPush.cmd"
 
-
-
-
-
-
 rem old idea
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git init""
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git add -A .""
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%""
 rem C:\WINDOWS\system32\cmd.exe /c ""D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master""
 
-pause
+rem pause
