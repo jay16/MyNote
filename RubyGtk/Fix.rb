@@ -35,9 +35,9 @@ class RubyApp < Gtk::Window
         modify_bg Gtk::STATE_NORMAL, Gdk::Color.new(6400, 6400, 6440)
                
         begin       
-            bardejov = Gdk::Pixbuf.new "bardejov.jpg"
-            rotunda = Gdk::Pixbuf.new "rotunda.jpg"
-            mincol = Gdk::Pixbuf.new "mincol.jpg"
+            bardejov = Gdk::Pixbuf.new "intfocus_logo.png"
+            rotunda = Gdk::Pixbuf.new "intfocus_logo.png"
+            mincol = Gdk::Pixbuf.new "intfocus_logo.png"
         rescue IOError => e
             puts e
             puts "cannot load images"
