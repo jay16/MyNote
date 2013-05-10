@@ -1,8 +1,6 @@
 ORACLE tansname.ora listener SID
-
-/home重新分配大小 安装时尽量大于15G,oracle安装包解压后+压缩包有8G
-http://serverfault.com/questions/415914/modifying-partitions-in-centos-6
-
+******************************************************************
+/home重新分配大小 安装时尽量大于15G,oracle安装包解压后+压缩包有8G,
 ou're on the right track. Just create separate logical volumes for all of those directories. They don't have to be physical partitions.
 
 Since lv_home contains the most space, you should be able to do this remotely.
@@ -17,3 +15,7 @@ Since lv_home contains the most space, you should be able to do this remotely.
     lvcreate -nlv_home -L<size> vg_ts0
 
 That will also leave you some space in the volume group for expanding the other logical volumes at a later date.
+******************************************************************
+FocusMail
+track ip
+113
