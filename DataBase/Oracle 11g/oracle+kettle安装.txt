@@ -29,6 +29,19 @@ export PATH=${JAVA_HOME}/bin:$PATH
 
 [root@localhost jvm]$ source ~/.bashrc
 [root@localhost jvm]$ java -version
+java version "1.7.0_09"
+Java(TM) SE Runtime Environment (build 1.7.0_09-b05)
+Java HotSpot(TM) Server VM (build 23.5-b02, mixed mode)
+
+若出现下面报错
+[root@localhost java-7-sun]# java -version
+Error: dl failure on line 864
+Error: failed /usr/lib/jvm/java-7-sun/jre/lib/i386/server/libjvm.so, because /usr/lib/jvm/java-7-sun/jre/lib/i386/server/libjvm.so: cannot restore segment prot after reloc: Permission denied
+解决方法：关闭selinux即可解决。
+
+# vi /etc/sysconfig/selinux
+修改：SELINUX=enforcing 为：SELINUX=disable 或 permissive 禁用SeLinux, 再重启运行。
+
 
 [root@localhost ~]$ rpm -q unzip binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel elfutils-libelf-devel-static glibc glibc-common glibc-devel gcc gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh numactl-devel glibc-headers pcre-devel
 [root@localhost ~]$ yum -y install unzip binutils compat-libstdc++-33 elfutils-libelf elfutils-libelf-devel elfutils-libelf-devel-static glibc glibc-common glibc-devel gcc gcc-c++ libaio-devel libaio libgcc libstdc++ libstdc++-devel make sysstat unixODBC unixODBC-devel pdksh ksh numactl-devel glibc-headers pcre-devel
