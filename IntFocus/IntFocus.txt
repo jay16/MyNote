@@ -26,3 +26,40 @@ oracle:
  SID            = "IntFocus"            //对应的实例名字,实例名只允许使用字母
  SYSPASSWORD    = "Focus_Mail"          //SYS管理员密码
  SYSTEMPASSWORD = "Focus_Mail"          //SYSTEM管理员密码
+ [{
+   User           = IntFocus
+   Pw             = Focus_Mail
+  }
+ ]
+
+
+Cleaning up failed steps
+DBCA_PROGRESS : 5%
+Copying database files
+DBCA_PROGRESS : 7%
+DBCA_PROGRESS : 9%
+DBCA_PROGRESS : 16%
+DBCA_PROGRESS : 23%
+DBCA_PROGRESS : 30%
+DBCA_PROGRESS : 41%
+Creating and starting Oracle instance
+DBCA_PROGRESS : 43%
+DBCA_PROGRESS : 48%
+DBCA_PROGRESS : 53%
+DBCA_PROGRESS : 57%
+DBCA_PROGRESS : 58%
+DBCA_PROGRESS : 59%
+DBCA_PROGRESS : 62%
+DBCA_PROGRESS : 64%
+Completing Database Creation
+DBCA_PROGRESS : 68%
+DBCA_PROGRESS : 71%
+DBCA_PROGRESS : 75%
+DBCA_PROGRESS : 85%
+DBCA_PROGRESS : 96%
+DBCA_PROGRESS : 100%
+Database creation complete. For details check the logfiles at:
+ /home/work/oracle/cfgtoollogs/dbca/maill_dev.
+Database Information:
+Global Database Name:maill_dev
+System Identifier(SID):IntFocus

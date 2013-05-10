@@ -207,7 +207,7 @@ DECLINE_SECURITY_UPDATES=true
  SYSPASSWORD = "Focus_Mail"   //SYS管理员密码
  SYSTEMPASSWORD = "Focus_Mail"  //SYSTEM管理员密码
  DATAFILEDESTINATION = /home/work/oracle/oracle_data //数据文件存放目录
- RECOVERYAREADESTINATION=/home/work/oracle/oradata_back //恢复数据存放目录
+ RECOVERYAREADESTINATION = /home/work/oracle/oradata_back //恢复数据存放目录
  CHARACTERSET = "ZHS16GBK"   //字符集，重要!!! 建库后一般不能更改，所以建库前要确定清楚。
  TOTALMEMORY = "5120"    //oracle内存5120MB
 [oracle@oracle11g ~]$ export ORACLE_SID=IntFocus
@@ -216,9 +216,9 @@ DECLINE_SECURITY_UPDATES=true
 九、修改数据库为归档模式(归档模式才能热备份，增量备份)
 [oracle@oracle11g ~]$ export ORACLE_SID=IntFocus
 [oracle@oracle11g ~]$ sqlplus / as sysdba
-SQL>shutdown immediate;
-SQL>startup mount;
-SQL>alter database archivelog;
+SQL> shutdown immediate;
+SQL> startup mount;
+SQL> alter database archivelog;
 SQL> alter database flashback on;
 SQL> alter database open;
 SQL> execute utl_recomp.recomp_serial();
@@ -238,13 +238,15 @@ hello:/home/work/oracle/prodcut/11.2.0:Y
 //创建临时表空间
 $ORACLE_BASE/oracle/oracle_data/$ORACLE_SID/user_temp.dbf
 
-SQL> create temporary tablespace user_temp tempfile '/home/work/oracle/oracle_data/hello/user_temp.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;
+SQL> startup
+SQL> create temporary tablespace user_temp tempfile '/home/work/oracle/oracle_data/maill_dev/user_temp.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;
 //创建数据表空间
-SQL> create tablespace user_data logging datafile   '/home/work/oracle/oracle_data/hello/user_data.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;  
+SQL> create tablespace user_data logging datafile   '/home/work/oracle/oracle_data/maill_dev/user_data.dbf' size 50m autoextend on next 50m maxsize 20480m extent management local;  
 //创建用户并指定表空间
-SQL> create user intfocus identified by focus_mail default tablespace user_data temporary tablespace user_temp;  
-SQL> grant connect,resource to intfocus;
+SQL> create user IntFocus identified by Focus_Mail default tablespace user_data temporary tablespace user_temp;  
+SQL> grant connect,resource to IntFocus;
 SQL> create table STUDENT(ID int, NAME varchar(20));
 SQL> insert into STUDENT values(1, 'intfocus');
+SQL> insert into STUDENT values(2, '中文');
 SQL> select * from student;
 SQL> exit
