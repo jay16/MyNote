@@ -1,0 +1,26 @@
+Amercia Server：
+
+OS: CentOS 5.9 x64
+CPU: 2 cores
+RAM: 4gb
+HD: 50gb
+用户名/密码: root / k0HL1md40lC
+IP(s): [ifcfg-eth0(Linux)] =166.63.126.33
+ADDITIONAL IP(s)= 166.63.15.48 - 166.63.15.62 
+---------------------------------------------
+192.168.0.114
+
+OS: CentOS release 6.3 (Final) x32
+oracle:
+ 所有默认密码： 123456
+ 实例名: hello
+  [intfocus/focus_mail]
+
+--------------------------------------------
+192.168.0.155
+
+OS: CentOS release 5.9 (Final)
+oracle:
+  所有默认密码：focus_mail
+  SID：IntFocus
+  数据库名：focus_mail
