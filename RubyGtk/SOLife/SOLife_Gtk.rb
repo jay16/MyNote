@@ -52,7 +52,7 @@ end
 
 tree_view = Gtk::TreeView.new(trees_tore)
 tree_view.selection.mode = Gtk::SELECTION_SINGLE
-tree_view.expand_all
+#tree_view.expand_all
 tree_view.hadjustment.value=100
 tree_view.columns_autosize
 #SELECTION_NONE
@@ -62,26 +62,40 @@ scrolled_view.border_width = 2
 scrolled_view.add(tree_view)
 scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
+#树形结点
 renderer = Gtk::CellRendererText.new
 col = Gtk::TreeViewColumn.new(SOLife_name, renderer, :text => 0)
 tree_view.append_column(col)
 
+#右侧水平容器
+left_hbox = Gtk::HBox.new(homogeneous=false, spacing=0) 
+left_hbox.pack_start(scrolled_view,true,true,0)
 
-table = Gtk::Table.new(1,    2,    true)
+#记事本
+note_book = Gtk::Notebook.new
+note1  = Gtk::Label.new("notebooxk")
+note_book.append_page(note1, note1)
+
+
+#整体布局表格
+table = Gtk::Table.new(1, 4,true)
+
+
 
 
 options = Gtk::EXPAND|Gtk::FILL
-            # child, x1, x2, y1, y2, x-opt,   y-opt,   xpad, ypad
-table.attach(label1,  0,  1,  0,  1, options, options, 0,    0)
-table.attach(label2,  0,  1,  1,  2, options, options, 0,    0)
-table.attach(name,    ,  2,  1,  2, options, options, 0,    0)
+table.attach(left_hbox,  0,  1,  0,  1, options, options, 0,    0)
+table.attach(note_book,  1,  4,  0,  1, options, options, 0,    0)
+
 
 
 window = Gtk::Window.new("")
 
 window.signal_connect("destroy") { Gtk.main_quit }
-hbox = Gtk::HBox.new(homogeneous=false, spacing=0) 
-hbox.pack_start(scrolled_view,true,true,0)
-window.add(hbox)
+
+window.add(table)
+window.set_title("SoLife")
+window.border_width = 5
+window.set_size_request(800, 700)
 window.show_all
 Gtk.main
