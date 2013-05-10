@@ -59,3 +59,47 @@ mysql> quit
 mysqladmin -u用户名 -p旧密码 password 新密码
 mysql> UPDATE mysql.user SET password=PASSWORD(’新密码’) WHERE User=’root’;
 mysql> FLUSH PRIVILEGES;
+
+
+
+查看database打开状态
+SQL> select open_mode from v$database;
+OPEN_MODE----------
+MOUNTED
+SQL> alter database open;
+Database altered.
+查看当前用户
+SQL> show user;
+USER is "SYS"
+
+查看service_name
+show parameter service_name;
+查看用户系统权限
+select * from dba_sys_privs;
+select * from user_sys_privs;
+查看用户对象权限
+select * from dba_tab_privs;
+select * from all_tab_privs;
+select * from user_tab_privs;
+查看所有角色
+select * from dba_roles;
+查看用户所拥有的角色
+select * from dba_role_privs;
+select * from user_role_privs;
+查看当前用户的缺省表空间
+select username,default_tablespace from user_users;
+查看表
+select table_name from user_tables; //当前用户的表       
+select table_name from all_tables; //所有用户的表   
+select table_name from dba_tables; //包括系统表
+select table_name from dba_tables where owner='用户名'
+查看表结构
+desc table_name;
+sqlplus远程连接
+sqlplus usr/pwd@//host:port/sid
+sqlplus test/test@192.168.0.114:1521/mail
+connect test/test@//192.168.0.114:1521/mail
+
+插入列
+SQL> alter table student add email varchar(50);
+Table altered.

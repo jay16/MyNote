@@ -1,0 +1,24 @@
+http://www.ibm.com/developerworks/cn/data/tutorials/dm-1110wumd2/section2.html
+derby数据库交互界面：
+ \Program Files\ibm\cognos\c10\derby10.1.2.1\bin\ij.bat   (以windows系统为例）
+运行该脚本可以出现命令行。
+
+连接数据库：（连接成功就进入cm数据库中）
+connect 'jdbc:derby://localhost:1527/cm;create=false;user=cognos;password=cognos';
+
+Cognos默认情况下在derby中创建了一个数据库，数据库名为cm，用户/密码：cognos/cognos。
+create=false表示连接到已有的数据库，如果不存在则失败。
+需要注意的是，整个连接字串需要使用单引号引起来，另外就是参数之间需要使用分号隔开，最后，所有的语句都要以分号结尾。
+
+新建一个数据库cognoscm（create设置为true）
+connect 'jdbc:derby://localhost:1527/cognoscm;create=true;user=cognos;password=cognos';
+
+基本操作
+ij> create table derbyDB(num int, addr varchar(40));
+ij> insert into derbyDB values (1956,'Webster St.');
+ij> insert into derbyDB values (1910,'Union St.');
+ij> update derbyDB set num=180, addr='Grand Ave.' where num=1956;
+ij> select * from derbyDb;
+
+运行SQL脚本
+ij> run 'c:\insert.sql';
