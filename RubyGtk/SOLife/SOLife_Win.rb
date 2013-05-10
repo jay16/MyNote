@@ -14,10 +14,6 @@ require './SOLife_Action.rb'
 treestore = Gtk::TreeStore.new(String, String, Integer)
 
 
-#根据SOLife_dir显示目录
-Dir.foreach(SOLife_dir) do |item|
-  
-end
 note_load.each do |one|
   # Append a second toplevel row and fill in some data
   parent = treestore.append(nil)
