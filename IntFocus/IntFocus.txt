@@ -1,4 +1,4 @@
-Amercia Server：
+美国服务
 
 OS: CentOS 5.9 x64
 CPU: 2 cores
@@ -8,6 +8,14 @@ HD: 50gb
              webmail / openfind&focusmail
 IP(s): [ifcfg-eth0(Linux)] =166.63.126.33
 ADDITIONAL IP(s)= 166.63.15.48 - 166.63.15.62 
+---------------------------------------------
+台湾服务器
+
+113.196.70.18
+
+OS: CentOS release 5.6 (Final)
+用户名/密码: root    / Focu$_01
+
 ---------------------------------------------
 192.168.0.114
 
