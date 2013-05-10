@@ -1,0 +1,21 @@
+Alex Chen 陈右铮
+
+重要邮件备忘
+**************************************
+验证名单：
+
+用户名/密码: root / k0HL1md40lC
+             webmail / openfind&focusmail
+IP(s): [ifcfg-eth0(Linux)] =166.63.126.33
+--------------------------------------
+運行方式：
+
+/home/webmail/alex/chkuser.pl [檔案名稱]
+
+運行完後會自動呼叫 smtp_return.pl 確認郵箱狀態
+返回的結果會是 [檔名.域名_result.csv] ,
+例如 2013.csv.tom.com_result.csv
+
+ps. 新浪郵箱比較麻煩，因此請額外處理
+
+***************************************
