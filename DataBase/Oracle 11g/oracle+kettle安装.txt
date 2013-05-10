@@ -201,7 +201,7 @@ DECLINE_SECURITY_UPDATES=true
 [root@oracle11g ~]$ vi /home/work/oracle/response/dbca.rsp
  RESPONSEFILE_VERSION = "11.2.0"  //不能更改
  OPERATION_TYPE = "createDatabase"
- GDBNAME = "mail_dev"  //数据库的名字
+ GDBNAME = "mail"  //数据库的名字,好像也不允许_
  SID = "IntFocus"    //对应的实例名字,实例名只允许使用字母
  TEMPLATENAME = "General_Purpose.dbc" //建库用的模板文件
  SYSPASSWORD = "Focus_Mail"   //SYS管理员密码
