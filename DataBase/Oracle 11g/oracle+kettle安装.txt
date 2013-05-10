@@ -201,19 +201,20 @@ DECLINE_SECURITY_UPDATES=true
 [root@oracle11g ~]$ vi /home/work/oracle/response/dbca.rsp
  RESPONSEFILE_VERSION = "11.2.0"  //不能更改
  OPERATION_TYPE = "createDatabase"
- GDBNAME = "FocusMail"  //数据库的名字
- SID = "IntFocus"    //对应的实例名字
+ GDBNAME = "mail_dev"  //数据库的名字
+ SID = "IntFocus"    //对应的实例名字,实例名只允许使用字母
  TEMPLATENAME = "General_Purpose.dbc" //建库用的模板文件
- SYSPASSWORD = "focus_mail"   //SYS管理员密码
- SYSTEMPASSWORD = "focus_mail"  //SYSTEM管理员密码
+ SYSPASSWORD = "Focus_Mail"   //SYS管理员密码
+ SYSTEMPASSWORD = "Focus_Mail"  //SYSTEM管理员密码
  DATAFILEDESTINATION = /home/work/oracle/oracle_data //数据文件存放目录
  RECOVERYAREADESTINATION=/home/work/oracle/oradata_back //恢复数据存放目录
  CHARACTERSET = "ZHS16GBK"   //字符集，重要!!! 建库后一般不能更改，所以建库前要确定清楚。
  TOTALMEMORY = "5120"    //oracle内存5120MB
+[oracle@oracle11g ~]$ export ORACLE_SID=IntFocus
 [oracle@oracle11g ~]$ $ORACLE_HOME/bin/dbca -silent -responseFile /home/work/oracle/response/dbca.rsp
 
 九、修改数据库为归档模式(归档模式才能热备份，增量备份)
-[oracle@oracle11g ~]$ export ORACLE_SID=mail
+[oracle@oracle11g ~]$ export ORACLE_SID=IntFocus
 [oracle@oracle11g ~]$ sqlplus / as sysdba
 SQL>shutdown immediate;
 SQL>startup mount;
