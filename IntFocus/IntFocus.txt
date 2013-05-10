@@ -21,9 +21,8 @@ oracle:
 
 OS: CentOS release 5.9 (Final)
 oracle:
-  所有默认密码：focus_mail
+  所有默认密码：123456
  GDBNAME        = "mail_dev"            //数据库的名字
  SID            = "IntFocus"            //对应的实例名字,实例名只允许使用字母
- TEMPLATENAME   = "General_Purpose.dbc" //建库用的模板文件
  SYSPASSWORD    = "Focus_Mail"          //SYS管理员密码
  SYSTEMPASSWORD = "Focus_Mail"          //SYSTEM管理员密码
