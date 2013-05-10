@@ -1,0 +1,25 @@
+[root@localhost tools]$ wget -c http://download.oracle.com/otn-pub/java/jdk/7u9-b05/jdk-7u9-linux-i586.tar.gz?AuthParam=1353847286_f4981599ef681c359d47228c07196531
+[root@localhost tools]$ mkdir /usr/lib/jvm
+[root@localhost tools]$ tar -zxvf ./jdk-7u2-linux-i586.tar.gz -C /usr/lib/jvm
+[root@localhost tools]$ cd /usr/lib/jvm
+[root@localhost jvm]$ mv jdk1.7.0 /java-7-sun
+[root@localhost jvm]$ vi ~/.bashrc 添加
+export JAVA_HOME=/usr/lib/jvm/java-7-sun  
+export JRE_HOME=${JAVA_HOME}/jre  
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
+export PATH=${JAVA_HOME}/bin:$PATH
+
+[root@localhost jvm]$ source ~/.bashrc
+[root@localhost jvm]$ java -version
+java version "1.7.0_09"
+Java(TM) SE Runtime Environment (build 1.7.0_09-b05)
+Java HotSpot(TM) Server VM (build 23.5-b02, mixed mode)
+
+若出现下面报错
+[root@localhost java-7-sun]# java -version
+Error: dl failure on line 864
+Error: failed /usr/lib/jvm/java-7-sun/jre/lib/i386/server/libjvm.so, because /usr/lib/jvm/java-7-sun/jre/lib/i386/server/libjvm.so: cannot restore segment prot after reloc: Permission denied
+解决方法：关闭selinux即可解决。
+
+# vi /etc/sysconfig/selinux
+修改：SELINUX=enforcing 为：SELINUX=disable 或 permissive 禁用SeLinux, 再重启运行。

@@ -105,8 +105,8 @@ endif
 
 
 [root@oracle11g ~]$ cd /home/tools/oracle
-[root@oracle11g ~]$ unip linux.x64_11gR2_database_1of2.zip
-[root@oracle11g ~]$ unip linux.x64_11gR2_database_2of2.zip
+[root@oracle11g ~]$ unzip linux.x64_11gR2_database_1of2.zip
+[root@oracle11g ~]$ unzip linux.x64_11gR2_database_2of2.zip
 //解压后会增加一个database目录
 
 四、创建oracle用户
@@ -117,7 +117,7 @@ endif
 
 [root@oracle11g ~]$ su - oracle
 Enter Password:
-[oracle@oracle11g ~]$ vi .bash_profile
+[oracle@oracle11g ~]$ vi ~/.bash_profile
 ORACLE_SID=ora11g;export ORACLE_SID
 ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
 
@@ -127,7 +127,7 @@ ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
 PATH=$PATH:$ORACLE_HOME/bin:$HOME/bin;export PATH
 
 umask 022
-[oracle@oracle11g ~]$ source .bash_profile
+[oracle@oracle11g ~]$ source ~/.bash_profile
 
 [oracle@oracle11g ~]$ exit
 [root@oracle11g ~]$ mkdir -p /home/work/oracle
