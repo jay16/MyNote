@@ -19,3 +19,6 @@ IP(s): [ifcfg-eth0(Linux)] =166.63.126.33
 ps. 新浪郵箱比較麻煩，因此請額外處理
 
 ***************************************
+ ps axuw|grep return
+ ls -alrt  ==  ll
+ cp -p /home/webmail/alex/chkuser.pl /home/webmail/alex/smtp_reture.pl .
