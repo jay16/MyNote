@@ -45,9 +45,13 @@ eof
 /home/work/oracle/product/11.2.0/db_1/bin/lsnrctl start
 
 
-"oracle_db_start.sh" 21L, 475C written                            
+"oracle_db_start.sh" 21L, 475C written    
 
-4.本机执行启动oracle数据库脚本oracle_db_start.sh,必须使用root用户
+4. 赋予脚本可执行权限
+
+[oracle@oracle11g ~]$ chmod +x oracle_db_start.sh                         
+
+5.本机执行启动oracle数据库脚本oracle_db_start.sh,必须使用root用户
 
 [oracle@oracle11g ~]$ exit
 exit
