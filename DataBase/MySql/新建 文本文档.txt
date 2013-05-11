@@ -1,0 +1,3 @@
+查看今天插入的数据
+
+select * from members where to_days(now())=to_days(created_at);
