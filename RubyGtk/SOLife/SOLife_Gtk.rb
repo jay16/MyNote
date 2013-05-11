@@ -92,20 +92,20 @@ text_view = Gtk::TextView.new
 text_view.buffer.text = "Your 1st Gtk::TextView widget!"
 text_font = Pango::FontDescription.new("Monospace Normal 10")
 text_view.modify_font(text_font)
+
+scrolled_text = Gtk::ScrolledWindow.new
+scrolled_text.border_width = 2
+scrolled_text.add(text_view)
+scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 #记事本填充
-note_book.append_page(text_view,note_label)
+note_book.append_page(scrolled_text,note_label)
 
 #整体布局表格
 table = Gtk::Table.new(1, 4,true)
 
-
-
-
 options = Gtk::EXPAND|Gtk::FILL
 table.attach(left_hbox,  0,  1,  0,  1, options, options, 0,    0)
 table.attach(note_book,  1,  4,  0,  1, options, options, 0,    0)
-
-
 
 window = Gtk::Window.new("")
 

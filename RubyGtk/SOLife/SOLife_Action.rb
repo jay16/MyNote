@@ -1,5 +1,5 @@
 
-
+#目录节点被点击反应
 def row_activated(tree_view,tree_store,text_view,window,note_label)
     selection = tree_view.selection
     iter = selection.selected    
@@ -8,9 +8,12 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     
     node_name = iter[0] 
     node_path = iter[1]
+    #puts node_path
     if File.file? node_path
       note_label.text = node_name
-      text_view.buffer.text = File.readlines(node_path).join("").to_s.encode('UTF-8')
+      file_content = File.readlines(node_path).join("").to_s
+      #file_content = (file_content.encoding.to_s == "GB2312" ? file_content.encode('UTF-8') : file_content)
+      text_view.buffer.text = file_content.encode('UTF-8')
       #puts File.readlines(node_path).join('\n')
     else
       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
@@ -21,7 +24,7 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
         #展开该节点目录
         tree_view.expand_row(row_path,true)
         #有父节点取得父节点，若没有，则取本身
-        parent = iter.parent ? iter.parent : iter
+        parent = iter #iter.parent ? iter.parent : iter
 
         tree_model = tree_view.model
         parent_path = tree_model.get_iter(parent.to_s)
@@ -31,20 +34,27 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
         if first_child[0] == "loading" and first_child[1] == "loading" then
           first_child[0] = "done"
           first_child[1] = "done"
+          return unless File.directory?(node_path)
           Dir.foreach(node_path) do |file|
             next if file == "." or file == ".."
             child = tree_model.append(parent_path)
-            if File.directory?(file)  then
-              child[0] = "dir-"+file
-              child[1] = node_path+"\\"+file
+            file_path = node_path+"\\"+file
+            if File.directory?(file_path)  then
+              child[0] = "D_"+file
+              child[1] = file_path
+              #文件夹目录添加Loading标识
+              tree_lt = tree_store.append(child)
+              tree_lt[0] = "loading"
+              tree_lt[1] = "loading"
             else
-              child[0] = "file-"+file
-              child[1] = node_path+"\\"+file
+              child[0] = "F_"+file
+              child[1] = file_path
             end  #if
           end    #Dir.foreach
         end      #if first_child
       else
-        
+        #缩回目录 
+        tree_view.collapse_row(row_path)
       end
     end
    
@@ -53,47 +63,16 @@ end
 def save_file(tree_view,tree_store,text_view,window,cur_dir) 
  selection = tree_view.selection
  if iter = selection.selected        
-   row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
-   name_path = row_ref.path.to_str.split(":")
-   if name_path.length==3
-     temp_path = row_ref.path.to_str.split(":")
-     str_path = Array.new
-     name_path.each do |item|
-       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(temp_path.join(":").to_s))
-       str_path.push(row_ref.model.get_iter(row_ref.path)[0])
-       temp_path.delete_at(temp_path.length-1)
-     end
-     str_path.reverse!
-     yml_file = File.join(cur_dir,"note",str_path[0],str_path[1],"#{str_path[2]}.yml")
-     db = YAML::Store.new(yml_file)
-     db.transaction do
-       db["content"] = text_view.buffer.text
-     end
-     window.set_title("SoLife [#{str_path[0]}][#{str_path[1]}][#{str_path[2]}] [saved]")
-     window.show_all
-   else
-    window.set_title("SoLife #{name_path.join(':')} [PathError]")
-    window.show_all
-   end
+   window.set_title("SoLife #{iter[1] ? iter[1]+'[saved]' : '' }")
+   window.show_all
  end
 end
 
+#编辑文本时状态
 def write_statu(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
  if iter = selection.selected        
-   row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
-   name_path = row_ref.path.to_str.split(":")
-   temp_path = row_ref.path.to_str.split(":")
-   str_path = Array.new
-   name_path.each do |item|
-     row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(temp_path.join(":").to_s))
-     str_path.push(row_ref.model.get_iter(row_ref.path)[0])
-     temp_path.delete_at(temp_path.length-1)
-   end
-   str_path.reverse!
-   window.set_title("SoLife [#{str_path[0]}][#{str_path[1]}][#{str_path[2]}] [writing]") if str_path.length==3
-   window.set_title("SoLife [#{str_path[0]}][#{str_path[1]}] [writing]") if str_path.length==2
-   window.set_title("SoLife [#{str_path[0]}] [writing]") if str_path.length==1
+   window.set_title("SoLife #{iter[1] ? iter[1] : ''}")
    window.show_all
  else
  end
