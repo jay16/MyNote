@@ -1,22 +1,87 @@
-[最简单的] ssh安全的自动登录
-2005-5-21 by wwy
-###########################
+ssh安全的自动登录
 
+说明：
 A为本地主机(即用于控制其他主机的机器) ;
-B为远程主机(即被控制的机器Server), 假如ip为172.24.253.2 ;
+B为远程主机(即被控制的机器Server), 假如ip为166.63.126.33 ;
 A和B的系统都是Linux
 
+
 在A上的命令:
-# ssh-keygen -t rsa (连续三次回车,即在本地生成了公钥和私钥,不设置密码)
-# ssh root@172.24.253.2 "mkdir .ssh;chmod 0700 .ssh" (需要输入密码)
-# scp ~/.ssh/id_rsa.pub root@172.24.253.2:.ssh/id_rsa.pub (需要输入密码)
+
+1.生成本地公钥与私钥
+
+[root@oracle11g ~]# ssh-keygen -t rsa (连续三次回车,即在本地生成了公钥和私钥,不设置密码)
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+65:9c:5b:6d:e5:d1:00:3b:32:5a:8d:07:26:82:ea:f6 root@oracle11g
+The key's randomart image is:
++--[ RSA 2048]----+
+|     .. . o ...oo|
+|    .  . + = o oo|
+|   .      X * o .|
+|  .      = * o   |
+| .      S .      |
+|  o              |
+| . .             |
+|    E            |
+|                 |
++-----------------+
+
+2.在目标主机创建.ssh文件夹，并修改权限
+
+[root@oracle11g ~]# ssh webmail@166.63.126.33 "mkdir .ssh;chmod 0700 .ssh"  (需要输入密码)
+
+reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
+webmail@166.63.126.33's password: 
+mkdir: cannot create directory `.ssh': File exists 
+
+(若.ssh文件已存在，导致命令没有执行，则不创建.ssh)
+[root@oracle11g ~]# ssh webmail@166.63.126.33 "chmod 0700 .ssh" (需要输入密码)
+
+reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
+webmail@166.63.126.33's password: 
+[root@oracle11g ~]# 
+
+3.把本地公钥拷贝至目标服务器
+
+[root@oracle11g ~]# scp ~/.ssh/id_rsa.pub webmail@166.63.126.33:.ssh/id_rsa.pub (需要输入密码)
+
+reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
+webmail@166.63.126.33's password: 
+id_rsa.pub                                        100%  396     0.4KB/s   00:00 
+
+
 
 在B上的命令:
-# touch /root/.ssh/authorized_keys2 (如果已经存在这个文件, 跳过这条)
-# cat /root/.ssh/id_rsa.pub  >;>; /root/.ssh/authorized_keys2 (将id_rsa.pub的内容追加到 authorized_keys2 中)
+
+1.查看.ssh文件夹下是否有authorized_keys文件
+
+[webmail@cloud log]$ ls ~/.ssh/
+authorized_keys  id_rsa.pub
+
+(若没有authorized_keys，则创建,若有跳过该命令)
+[webmail@cloud log]$ touch ~/.ssh/authorized_keys
+
+2.将id_rsa.pub的内容追加到 authorized_keys 中
+
+[webmail@cloud log]$ cat ~/.ssh/id_rsa.pub  >> ~/.ssh/authorized_keys  
+
 
 回到A机器:
-# ssh root@172.24.253.2 (不需要密码, 登录成功)
+
+ssh登陆目标服务器(不需要密码, 登录成功)
+
+[root@oracle11g ~]# ssh webmail@166.63.126.33
+
+reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
+Last login: Fri May 10 21:50:52 2013 from 220.248.30.60
+[webmail@cloud ~]$ 
 
 如果能保护好自己的私钥, 这种方法相对在shell上输入密码, 要安全一些
 
