@@ -24,8 +24,9 @@ SQL> alter table upload_temp rename to members_temp;
 SQL> alter table student add email varchar(50);	
 删除列
 alter table dog_day_bi drop column time_tag
-修改列结构
+修改列结构 (修改类型、列名)
 SQL> alter table student modify (email varchar(150))
+SQL> alter table dog_day_data rename column camaign_id to campaign_id
 复制表结构
 SQL> create table dog_day_bi as select * from log_bi where 1=2
 查看第4行到第7行的数据

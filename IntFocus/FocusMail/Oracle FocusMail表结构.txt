@@ -364,6 +364,8 @@ create table dog_day_org (content varchar(4000))
 
 create table dog_day_bi(to_email varchar(255),log_time varchar(255),eml_file varchar(255),mail_type varchar(255),campaign_id varchar(255),campaign_subject varchar(1000),log_cm varchar(255))
 
+create table dog_day_data(campaign_id number(10),send_num number(10),send_ok number(10),time_tag varchar(255))
+
 create table dog_day_data_temp(campaign_id number(10),send_num number(10),send_ok number(10),time_tag varchar(255))
 
 create table dog_totle_bi(to_email varchar(255),log_time varchar(255),eml_file varchar(255),mail_type varchar(255),campaign_id varchar(255),campaign_subject varchar(1000),log_cm varchar(255))
