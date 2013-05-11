@@ -1,16 +1,24 @@
 
 
-def row_activated(tree_view,text_view,window,note_label)
+def row_activated(tree_view,tree_store,text_view,window,note_label)
  selection = tree_view.selection
  if iter = selection.selected    
     node_name = iter[0] 
     node_path = iter[1]
     if File.file? node_path
       note_label.text = node_name
-      text_view.buffer.text = File.readlines(node_path).join("").to_s.force_encoding("utf-8")
+      text_view.buffer.text = File.readlines(node_path).join("").to_s.encode('UTF-8')
       #puts File.readlines(node_path).join('\n')
     else
-      puts "dir"
+      row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
+      #展开该节点目录
+      tree_view.expand_row(row_ref.path,true)
+      #动态插入目录子节点
+      parent = iter.parent
+      row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(parent.to_s))
+      child = row_ref.model.get_iter(row_ref.path)[0]
+      tree_store.insert(iter, 1, "insert")
+
     end
 
  end

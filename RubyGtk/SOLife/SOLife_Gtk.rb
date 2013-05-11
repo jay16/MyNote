@@ -36,7 +36,7 @@ generate_catalogue(SOLife_dir,SOLife_dir,catalogue,-1)
 level_one = catalogue.select { |item| item[-1] == 1 }
 
 
-#为减少压力只显示两层
+#为减少压力只显示一层
 tree_store = Gtk::TreeStore.new(String, String, Integer)
 
 level_one.each do |lo|
@@ -45,13 +45,20 @@ level_one.each do |lo|
   tree_lo[0] = lo[0] #tree_level_one nodename
   tree_lo[1] = lo[1] #tree_level_one nodepath
   #tree_lo[2] = lo[2] #tree_level_one nodetype
+  if lo[2]=="dir" then
+   tree_lt = tree_store.append(tree_lo)
+   tree_lt[0] = "loading"
+   tree_lt[1] = "loading"
+  end
+=begin
   level_two = catalogue.select { |item| File.dirname(item[1]) == lo[1] }
   level_two.each do |lt|
     tree_lt = tree_store.append(tree_lo)
     tree_lt[0] = lt[0]
     tree_lt[1] = lt[1]
-    #tree_lt[2] = lt[2]
+    tree_lt[2] = lt[2]
   end
+=end
 end
 
 
@@ -104,9 +111,10 @@ window = Gtk::Window.new("")
 
 #点击关闭
 window.signal_connect("destroy") { Gtk.main_quit }
-#目录文件被点击时，使用记事本打开
-tree_view.signal_connect("row-activated") { row_activated(tree_view,text_view,window,note_label)}
-
+#目录被双击时，使用记事本打开
+tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_view,window,note_label)}
+#目录被单击时，使用记事本打开
+tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_view,window,note_label) }
 window.add(table)
 window.set_title("SoLife")
 window.border_width = 5
