@@ -14,11 +14,27 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
       #展开该节点目录
       tree_view.expand_row(row_ref.path,true)
       #动态插入目录子节点
-      parent = iter.parent
-      row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(parent.to_s))
-      child = row_ref.model.get_iter(row_ref.path)[0]
-      tree_store.insert(iter, 1, "insert")
-
+      if iter.parent then
+        parent = iter.parent
+      else
+        parent = iter
+      end
+      tree_model = tree_view.model
+      parent_path = tree_model.get_iter(parent.to_s)
+      parent_path
+=begin     
+      Dir.foreach(node_path) do |file|
+        next if file == "." or file == ".."
+        child = tree_model.append(parent_path)
+        if File.directory?(file)  then
+          child[0] = "dir-"+file
+          child[1] = node_path+"\\"+file
+        else
+          child[0] = "file-"+file
+          child[1] = node_path+"\\"+file
+        end
+      end
+=end      
     end
 
  end
