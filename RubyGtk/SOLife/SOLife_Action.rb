@@ -7,8 +7,7 @@ def row_activated(tree_view,text_view,window,note_label)
     node_path = iter[1]
     if File.file? node_path
       note_label.text = node_name
-      text_view.buffer.text = File.readlines(node_path).join("").to_s
-      text_view.buffer.text = "hello no chinese"
+      text_view.buffer.text = File.readlines(node_path).join("").to_s.force_encoding("utf-8")
       #puts File.readlines(node_path).join('\n')
     else
       puts "dir"
