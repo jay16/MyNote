@@ -1,4 +1,6 @@
-/home/work/kettle_jobs/Upload_CSV_2_Oracle_2_Mysql
+%s+E:\\FocusMailBk\\kettle_114\\FocusMailJobs\\Upload_CSV_2_Oracle_2_Mysql_MAIL206_ALEX\\+/home/work/kettle_jobs/Upload_CSV_2_Oracle_2_Mysql_MV/+gc
+
+%s+E:\\FocusMailBk\\kettle_114\\FocusMailJobs\\MySql_Sync_2_Oracle\\+/home/work/kettle_jobs/MySql_Sync_2_Oracle+gc
 
 导出数据库（114服务器）
 
