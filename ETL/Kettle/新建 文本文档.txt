@@ -1,0 +1,12 @@
+错误提示：
+
+org.pentaho.di.core.exception.KettleDatabaseException: 
+2013/05/11 16:49:59 - mysql_output_tracks.0 - ERROR (version 4.3.0-stable, build 16786 from 2012-04-24 14.11.32 by buildguy) : Couldn't get row from result set
+2013/05/11 16:49:59 - mysql_output_tracks.0 - ERROR (version 4.3.0-stable, build 16786 from 2012-04-24 14.11.32 by buildguy) : 
+2013/05/11 16:49:59 - mysql_output_tracks.0 - ERROR (version 4.3.0-stable, build 16786 from 2012-04-24 14.11.32 by buildguy) : Unable to get value 'Date' from database resultset, index 3
+2013/05/11 16:49:59 - mysql_output_tracks.0 - ERROR (version 4.3.0-stable, build 16786 from 2012-04-24 14.11.32 by buildguy) : Value '0000-00-00' can not be represented as java.sql.Timestamp
+
+原因：
+
+要导的数据库中有created_at 或updated_at为空
+去数据库随便赋个时间值就可以
