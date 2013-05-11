@@ -1,0 +1,27 @@
+修改Linux系统时间
+
+1.查看当前系统时间
+
+[root@oracle11g crond]# date
+Fri May 10 00:12:36 CST 2013
+
+2.设置系统日期为2013年5月11日
+
+[root@oracle11g crond]# date -s 05/11/2013
+Sat May 11 00:00:00 CST 2013
+
+3.设置系统时间为13点33分30厘
+[root@oracle11g crond]# date -s 13:33:30
+Sat May 11 13:33:30 CST 2013
+
+4.再查看当前系统时间
+
+[root@oracle11g crond]# date
+Sat May 11 13:33:32 CST 2013
+
+5.系统启动时，操作系统时间从CMOS中读取系统时间，如果系统重启刚才对系统时间的设置可以不会写入CMOS中，使用命令clock -w强制把系统时间写CMOS
+
+[root@oracle11g crond]# clock -w
+[root@oracle11g crond]# date
+Sat May 11 13:33:56 CST 2013
+[root@oracle11g crond]# 
