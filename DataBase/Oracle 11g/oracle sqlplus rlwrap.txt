@@ -10,9 +10,26 @@ linux上的sqlplus，操作很不方便，主要就是退格键还有上下键不可用
 [root@oracle11g tools]# tar -xzvf rlwrap-0.37.tar.gz 
 [root@oracle11g tools]# cd rlwrap-0.37
 [root@oracle11g rlwrap-0.37]# ./configure 
+-----------------------------------------------
+若configure过程中报下面错误：
+checking for readline in -lreadline... no
+configure: error: 
+
+You need the GNU readline library(ftp://ftp.gnu.org/gnu/readline/ ) to build
+this program!
+解决方案：
+[root@oracle11g rlwrap-0.37]# rpm -qa|grep readline
+readline-5.1-3.el5
+[root@oracle11g rlwrap-0.37]# yum install readline-devel
+----------------------------------------------------
+
 [root@oracle11g rlwrap-0.37]# make 
 [root@oracle11g rlwrap-0.37]# make check
 [root@oracle11g rlwrap-0.37]# make install
+[root@oracle11g rlwrap-0.37]# whereis rlwrap
+rlwrap: /usr/local/bin/rlwrap
+[root@oracle11g rlwrap-0.37]# which rlwrap
+/usr/local/bin/rlwrap
 
 设别名并加入到oracle用户的环境变量中(/home/oracle为$ORACLE_BASE)
 
