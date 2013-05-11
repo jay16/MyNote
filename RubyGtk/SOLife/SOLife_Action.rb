@@ -1,8 +1,11 @@
 
 
 def row_activated(tree_view,tree_store,text_view,window,note_label)
- selection = tree_view.selection
- if iter = selection.selected    
+    selection = tree_view.selection
+    iter = selection.selected    
+    #没有选中值则返回
+    return unless iter
+    
     node_name = iter[0] 
     node_path = iter[1]
     if File.file? node_path
@@ -11,33 +14,39 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
       #puts File.readlines(node_path).join('\n')
     else
       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
-      #展开该节点目录
-      tree_view.expand_row(row_ref.path,true)
-      #动态插入目录子节点
-      if iter.parent then
-        parent = iter.parent
-      else
-        parent = iter
-      end
-      tree_model = tree_view.model
-      parent_path = tree_model.get_iter(parent.to_s)
-      parent_path
-=begin     
-      Dir.foreach(node_path) do |file|
-        next if file == "." or file == ".."
-        child = tree_model.append(parent_path)
-        if File.directory?(file)  then
-          child[0] = "dir-"+file
-          child[1] = node_path+"\\"+file
-        else
-          child[0] = "file-"+file
-          child[1] = node_path+"\\"+file
-        end
-      end
-=end      
-    end
+      row_path = row_ref.path
+      is_expand = tree_view.row_expanded?(row_path)
+      #判断该节点目录是否展开
+      if !is_expand then 
+        #展开该节点目录
+        tree_view.expand_row(row_path,true)
+        #有父节点取得父节点，若没有，则取本身
+        parent = iter.parent ? iter.parent : iter
 
- end
+        tree_model = tree_view.model
+        parent_path = tree_model.get_iter(parent.to_s)
+        #该目录下第一个节点
+        first_child = iter.first_child
+        #若第一个节点都为loading说明该目录子节点还没有加载
+        if first_child[0] == "loading" and first_child[1] == "loading" then
+          first_child[0] = "done"
+          first_child[1] = "done"
+          Dir.foreach(node_path) do |file|
+            next if file == "." or file == ".."
+            child = tree_model.append(parent_path)
+            if File.directory?(file)  then
+              child[0] = "dir-"+file
+              child[1] = node_path+"\\"+file
+            else
+              child[0] = "file-"+file
+              child[1] = node_path+"\\"+file
+            end  #if
+          end    #Dir.foreach
+        end      #if first_child
+      else
+        
+      end
+    end
    
 end
 
