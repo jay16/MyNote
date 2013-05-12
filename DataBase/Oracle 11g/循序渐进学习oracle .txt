@@ -1,0 +1,49 @@
+  1. 需要了解数据库原理基本知识，明白行、列概念，有关系型数据库知识。
+
+    2. 有环境学习数据库，如自己XP上安装，或公司的小型机，或PC，linux,solaris,
+
+    AIX,或hp-unix等等环境。
+
+    3. 开始学习sql基础。DML，DDL，DCL，等等多加练习。先过sql这一关。
+
+    4. 安装oracle,9i以上版本吧，10g也可以，但资料上，学习中遇到问题解决方面有一定的难度，因为用的人还不是最多的。（$oracle_base,$oracle_home，SID)这三个概念一定要清楚。
+
+    5. 开始学习oracle了，基础的启动关闭（才开始只要会startup,和shutdown immediate就可以了，),再学习SQLplus（设定环境变量，设定格式），同时学习iSQL*PLUS(这个要事先启动httpserver服务）。OK，你的基本已经搞定。
+
+    6. oracle的架构学习：instance +db= oracle server.
+
+    instance = SGA+ background processes.
+
+    database= controlfile+datafile +redolog file
+
+    一定要明白.   了解了一些基本概念了，你就会问表空间是什么，表呢，日志怎么管理，control file怎么看不了，oracle是怎么启动的，怎么关闭的，这样关闭有什么好处？听说有表有index，这是什么？听说oracle有五种对象，是什么？有五种常用约束是什么？ok,学知识就是越学问题越多。
+
+    7.现在你需要的不是解决以上问题，是网络配置，要了解listener.ora,tnsnames.ora,sqlnet.ora 因为你要用数据库，或网络中的DB，你就要会配置这三个文件。先解决这个，你就可以无时无地地学习oracle了。
+
+    8. 解决6中所提到的以上问题。学习oracle的sql,当然与标准兼容（9i兼容sql99).
+
+    9. 经过实战：你慢慢了解了：
+
+    表，索引，视图，索引和同义词，这是oracle5类对象。
+
+    主键，外键，not null,unique,check 五种约束。
+
+    startup nomount,mount,alter database open 三步启动。
+
+    关闭的四种方法。
+
+    sysdba用户的作用，密码创建与修改。
+
+    建立用户，角色，授权，回收权限。
+
+    tablespace,segment,extent ,db block. datafile,os block关系。
+
+    tablespace,datafile。redolog 管理，controlfile的备份。
+
+    对table、index、视图的细化学习。包括存储参数。
+
+    对undo tablespace、rollback segment,学习。
+
+    oracle字符集学习。
+
+    OK，你可先删除DB，再创建DB了。因为在创建过程中用到的东西你基本了解了。
