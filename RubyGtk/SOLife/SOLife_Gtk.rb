@@ -10,6 +10,10 @@ current_dir = Dir.pwd
 SOLife_dir  = "E:\\MyWork\\MyNote\\"
 SOLife_name = File.basename(SOLife_dir)
 
+class TextEditor
+  attr_accessor :text_view, :note_label, :search
+end
+
 #根据SOLife_dir显示目录
 def generate_catalogue(root_dir,note_path,catalogue_array,level)
   level += 1
@@ -51,15 +55,6 @@ level_one.each do |lo|
    tree_lt[0] = "loading"
    tree_lt[1] = "loading"
   end
-=begin
-  level_two = catalogue.select { |item| File.dirname(item[1]) == lo[1] }
-  level_two.each do |lt|
-    tree_lt = tree_store.append(tree_lo)
-    tree_lt[0] = lt[0]
-    tree_lt[1] = lt[1]
-    tree_lt[2] = lt[2]
-  end
-=end
 end
 
 
@@ -89,6 +84,7 @@ left_hbox.pack_start(scrolled_view,true,true,0)
 note_book = Gtk::Notebook.new
 note_label  = Gtk::Label.new("notebooxk")
 #记事本内容
+ed = TextEditor.new
 text_view = Gtk::TextView.new
 text_view.buffer.text = "Your 1st Gtk::TextView widget!"
 text_font = Pango::FontDescription.new("Monospace Normal 10")
@@ -116,18 +112,24 @@ window.signal_connect("destroy") { Gtk.main_quit }
 tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_view,window,note_label)}
 #目录被单击时，使用记事本打开
 tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_view,window,note_label) }
-#ctrl+s保存快捷键
+#ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   save_file(tree_view,tree_store,text_view,window)
 }
-#ctrl+z重新加文本快捷键
+#ctrl+z重新加载文本快捷键
 ctrl_z = Gtk::AccelGroup.new
 ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   reload_file(tree_view,tree_store,text_view,window)
 }
+#ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
+ctrl_n = Gtk::AccelGroup.new
+ctrl_n.connect(Gdk::Keyval::GDK_N, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  new_file(text_view,note_label,window)
+}
 window.add_accel_group(ctrl_s)
 window.add_accel_group(ctrl_z)
+window.add_accel_group(ctrl_n)
 #编辑文本状态
 text_view.buffer.signal_connect("changed"){ write_statu(tree_view,tree_store,text_view,window) }
 

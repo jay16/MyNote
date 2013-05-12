@@ -12,12 +12,11 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     if File.file? node_path
       note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
-      #file_content = (file_content.encoding.to_s == "GB2312" ? file_content.encode('UTF-8') : file_content)
-      file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
-      puts "encoding:"+file_content.encoding.to_s
-
+      #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
+      #加载文本内容
+      text_view.buffer.text =  file_content
       #如果文本内容与控件加载内容数量不同表示文本内容格式不对
-      if(text_view.buffer.text.length != file_content.length )
+      if(text_view.buffer.text.length == 0 and file_content.length > 0)
         #强制转换编码重新写入文本
         file = File.open(node_path+"_new","w")
         file.puts file_content.encode("UTF-8")
@@ -77,6 +76,7 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
    
 end
 
+#保存文本
 def save_file(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
  if iter = selection.selected
@@ -89,7 +89,7 @@ def save_file(tree_view,tree_store,text_view,window)
    end
  end
 end
-
+#重新加载文本
 def reload_file(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
  if iter = selection.selected
@@ -99,6 +99,31 @@ def reload_file(tree_view,tree_store,text_view,window)
     window.show_all
    end
  end
+end
+#重新加载文本
+def new_file(text_view,node_label,window) 
+  node_label.text = "new file"
+  text_view.buffer.text = "please input content..."
+end
+#保存新建文本
+def save_new_file(te)
+  dialog = Gtk::FileChooserDialog.new(
+    "Save the file ...",
+    nil,
+    Gtk::FileChooser::ACTION_SAVE,
+    nil,
+    [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL ],
+    [ Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_APPLY ]
+  )
+  dialog.run do |response|
+    if response == Gtk::Dialog::RESPONSE_APPLY
+      file = dialog.filename
+      content = te.textview.buffer.text
+      # Open for writing, write and close.
+      File.open(file, "w") { |f| f <<  content } 
+    end
+  end
+  dialog.destroy
 end
 #编辑文本时状态
 def write_statu(tree_view,tree_store,text_view,window) 
