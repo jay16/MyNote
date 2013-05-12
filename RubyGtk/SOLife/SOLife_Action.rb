@@ -1,6 +1,6 @@
 
 #目录节点被点击反应
-def row_activated(tree_view,tree_store,text_view,window,note_label)
+def row_activated(tree_view,tree_store,text_editor,window)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -10,13 +10,13 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     node_path = iter[1]
     #puts node_path
     if File.file? node_path
-      note_label.text = node_name
+      text_editor.note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
       #加载文本内容
-      text_view.buffer.text =  file_content
+      text_editor.text_view.buffer.text =  file_content
       #如果文本内容与控件加载内容数量不同表示文本内容格式不对
-      if(text_view.buffer.text.length == 0 and file_content.length > 0)
+      if(text_editor.text_view.buffer.text.length == 0 and file_content.length > 0)
         #强制转换编码重新写入文本
         file = File.open(node_path+"_new","w")
         file.puts file_content.encode("UTF-8")
@@ -26,7 +26,7 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
         #修改文件名称
         File.rename(node_path+"_new",node_path)
         file_content = File.readlines(node_path).join("").to_s
-        text_view.buffer.text =  file_content
+        text_editor.text_view.buffer.text =  file_content
       end
 
       #puts File.readlines(node_path).join('\n')
@@ -77,39 +77,41 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
 end
 
 #保存文本
-def save_file(tree_view,tree_store,text_view,window) 
+def save_file(tree_view,tree_store,text_editor,window) 
  selection = tree_view.selection
- if iter = selection.selected
-   if iter[1] then 
+ if iter = selection.selected and iter[1] and File.file?(iter[1])
     file = File.open(iter[1],"w")
-    file.puts text_view.buffer.text
+    file.puts text_editor.text_view.buffer.text
     file.close
     window.set_title("SoLife #{iter[1]}[saved]")
     window.show_all
-   end
+ elsif text_editor.note_label.text == "new file"
+   save_new_file(text_editor,window)
+ else
+   puts "can not save:"+iter[1]
  end
 end
 #重新加载文本
-def reload_file(tree_view,tree_store,text_view,window) 
+def reload_file(tree_view,tree_store,text_editor,window) 
  selection = tree_view.selection
  if iter = selection.selected
    if iter[1] then 
-    text_view.buffer.text = File.readlines(iter[1]).join("").to_s.encode("UTF-8")
+    text_editor.text_view.buffer.text = File.readlines(iter[1]).join("").to_s.encode("UTF-8")
     window.set_title("SoLife #{iter[1]}[reload]")
     window.show_all
    end
  end
 end
 #重新加载文本
-def new_file(text_view,node_label,window) 
-  node_label.text = "new file"
-  text_view.buffer.text = "please input content..."
+def new_file(text_editor,window) 
+  text_editor.note_label.text = "new file"
+  text_editor.text_view.buffer.text = "please input content..."
 end
 #保存新建文本
-def save_new_file(te)
+def save_new_file(text_editor,window)
   dialog = Gtk::FileChooserDialog.new(
     "Save the file ...",
-    nil,
+    window,
     Gtk::FileChooser::ACTION_SAVE,
     nil,
     [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL ],
@@ -118,7 +120,7 @@ def save_new_file(te)
   dialog.run do |response|
     if response == Gtk::Dialog::RESPONSE_APPLY
       file = dialog.filename
-      content = te.textview.buffer.text
+      content = text_editor.textview.buffer.text
       # Open for writing, write and close.
       File.open(file, "w") { |f| f <<  content } 
     end
@@ -135,28 +137,9 @@ def write_statu(tree_view,tree_store,text_view,window)
  end
 end
 
-def window_exit(tree_view,tree_store,note_record,window)
- selection = tree_view.selection
- if iter = selection.selected        
-   row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
-   name_path = row_ref.path.to_str.split(":")   
-   temp_path = row_ref.path.to_str.split(":")
-   str_path = Array.new
-   name_path.each do |item|
-     row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(temp_path.join(":").to_s))
-     str_path.push(row_ref.model.get_iter(row_ref.path)[0])
-     temp_path.delete_at(temp_path.length-1)
-   end
-   str_path.reverse!
-   selection.selected_each do |model, path, iter|
-     note_record.transaction do
-       note_record["row"]["selected"]["path"] = name_path.join(":")
-       note_record["row"]["selected"]["yaml"] = str_path.join(":")
-       note_record["window"]["position"] = window.window_position
-       puts window.position
-    end
-   end
- end
+def window_exit(tree_view,tree_store,window)
+     
+
  Gtk.main_quit
 end
 # Search for the entered string within the Gtktext_view.

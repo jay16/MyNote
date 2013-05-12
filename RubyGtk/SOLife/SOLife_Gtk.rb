@@ -82,20 +82,20 @@ left_hbox.pack_start(scrolled_view,true,true,0)
 
 #记事本框架
 note_book = Gtk::Notebook.new
-note_label  = Gtk::Label.new("notebooxk")
 #记事本内容
-ed = TextEditor.new
-text_view = Gtk::TextView.new
-text_view.buffer.text = "Your 1st Gtk::TextView widget!"
+text_editor = TextEditor.new
+text_editor.text_view = Gtk::TextView.new
+text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
 text_font = Pango::FontDescription.new("Monospace Normal 10")
-text_view.modify_font(text_font)
+text_editor.text_view.modify_font(text_font)
+text_editor.note_label  = Gtk::Label.new("notebooxk")
 
 scrolled_text = Gtk::ScrolledWindow.new
 scrolled_text.border_width = 2
-scrolled_text.add(text_view)
+scrolled_text.add(text_editor.text_view)
 scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 #记事本填充
-note_book.append_page(scrolled_text,note_label)
+note_book.append_page(scrolled_text,text_editor.note_label)
 
 #整体布局表格
 table = Gtk::Table.new(1, 24,true)
@@ -109,29 +109,29 @@ window = Gtk::Window.new("")
 #点击关闭
 window.signal_connect("destroy") { Gtk.main_quit }
 #目录被双击时，使用记事本打开
-tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_view,window,note_label)}
+tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_editor,window)}
 #目录被单击时，使用记事本打开
-tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_view,window,note_label) }
+tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_editor,window) }
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  save_file(tree_view,tree_store,text_view,window)
+  save_file(tree_view,tree_store,text_editor,window)
 }
 #ctrl+z重新加载文本快捷键
 ctrl_z = Gtk::AccelGroup.new
 ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  reload_file(tree_view,tree_store,text_view,window)
+  reload_file(tree_view,tree_store,text_editor,window)
 }
 #ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
 ctrl_n = Gtk::AccelGroup.new
 ctrl_n.connect(Gdk::Keyval::GDK_N, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  new_file(text_view,note_label,window)
+  new_file(text_editor,window)
 }
 window.add_accel_group(ctrl_s)
 window.add_accel_group(ctrl_z)
 window.add_accel_group(ctrl_n)
 #编辑文本状态
-text_view.buffer.signal_connect("changed"){ write_statu(tree_view,tree_store,text_view,window) }
+text_editor.text_view.buffer.signal_connect("changed"){ write_statu(tree_view,tree_store,text_editor,window) }
 
 
 window.add(table)
