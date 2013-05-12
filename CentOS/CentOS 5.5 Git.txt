@@ -1,14 +1,14 @@
-CentOSµÄyumÔ´ÖĞÃ»ÓĞgit£¬Ö»ÄÜ×Ô¼º±àÒë°²×°
+CentOSçš„yumæºä¸­æ²¡æœ‰gitï¼Œåªèƒ½è‡ªå·±ç¼–è¯‘å®‰è£…
 
-È·±£ÒÑ°²×°ÁËÒÀÀµµÄ°ü
+ç¡®ä¿å·²å®‰è£…äº†ä¾èµ–çš„åŒ…
 [root@localhost tools]# yum install curl curl-devel zlib-devel openssl-devel perl cpio expat-devel gettext-devel
 
 
-ÏÂÔØ×îĞÂµÄgit°ü
+ä¸‹è½½æœ€æ–°çš„gitåŒ…
 
 [root@localhost tools]# wget http://www.codemonkey.org.uk/projects/git-snapshots/git/git-latest.tar.gz
 [root@localhost tools]# tar xzvf git-latest.tar.gz 
-[root@localhost tools]# cd git-2013-04-29/  #ÄãµÄÄ¿Â¼¿ÉÄÜ²»ÊÇÕâ¸ö
+[root@localhost tools]# cd git-2013-04-29/  #ä½ çš„ç›®å½•å¯èƒ½ä¸æ˜¯è¿™ä¸ª
 [root@localhost git-2013-04-29]# autoconf
 [root@localhost git-2013-04-29]# ./configure 
 [root@localhost git-2013-04-29]# make
@@ -22,12 +22,12 @@ git version 1.8.3-rc0
 
 git (1.2.5)
 
-ÅäÖÃ Ê¹ÓÃ Git
+é…ç½® ä½¿ç”¨ Git
 
 [root@localhost FocusMail_SOP]# git config --global user.name "jay16"
 [root@localhost FocusMail_SOP]# git config --global user.email "jay_li@intfocus.com"
 
-²é¿´ÒÑÅäÖÃÓÃ»§ĞÅÏ¢
+æŸ¥çœ‹å·²é…ç½®ç”¨æˆ·ä¿¡æ¯
 [root@localhost FocusMail_SOP]# git config --list
 user.name=jay16
 user.email=jay_li@intfocus.com
@@ -40,18 +40,18 @@ remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
 branch.master.remote=origin
 branch.master.merge=refs/heads/master
 [root@localhost FocusMail_SOP]# 
-Í¬²½ÉÏ´«ÎÄ¼ş
+åŒæ­¥ä¸Šä¼ æ–‡ä»¶
 
-³õÊ¼»¯
+åˆå§‹åŒ–
 [root@localhost FocusMail_SOP]# git init
-³õÊ¼»¯¿ÕµÄ Git °æ±¾¿âÓÚ /home/tools/FocusMail_SOP/.git/
+åˆå§‹åŒ–ç©ºçš„ Git ç‰ˆæœ¬åº“äº /home/tools/FocusMail_SOP/.git/
 
-Ñ¡ÔñÍ¬²½ÉÏ´«ÎÄ¼ş¼ĞÏÂËùÓĞÎÄ¼ş
+é€‰æ‹©åŒæ­¥ä¸Šä¼ æ–‡ä»¶å¤¹ä¸‹æ‰€æœ‰æ–‡ä»¶
 [root@localhost FocusMail_SOP]# git add .
 
-Ìá½»
-[root@localhost FocusMail_SOP]# git commit -m "FocusMail ²¿ÊğSOP"
-[master£¨¸ùÌá½»£© e7076dc] FocusMail ²¿ÊğSOP
+æäº¤
+[root@localhost FocusMail_SOP]# git commit -m "FocusMail éƒ¨ç½²SOP"
+[masterï¼ˆæ ¹æäº¤ï¼‰ e7076dc] FocusMail éƒ¨ç½²SOP
  5 files changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 mail206.tar.gz
  create mode 100644 node-v0.4.8.tar.gz
@@ -59,10 +59,10 @@ branch.master.merge=refs/heads/master
  create mode 100644 ruby-1.9.2-p180.tar.gz
  create mode 100644 sqlite-amalgamation-3.6.16.tar.gz
 
-½¨Á¢Á¬½Ó
+å»ºç«‹è¿æ¥
 [root@localhost FocusMail_SOP]# git remote add origin https://github.com/jay16/FocusMail_SOP.git
 
-ÉÏ´«
+ä¸Šä¼ 
 [root@localhost FocusMail_SOP]# git push -u origin master
 
 (gnome-ssh-askpass:21385): Gtk-WARNING **: cannot open display:  
@@ -80,7 +80,7 @@ To https://github.com/jay16/FocusMail_SOP.git
  * [new branch]      master -> master
 Branch master set up to track remote branch master from origin.
 
-²é¿´·şÎñgit×ÊÔ´
+æŸ¥çœ‹æœåŠ¡gitèµ„æº
 [root@localhost FocusMail_SOP]# git remote -v
 origin  https://github.com/jay16/FocusMail_SOP.git (fetch)
 origin  https://github.com/jay16/FocusMail_SOP.git (push)
@@ -92,7 +92,7 @@ http://proxy:8081
 [root@localhost ~]# 
 
 
-É¾³ıÎÄ¼ş
+åˆ é™¤æ–‡ä»¶
 git rm file1.txt
 git commit -m "remove file1.txt"
 
@@ -106,34 +106,34 @@ My "c:\Documents and Settings\xxx.gitconfig" file is
     email = xxx@xxx.com
 
 [root@localhost FocusMail_SOP]# git --help
-ÓÃ·¨£ºgit [--version] [--help] [-c name=value]
+ç”¨æ³•ï¼šgit [--version] [--help] [-c name=value]
            [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
            [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
            [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
            <command> [<args>]
 
-×î³£ÓÃµÄ git ÃüÁîÓĞ£º
-   add        Ìí¼ÓÎÄ¼şÄÚÈİÖÁË÷Òı
-   bisect     Í¨¹ı¶ş·Ö²éÕÒ¶¨Î»ÒıÈë bug µÄ±ä¸ü
-   branch     ÁĞ³ö¡¢´´½¨»òÉ¾³ı·ÖÖ§
-   checkout   ¼ì³öÒ»¸ö·ÖÖ§»òÂ·¾¶µ½¹¤×÷Çø
-   clone      ¿ËÂ¡Ò»¸ö°æ±¾¿âµ½Ò»¸öĞÂÄ¿Â¼
-   commit     ¼ÇÂ¼±ä¸üµ½°æ±¾¿â
-   diff       ÏÔÊ¾Ìá½»Ö®¼ä¡¢Ìá½»ºÍ¹¤×÷ÇøÖ®¼äµÈµÄ²îÒì
-   fetch      ´ÓÁíÍâÒ»¸ö°æ±¾¿âÏÂÔØ¶ÔÏóºÍÒıÓÃ
-   grep       Êä³öºÍÄ£Ê½Æ¥ÅäµÄĞĞ
-   init       ´´½¨Ò»¸ö¿ÕµÄ Git °æ±¾¿â»òÖØĞÂ³õÊ¼»¯Ò»¸öÒÑ´æÔÚµÄ°æ±¾¿â
-   log        ÏÔÊ¾Ìá½»ÈÕÖ¾
-   merge      ºÏ²¢Á½¸ö»ò¸ü¶à¿ª·¢ÀúÊ·
-   mv         ÒÆ¶¯»òÖØÃüÃûÒ»¸öÎÄ¼ş¡¢Ä¿Â¼»ò·ûºÅÁ´½Ó
-   pull       »ñÈ¡²¢ºÏ²¢ÁíÍâµÄ°æ±¾¿â»òÒ»¸ö±¾µØ·ÖÖ§
-   push       ¸üĞÂÔ¶³ÌÒıÓÃºÍÏà¹ØµÄ¶ÔÏó
-   rebase     ±¾µØÌá½»×ªÒÆÖÁ¸üĞÂºóµÄÉÏÓÎ·ÖÖ§ÖĞ
-   reset      ÖØÖÃµ±Ç°HEADµ½Ö¸¶¨×´Ì¬
-   rm         ´Ó¹¤×÷ÇøºÍË÷ÒıÖĞÉ¾³ıÎÄ¼ş
-   show       ÏÔÊ¾¸÷ÖÖÀàĞÍµÄ¶ÔÏó
-   status     ÏÔÊ¾¹¤×÷Çø×´Ì¬
-   tag        ´´½¨¡¢ÁĞ³ö¡¢É¾³ı»òĞ£ÑéÒ»¸öGPGÇ©ÃûµÄ tag ¶ÔÏó
+æœ€å¸¸ç”¨çš„ git å‘½ä»¤æœ‰ï¼š
+   add        æ·»åŠ æ–‡ä»¶å†…å®¹è‡³ç´¢å¼•
+   bisect     é€šè¿‡äºŒåˆ†æŸ¥æ‰¾å®šä½å¼•å…¥ bug çš„å˜æ›´
+   branch     åˆ—å‡ºã€åˆ›å»ºæˆ–åˆ é™¤åˆ†æ”¯
+   checkout   æ£€å‡ºä¸€ä¸ªåˆ†æ”¯æˆ–è·¯å¾„åˆ°å·¥ä½œåŒº
+   clone      å…‹éš†ä¸€ä¸ªç‰ˆæœ¬åº“åˆ°ä¸€ä¸ªæ–°ç›®å½•
+   commit     è®°å½•å˜æ›´åˆ°ç‰ˆæœ¬åº“
+   diff       æ˜¾ç¤ºæäº¤ä¹‹é—´ã€æäº¤å’Œå·¥ä½œåŒºä¹‹é—´ç­‰çš„å·®å¼‚
+   fetch      ä»å¦å¤–ä¸€ä¸ªç‰ˆæœ¬åº“ä¸‹è½½å¯¹è±¡å’Œå¼•ç”¨
+   grep       è¾“å‡ºå’Œæ¨¡å¼åŒ¹é…çš„è¡Œ
+   init       åˆ›å»ºä¸€ä¸ªç©ºçš„ Git ç‰ˆæœ¬åº“æˆ–é‡æ–°åˆå§‹åŒ–ä¸€ä¸ªå·²å­˜åœ¨çš„ç‰ˆæœ¬åº“
+   log        æ˜¾ç¤ºæäº¤æ—¥å¿—
+   merge      åˆå¹¶ä¸¤ä¸ªæˆ–æ›´å¤šå¼€å‘å†å²
+   mv         ç§»åŠ¨æˆ–é‡å‘½åä¸€ä¸ªæ–‡ä»¶ã€ç›®å½•æˆ–ç¬¦å·é“¾æ¥
+   pull       è·å–å¹¶åˆå¹¶å¦å¤–çš„ç‰ˆæœ¬åº“æˆ–ä¸€ä¸ªæœ¬åœ°åˆ†æ”¯
+   push       æ›´æ–°è¿œç¨‹å¼•ç”¨å’Œç›¸å…³çš„å¯¹è±¡
+   rebase     æœ¬åœ°æäº¤è½¬ç§»è‡³æ›´æ–°åçš„ä¸Šæ¸¸åˆ†æ”¯ä¸­
+   reset      é‡ç½®å½“å‰HEADåˆ°æŒ‡å®šçŠ¶æ€
+   rm         ä»å·¥ä½œåŒºå’Œç´¢å¼•ä¸­åˆ é™¤æ–‡ä»¶
+   show       æ˜¾ç¤ºå„ç§ç±»å‹çš„å¯¹è±¡
+   status     æ˜¾ç¤ºå·¥ä½œåŒºçŠ¶æ€
+   tag        åˆ›å»ºã€åˆ—å‡ºã€åˆ é™¤æˆ–æ ¡éªŒä¸€ä¸ªGPGç­¾åçš„ tag å¯¹è±¡
 
 'git help -a' and 'git help -g' lists available subcommands and some
 concept guides. See 'git help <command>' or 'git help <concept>'

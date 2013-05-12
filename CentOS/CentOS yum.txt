@@ -34,16 +34,16 @@ upgrade        Update packages taking obsoletes into account
 
 options:
   -h, --help            show this help message and exit
-  -t, --tolerant        be tolerant of errors                                 ºöÂÔ´íÎó
-  -C                    run entirely from cache, don't update cache           ÍêÈ«ÔÚÄÚ´æÖĞ°²×°
-  -c  [config file]     config file location                                  ÅäÖÃ±¾µØÎÄ¼ş
-  -R  [minutes]         maximum command wait time                             ÃüÁîÖ´ĞĞ×î³¤µÈ´ıÊ±¼äÉèÖÃ
-  -d  [debug level]     debugging output level                                µ÷ÊÔÊä³ö¼¶±ğÉèÖÃ
+  -t, --tolerant        be tolerant of errors                                 å¿½ç•¥é”™è¯¯
+  -C                    run entirely from cache, don't update cache           å®Œå…¨åœ¨å†…å­˜ä¸­å®‰è£…
+  -c  [config file]     config file location                                  é…ç½®æœ¬åœ°æ–‡ä»¶
+  -R  [minutes]         maximum command wait time                             å‘½ä»¤æ‰§è¡Œæœ€é•¿ç­‰å¾…æ—¶é—´è®¾ç½®
+  -d  [debug level]     debugging output level                                è°ƒè¯•è¾“å‡ºçº§åˆ«è®¾ç½®
   --showduplicates      show duplicates, in repos, in list/search commands
-  -e  [error level]     error output level                                    ±¨´íÊä³ö¼¶±ğÉèÖÃ
+  -e  [error level]     error output level                                    æŠ¥é”™è¾“å‡ºçº§åˆ«è®¾ç½®
   -q, --quiet           quiet operation                                       
-  -v, --verbose         verbose operation                                     ÏêÏ¸µÄÒıµ¼
-  -y                    answer yes for all questions,                         ¶ÔÓÚÈÎºÎÌáÊ¾ÒªÊäÈë[y/n]µÄ¶¼Ä¬ÈÏy
+  -v, --verbose         verbose operation                                     è¯¦ç»†çš„å¼•å¯¼
+  -y                    answer yes for all questions,                         å¯¹äºä»»ä½•æç¤ºè¦è¾“å…¥[y/n]çš„éƒ½é»˜è®¤y
   --version             show Yum version and exit
   --installroot=[path]  set install root
   --enablerepo=[repo]   enable one or more repositories (wildcards allowed)

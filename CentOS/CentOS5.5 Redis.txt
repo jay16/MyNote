@@ -1,16 +1,16 @@
-CentOS 5.5 °²×°Redis
+CentOS 5.5 å®‰è£…Redis
 
-×÷Õß£ºfoooy ·¢²¼ÓÚ£º2012-7-14 16:20 Saturday ·ÖÀà£ºNoSQL
-1¡¢ÏÂÔØredis
-ÏÂÔØµØÖ·£º£¨Ñ¡×îĞÂÎÈ¶¨°æÏÂÔØ£©
+ä½œè€…ï¼šfoooy å‘å¸ƒäºï¼š2012-7-14 16:20 Saturday åˆ†ç±»ï¼šNoSQL
+1ã€ä¸‹è½½redis
+ä¸‹è½½åœ°å€ï¼šï¼ˆé€‰æœ€æ–°ç¨³å®šç‰ˆä¸‹è½½ï¼‰
 http://code.google.com/p/redis/downloads/list
 1	wget http://redis.googlecode.com/files/redis-2.2.2.tar.gz
-2¡¢°²×°redis
+2ã€å®‰è£…redis
 1	tar -zxvf redis-2.2.2.tar.gz 
 2	make 
 3	make install
-3¡¢ÅäÖÃredis
-ĞŞ¸Ä/etc/redis.conf
+3ã€é…ç½®redis
+ä¿®æ”¹/etc/redis.conf
 01	daemonize yes   
 02	pidfile /usr/local/redis/var/redis.pid   
 03	port 6379   
@@ -40,21 +40,21 @@ http://code.google.com/p/redis/downloads/list
 27	list-max-ziplist-value 64   
 28	set-max-intset-entries 512   
 29	activerehashing yes
-4¡¢Æô¶¯£¬Ê¹ÓÃredis
+4ã€å¯åŠ¨ï¼Œä½¿ç”¨redis
 1	redis-server /etc/redis.conf 
-2	²é¿´ÊÇ·ñÆô¶¯ 
+2	æŸ¥çœ‹æ˜¯å¦å¯åŠ¨ 
 3	ps -ef | grep redis 
-4	ÈçÓĞÏÂÃæĞÅÏ¢ËµÃ÷Æô¶¯³É¹¦£º 
+4	å¦‚æœ‰ä¸‹é¢ä¿¡æ¯è¯´æ˜å¯åŠ¨æˆåŠŸï¼š 
 5	root  10586   1  0 22:32 ?  00:00:00 redis-server /etc/redis.conf
 
-5¡¢²âÊÔ
+5ã€æµ‹è¯•
 1	[root@centos redis-2.2.2]# redis-cli set foooy "foooy.me" 
 2	OK 
 3	[root@centos redis-2.2.2]# redis-cli get foooy
 4	"foooy.me"
-6¡¢¹Ø±Õredis
+6ã€å…³é—­redis
 view source
 print?
-1	redis-cli shutdown   //¹Ø±ÕËùÓĞ
-2	¹Ø±ÕÄ³¸ö¶Ë¿ÚÉÏµÄredis   
-3	redis-cli -p 6397 shutdown  //¹Ø±Õ6397¶Ë¿ÚµÄredis
+1	redis-cli shutdown   //å…³é—­æ‰€æœ‰
+2	å…³é—­æŸä¸ªç«¯å£ä¸Šçš„redis   
+3	redis-cli -p 6397 shutdown  //å…³é—­6397ç«¯å£çš„redis

@@ -1,0 +1,21 @@
+ORACLE tansname.ora listener SID
+******************************************************************
+/home重新分配大小 安装时尽量大于15G,oracle安装包解压后+压缩包有8G,
+ou're on the right track. Just create separate logical volumes for all of those directories. They don't have to be physical partitions.
+
+Since lv_home contains the most space, you should be able to do this remotely.
+
+    Backup anything in /home you want to save.
+    umount /home
+    lvremove /dev/vg_ts0/lv_home or lvreduce -L200G /dev/vg_ts0/lv_home
+    lvcreate -nlv_tmp -L<size> vg_ts0
+    lvcreate -nlv_var -L<size> vg_ts0
+    lvcreate -nlv_varlog -L<size> vg_ts0
+    Repeat for remaining mountpoints.
+    lvcreate -nlv_home -L<size> vg_ts0
+
+That will also leave you some space in the volume group for expanding the other logical volumes at a later date.
+******************************************************************
+FocusMail
+track ip
+113

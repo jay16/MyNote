@@ -12,14 +12,24 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     if File.file? node_path
       note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
-      puts "delete:"+node_path+"---return:"+File.delete(node_path).to_s
-      file = File.open(node_path,"w")
-      file.puts file_content.encode("UTF-8")
-      file.close
-      file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.encoding.to_s == "GB2312" ? file_content.encode('UTF-8') : file_content)
-      #file_content = (file_content.strip.length > 0 ? file_content.encode('UTF-8') : "  content is empty")
-      text_view.buffer.text =  file_content
+      file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
+      puts "encoding:"+file_content.encoding.to_s
+
+      #如果文本内容与控件加载内容数量不同表示文本内容格式不对
+      if(text_view.buffer.text.length != file_content.length )
+        #强制转换编码重新写入文本
+        file = File.open(node_path+"_new","w")
+        file.puts file_content.encode("UTF-8")
+        file.close
+        #成功写入后再删除
+        puts "return:"+File.delete(node_path).to_s+"-delete:"+node_path
+        #修改文件名称
+        File.rename(node_path+"_new",node_path)
+        file_content = File.readlines(node_path).join("").to_s
+        text_view.buffer.text =  file_content
+      end
+
       #puts File.readlines(node_path).join('\n')
     else
       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
