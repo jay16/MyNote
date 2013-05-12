@@ -1,0 +1,36 @@
+http://stackoverflow.com/questions/2896485/no-such-file-to-load-rubygems-loaderror
+系统重启后，启动resque时报错
+
+[webmail@emd focus_mail]$ rake resque:workers COUNT=2 QUEUE=* VERBOSE=1
+/usr/local/bin/rake:9:in `require': no such file to load -- rubygems (LoadError)
+        from /usr/local/bin/rake:9
+
+
+解决方法
+[webmail@emd focus_mail]$ which ruby
+/usr/bin/ruby
+
+[webmail@emd focus_mail]$ which rails
+/usr/local/bin/rails
+
+[webmail@emd focus_mail]$ which gem
+/usr/local/bin/gem
+
+[webmail@emd focus_mail]$ vi ~/.bash_profile 
+追加内容
+....
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin/ruby:$PATH"
+
+
+"~/.bash_profile" 14L, 242C written
+
+[webmail@emd focus_mail]$ source ~/.bash_profile 
+
+[webmail@emd focus_mail]$ rake resque:workers COUNT=2 QUEUE=* VERBOSE=1
+*** Starting worker emd.mailhok.com:2487:*
+*** Registered signals
+*** Starting worker emd.mailhok.com:2489:*
+*** Registered signals
+*** Running before_first_fork hooks
+*** Checking job_mail_producer
+*** Found job on job_mail_producer
