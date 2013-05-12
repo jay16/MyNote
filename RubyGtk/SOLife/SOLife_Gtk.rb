@@ -13,7 +13,8 @@ SOLife_name = File.basename(SOLife_dir)
 #根据SOLife_dir显示目录
 def generate_catalogue(root_dir,note_path,catalogue_array,level)
   level += 1
-  if File.directory?(note_path) then
+  
+  if File.directory?(note_path) and File.basename(note_path) != ".git" then
     #puts "enter:"+note_path+"-basename:"+File.basename(note_path)+"-dirname:"+File.dirname(note_path);
     if root_dir != note_path then
       catalogue_array.push([File.basename(note_path),note_path,"dir",level])
@@ -23,7 +24,7 @@ def generate_catalogue(root_dir,note_path,catalogue_array,level)
         generate_catalogue(root_dir,note_path+"\\"+file,catalogue_array,level)
       end
     end
-  elsif 
+  elsif  File.basename(note_path) != ".git"
     #puts "file:" + note_path+"-basename:"+File.basename(note_path)+"-dirname:"+File.dirname(note_path);
     catalogue_array.push([File.basename(note_path),note_path,"file",level])
     
@@ -34,7 +35,7 @@ catalogue = Array.new
 generate_catalogue(SOLife_dir,SOLife_dir,catalogue,-1)
 
 level_one = catalogue.select { |item| item[-1] == 1 }
-
+#puts level_one.to_s
 
 #为减少压力只显示一层
 tree_store = Gtk::TreeStore.new(String, String, Integer)
@@ -101,11 +102,11 @@ scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 note_book.append_page(scrolled_text,note_label)
 
 #整体布局表格
-table = Gtk::Table.new(1, 4,true)
+table = Gtk::Table.new(1, 24,true)
 
 options = Gtk::EXPAND|Gtk::FILL
-table.attach(left_hbox,  0,  1,  0,  1, options, options, 0,    0)
-table.attach(note_book,  1,  4,  0,  1, options, options, 0,    0)
+table.attach(left_hbox,  0,  7,  0,  1, options, options, 0,    0)
+table.attach(note_book,  7,  24,  0,  1, options, options, 0,    0)
 
 window = Gtk::Window.new("")
 
@@ -115,9 +116,26 @@ window.signal_connect("destroy") { Gtk.main_quit }
 tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_view,window,note_label)}
 #目录被单击时，使用记事本打开
 tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_view,window,note_label) }
+#ctrl+s保存快捷键
+ctrl_s = Gtk::AccelGroup.new
+ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  save_file(tree_view,tree_store,text_view,window)
+}
+#ctrl+z重新加文本快捷键
+ctrl_z = Gtk::AccelGroup.new
+ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  reload_file(tree_view,tree_store,text_view,window)
+}
+window.add_accel_group(ctrl_s)
+window.add_accel_group(ctrl_z)
+#编辑文本状态
+text_view.buffer.signal_connect("changed"){ write_statu(tree_view,tree_store,text_view,window) }
+
+
 window.add(table)
 window.set_title("SoLife")
 window.border_width = 5
-window.set_size_request(800, 700)
+window.set_size_request(800, 680)
+window.move(600,10)
 window.show_all
 Gtk.main

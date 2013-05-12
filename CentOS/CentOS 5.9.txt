@@ -3,3 +3,5 @@ http://blog.const.net.cn/a/17127.htm
 
 http://mirrors.163.com/centos/5.9/isos/i386/CentOS-5.9-i386-bin-DVD-1of2.iso
 http://mirrors.163.com/centos/5.9/isos/i386/CentOS-5.9-i386-bin-DVD-2of2.iso
+
+hello world!

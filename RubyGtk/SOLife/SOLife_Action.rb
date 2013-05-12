@@ -4,7 +4,7 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
-    return unless iter
+    return unless (iter and iter[0] != iter[1])
     
     node_name = iter[0] 
     node_path = iter[1]
@@ -13,7 +13,8 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
       note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.encoding.to_s == "GB2312" ? file_content.encode('UTF-8') : file_content)
-      text_view.buffer.text = file_content.encode('UTF-8')
+      file_content = (file_content.strip.length > 0 ? file_content.encode('UTF-8') : "  content is empty")
+      text_view.buffer.text = file_content
       #puts File.readlines(node_path).join('\n')
     else
       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
@@ -31,7 +32,8 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
         #该目录下第一个节点
         first_child = iter.first_child
         #若第一个节点都为loading说明该目录子节点还没有加载
-        if first_child[0] == "loading" and first_child[1] == "loading" then
+        return if first_child[0] == first_child[1] and first_child[1] == "done"
+        if first_child[0] == first_child[1] and first_child[1] == "loading" then
           first_child[0] = "done"
           first_child[1] = "done"
           return unless File.directory?(node_path)
@@ -60,19 +62,34 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
    
 end
 
-def save_file(tree_view,tree_store,text_view,window,cur_dir) 
+def save_file(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
- if iter = selection.selected        
-   window.set_title("SoLife #{iter[1] ? iter[1]+'[saved]' : '' }")
-   window.show_all
+ if iter = selection.selected
+   if iter[1] then 
+    file = File.open(iter[1],"w")
+    file.puts text_view.buffer.text
+    file.close
+    window.set_title("SoLife #{iter[1]}[saved]")
+    window.show_all
+   end
  end
 end
 
+def reload_file(tree_view,tree_store,text_view,window) 
+ selection = tree_view.selection
+ if iter = selection.selected
+   if iter[1] then 
+    text_view.buffer.text = File.readlines(iter[1]).join("").to_s.encode("UTF-8")
+    window.set_title("SoLife #{iter[1]}[reload]")
+    window.show_all
+   end
+ end
+end
 #编辑文本时状态
 def write_statu(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
- if iter = selection.selected        
-   window.set_title("SoLife #{iter[1] ? iter[1] : ''}")
+ if iter = selection.selected      
+   window.set_title("SoLife #{iter[1]} [writing]")
    window.show_all
  else
  end
