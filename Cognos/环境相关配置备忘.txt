@@ -1,0 +1,76 @@
+Tomcat
+修改portal文件夹名，同时修改以下三个文件
+D:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\portal\WEB-INF\struts-config.xml
+D:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\portal\verson_index.jsp
+D:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\portal\verson_portal_index.jsp
+修改portal数据库连接，同时修改以下文件
+D:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\portal\WEB-INF\classes
+D:\Program Files\Apache Software Foundation\Tomcat 5.5\webapps\portal\WEB-INF
+hibernate.kpi.properties
+hibernate.properties
+
+Cognos
+cognos启动
+D:\Program Files (x86)\ibm\cognos\c10\bin\cogbootstrapservice.exe
+报表导入导出位置
+D:\Program Files\ibm\cognos\c10\deployment
+报表图片放置位置
+D:\Program Files\ibm\cognos\c10\webcontent\samples\images
+
+Cognos中CSS文件的存放地址：
+/cognos/c8/reportstyles/default_layout.css
+/cognos/c8/reportstyles/GlobalReportStyles.css
+提示按钮的CSS类在GlobalReportStyles.css中为bp。 
+
+Cognos隐藏标题栏，在url后拼接下面字符串：
+&cv.header=false&cv.toolbar=false
+
+Cognos隐藏工具栏
+cognos\c8\templates\ps\portal\system.xml文件中添加下面代码：
+<RV_TOOLBAR_BUTTONS/>         Cognos Viewer 中的工具栏选项
+<RV_TOOLBAR_BUTTONS_DOWNLOAD/>         “下载”工具栏按钮。该按钮在启用下载之后适用。
+<RV_TOOLBAR_BUTTONS_SAVE/>         “保存”工具栏按钮
+<RV_TOOLBAR_BUTTONS_SAVEAS/>         “另存为”工具栏按钮
+<RV_TOOLBAR_BUTTONS_SEND/>         “电子邮件”工具栏按钮
+<RV_TOOLBAR_BUTTONS_HISTORY/>         历史记录工具栏选项
+<RV_TOOLBAR_BUTTONS_RUN/>         “运行”工具栏按钮
+<RV_TOOLBAR_BUTTONS_HTML/>         “以HTML 格式查看”按钮
+<RV_TOOLBAR_BUTTONS_PDF/>         “以PDF 格式查看”按钮
+<RV_TOOLBAR_BUTTONS_XLS/>         “以XLS 格式查看”按钮
+<RV_TOOLBAR_BUTTONS_XLS_CSV/>         “以CSV 格式查看”按钮
+<RV_TOOLBAR_BUTTONS_XML/>         “以XML 格式查看”按钮
+<RV_TOOLBAR_BUTTONS_XLS_SPREADSHEETML/>         以Excel 2007 格式查看
+<RV_TOOLBAR_BUTTONS_XLS_XLWA/>         以Excel 2002 格式查看
+<RV_TOOLBAR_BUTTONS_XLS_XLS/>         以Excel 2000 格式查看
+<RV_TOOLBAR_BUTTONS_XLS_SINGLEXLS/>         以Excel 2000 单一工作表格式查看
+<RV_TOOLBAR_BUTTONS_DRILLDOWN/>         隐藏“向下追溯”按钮
+<RV_TOOLBAR_BUTTONS_DRILLUP/>         隐藏“向上追溯”按钮
+<RV_TOOLBAR_BUTTONS_GOTO/>         隐藏“转到”按钮<RV_TOOLBAR_BUTTONS_ADD_THIS_REPORT>         隐藏“添加此报表”按钮
+<RV_TOOLBAR_BUTTONS_ADD_TO_MY_BOOKMARKS/>         隐藏“添加至“我的书签””按钮
+<RV_TOOLBAR_BUTTONS_ADD_TO_MY_FOLDERS/>         隐藏“添加至“我的文件夹””按钮
+<RV_TOOLBAR_BUTTONS_KEEP_THIS_VERSION/>  
+
+    <param name="ui_hide">
+    <RV_TOOLBAR_BUTTONS/>
+    <RV_TOOLBAR_BUTTONS_RUN/> 
+    <RV_TOOLBAR_BUTTONS_SAVE/>   
+    <RV_TOOLBAR_BUTTONS_SAVEAS/>
+    <RV_TOOLBAR_BUTTONS_DOWNLOAD/> 
+    <RV_TOOLBAR_BUTTONS_SEND/>
+    <RV_TOOLBAR_BUTTONS_HISTORY/>
+    <RV_TOOLBAR_BUTTONS_HTML/>
+    <RV_TOOLBAR_BUTTONS_XML/>
+    <RV_TOOLBAR_BUTTONS_PDF/> 
+    <RV_TOOLBAR_BUTTONS_XLS_XLWA/> 
+    <RV_TOOLBAR_BUTTONS_XLS_SPREADSHEETML/>
+    <RV_TOOLBAR_BUTTONS_XLS_XLWA/>
+    <RV_TOOLBAR_BUTTONS_XLS_XLS/>
+    <RV_TOOLBAR_BUTTONS_XLS_SingleXLS/>
+    <RV_TOOLBAR_BUTTONS_DRILLDOWN/>         
+    <RV_TOOLBAR_BUTTONS_DRILLUP/>         
+    <RV_TOOLBAR_BUTTONS_GOTO/>         
+    <RV_TOOLBAR_BUTTONS_ADD_THIS_REPORT/>
+    <RV_TOOLBAR_BUTTONS_ADD_TO_MY_BOOKMARKS/>
+    <RV_TOOLBAR_BUTTONS_ADD_TO_MY_FOLDERS/>
+    <RV_TOOLBAR_BUTTONS_KEEP_THIS_VERSION/>
+    </param>
