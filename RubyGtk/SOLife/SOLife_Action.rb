@@ -108,7 +108,7 @@ def new_file(text_editor,window)
   text_editor.text_view.buffer.text = "please input content..."
 end
 #保存新建文本
-def save_new_file(text_editor,window)
+def save_new_file_old(text_editor,window)
   dialog = Gtk::FileChooserDialog.new(
     "Save the file ...",
     window,
@@ -127,6 +127,54 @@ def save_new_file(text_editor,window)
   end
   dialog.destroy
 end
+
+
+
+def save_new_file(text_editor,window)
+  dialog = Gtk::Dialog.new(
+      "Information",
+      window,
+      Gtk::Dialog::MODAL,
+      [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK ]
+  )
+  dialog.has_separator = false
+  label = Gtk::Label.new("The button was clicked!")
+  image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
+  radio1 = Gtk::RadioButton.new(Dir.pwd.to_s)
+  radio2 = Gtk::RadioButton.new(radio1, "")
+  choo_dir_btt  = Gtk::FileChooserButton.new(
+    "Choose a Folder", Gtk::FileChooser::ACTION_SELECT_FOLDER)
+  choo_dir_btt.signal_connect('selection_changed') do |w|
+   puts w.filename
+   # window.set_title(choo_dir.filename)
+end
+
+  hbox_1 = Gtk::HBox.new(false, 5)
+  hbox_1.border_width = 10
+  hbox_1.pack_start_defaults(radio1);
+  hbox_2 = Gtk::HBox.new(false, 5)
+  hbox_2.border_width = 10
+  hbox_2.pack_start_defaults(radio2);
+  hbox_2.pack_start_defaults(choo_dir_btt);
+  chose_label = Gtk::Label.new("Choose:")
+  chose_dir = Gtk::Label.new(Dir.pwd.to_s)
+  hbox_3 = Gtk::HBox.new(false, 5)
+  hbox_3.border_width = 10
+  hbox_3.pack_start_defaults(chose_label);
+  hbox_3.pack_start_defaults(chose_dir);
+
+  # Add the message in a label, and show everything we've added to the dialog.
+  # dialog.vbox.pack_start_defaults(hbox) # Also works, however dialog.vbox
+                                          # limits a single item (element).
+  dialog.vbox.add(hbox_1)
+  dialog.vbox.add(hbox_2)
+  dialog.vbox.add(hbox_3)
+  dialog.show_all
+  dialog.run
+  dialog.destroy
+end
+
+
 #编辑文本时状态
 def write_statu(tree_view,tree_store,text_view,window) 
  selection = tree_view.selection
