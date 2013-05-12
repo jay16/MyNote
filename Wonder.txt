@@ -1,6 +1,6 @@
 ORACLE tansname.ora listener SID
 ******************************************************************
-/homeÖØĞÂ·ÖÅä´óĞ¡ °²×°Ê±¾¡Á¿´óÓÚ15G,oracle°²×°°ü½âÑ¹ºó+Ñ¹Ëõ°üÓĞ8G,
+/homeé‡æ–°åˆ†é…å¤§å° å®‰è£…æ—¶å°½é‡å¤§äº15G,oracleå®‰è£…åŒ…è§£å‹å+å‹ç¼©åŒ…æœ‰8G,
 ou're on the right track. Just create separate logical volumes for all of those directories. They don't have to be physical partitions.
 
 Since lv_home contains the most space, you should be able to do this remotely.

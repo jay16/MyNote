@@ -2,9 +2,11 @@
 require 'yaml/store'
 require 'yaml'
 require 'gtk2'
+require 'iconv'
 require './SOLife_Action.rb'
 
 
+UTF8_TO_GBK = Iconv.new "gbk", "utf-8"
 
 current_dir = Dir.pwd
 SOLife_dir  = "E:\\MyWork\\MyNote\\"

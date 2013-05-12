@@ -12,10 +12,11 @@ def row_activated(tree_view,tree_store,text_view,window,note_label)
     if File.file? node_path
       note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
-      #file = File.open(node_path,"w")
-      #file.puts file_content.encode('UTF-8')
-      #file.close
-      #file_content = File.readlines(node_path).join("").to_s
+      puts "delete:"+node_path+"---return:"+File.delete(node_path).to_s
+      file = File.open(node_path,"w")
+      file.puts file_content.encode("UTF-8")
+      file.close
+      file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.encoding.to_s == "GB2312" ? file_content.encode('UTF-8') : file_content)
       #file_content = (file_content.strip.length > 0 ? file_content.encode('UTF-8') : "  content is empty")
       text_view.buffer.text =  file_content
