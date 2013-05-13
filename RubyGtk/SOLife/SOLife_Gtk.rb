@@ -35,10 +35,19 @@ def generate_catalogue(root_dir,note_path,catalogue_array,level)
   end
 end
 
-catalogue = Array.new
-generate_catalogue(SOLife_dir,SOLife_dir,catalogue,-1)
+#catalogue = Array.new
+#generate_catalogue(SOLife_dir,SOLife_dir,catalogue,-1)
 
-level_one = catalogue.select { |item| item[-1] == 1 }
+#level_one = catalogue.select { |item| item[-1] == 1 }
+level_one = Array.new
+Dir.foreach(SOLife_dir) do |file|
+  #跳过隐藏文件
+  next if file=~ /^\..*/
+  file_path = SOLife_dir+"\\"+file
+  level_one.push([file,file_path,File.file?(file_path) ? "file" : "dir" ])
+end
+#删除隐藏文件
+#level_one = level_one.delete_if{ |e| e=~ /^\..*/} 
 #puts level_one.to_s
 
 #为减少压力只显示一层
@@ -47,7 +56,9 @@ tree_store = Gtk::TreeStore.new(String, String, Integer)
 level_one.each do |lo|
   #level one
   tree_lo = tree_store.append(nil)
-  tree_lo[0] = lo[0] #tree_level_one nodename
+  #tree_level_one nodename
+  tree_lo[0] = (File.file?(lo[1]) ? "F_"+lo[0] : lo[0])
+
   tree_lo[1] = lo[1] #tree_level_one nodepath
   #tree_lo[2] = lo[2] #tree_level_one nodetype
   if lo[2]=="dir" then

@@ -52,7 +52,7 @@ def row_activated(tree_view,tree_store,text_editor,window)
           first_child[1] = "done"
           return unless File.directory?(node_path)
           Dir.foreach(node_path) do |file|
-            next if file == "." or file == ".."
+            next if file=~ /^\..*/
             child = tree_model.append(parent_path)
             file_path = node_path+"\\"+file
             if File.directory?(file_path)  then
