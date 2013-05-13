@@ -41,12 +41,16 @@ def row_activated(tree_view,tree_store,text_editor,window)
           file_content = File.readlines(node_path).join("").to_s
           text_editor.text_view.buffer.text =  file_content       
           text_editor.note_label.text = node_name
-          text_editor.note_label.set_tooltip_text = node_name
+          #鼠标悬停显示文本路径
+          tooltip = Gtk::Tooltips.new
+          tooltip.set_tip(text_editor.note_label,node_path,"private")
         ensure
         end
       else
         text_editor.note_label.text = node_name
-        text_editor.note_label.set_tooltip_text = node_name
+        #鼠标悬停显示文本路径
+        tooltip = Gtk::Tooltips.new
+        tooltip.set_tip(text_editor.note_label,node_path,"private")
       end
 
       #puts File.readlines(node_path).join('\n')
@@ -275,7 +279,7 @@ dialog = Gtk::Dialog.new(
   
 end
 
-def InitConfig_diaog()
+def InitConfig_diaog(yam_save)
 dialog = Gtk::Dialog.new(
       "FileRead Error!",
       nil,
@@ -325,6 +329,13 @@ dialog = Gtk::Dialog.new(
 
   dialog.run do |response|
     if response == Gtk::Dialog::RESPONSE_OK
+      note_dir_list = Array.new
+      tree_store.each do |store|
+        note_dir_list.push(store[0])
+      end
+      yam_save.transaction do 
+        yam_save["NoteDirList"] = note_dir_list
+      end
     end
     dialog.destroy
   end

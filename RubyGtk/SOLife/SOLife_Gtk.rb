@@ -10,11 +10,15 @@ current_dir = Dir.pwd.to_s
 SOLife_dir  = "E:\\MyWork\\MyNote\\"
 SOLife_name = File.basename(SOLife_dir)
 
+
+yam_save = YAML::Store.new('SOLife.yml')
+
 #读取配置信息 笔记目录路径数组 上次关闭时点击查看文本
 if File.exists?(current_dir+"\\"+"SOLife.yml") then
+y am_load = YAML.load_file('SOLife.yml')
   puts "has config it"
 else
-  InitConfig_diaog()
+  InitConfig_diaog(yam_save)
 end
 
 class TextEditor
@@ -62,7 +66,7 @@ tree_store = Gtk::TreeStore.new(String, String, Integer)
 
 level_one.each do |lo|
   #level one
-  tree_lo = tree_store.append(nil)
+  tree_lo[0] =  tree_store.append(nil)
   #tree_level_one nodename
   tree_lo[0] = (File.file?(lo[1]) ? "F_"+lo[0] : lo[0])
 

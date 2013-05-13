@@ -4,6 +4,8 @@ require 'yaml'
 require 'gtk2'
 
 
+yam_load = YAML.load_file('SOLife.yml')
+yam_save = YAML::Store.new('SOLife.yml')
 
 current_dir = Dir.pwd
 SOLife_dir  = "E:\\MyWork\\MyNote\\"
