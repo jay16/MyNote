@@ -144,7 +144,8 @@ def save_new_file(iter,tree_view,text_editor,window)
   label = Gtk::Label.new("The button was clicked!")
   image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
   #当前被选中节点路径
-  radio1 = Gtk::RadioButton.new(iter[1])
+  sel_dir = File.dirname(iter[1])
+  radio1 = Gtk::RadioButton.new(sel_dir)
   radio1.name = "radio1"
   radio2 = Gtk::RadioButton.new(radio1, "")
   radio2.name = "radio2"
@@ -165,14 +166,14 @@ def save_new_file(iter,tree_view,text_editor,window)
   hbox_2.pack_start_defaults(radio2);
   hbox_2.pack_start_defaults(choo_dir_btt);
   chose_label = Gtk::Label.new("Choose:")
-  chose_dir = Gtk::Label.new(Dir.pwd.to_s)
+  chose_dir = Gtk::Label.new(sel_dir)
   hbox_3 = Gtk::HBox.new(false, 5)
   hbox_3.border_width = 10
   hbox_3.pack_start_defaults(chose_label);
   hbox_3.pack_start_defaults(chose_dir);
 
   radio1.signal_connect('clicked') do |radio|
-    chose_dir.text = Dir.pwd
+    chose_dir.text = sel_dir
   end
   radio2.signal_connect('clicked') do |radio|
     chose_dir.text = choo_dir_btt.filename
