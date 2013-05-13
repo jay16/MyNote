@@ -141,14 +141,18 @@ def save_new_file(text_editor,window)
   label = Gtk::Label.new("The button was clicked!")
   image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
   radio1 = Gtk::RadioButton.new(Dir.pwd.to_s)
+  radio1.name = "radio1"
   radio2 = Gtk::RadioButton.new(radio1, "")
+  radio2.name = "radio2"
+  radio1.group = radio1
   choo_dir_btt  = Gtk::FileChooserButton.new(
     "Choose a Folder", Gtk::FileChooser::ACTION_SELECT_FOLDER)
-  choo_dir_btt.signal_connect('selection_changed') do |w|
-   puts w.filename
-   # window.set_title(choo_dir.filename)
-end
-
+ 
+  new_name = Gtk::Entry.new
+  hbox_0 = Gtk::HBox.new(false, 5)
+  hbox_0.border_width = 10
+  hbox_0.pack_start_defaults(Gtk::Label.new("NewFileName:"));
+  hbox_0.pack_start_defaults(new_name);
   hbox_1 = Gtk::HBox.new(false, 5)
   hbox_1.border_width = 10
   hbox_1.pack_start_defaults(radio1);
@@ -163,15 +167,35 @@ end
   hbox_3.pack_start_defaults(chose_label);
   hbox_3.pack_start_defaults(chose_dir);
 
-  # Add the message in a label, and show everything we've added to the dialog.
-  # dialog.vbox.pack_start_defaults(hbox) # Also works, however dialog.vbox
-                                          # limits a single item (element).
+  radio1.signal_connect('clicked') do |radio|
+    chose_dir.text = Dir.pwd
+  end
+  radio2.signal_connect('clicked') do |radio|
+    chose_dir.text = choo_dir_btt.filename
+  end
+
+  choo_dir_btt.signal_connect('selection_changed') do |w|
+   chose_dir.text = w.filename
+  end
+  
+
+  dialog.vbox.add(hbox_0) 
   dialog.vbox.add(hbox_1)
   dialog.vbox.add(hbox_2)
   dialog.vbox.add(hbox_3)
   dialog.show_all
-  dialog.run
-  dialog.destroy
+
+  dialog.run do |response|
+    if response == Gtk::Dialog::RESPONSE_OK
+      file_path = File.join(chose_dir.text,new_name.text)
+      file = File.open(file_path,"w")
+      file.puts text_editor.text_view.buffer.text
+      file.close
+      text_editor.note_label.text=new_name.text
+    end
+    dialog.destroy
+  end
+  
 end
 
 
