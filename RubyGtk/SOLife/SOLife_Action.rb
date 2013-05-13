@@ -41,10 +41,12 @@ def row_activated(tree_view,tree_store,text_editor,window)
           file_content = File.readlines(node_path).join("").to_s
           text_editor.text_view.buffer.text =  file_content       
           text_editor.note_label.text = node_name
+          text_editor.note_label.set_tooltip_text = node_name
         ensure
         end
       else
         text_editor.note_label.text = node_name
+        text_editor.note_label.set_tooltip_text = node_name
       end
 
       #puts File.readlines(node_path).join('\n')
