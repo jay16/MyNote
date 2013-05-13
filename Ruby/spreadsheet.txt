@@ -1,4 +1,4 @@
-¶ÁÈ¡
+è¯»å–
 require "rubygems"  
 require "spreadsheet"  
   
@@ -6,7 +6,7 @@ Spreadsheet.client_encoding = "UTF-8"
   
 book = Spreadsheet.open("test.xls")  
   
-# µÃµ½µÚÒ»¸ö±í¸ñ  
+# å¾—åˆ°ç¬¬ä¸€ä¸ªè¡¨æ ¼  
 sheet1 = book.worksheet(0)  
   
 test_file = File.open("test.txt", "w")  
@@ -20,40 +20,40 @@ end
   
 test_file.close() 
 
-¶¨Èë
+å†™å…¥
 
-    # ÒıÈëspreadsheet²å¼ş  
+    # å¼•å…¥spreadsheetæ’ä»¶  
     require "rubygems"  
     require "spreadsheet"  
       
-    # ÉùÃ÷Spreadsheet´¦ÀíExcelÎÄ¼ş×éÊ±µÄ±àÂë  
+    # å£°æ˜Spreadsheetå¤„ç†Excelæ–‡ä»¶ç»„æ—¶çš„ç¼–ç   
     Spreadsheet.client_encoding = "UTF-8"  
       
-    # ´´½¨Ò»¸öSpreadsheet¶ÔÏó£¬ËüÏàµ±ÓÚExcelÎÄ¼ş  
+    # åˆ›å»ºä¸€ä¸ªSpreadsheetå¯¹è±¡ï¼Œå®ƒç›¸å½“äºExcelæ–‡ä»¶  
     book = Spreadsheet::Workbook.new  
-    # ´´½¨ExcelÎÄ¼şÖĞµÄÒ»¸ö±í¸ñ£¬²¢ÃüÃûÎª "Test Excel"  
+    # åˆ›å»ºExcelæ–‡ä»¶ä¸­çš„ä¸€ä¸ªè¡¨æ ¼ï¼Œå¹¶å‘½åä¸º "Test Excel"  
     sheet1 = book.create_worksheet :name => "Test Excel"  
       
-    # ÉèÖÃÒ»¸öExcelÎÄ¼şµÄ¸ñÊ½  
+    # è®¾ç½®ä¸€ä¸ªExcelæ–‡ä»¶çš„æ ¼å¼  
     default_format = Spreadsheet::Format.new(:weight => :bold, :size => 14,   
                                  :align => :merge, :color=>"red", :border=>1,   
                                  :border_color=>"black", :pattern => 1 ,  
                                  :pattern_fg_color => "yellow" )  
       
-    data = "²âÊÔ±êÌâ"  
+    data = "æµ‹è¯•æ ‡é¢˜"  
       
-    # Ö¸¶¨Ò»¸öÔÚ±í¸ñÖĞµÄµÚÒ»ĞĞ¶ÔÏó  
+    # æŒ‡å®šä¸€ä¸ªåœ¨è¡¨æ ¼ä¸­çš„ç¬¬ä¸€è¡Œå¯¹è±¡  
     test_row = sheet1.row(0)  
       
-    # ÎªµÚÒ»ĞĞµÄÇ°5¸öÁĞÖ¸¶¨¸ñÊ½  
+    # ä¸ºç¬¬ä¸€è¡Œçš„å‰5ä¸ªåˆ—æŒ‡å®šæ ¼å¼  
     5.times do |i|  
         test_row.set_format(i, default_format)  
     end  
       
       
       
-    # ÎªµÚÒ»ĞĞµÄµÚÒ»ÁĞÖ¸¶¨Öµ  
+    # ä¸ºç¬¬ä¸€è¡Œçš„ç¬¬ä¸€åˆ—æŒ‡å®šå€¼  
     test_row[0] = data  
       
-    # ½«´´½¨µÄSpreadsheet¶ÔÏóĞ´ÈëÎÄ¼ş£¬ĞÎ³Éµç×Ó±í¸ñ  
+    # å°†åˆ›å»ºçš„Spreadsheetå¯¹è±¡å†™å…¥æ–‡ä»¶ï¼Œå½¢æˆç”µå­è¡¨æ ¼  
     book.write 'book2.xls'  

@@ -9,7 +9,7 @@
 5:其他原因
 
 -------------------------------------------
-需要将上传到Liunx服务上的文件格式化
+需要将上传到Liunx服务上的文件格式化，使用dos2unix
 
 [webmail@cloud alex]$ dos2unix members_no_sian.csv
 dos2unix: converting file members_no_sian.csv to UNIX format ...
@@ -24,3 +24,23 @@ dos2unix: converting file members_no_sian.csv to UNIX format ...
 例如 2013.csv.tom.com_result.csv
 
 ps. 新浪郵箱比較麻煩，因此請額外處理
+
+-----------------------------------------------
+[webmail@cloud alex]$ dos2unix --help
+dos2unix Copyright (c) 1994-1995 Benjamin Lin
+         Copyright (c) 1998      Bernd Johannes Wuebben (Version 3.0)
+         Copyright (c) 1998      Christian Wurll (Version 3.1)
+Usage: dos2unix [-hkqV] [-c convmode] [-o file ...] [-n infile outfile ...]
+ -h --help        give this help
+ -k --keepdate    keep output file date
+ -q --quiet       quiet mode, suppress all warnings
+                  always on in stdin->stdout mode
+ -V --version     display version number
+ -c --convmode    conversion mode
+ convmode         ASCII, 7bit, ISO, Mac, default to ASCII
+ -l --newline     add additional newline in all but Mac convmode
+ -o --oldfile     write to old file
+ file ...         files to convert in old file mode
+ -n --newfile     write to new file
+ infile           original file in new file mode
+ outfile          output file in new file mode
