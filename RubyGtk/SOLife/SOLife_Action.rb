@@ -79,14 +79,15 @@ end
 #保存文本
 def save_file(tree_view,tree_store,text_editor,window) 
  selection = tree_view.selection
- if iter = selection.selected and iter[1] and File.file?(iter[1])
+ iter = selection.selected
+ if iter and iter[1] and File.file?(iter[1]) and text_editor.note_label.text == File.basename(iter[1])
     file = File.open(iter[1],"w")
     file.puts text_editor.text_view.buffer.text
     file.close
     window.set_title("SoLife #{iter[1]}[saved]")
     window.show_all
  elsif text_editor.note_label.text == "new file"
-   save_new_file(text_editor,window)
+   save_new_file(iter,tree_view,text_editor,window)
  else
    puts "can not save:"+iter[1]
  end
@@ -130,7 +131,7 @@ end
 
 
 
-def save_new_file(text_editor,window)
+def save_new_file(iter,tree_view,text_editor,window)
   dialog = Gtk::Dialog.new(
       "Information",
       window,
@@ -192,6 +193,13 @@ def save_new_file(text_editor,window)
       file.puts text_editor.text_view.buffer.text
       file.close
       text_editor.note_label.text=new_name.text
+      #目录下添加新节点
+      parent = iter.parent
+      tree_model = tree_view.model
+      parent_path = tree_model.get_iter(parent.to_s)
+      new_note = tree_model.append(parent_path)
+      new_note[0] = new_name.text
+      new_note[1] = file_path
     end
     dialog.destroy
   end
