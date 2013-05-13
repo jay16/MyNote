@@ -292,26 +292,59 @@ dialog = Gtk::Dialog.new(
   
 end
 
-def InitConfig_diaog(file_path,window)
+def InitConfig_diaog()
 dialog = Gtk::Dialog.new(
       "FileRead Error!",
-      window,
+      nil,
       Gtk::Dialog::MODAL,
       [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK ]
   )
   dialog.has_separator = false
-  label = Gtk::Label.new("FileRead Error!")
-  image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
-  entry_dir = Gtk::Entry.new
-  entry_dir.text = file_path
-  hbox_1 = Gtk::HBox.new(false, 5)
-  hbox_1.pack_start_defaults(label);
-  hbox_2 = Gtk::HBox.new(false, 5)
-  hbox_2.pack_start_defaults(entry_dir);
+ 
+   #为减少压力只显示一层
+   tree_store = Gtk::TreeStore.new(String, String, Integer)
+
+
+   tree_view = Gtk::TreeView.new(tree_store)
+   tree_view.selection.mode = Gtk::SELECTION_SINGLE
+   tree_view.expand_all
+   tree_view.hadjustment.value=100
+   tree_view.columns_autosize
+   #SELECTION_NONE
+   #SELECTION_BROWSE
+   scrolled_view = Gtk::ScrolledWindow.new
+   scrolled_view.border_width = 2
+   scrolled_view.add(tree_view)
+   scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+
+   #笔记路径树
+   renderer = Gtk::CellRendererText.new
+   tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
+   tree_view.append_column(tree_col)
+
+
+
+
   
-  dialog.vbox.add(image)
+
+  add_dir_btn   = Gtk::Button.new(Gtk::Stock::NEW)
+  add_dir_btn.signal_connect("clicked") { }
+  choo_dir_btt  = Gtk::FileChooserButton.new(
+    "Choose a Folder", Gtk::FileChooser::ACTION_SELECT_FOLDER)
+  choo_dir_btt.signal_connect('selection_changed') do |w|
+   note_dir_sel = tree_store.append(nil)
+   note_dir_sel[0] = w.filename
+  end
+    
+
+  hbox_1 = Gtk::HBox.new(false, 5)
+  hbox_1.pack_start_defaults(scrolled_view);
+  hbox_3 = Gtk::HBox.new(false, 5)
+  hbox_3.pack_start_defaults(choo_dir_btt);
+  
   dialog.vbox.add(hbox_1)
   dialog.vbox.add(hbox_2)
+  dialog.vbox.add(hbox_3)
   dialog.show_all
 
   dialog.run do |response|

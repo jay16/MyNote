@@ -14,7 +14,7 @@ SOLife_name = File.basename(SOLife_dir)
 if File.exists?(current_dir+"\\"+"SOLife.yml") then
   puts "has config it"
 else
-  
+  InitConfig_diaog()
 end
 
 class TextEditor
