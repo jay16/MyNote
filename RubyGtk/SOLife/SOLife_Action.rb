@@ -80,7 +80,8 @@ end
 def save_file(tree_view,tree_store,text_editor,window) 
  selection = tree_view.selection
  iter = selection.selected
- if iter and iter[1] and File.file?(iter[1]) and text_editor.note_label.text == File.basename(iter[1])
+ file_name = text_editor.note_label.text.split("_")[1]
+ if iter and iter[1] and File.file?(iter[1]) and  file_name== File.basename(iter[1])
     file = File.open(iter[1],"w")
     file.puts text_editor.text_view.buffer.text
     file.close

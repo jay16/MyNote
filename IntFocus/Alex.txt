@@ -1,1 +1,26 @@
 
+格式：email,result(0~5)
+
+0: Domain 不存在
+1: 帳號存在
+2: 帳號不存在或是其他原因（550)
+3.:Domain 可能錯誤（553）
+4:遇到灰名單（45x）
+5:其他原因
+
+-------------------------------------------
+需要将上传到Liunx服务上的文件格式化
+
+[webmail@cloud alex]$ dos2unix members_no_sian.csv
+dos2unix: converting file members_no_sian.csv to UNIX format ...
+
+已經將腳本傳到美國主機上
+運行方式：
+
+/home/webmail/alex/chkuser.pl [檔案名稱]
+
+運行完後會自動呼叫 smtp_return.pl 確認郵箱狀態
+返回的結果會是 [檔名.域名_result.csv] ,
+例如 2013.csv.tom.com_result.csv
+
+ps. 新浪郵箱比較麻煩，因此請額外處理

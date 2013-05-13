@@ -1,6 +1,28 @@
-ע��windows�̷����⣬������д��E:\...��Ҫд/e/...
+注意windows盘符问题，不可以写成E:\...而要写/e/...,
 
 E:\MyWork\MyNote\Ruby>scp root@192.168.0.128:/home/webmail/mailtem/163/51414
 68083514.9290972.eml /e/
 root@192.168.0.128's password:
 514146_1368083514.9290972.eml                 100%   34KB  33.8KB/s   00:00
+
+----------------------------------------------------------------------
+或直接进入文件夹下，进行操作：
+
+
+Microsoft Windows XP [版本 5.1.2600]
+(C) 版权所有 1985-2001 Microsoft Corp.
+
+C:\Documents and Settings\Administrator>cd E:\MyWork\元祖 ganso\2013-05-08
+
+C:\Documents and Settings\Administrator>e:
+
+E:\MyWork\元祖 ganso\2013-05-08>scp "members no sina.csv" webmail@166.63.126.33:
+/home/webmail/alex
+The authenticity of host '166.63.126.33 (166.63.126.33)' can't be established.
+RSA key fingerprint is e1:9a:8d:fe:ab:88:4b:a1:fc:4b:58:02:ae:e6:ad:0a.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '166.63.126.33' (RSA) to the list of known hosts.
+webmail@166.63.126.33's password:
+members no sina.csv                           100% 1695KB   1.7MB/s   00:01
+
+E:\MyWork\元祖 ganso\2013-05-08>
