@@ -1,111 +1,111 @@
 http://www.liusuping.com/ubuntu-linux/iptables-firewall-setting.html
-iptablesÊÇ»ùÓÚÄÚºËµÄ·À»ðÇ½£¬¹¦ÄÜ·Ç³£Ç¿´ó£¬iptablesÄÚÖÃÁËfilter£¬natºÍmangleÈýÕÅ±í¡£
-1.filter¸ºÔð¹ýÂËÊý¾Ý°ü£¬°üÀ¨µÄ¹æÔòÁ´ÓÐ£¬input£¬outputºÍforward£»
-2.natÔòÉæ¼°µ½ÍøÂçµØÖ·×ª»»£¬°üÀ¨µÄ¹æÔòÁ´ÓÐ£¬prerouting£¬postroutingºÍoutput£»
-3.mangle±íÔòÖ÷ÒªÓ¦ÓÃÔÚÐÞ¸ÄÊý¾Ý°üÄÚÈÝÉÏ£¬ÓÃÀ´×öÁ÷Á¿ÕûÐÎµÄ£¬Ä¬ÈÏµÄ¹æÔòÁ´ÓÐ£ºINPUT£¬OUTPUT£¬NAT£¬POSTROUTING£¬PREROUTING£»
-4.input  Æ¥ÅäÄ¿µÄIPÊÇ±¾»úµÄÊý¾Ý°ü£¬
-    forwardÆ¥ÅäÁ÷¾­±¾»úµÄÊý¾Ý°ü£¬
-    prerouting ÓÃÀ´ÐÞ¸ÄÄ¿µÄµØÖ·ÓÃÀ´×öDNAT£¬
-    postroutingÓÃÀ´ÐÞ¸ÄÔ´µØÖ·ÓÃÀ´×öSNAT¡£
+iptablesæ˜¯åŸºäºŽå†…æ ¸çš„é˜²ç«å¢™ï¼ŒåŠŸèƒ½éžå¸¸å¼ºå¤§ï¼Œiptableså†…ç½®äº†filterï¼Œnatå’Œmangleä¸‰å¼ è¡¨ã€‚
+1.filterè´Ÿè´£è¿‡æ»¤æ•°æ®åŒ…ï¼ŒåŒ…æ‹¬çš„è§„åˆ™é“¾æœ‰ï¼Œinputï¼Œoutputå’Œforwardï¼›
+2.natåˆ™æ¶‰åŠåˆ°ç½‘ç»œåœ°å€è½¬æ¢ï¼ŒåŒ…æ‹¬çš„è§„åˆ™é“¾æœ‰ï¼Œpreroutingï¼Œpostroutingå’Œoutputï¼›
+3.mangleè¡¨åˆ™ä¸»è¦åº”ç”¨åœ¨ä¿®æ”¹æ•°æ®åŒ…å†…å®¹ä¸Šï¼Œç”¨æ¥åšæµé‡æ•´å½¢çš„ï¼Œé»˜è®¤çš„è§„åˆ™é“¾æœ‰ï¼šINPUTï¼ŒOUTPUTï¼ŒNATï¼ŒPOSTROUTINGï¼ŒPREROUTINGï¼›
+4.input  åŒ¹é…ç›®çš„IPæ˜¯æœ¬æœºçš„æ•°æ®åŒ…ï¼Œ
+    forwardåŒ¹é…æµç»æœ¬æœºçš„æ•°æ®åŒ…ï¼Œ
+    prerouting ç”¨æ¥ä¿®æ”¹ç›®çš„åœ°å€ç”¨æ¥åšDNATï¼Œ
+    postroutingç”¨æ¥ä¿®æ”¹æºåœ°å€ç”¨æ¥åšSNATã€‚
 
-²é¿´iptablesÎÄ¼þ
+æŸ¥çœ‹iptablesæ–‡ä»¶
 [root@localhost ~]# vi /etc/sysconfig/iptables
 # Firewall configuration written by system-config-firewall
 
-iptablesÖ÷Òª²ÎÊý
-×¢Òâ£ºËùÓÐÁ´Ãû±ØÐë´óÐ´£¬±íÃ÷±ØÐëÐ¡Ð´£¬¶¯×÷±ØÐë´óÐ´£¬Æ¥Åä±ØÐëÐ¡Ð´
-    -A Ïò¹æÔòÁ´ÖÐÌí¼ÓÒ»Ìõ¹æÔò£¬Ä¬ÈÏ±»Ìí¼Óµ½Ä©Î²
-    -TÖ¸¶¨Òª²Ù×÷µÄ±í£¬Ä¬ÈÏÊÇfilter
-    -D´Ó¹æÔòÁ´ÖÐÉ¾³ý¹æÔò£¬¿ÉÒÔÖ¸¶¨ÐòºÅ»òÕßÆ¥ÅäµÄ¹æÔòÀ´É¾³ý
-    -R½øÐÐ¹æÔòÌæ»»
-    -I²åÈëÒ»Ìõ¹æÔò£¬Ä¬ÈÏ±»²åÈëµ½Ê×²¿
-    -FÇå¿ÕËùÑ¡µÄÁ´£¬ÖØÆôºó»Ö¸´
-    -NÐÂ½¨ÓÃ»§×Ô¶¨ÒåµÄ¹æÔòÁ´
-    -XÉ¾³ýÓÃ»§×Ô¶¨ÒåµÄ¹æÔòÁ´
-    -pÓÃÀ´Ö¸¶¨Ð­Òé¿ÉÒÔÊÇtcp£¬udp£¬icmpµÈÒ²¿ÉÒÔÊÇÊý×ÖµÄÐ­ÒéºÅ£¬
-    -sÖ¸¶¨Ô´µØÖ·
-    -dÖ¸¶¨Ä¿µÄµØÖ·
-    -i½øÈë½Ó¿Ú
-    -oÁ÷³ö½Ó¿Ú
-    -j²ÉÈ¡µÄ¶¯×÷£¬accept£¬drop£¬snat£¬dnat£¬masquerade
-    --sportÔ´¶Ë¿Ú
-    --dportÄ¿µÄ¶Ë¿Ú£¬¶Ë¿Ú±ØÐëºÍÐ­ÒéÒ»ÆðÀ´ÅäºÏÊ¹ÓÃ
+iptablesä¸»è¦å‚æ•°
+æ³¨æ„ï¼šæ‰€æœ‰é“¾åå¿…é¡»å¤§å†™ï¼Œè¡¨æ˜Žå¿…é¡»å°å†™ï¼ŒåŠ¨ä½œå¿…é¡»å¤§å†™ï¼ŒåŒ¹é…å¿…é¡»å°å†™
+    -A å‘è§„åˆ™é“¾ä¸­æ·»åŠ ä¸€æ¡è§„åˆ™ï¼Œé»˜è®¤è¢«æ·»åŠ åˆ°æœ«å°¾
+    -TæŒ‡å®šè¦æ“ä½œçš„è¡¨ï¼Œé»˜è®¤æ˜¯filter
+    -Dä»Žè§„åˆ™é“¾ä¸­åˆ é™¤è§„åˆ™ï¼Œå¯ä»¥æŒ‡å®šåºå·æˆ–è€…åŒ¹é…çš„è§„åˆ™æ¥åˆ é™¤
+    -Rè¿›è¡Œè§„åˆ™æ›¿æ¢
+    -Iæ’å…¥ä¸€æ¡è§„åˆ™ï¼Œé»˜è®¤è¢«æ’å…¥åˆ°é¦–éƒ¨
+    -Fæ¸…ç©ºæ‰€é€‰çš„é“¾ï¼Œé‡å¯åŽæ¢å¤
+    -Næ–°å»ºç”¨æˆ·è‡ªå®šä¹‰çš„è§„åˆ™é“¾
+    -Xåˆ é™¤ç”¨æˆ·è‡ªå®šä¹‰çš„è§„åˆ™é“¾
+    -pç”¨æ¥æŒ‡å®šåè®®å¯ä»¥æ˜¯tcpï¼Œudpï¼Œicmpç­‰ä¹Ÿå¯ä»¥æ˜¯æ•°å­—çš„åè®®å·ï¼Œ
+    -sæŒ‡å®šæºåœ°å€
+    -dæŒ‡å®šç›®çš„åœ°å€
+    -iè¿›å…¥æŽ¥å£
+    -oæµå‡ºæŽ¥å£
+    -jé‡‡å–çš„åŠ¨ä½œï¼Œacceptï¼Œdropï¼Œsnatï¼Œdnatï¼Œmasquerade
+    --sportæºç«¯å£
+    --dportç›®çš„ç«¯å£ï¼Œç«¯å£å¿…é¡»å’Œåè®®ä¸€èµ·æ¥é…åˆä½¿ç”¨
 
 
-iptable»ù±¾²Ù×÷
-    iptables -L  ÁÐ³öiptables¹æÔò
-    iptables -F  Çå³ýiptablesÄÚÖÃ¹æÔò
-    iptables -X  Çå³ýiptables×Ô¶¨Òå¹æÔò
+iptableåŸºæœ¬æ“ä½œ
+    iptables -L  åˆ—å‡ºiptablesè§„åˆ™
+    iptables -F  æ¸…é™¤iptableså†…ç½®è§„åˆ™
+    iptables -X  æ¸…é™¤iptablesè‡ªå®šä¹‰è§„åˆ™
 
-Éè¶¨Ä¬ÈÏ¹æÔò
+è®¾å®šé»˜è®¤è§„åˆ™
 
-ÔÚiptables¹æÔòÖÐÃ»ÓÐÆ¥Åäµ½¹æÔòÔòÊ¹ÓÃÄ¬ÈÏ¹æÔò½øÐÐ´¦Àí
+åœ¨iptablesè§„åˆ™ä¸­æ²¡æœ‰åŒ¹é…åˆ°è§„åˆ™åˆ™ä½¿ç”¨é»˜è®¤è§„åˆ™è¿›è¡Œå¤„ç†
 
     iptables -P INPUT DROP
     iptables -P OUTPUT ACCEPT
     iptables -P FORWARD DROP
 
-ÅäÖÃSSH¹æÔò
+é…ç½®SSHè§„åˆ™
 
     iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-    iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT  Èç¹ûÄã°ÑOUTPUT ÉèÖÃ³ÉDROP£¬¾ÍÐèÒª¼ÓÉÏÕâ¸ö¹æÔò,·ñÔòSSH»¹ÊÇ²»ÄÜµÇÂ¼£¬ÒòÎªSSH·þÎñÖ°ÄÜ½ø²»ÄÜ³ö¡£
+    iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT  å¦‚æžœä½ æŠŠOUTPUT è®¾ç½®æˆDROPï¼Œå°±éœ€è¦åŠ ä¸Šè¿™ä¸ªè§„åˆ™,å¦åˆ™SSHè¿˜æ˜¯ä¸èƒ½ç™»å½•ï¼Œå› ä¸ºSSHæœåŠ¡èŒèƒ½è¿›ä¸èƒ½å‡ºã€‚
 
-Ö»ÔÊÐí192.168.0.3µÄ»úÆ÷½øÐÐSSHÁ¬½Ó
+åªå…è®¸192.168.0.3çš„æœºå™¨è¿›è¡ŒSSHè¿žæŽ¥
 
     iptables -A INPUT -s 192.168.0.3 -p tcp --dport 22 -j ACCEPT
 
-    Èç¹ûÒªÔÊÐí,»òÏÞÖÆÒ»¶ÎIPµØÖ·¿ÉÓÃ 192.168.0.0/24 ±íÊ¾192.168.0.1-255¶ËµÄËùÓÐIP.
+    å¦‚æžœè¦å…è®¸,æˆ–é™åˆ¶ä¸€æ®µIPåœ°å€å¯ç”¨ 192.168.0.0/24 è¡¨ç¤º192.168.0.1-255ç«¯çš„æ‰€æœ‰IP.
 
-ÔÊÐíloopback»Ø»·Í¨ÐÅ
+å…è®¸loopbackå›žçŽ¯é€šä¿¡
 
     IPTABLES -A INPUT -i lo -p all -j ACCEPT
     IPTABLES -A OUTPUT -o lo -p all -j ACCEPT
 
-Ä¿µÄµØÖ·×ª»»£¬Ó³ÉäÄÚ²¿µØÖ·
+ç›®çš„åœ°å€è½¬æ¢ï¼Œæ˜ å°„å†…éƒ¨åœ°å€
 
     iptables -t nat -A PREROUTING -i ppp0 -p tcp --dprot 81 -j DNAT --to 192.168.0.2:80
     iptables -t nat -A PREROUTING -i ppp0 -p tcp --dprot 81 -j DNAT --to 192.168.0.1-192.168.0.10
 
-Ô´µØÖ·×ª»»£¬Òþ²ØÄÚ²¿µØÖ·
+æºåœ°å€è½¬æ¢ï¼Œéšè—å†…éƒ¨åœ°å€
 
     iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to 1.1.1.1
     iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to 1.1.1.1-1.1.1.10
 
-µØÖ·Î±×°£¬¶¯Ì¬ipµÄNAT
+åœ°å€ä¼ªè£…ï¼ŒåŠ¨æ€ipçš„NAT
 
     iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j MASQUERADE
 
-masqueradeºÍsnatµÄÖ÷ÒªÇø±ðÔÚÓÚ£¬snatÊÇ°ÑÔ´µØÖ·×ª»»Îª¹Ì¶¨µÄIPµØÖ·»òÕßÊÇµØÖ·³Ø£¬¶ømasqueradeÔÚadslµÈ·½Ê½²¦ºÅÉÏÍøÊ±ºò·Ç³£ÓÐÓÃ£¬ÒòÎªÊÇ²¦ºÅÉÏÍøËùÒÔÍø¿¨µÄÍâÍøIP¾­³£±ä»¯£¬ÕâÑùÔÚ½øÐÐµØÖ·×ª»»µÄÊ±ºò¾ÍÒªÔÚÃ¿´Î¶¼ÒªÐÞ¸Ä×ª»»²ßÂÔÀïÃæµÄip£¬Ê¹ÓÃmasquerade¾ÍºÜºÃµÄ½â¾öÁËÕâ¸öÎÊÌâ£¬Ëû»á×Ô¼ºÈ¥Ì½²âÍâÍø¿¨»ñµÃµÄipµØÖ·È»ºó×Ô¶¯½øÐÐµØÖ·×ª»»£¬ÕâÑù¾ÍËãÍâÍø»ñµÃµÄip¾­³£±ä»¯Ò²²»ÓÃÈË¹¤¸ÉÔ¤ÁË¡£
+masqueradeå’Œsnatçš„ä¸»è¦åŒºåˆ«åœ¨äºŽï¼Œsnatæ˜¯æŠŠæºåœ°å€è½¬æ¢ä¸ºå›ºå®šçš„IPåœ°å€æˆ–è€…æ˜¯åœ°å€æ± ï¼Œè€Œmasqueradeåœ¨adslç­‰æ–¹å¼æ‹¨å·ä¸Šç½‘æ—¶å€™éžå¸¸æœ‰ç”¨ï¼Œå› ä¸ºæ˜¯æ‹¨å·ä¸Šç½‘æ‰€ä»¥ç½‘å¡çš„å¤–ç½‘IPç»å¸¸å˜åŒ–ï¼Œè¿™æ ·åœ¨è¿›è¡Œåœ°å€è½¬æ¢çš„æ—¶å€™å°±è¦åœ¨æ¯æ¬¡éƒ½è¦ä¿®æ”¹è½¬æ¢ç­–ç•¥é‡Œé¢çš„ipï¼Œä½¿ç”¨masqueradeå°±å¾ˆå¥½çš„è§£å†³äº†è¿™ä¸ªé—®é¢˜ï¼Œä»–ä¼šè‡ªå·±åŽ»æŽ¢æµ‹å¤–ç½‘å¡èŽ·å¾—çš„ipåœ°å€ç„¶åŽè‡ªåŠ¨è¿›è¡Œåœ°å€è½¬æ¢ï¼Œè¿™æ ·å°±ç®—å¤–ç½‘èŽ·å¾—çš„ipç»å¸¸å˜åŒ–ä¹Ÿä¸ç”¨äººå·¥å¹²é¢„äº†ã€‚
 
-¿ªÆô×ª·¢¹¦ÄÜ
+å¼€å¯è½¬å‘åŠŸèƒ½
 
-    iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT Ö»ÔÊÐíÒÑ½¨Á¬½Ó¼°Ïà¹ØÁ´½Ó¶ÔÄÚ×ª·¢
-    ptables -A FORWARD -i eth1 -o eh0 -j ACCEPT ÔÊÐí¶ÔÍâ×ª·¢
+    iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT åªå…è®¸å·²å»ºè¿žæŽ¥åŠç›¸å…³é“¾æŽ¥å¯¹å†…è½¬å‘
+    ptables -A FORWARD -i eth1 -o eh0 -j ACCEPT å…è®¸å¯¹å¤–è½¬å‘
 
-¹ýÂËÄ³¸öMAC
+è¿‡æ»¤æŸä¸ªMAC
 
-    iptables -A FORWARD -m mac --mac -source MACµØÖ· -j DROP
+    iptables -A FORWARD -m mac --mac -source MACåœ°å€ -j DROP
 
-±¨ÎÄ¾­¹ýÂ·ÓÉºó£¬Êý¾Ý°üÖÐÔ­ÓÐµÄMACÐÅÏ¢»á±»Ìæ»»£¬ËùÒÔÔÚÂ·ÓÉºóµÄiptablesÖÐÊ¹ÓÃmacÆ¥ÅäÃ»ÓÐÒâÒå¡£
+æŠ¥æ–‡ç»è¿‡è·¯ç”±åŽï¼Œæ•°æ®åŒ…ä¸­åŽŸæœ‰çš„MACä¿¡æ¯ä¼šè¢«æ›¿æ¢ï¼Œæ‰€ä»¥åœ¨è·¯ç”±åŽçš„iptablesä¸­ä½¿ç”¨macåŒ¹é…æ²¡æœ‰æ„ä¹‰ã€‚
 
-Êý¾Ý°üÕûÁ÷
+æ•°æ®åŒ…æ•´æµ
 
     iptables -A FORWARD -d 192.168.0.1 -m limit --limit 50/s -j ACCEPT
     iptables -A FORWARD -d 192.168.0.1 -j DROP
 
-¶à¶Ë¿ÚÆ¥Åä
+å¤šç«¯å£åŒ¹é…
 
-ÓÃÒÔÒ»´ÎÆ¥Åä¶à¸ö¶Ë¿Ú
+ç”¨ä»¥ä¸€æ¬¡åŒ¹é…å¤šä¸ªç«¯å£
 
     iptables -A INPUT -p tcp -m muliport --dport s 21,22,25,80,110 -j ACCEPT
 
-¶ªÆú·Ç·¨Á¬½Ó
+ä¸¢å¼ƒéžæ³•è¿žæŽ¥
 
     iptables -A INPUT   -m state --state INVALID -j DROP
     iptables -A OUTPUT -m state --state INVALID -j DROP
     iptables-A FORWARD -m state --state INVALID -j DROP
 
-´æ´¢ÓÚ»Ö¸´iptables¹æÔò
+å­˜å‚¨äºŽæ¢å¤iptablesè§„åˆ™
 
     iptables-save > somefile
     iptables-restore < somefile

@@ -1,16 +1,16 @@
-ssh°²È«µÄ×Ô¶¯µÇÂ¼
+sshå®‰å…¨çš„è‡ªåŠ¨ç™»å½•
 
-ËµÃ÷£º
-AÎª±¾µØÖ÷»ú(¼´ÓÃÓÚ¿ØÖÆÆäËûÖ÷»úµÄ»úÆ÷) ;
-BÎªÔ¶³ÌÖ÷»ú(¼´±»¿ØÖÆµÄ»úÆ÷Server), ¼ÙÈçipÎª166.63.126.33 ;
-AºÍBµÄÏµÍ³¶¼ÊÇLinux
+è¯´æ˜Žï¼š
+Aä¸ºæœ¬åœ°ä¸»æœº(å³ç”¨äºŽæŽ§åˆ¶å…¶ä»–ä¸»æœºçš„æœºå™¨) ;
+Bä¸ºè¿œç¨‹ä¸»æœº(å³è¢«æŽ§åˆ¶çš„æœºå™¨Server), å‡å¦‚ipä¸º166.63.126.33 ;
+Aå’ŒBçš„ç³»ç»Ÿéƒ½æ˜¯Linux
 
 
-ÔÚAÉÏµÄÃüÁî:
+åœ¨Aä¸Šçš„å‘½ä»¤:
 
-1.Éú³É±¾µØ¹«Ô¿ÓëË½Ô¿
+1.ç”Ÿæˆæœ¬åœ°å…¬é’¥ä¸Žç§é’¥
 
-[root@oracle11g ~]# ssh-keygen -t rsa (Á¬ÐøÈý´Î»Ø³µ,¼´ÔÚ±¾µØÉú³ÉÁË¹«Ô¿ºÍË½Ô¿,²»ÉèÖÃÃÜÂë)
+[root@oracle11g ~]# ssh-keygen -t rsa (è¿žç»­ä¸‰æ¬¡å›žè½¦,å³åœ¨æœ¬åœ°ç”Ÿæˆäº†å…¬é’¥å’Œç§é’¥,ä¸è®¾ç½®å¯†ç )
 
 Generating public/private rsa key pair.
 Enter file in which to save the key (/root/.ssh/id_rsa): 
@@ -33,24 +33,24 @@ The key's randomart image is:
 |                 |
 +-----------------+
 
-2.ÔÚÄ¿±êÖ÷»ú´´½¨.sshÎÄ¼þ¼Ð£¬²¢ÐÞ¸ÄÈ¨ÏÞ
+2.åœ¨ç›®æ ‡ä¸»æœºåˆ›å»º.sshæ–‡ä»¶å¤¹ï¼Œå¹¶ä¿®æ”¹æƒé™
 
-[root@oracle11g ~]# ssh webmail@166.63.126.33 "mkdir .ssh;chmod 0700 .ssh"  (ÐèÒªÊäÈëÃÜÂë)
+[root@oracle11g ~]# ssh webmail@166.63.126.33 "mkdir .ssh;chmod 0700 .ssh"  (éœ€è¦è¾“å…¥å¯†ç )
 
 reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
 webmail@166.63.126.33's password: 
 mkdir: cannot create directory `.ssh': File exists 
 
-(Èô.sshÎÄ¼þÒÑ´æÔÚ£¬µ¼ÖÂÃüÁîÃ»ÓÐÖ´ÐÐ£¬Ôò²»´´½¨.ssh)
-[root@oracle11g ~]# ssh webmail@166.63.126.33 "chmod 0700 .ssh" (ÐèÒªÊäÈëÃÜÂë)
+(è‹¥.sshæ–‡ä»¶å·²å­˜åœ¨ï¼Œå¯¼è‡´å‘½ä»¤æ²¡æœ‰æ‰§è¡Œï¼Œåˆ™ä¸åˆ›å»º.ssh)
+[root@oracle11g ~]# ssh webmail@166.63.126.33 "chmod 0700 .ssh" (éœ€è¦è¾“å…¥å¯†ç )
 
 reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
 webmail@166.63.126.33's password: 
 [root@oracle11g ~]# 
 
-3.°Ñ±¾µØ¹«Ô¿¿½±´ÖÁÄ¿±ê·þÎñÆ÷
+3.æŠŠæœ¬åœ°å…¬é’¥æ‹·è´è‡³ç›®æ ‡æœåŠ¡å™¨
 
-[root@oracle11g ~]# scp ~/.ssh/id_rsa.pub webmail@166.63.126.33:.ssh/id_rsa.pub (ÐèÒªÊäÈëÃÜÂë)
+[root@oracle11g ~]# scp ~/.ssh/id_rsa.pub webmail@166.63.126.33:.ssh/id_rsa.pub (éœ€è¦è¾“å…¥å¯†ç )
 
 reverse mapping checking getaddrinfo for cloudstack.cloudix.com [166.63.126.33] failed - POSSIBLE BREAK-IN ATTEMPT!
 webmail@166.63.126.33's password: 
@@ -58,24 +58,24 @@ id_rsa.pub                                        100%  396     0.4KB/s   00:00
 
 
 
-ÔÚBÉÏµÄÃüÁî:
+åœ¨Bä¸Šçš„å‘½ä»¤:
 
-1.²é¿´.sshÎÄ¼þ¼ÐÏÂÊÇ·ñÓÐauthorized_keysÎÄ¼þ
+1.æŸ¥çœ‹.sshæ–‡ä»¶å¤¹ä¸‹æ˜¯å¦æœ‰authorized_keysæ–‡ä»¶
 
 [webmail@cloud log]$ ls ~/.ssh/
 authorized_keys  id_rsa.pub
 
-(ÈôÃ»ÓÐauthorized_keys£¬Ôò´´½¨,ÈôÓÐÌø¹ý¸ÃÃüÁî)
+(è‹¥æ²¡æœ‰authorized_keysï¼Œåˆ™åˆ›å»º,è‹¥æœ‰è·³è¿‡è¯¥å‘½ä»¤)
 [webmail@cloud log]$ touch ~/.ssh/authorized_keys
 
-2.½«id_rsa.pubµÄÄÚÈÝ×·¼Óµ½ authorized_keys ÖÐ
+2.å°†id_rsa.pubçš„å†…å®¹è¿½åŠ åˆ° authorized_keys ä¸­
 
 [webmail@cloud log]$ cat ~/.ssh/id_rsa.pub  >> ~/.ssh/authorized_keys  
 
 
-»Øµ½A»úÆ÷:
+å›žåˆ°Aæœºå™¨:
 
-sshµÇÂ½Ä¿±ê·þÎñÆ÷(²»ÐèÒªÃÜÂë, µÇÂ¼³É¹¦)
+sshç™»é™†ç›®æ ‡æœåŠ¡å™¨(ä¸éœ€è¦å¯†ç , ç™»å½•æˆåŠŸ)
 
 [root@oracle11g ~]# ssh webmail@166.63.126.33
 
@@ -85,37 +85,37 @@ Last login: Fri May 10 21:50:52 2013 from 220.248.30.60
 
 
 
-Èç¹ûÄÜ±£»¤ºÃ×Ô¼ºµÄË½Ô¿, ÕâÖÖ·½·¨Ïà¶ÔÔÚshellÉÏÊäÈëÃÜÂë, Òª°²È«Ò»Ð©
+å¦‚æžœèƒ½ä¿æŠ¤å¥½è‡ªå·±çš„ç§é’¥, è¿™ç§æ–¹æ³•ç›¸å¯¹åœ¨shellä¸Šè¾“å…¥å¯†ç , è¦å®‰å…¨ä¸€äº›
 
 #########################################################################
 
-ÉîÈëÒ»µãµã:
+æ·±å…¥ä¸€ç‚¹ç‚¹:
 
-´Ó±íÃæÉÏ¼òµ¥µÄÀí½âÒ»ÏÂµÇÂ¼µÄ¹ý³Ì,
-Ê×ÏÈ ssh-keygen -t rsa ÃüÁîÉú³ÉÁËÒ»¸öÃÜÔ¿ºÍÒ»¸ö¹«Ô¿, ¶øÇÒÃÜÔ¿¿ÉÒÔÉèÖÃ×Ô¼ºµÄÃÜÂë
-¿ÉÒÔ°ÑÃÜÔ¿Àí½â³ÉÒ»°ÑÔ¿³×, ¹«Ô¿Àí½â³ÉÕâ°ÑÔ¿³×¶ÔÓ¦µÄËøÍ·,
-°ÑËøÍ·(¹«Ô¿)·Åµ½ÏëÒª¿ØÖÆµÄserverÉÏ, Ëø×¡server, Ö»ÓÐÓµÓÐÔ¿³×(ÃÜÔ¿)µÄÈË, ²ÅÄÜ´ò¿ªËøÍ·, ½øÈëserver²¢¿ØÖÆ
-¶ø¶ÔÓÚÓµÓÐÕâ°ÑÔ¿³×µÄÈË, ±ØÐèµÃÖªµÀÔ¿³×±¾ÉíµÄÃÜÂë,²ÅÄÜÊ¹ÓÃÕâ°ÑÔ¿³× (³ý·ÇÕâ°ÑÔ¿³×Ã»ÉèÖÃÃÜÂë), ÕâÑù¾Í¿ÉÒÔ·ÀÖ¹Ô¿³×±»ÁËÅäÁË(Ë½Ô¿±»ÈË¸´ÖÆ)
+ä»Žè¡¨é¢ä¸Šç®€å•çš„ç†è§£ä¸€ä¸‹ç™»å½•çš„è¿‡ç¨‹,
+é¦–å…ˆ ssh-keygen -t rsa å‘½ä»¤ç”Ÿæˆäº†ä¸€ä¸ªå¯†é’¥å’Œä¸€ä¸ªå…¬é’¥, è€Œä¸”å¯†é’¥å¯ä»¥è®¾ç½®è‡ªå·±çš„å¯†ç 
+å¯ä»¥æŠŠå¯†é’¥ç†è§£æˆä¸€æŠŠé’¥åŒ™, å…¬é’¥ç†è§£æˆè¿™æŠŠé’¥åŒ™å¯¹åº”çš„é”å¤´,
+æŠŠé”å¤´(å…¬é’¥)æ”¾åˆ°æƒ³è¦æŽ§åˆ¶çš„serverä¸Š, é”ä½server, åªæœ‰æ‹¥æœ‰é’¥åŒ™(å¯†é’¥)çš„äºº, æ‰èƒ½æ‰“å¼€é”å¤´, è¿›å…¥serverå¹¶æŽ§åˆ¶
+è€Œå¯¹äºŽæ‹¥æœ‰è¿™æŠŠé’¥åŒ™çš„äºº, å¿…éœ€å¾—çŸ¥é“é’¥åŒ™æœ¬èº«çš„å¯†ç ,æ‰èƒ½ä½¿ç”¨è¿™æŠŠé’¥åŒ™ (é™¤éžè¿™æŠŠé’¥åŒ™æ²¡è®¾ç½®å¯†ç ), è¿™æ ·å°±å¯ä»¥é˜²æ­¢é’¥åŒ™è¢«äº†é…äº†(ç§é’¥è¢«äººå¤åˆ¶)
 
-µ±È», ÕâÖÖÀý×ÓÖ»ÊÇ·½±ãÀí½â°ÕÁË,
-ÓµÓÐrootÃÜÂëµÄÈËµ±È»ÊÇ²»»á±»Ëø×¡µÄ, ¶øÇÒ²»Ò»¶¨Ö»ÓÐÒ»°ÑËø(¹«Ô¿), µ«Èç¹ûÈÎºÎÒ»°ÑËø, ±»ÈËÓÃÆä¶ÔÓ¦µÄÔ¿³×(Ë½Ô¿)´ò¿ªÁË, server¾Í¿ÉÒÔ±»ÄÇ¸öÈË¿ØÖÆÁË
-ËùÒÔËµ, Ö»ÒªÄãÔø¾­ÖªµÀserverµÄrootÃÜÂë, ²¢½«ÓÐrootÉí·ÝµÄ¹«Ô¿·Åµ½ÉÏÃæ, ¾Í¿ÉÒÔÓÃÕâ¸ö¹«Ô¿¶ÔÓ¦µÄË½Ô¿"´ò¿ª" server, ÔÙÒÔrootµÄÉí·ÖµÇÂ¼, ¼´Ê¹ÏÖÔÚrootÃÜÂëÒÑ¾­¸ü¸Ä!
+å½“ç„¶, è¿™ç§ä¾‹å­åªæ˜¯æ–¹ä¾¿ç†è§£ç½¢äº†,
+æ‹¥æœ‰rootå¯†ç çš„äººå½“ç„¶æ˜¯ä¸ä¼šè¢«é”ä½çš„, è€Œä¸”ä¸ä¸€å®šåªæœ‰ä¸€æŠŠé”(å…¬é’¥), ä½†å¦‚æžœä»»ä½•ä¸€æŠŠé”, è¢«äººç”¨å…¶å¯¹åº”çš„é’¥åŒ™(ç§é’¥)æ‰“å¼€äº†, serverå°±å¯ä»¥è¢«é‚£ä¸ªäººæŽ§åˆ¶äº†
+æ‰€ä»¥è¯´, åªè¦ä½ æ›¾ç»çŸ¥é“serverçš„rootå¯†ç , å¹¶å°†æœ‰rootèº«ä»½çš„å…¬é’¥æ”¾åˆ°ä¸Šé¢, å°±å¯ä»¥ç”¨è¿™ä¸ªå…¬é’¥å¯¹åº”çš„ç§é’¥"æ‰“å¼€" server, å†ä»¥rootçš„èº«åˆ†ç™»å½•, å³ä½¿çŽ°åœ¨rootå¯†ç å·²ç»æ›´æ”¹!
 
-Èç¹ûÏë¿ØÖÆn¸ö»úÆ÷, ÄÇ¾ÍÐèÒªn¶ÔÔ¿³×(ÃÜÔ¿ºÍ¹«Ô¿), ssh-keygen ÃüÁî¿ÉÒÔËæÒâ¸ü¸ÄÔ¿³×¶ÔµÄÃû×Ö, ±ÈÈç:
+å¦‚æžœæƒ³æŽ§åˆ¶nä¸ªæœºå™¨, é‚£å°±éœ€è¦nå¯¹é’¥åŒ™(å¯†é’¥å’Œå…¬é’¥), ssh-keygen å‘½ä»¤å¯ä»¥éšæ„æ›´æ”¹é’¥åŒ™å¯¹çš„åå­—, æ¯”å¦‚:
 [root@wwy .ssh]# ssh-keygen -t rsa
 Generating public/private rsa key pair.
 Enter file in which to save the key (/root/.ssh/id_rsa): /root/.ssh/id_rsa_192.168.102.12
 ......
 
-ÕâÑùË½Ô¿ºÍ¹«Ô¿µÄÃû×Ö·Ö±ð¾ÍÊÇ:
-id_rsa_192.168.102.12 ºÍ id_rsa_192.168.102.12.pub
-È»ºó½« id_rsa_192.168.102.12.pub ÎÄ¼þµÄÄÚÈÝ, ×·¼Óµ½severµÄ ~/.ssh/authorized_keys2 ÎÄ¼þÖÐ,
+è¿™æ ·ç§é’¥å’Œå…¬é’¥çš„åå­—åˆ†åˆ«å°±æ˜¯:
+id_rsa_192.168.102.12 å’Œ id_rsa_192.168.102.12.pub
+ç„¶åŽå°† id_rsa_192.168.102.12.pub æ–‡ä»¶çš„å†…å®¹, è¿½åŠ åˆ°severçš„ ~/.ssh/authorized_keys2 æ–‡ä»¶ä¸­,
 
-×îºó, ÔÚ±¾µØÓÃsshÃüÁîµÄ -i ²ÎÊýÖ¸¶¨±¾µØÃÜÔ¿, ²¢µÇÂ¼:
+æœ€åŽ, åœ¨æœ¬åœ°ç”¨sshå‘½ä»¤çš„ -i å‚æ•°æŒ‡å®šæœ¬åœ°å¯†é’¥, å¹¶ç™»å½•:
 # ssh -i /root/.ssh/id_rsa_192.168.102.12 192.168.102.12
 
-Èç¹ûÃÜÔ¿ÉèÖÃÁËÃÜÂë, ¾ÍÓÃÃÜÔ¿µÄÃÜÂëµÇÂ¼, Ã»ÉèÃÜÂë, ¾ÍÖ±½ÓµÇÂ¼½øÈ¥ÁË
+å¦‚æžœå¯†é’¥è®¾ç½®äº†å¯†ç , å°±ç”¨å¯†é’¥çš„å¯†ç ç™»å½•, æ²¡è®¾å¯†ç , å°±ç›´æŽ¥ç™»å½•è¿›åŽ»äº†
 
-scpÒ²ÊÇÒ»ÑùµÄ
-Èç£º
-scp £­i /root/.ssh/id_rsa  ./xxx 192.168.102.158:/home/wwy/bak
+scpä¹Ÿæ˜¯ä¸€æ ·çš„
+å¦‚ï¼š
+scp ï¼i /root/.ssh/id_rsa  ./xxx 192.168.102.158:/home/wwy/bak

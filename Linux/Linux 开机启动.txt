@@ -1,16 +1,16 @@
-1¡¢°ÑÆô¶¯³ÌÐòµÄÃüÁîÌí¼Óµ½/etc/rc.d/rc.localÎÄ¼þÖÐ
+1ã€æŠŠå¯åŠ¨ç¨‹åºçš„å‘½ä»¤æ·»åŠ åˆ°/etc/rc.d/rc.localæ–‡ä»¶ä¸­
 
-2¡¢°ÑÆô¶¯³ÌÐòµÄÃüÁîÌí¼Óµ½/etc/rc.d/rc.sysinit ÎÄ¼þÖÐ
+2ã€æŠŠå¯åŠ¨ç¨‹åºçš„å‘½ä»¤æ·»åŠ åˆ°/etc/rc.d/rc.sysinit æ–‡ä»¶ä¸­
 
-3¡¢Ê¹ÓÃÃüÁîchkconfigÉèÖÃ¿ª»úÆô¶¯
+3ã€ä½¿ç”¨å‘½ä»¤chkconfigè®¾ç½®å¼€æœºå¯åŠ¨
 
---add Ìí¼Ó·þÎñ
+--add æ·»åŠ æœåŠ¡
 [webmail@localhost focus_mail]$ chkconfig --add mysqld
---del É¾³ý·þÎñ
+--del åˆ é™¤æœåŠ¡
 [webmail@localhost focus_mail]$ chkconfig --del mysqld
---list ²é¿´¸÷·þÎñÆô¶¯×´Ì¬
+--list æŸ¥çœ‹å„æœåŠ¡å¯åŠ¨çŠ¶æ€
 [webmail@localhost focus_mail]$ chkconfig --list mysqld
-mysqld          0:¹Ø±Õ  1:¹Ø±Õ  2:¹Ø±Õ  3:¹Ø±Õ  4:¹Ø±Õ  5:¹Ø±Õ  6:¹Ø±Õ
-µ±2-5¶¼¿ªÆôÊ±£¬¼´Îª¿ª»úÆô¶¯
+mysqld          0:å…³é—­  1:å…³é—­  2:å…³é—­  3:å…³é—­  4:å…³é—­  5:å…³é—­  6:å…³é—­
+å½“2-5éƒ½å¼€å¯æ—¶ï¼Œå³ä¸ºå¼€æœºå¯åŠ¨
 
-4¡¢ÓÃÈíÁ¬½Ó·ÅÈëµ½ÏàÓ¦ÔËÐÐ¼¶µÄÄ¿Â¼ÖÐ
+4ã€ç”¨è½¯è¿žæŽ¥æ”¾å…¥åˆ°ç›¸åº”è¿è¡Œçº§çš„ç›®å½•ä¸­

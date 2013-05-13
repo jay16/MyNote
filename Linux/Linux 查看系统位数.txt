@@ -1,15 +1,15 @@
-£¨1£©²é¿´windows²Ù×÷ÏµÍ³µÄÎ»Êý£º
-´ò¿ªcmd£¬ÔÚÃüÁîÐÐ´°¿ÚÖÐÖ±½Ó¼üÈësysteminfo |findstr Windows|findstr Microsoft£¬»Ø³µ£¬½á¹ûÈçÏÂ£¨Ê¾Àý£©£º
-OS Ãû³Æ:          Microsoft Windows XP Professional
-£¨Ã»ÓÐx64¾Í±íÊ¾ÊÇ32Î»µÄ£©£¬ÉÏÃæµÄ½á¹û¾Í±íÊ¾ÊÇ32Î»µÄ¡£
+ï¼ˆ1ï¼‰æŸ¥çœ‹windowsæ“ä½œç³»ç»Ÿçš„ä½æ•°ï¼š
+æ‰“å¼€cmdï¼Œåœ¨å‘½ä»¤è¡Œçª—å£ä¸­ç›´æŽ¥é”®å…¥systeminfo |findstr Windows|findstr Microsoftï¼Œå›žè½¦ï¼Œç»“æžœå¦‚ä¸‹ï¼ˆç¤ºä¾‹ï¼‰ï¼š
+OS åç§°:          Microsoft Windows XP Professional
+ï¼ˆæ²¡æœ‰x64å°±è¡¨ç¤ºæ˜¯32ä½çš„ï¼‰ï¼Œä¸Šé¢çš„ç»“æžœå°±è¡¨ç¤ºæ˜¯32ä½çš„ã€‚
  
-ÈôÓÐ¡°x64¡±µÄ×ÖÑù£¬Ôò±íÊ¾²Ù×÷ÏµÍ³ÊÇ64Î»µÄ¡£
+è‹¥æœ‰â€œx64â€çš„å­—æ ·ï¼Œåˆ™è¡¨ç¤ºæ“ä½œç³»ç»Ÿæ˜¯64ä½çš„ã€‚
  
-£¨2£©linux
-´ò¿ªÖÕ¶Ë
-ÔËÐÐecho $HOSTTYPE
-Èç¹ûÔËÐÐ½á¹ûÊÇ¡°i686¡±£¬¡°i586¡±»ò¡°i386¡±£¬ÔòËµÃ÷linux²Ù×÷ÏµÍ³ÊÇ32Î»µÄ£»
-Èç¹û½á¹ûÊÇ¡°x86_64¡±,ÔòËµÃ÷linux²Ù×÷ÏµÍ³ÊÇ64Î»µÄ¡£
-·¶Àý£º
+ï¼ˆ2ï¼‰linux
+æ‰“å¼€ç»ˆç«¯
+è¿è¡Œecho $HOSTTYPE
+å¦‚æžœè¿è¡Œç»“æžœæ˜¯â€œi686â€ï¼Œâ€œi586â€æˆ–â€œi386â€ï¼Œåˆ™è¯´æ˜Žlinuxæ“ä½œç³»ç»Ÿæ˜¯32ä½çš„ï¼›
+å¦‚æžœç»“æžœæ˜¯â€œx86_64â€,åˆ™è¯´æ˜Žlinuxæ“ä½œç³»ç»Ÿæ˜¯64ä½çš„ã€‚
+èŒƒä¾‹ï¼š
 [root@localhost ~]# echo $HOSTTYPE
 i686

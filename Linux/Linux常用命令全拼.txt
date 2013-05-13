@@ -1,35 +1,35 @@
-ls£ºlist(ÁĞ³öÄ¿Â¼ÄÚÈİ)
+lsï¼šlist(åˆ—å‡ºç›®å½•å†…å®¹)
 
-cd£ºChange Directory£¨¸Ä±äÄ¿Â¼£©
-su:switch user ÇĞ»»ÓÃ»§
-rpm:redhat package manager ºìÃ±×Ó´ò°ü¹ÜÀíÆ÷
-pwd:print work directory ´òÓ¡µ±Ç°Ä¿Â¼ ÏÔÊ¾³öµ±Ç°¹¤×÷Ä¿Â¼µÄ¾ø¶ÔÂ·¾¶
-ps: process status(½ø³Ì×´Ì¬£¬ÀàËÆÓÚwindowsµÄÈÎÎñ¹ÜÀíÆ÷) ³£ÓÃ²ÎÊı£º£­auxf
-ps -auxf ÏÔÊ¾½ø³Ì×´Ì¬
-df: disk freeÆä¹¦ÄÜÊÇÏÔÊ¾´ÅÅÌ¿ÉÓÃ¿Õ¼äÊıÄ¿ĞÅÏ¢¼°¿Õ¼ä½áµãĞÅÏ¢¡£»»¾ä»°Ëµ£¬¾ÍÊÇ±¨¸æÔÚÈÎºÎ°²×°µÄÉè±¸»òÄ¿Â¼ÖĞ£¬»¹Ê£¶àÉÙ×ÔÓÉµÄ¿Õ¼ä¡£
-rpm£º ¼´RedHat Package Management£¬ÊÇRedHatµÄ·¢Ã÷Ö®Ò»
+cdï¼šChange Directoryï¼ˆæ”¹å˜ç›®å½•ï¼‰
+su:switch user åˆ‡æ¢ç”¨æˆ·
+rpm:redhat package manager çº¢å¸½å­æ‰“åŒ…ç®¡ç†å™¨
+pwd:print work directory æ‰“å°å½“å‰ç›®å½• æ˜¾ç¤ºå‡ºå½“å‰å·¥ä½œç›®å½•çš„ç»å¯¹è·¯å¾„
+ps: process status(è¿›ç¨‹çŠ¶æ€ï¼Œç±»ä¼¼äºwindowsçš„ä»»åŠ¡ç®¡ç†å™¨) å¸¸ç”¨å‚æ•°ï¼šï¼auxf
+ps -auxf æ˜¾ç¤ºè¿›ç¨‹çŠ¶æ€
+df: disk freeå…¶åŠŸèƒ½æ˜¯æ˜¾ç¤ºç£ç›˜å¯ç”¨ç©ºé—´æ•°ç›®ä¿¡æ¯åŠç©ºé—´ç»“ç‚¹ä¿¡æ¯ã€‚æ¢å¥è¯è¯´ï¼Œå°±æ˜¯æŠ¥å‘Šåœ¨ä»»ä½•å®‰è£…çš„è®¾å¤‡æˆ–ç›®å½•ä¸­ï¼Œè¿˜å‰©å¤šå°‘è‡ªç”±çš„ç©ºé—´ã€‚
+rpmï¼š å³RedHat Package Managementï¼Œæ˜¯RedHatçš„å‘æ˜ä¹‹ä¸€
 
-rmdir£ºRemove Directory£¨É¾³ıÄ¿Â¼£©
+rmdirï¼šRemove Directoryï¼ˆåˆ é™¤ç›®å½•ï¼‰
 
-rm£ºRemove£¨É¾³ıÄ¿Â¼»òÎÄ¼ş£©
-cat: concatenateÁ¬Ëø cat file1file2>>file3°ÑÎÄ¼ş1ºÍÎÄ¼ş2µÄÄÚÈİÁªºÏÆğÀ´·Åµ½file3ÖĞ
-insmod: install module,ÔØÈëÄ£¿é
-ln -s : link -soft ´´½¨Ò»¸öÈíÁ´½Ó£¬Ïàµ±ÓÚ´´½¨Ò»¸ö¿ì½İ·½Ê½
+rmï¼šRemoveï¼ˆåˆ é™¤ç›®å½•æˆ–æ–‡ä»¶ï¼‰
+cat: concatenateè¿é” cat file1file2>>file3æŠŠæ–‡ä»¶1å’Œæ–‡ä»¶2çš„å†…å®¹è”åˆèµ·æ¥æ”¾åˆ°file3ä¸­
+insmod: install module,è½½å…¥æ¨¡å—
+ln -s : link -soft åˆ›å»ºä¸€ä¸ªè½¯é“¾æ¥ï¼Œç›¸å½“äºåˆ›å»ºä¸€ä¸ªå¿«æ·æ–¹å¼
 
-mkdir£ºMake Directory(´´½¨Ä¿Â¼
+mkdirï¼šMake Directory(åˆ›å»ºç›®å½•
 
 touch
 
 man: Manual
-pwd£ºPrint working directory
-su£ºSwith user
-cd£ºChange directory
-ls£ºList files
-ps£ºProcess Status
-mkdir£ºMake directory
-rmdir£ºRemove directory
+pwdï¼šPrint working directory
+suï¼šSwith user
+cdï¼šChange directory
+lsï¼šList files
+psï¼šProcess Status
+mkdirï¼šMake directory
+rmdirï¼šRemove directory
 mkfs: Make file system
-fsck£ºFile system check
+fsckï¼šFile system check
 cat: Concatenate
 uname: Unix name
 df: Disk free
@@ -45,22 +45,22 @@ chown: Change owner
 chgrp: Change group
 chmod: Change mode
 umount: Unmount
-dd: ±¾À´Ó¦¸ù¾İÆä¹¦ÄÜÃèÊö¡°Convert an copy¡±ÃüÃûÎª¡°cc¡±£¬µ«¡°cc¡±ÒÑ¾­±»ÓÃÒÔ´ú±í¡°CComplier¡±£¬ËùÒÔÃüÃûÎª¡°dd¡±
-tar£ºTape archive
-ldd£ºList dynamic dependencies
-insmod£ºInstall module
-rmmod£ºRemove module
-lsmod£ºList module
-ÎÄ¼ş½áÎ²µÄ"rc"£¨Èç.bashrc¡¢.xinitrcµÈ£©£ºResource configuration
-Knnxxx /Snnxxx£¨Î»ÓÚrcx.dÄ¿Â¼ÏÂ£©£ºK£¨Kill£©£»S(Service)£»nn£¨Ö´ĞĞË³ĞòºÅ£©£»xxx£¨·şÎñ±êÊ¶£©
-.a£¨À©Õ¹Ãûa£©£ºArchive£¬static library
-.so£¨À©Õ¹Ãûso£©£ºShared object£¬dynamically linked library
-.o£¨À©Õ¹Ãûo£©£ºObject file£¬complied result of C/C++ source file
-RPM£ºRed hat package manager
-dpkg£ºDebian package manager
-apt£ºAdvanced package tool£¨Debian»ò»ùÓÚDebianµÄ·¢ĞĞ°æÖĞÌá¹©£©
+dd: æœ¬æ¥åº”æ ¹æ®å…¶åŠŸèƒ½æè¿°â€œConvert an copyâ€å‘½åä¸ºâ€œccâ€ï¼Œä½†â€œccâ€å·²ç»è¢«ç”¨ä»¥ä»£è¡¨â€œCComplierâ€ï¼Œæ‰€ä»¥å‘½åä¸ºâ€œddâ€
+tarï¼šTape archive
+lddï¼šList dynamic dependencies
+insmodï¼šInstall module
+rmmodï¼šRemove module
+lsmodï¼šList module
+æ–‡ä»¶ç»“å°¾çš„"rc"ï¼ˆå¦‚.bashrcã€.xinitrcç­‰ï¼‰ï¼šResource configuration
+Knnxxx /Snnxxxï¼ˆä½äºrcx.dç›®å½•ä¸‹ï¼‰ï¼šKï¼ˆKillï¼‰ï¼›S(Service)ï¼›nnï¼ˆæ‰§è¡Œé¡ºåºå·ï¼‰ï¼›xxxï¼ˆæœåŠ¡æ ‡è¯†ï¼‰
+.aï¼ˆæ‰©å±•åaï¼‰ï¼šArchiveï¼Œstatic library
+.soï¼ˆæ‰©å±•åsoï¼‰ï¼šShared objectï¼Œdynamically linked library
+.oï¼ˆæ‰©å±•åoï¼‰ï¼šObject fileï¼Œcomplied result of C/C++ source file
+RPMï¼šRed hat package manager
+dpkgï¼šDebian package manager
+aptï¼šAdvanced package toolï¼ˆDebianæˆ–åŸºäºDebiançš„å‘è¡Œç‰ˆä¸­æä¾›ï¼‰
 
-²¿·ÖLinuxÃüÁîËõĞ´
+éƒ¨åˆ†Linuxå‘½ä»¤ç¼©å†™
 
 
  
@@ -91,7 +91,7 @@ IFS = Internal Field Seperators
 
 LILO = LInux LOader
 
-MySQL = MyÊÇ×î³õ×÷ÕßÅ®¶ùµÄÃû×Ö£¬SQL = Structured QueryLanguage
+MySQL = Myæ˜¯æœ€åˆä½œè€…å¥³å„¿çš„åå­—ï¼ŒSQL = Structured QueryLanguage
 
 PHP = Personal Home Page Tools = PHP HypertextPreprocessor
 
@@ -99,7 +99,7 @@ PS = Prompt String
 
 Perl = "Pratical Extraction and Report Language" ="Pathologically Eclectic Rubbish Lister"
 
-Python µÃÃûÓÚµçÊÓ¾çMonty Python's Flying Circus
+Python å¾—åäºç”µè§†å‰§Monty Python's Flying Circus
 
 Tcl = Tool Command Language
 
@@ -117,7 +117,7 @@ ar = archiver
 
 as = assembler
 
-awk = "Aho Weiberger and Kernighan"Èı¸ö×÷ÕßµÄĞÕµÄµÚÒ»¸ö×ÖÄ¸
+awk = "Aho Weiberger and Kernighan"ä¸‰ä¸ªä½œè€…çš„å§“çš„ç¬¬ä¸€ä¸ªå­—æ¯
 
 bash = Bourne Again SHell
 
@@ -125,7 +125,7 @@ bc = Basic (Better) Calculator
 
 bg = BackGround
 
-biff = ×÷ÕßHeidiStettnerÔÚU.C.BerkelyÑøµÄÒ»Ìõ¹·,Ï²»¶¶ÔÓÊµİÔ±ÍôÍô½Ğ¡£
+biff = ä½œè€…HeidiStettneråœ¨U.C.Berkelyå…»çš„ä¸€æ¡ç‹—,å–œæ¬¢å¯¹é‚®é€’å‘˜æ±ªæ±ªå«ã€‚
 
 cal = CALendar
 
@@ -153,7 +153,7 @@ cpio = CoPy In and Out
 
 cpp = C Pre Processor
 
-cron = Chronos Ï£À°ÎÄÊ±¼ä
+cron = Chronos å¸Œè…Šæ–‡æ—¶é—´
 
 cups = Common Unix Printing System
 
@@ -271,7 +271,7 @@ pico = PIne's message COmposition editor
 
 pine = "Program for Internet News &Email" = "Pine is not Elm"
 
-ping = ÄâÉù ÓÖ = Packet InterNet Grouper
+ping = æ‹Ÿå£° åˆ = Packet InterNet Grouper
 
 pirntcap = PRINTer CAPability
 
@@ -289,7 +289,7 @@ pushd = PUSH Directory
 
 pwd = Print Working Directory
 
-rc = runcom = run command, rc»¹ÊÇplan9µÄshell
+rc = runcom = run command, rcè¿˜æ˜¯plan9çš„shell
 
 rev = REVerse
 
@@ -301,11 +301,11 @@ roff = RunOFF
 
 rpm = RPM Package Manager = RedHat PackageManager
 
-rsh, rlogin, rvimÖĞµÄr = Remote
+rsh, rlogin, rvimä¸­çš„r = Remote
 
 rxvt = ouR XVT
 
-seamoneky = ÎÒ
+seamoneky = æˆ‘
 
 sed = Stream EDitor
 
@@ -329,7 +329,7 @@ tar = Tape ARchive
 
 tcsh = TENEX C shell
 
-tee = T (TĞÎË®¹Ü½Ó¿Ú)
+tee = T (Tå½¢æ°´ç®¡æ¥å£)
 
 telnet = TEminaL over Network
 
@@ -337,7 +337,7 @@ termcap = terminal capability
 
 terminfo = terminal information
 
-tex = ¦Ó?¦Ö¦Í¦ÇµÄËõĞ´£¬Ï£À°ÎÄart
+tex = Ï„?Ï‡Î½Î·çš„ç¼©å†™ï¼Œå¸Œè…Šæ–‡art
 
 tr = traslate
 

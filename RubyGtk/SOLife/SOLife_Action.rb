@@ -23,14 +23,17 @@ def row_activated(tree_view,tree_store,text_editor,window)
 
       #如果文本内容与控件加载内容数量不同表示文本内容格式不对
       if(text_editor.text_view.buffer.text.length == 0 and file_content.length > 0)
-        #强制转换编码重新写入文本
-        file = File.open(node_path+"_new","w")
         begin
           file_content = file_content.encode("UTF-8")
         rescue => error #Encoding::InvalidByteSequenceError
           puts "FileContent ERROR (%s): %s\n" % [error.class, error]
-        else
+          #显示错误提示框
+          FileReadError_diaog(node_path,window)
+        else 
+          #强制转换编码重新写入文本
+          file = File.open(node_path+"_new","w")
           file.puts file_content
+          file.close
           #成功写入后,删除原始
           puts "return:"+File.delete(node_path).to_s+"-delete:"+node_path
           #修改文件名称
@@ -39,9 +42,9 @@ def row_activated(tree_view,tree_store,text_editor,window)
           text_editor.text_view.buffer.text =  file_content       
           text_editor.note_label.text = node_name
         ensure
-          file.close
         end
-        
+      else
+        text_editor.note_label.text = node_name
       end
 
       #puts File.readlines(node_path).join('\n')
@@ -257,4 +260,64 @@ def search(ent, txtvu)
     txtvu.buffer.apply_tag("highlight", first, last)
     count += 1
   end
+end
+
+def FileReadError_diaog(file_path,window)
+dialog = Gtk::Dialog.new(
+      "FileRead Error!",
+      window,
+      Gtk::Dialog::MODAL,
+      [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK ]
+  )
+  dialog.has_separator = false
+  label = Gtk::Label.new("FileRead Error!")
+  image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
+  entry_dir = Gtk::Entry.new
+  entry_dir.text = file_path
+  hbox_1 = Gtk::HBox.new(false, 5)
+  hbox_1.pack_start_defaults(label);
+  hbox_2 = Gtk::HBox.new(false, 5)
+  hbox_2.pack_start_defaults(entry_dir);
+  
+  dialog.vbox.add(image)
+  dialog.vbox.add(hbox_1)
+  dialog.vbox.add(hbox_2)
+  dialog.show_all
+
+  dialog.run do |response|
+    if response == Gtk::Dialog::RESPONSE_OK
+    end
+    dialog.destroy
+  end
+  
+end
+
+def InitConfig_diaog(file_path,window)
+dialog = Gtk::Dialog.new(
+      "FileRead Error!",
+      window,
+      Gtk::Dialog::MODAL,
+      [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK ]
+  )
+  dialog.has_separator = false
+  label = Gtk::Label.new("FileRead Error!")
+  image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
+  entry_dir = Gtk::Entry.new
+  entry_dir.text = file_path
+  hbox_1 = Gtk::HBox.new(false, 5)
+  hbox_1.pack_start_defaults(label);
+  hbox_2 = Gtk::HBox.new(false, 5)
+  hbox_2.pack_start_defaults(entry_dir);
+  
+  dialog.vbox.add(image)
+  dialog.vbox.add(hbox_1)
+  dialog.vbox.add(hbox_2)
+  dialog.show_all
+
+  dialog.run do |response|
+    if response == Gtk::Dialog::RESPONSE_OK
+    end
+    dialog.destroy
+  end
+  
 end

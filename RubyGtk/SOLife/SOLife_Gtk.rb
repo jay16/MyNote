@@ -6,9 +6,16 @@ require './SOLife_Action.rb'
 
 
 
-current_dir = Dir.pwd
+current_dir = Dir.pwd.to_s
 SOLife_dir  = "E:\\MyWork\\MyNote\\"
 SOLife_name = File.basename(SOLife_dir)
+
+#读取配置信息 笔记目录路径数组 上次关闭时点击查看文本
+if File.exists?(current_dir+"\\"+"SOLife.yml") then
+  puts "has config it"
+else
+  
+end
 
 class TextEditor
   attr_accessor :text_view, :note_label, :search

