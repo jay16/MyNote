@@ -10,23 +10,38 @@ def row_activated(tree_view,tree_store,text_editor,window)
     node_path = iter[1]
     #puts node_path
     if File.file? node_path
-      text_editor.note_label.text = node_name
       file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
+
       #加载文本内容
+      begin
       text_editor.text_view.buffer.text =  file_content
+      rescue => error
+        puts "TextViewBufferText ERROR (%s): %s\n" % [error.class, error]
+      else
+      end
+
       #如果文本内容与控件加载内容数量不同表示文本内容格式不对
       if(text_editor.text_view.buffer.text.length == 0 and file_content.length > 0)
         #强制转换编码重新写入文本
         file = File.open(node_path+"_new","w")
-        file.puts file_content.encode("UTF-8")
-        file.close
-        #成功写入后再删除
-        puts "return:"+File.delete(node_path).to_s+"-delete:"+node_path
-        #修改文件名称
-        File.rename(node_path+"_new",node_path)
-        file_content = File.readlines(node_path).join("").to_s
-        text_editor.text_view.buffer.text =  file_content
+        begin
+          file_content = file_content.encode("UTF-8")
+        rescue => error #Encoding::InvalidByteSequenceError
+          puts "FileContent ERROR (%s): %s\n" % [error.class, error]
+        else
+          file.puts file_content
+          #成功写入后,删除原始
+          puts "return:"+File.delete(node_path).to_s+"-delete:"+node_path
+          #修改文件名称
+          File.rename(node_path+"_new",node_path)
+          file_content = File.readlines(node_path).join("").to_s
+          text_editor.text_view.buffer.text =  file_content       
+          text_editor.note_label.text = node_name
+        ensure
+          file.close
+        end
+        
       end
 
       #puts File.readlines(node_path).join('\n')
