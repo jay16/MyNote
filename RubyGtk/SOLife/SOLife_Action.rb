@@ -133,6 +133,7 @@ end
 
 
 def save_new_file(iter,tree_view,text_editor,window)
+
   dialog = Gtk::Dialog.new(
       "Information",
       window,
@@ -142,7 +143,8 @@ def save_new_file(iter,tree_view,text_editor,window)
   dialog.has_separator = false
   label = Gtk::Label.new("The button was clicked!")
   image = Gtk::Image.new(Gtk::Stock::DIALOG_INFO, Gtk::IconSize::DIALOG)
-  radio1 = Gtk::RadioButton.new(Dir.pwd.to_s)
+  #当前被选中节点路径
+  radio1 = Gtk::RadioButton.new(iter[1])
   radio1.name = "radio1"
   radio2 = Gtk::RadioButton.new(radio1, "")
   radio2.name = "radio2"
@@ -190,17 +192,20 @@ def save_new_file(iter,tree_view,text_editor,window)
   dialog.run do |response|
     if response == Gtk::Dialog::RESPONSE_OK
       file_path = File.join(chose_dir.text,new_name.text)
+      puts file_path
+      #写入到本地
       file = File.open(file_path,"w")
       file.puts text_editor.text_view.buffer.text
       file.close
-      text_editor.note_label.text=new_name.text
+      text_editor.note_label.text="F_"+new_name.text
       #目录下添加新节点
       parent = iter.parent
       tree_model = tree_view.model
       parent_path = tree_model.get_iter(parent.to_s)
       new_note = tree_model.append(parent_path)
-      new_note[0] = new_name.text
+      new_note[0] = "F_"+new_name.text
       new_note[1] = file_path
+
     end
     dialog.destroy
   end

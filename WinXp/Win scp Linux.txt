@@ -12,6 +12,9 @@ root@192.168.0.128's password:
 Microsoft Windows XP [版本 5.1.2600]
 (C) 版权所有 1985-2001 Microsoft Corp.
 
+
+scp 到服务器
+
 C:\Documents and Settings\Administrator>cd E:\MyWork\元祖 ganso\2013-05-08
 
 C:\Documents and Settings\Administrator>e:
@@ -26,3 +29,30 @@ webmail@166.63.126.33's password:
 members no sina.csv                           100% 1695KB   1.7MB/s   00:01
 
 E:\MyWork\元祖 ganso\2013-05-08>
+
+从服务器scp到本地
+
+E:\MyWork\元祖 ganso\2013-05-08>cd 验证后
+
+E:\MyWork\元祖 ganso\2013-05-08\验证后>scp webmail@166.63.126.33:/home/webmail/a
+lex/members_no_sian.csv.* ./
+webmail@166.63.126.33's password:
+members_no_sian.csv.126.com                   100%  126KB  42.0KB/s   00:03
+members_no_sian.csv.126.com_result.csv        100%   12KB  12.0KB/s   00:00
+members_no_sian.csv.163.com                   100%  382KB 190.9KB/s   00:02
+members_no_sian.csv.163.com_result.csv        100%   12KB  12.0KB/s   00:01
+members_no_sian.csv.all_res.lst               100% 1358KB 226.4KB/s   00:06
+members_no_sian.csv.gmail.com                 100%   63KB  62.9KB/s   00:01
+members_no_sian.csv.gmail.com_result.csv      100%   36KB  36.0KB/s   00:01
+members_no_sian.csv.others.lst                100%  234KB 234.4KB/s   00:01
+members_no_sian.csv.others.lst_result.csv     100%   12KB  12.0KB/s   00:00
+members_no_sian.csv.qq.com                    100%  625KB 125.1KB/s   00:05
+members_no_sian.csv.qq.com_result.csv         100%   12KB  12.0KB/s   00:00
+members_no_sian.csv.sina                      100% 4236     4.1KB/s   00:00
+members_no_sian.csv.sina_result.csv           100% 4620     4.5KB/s   00:00
+members_no_sian.csv.sohu.com                  100%   26KB  25.9KB/s   00:00
+members_no_sian.csv.sohu.com_result.csv       100%    0     0.0KB/s   00:00
+members_no_sian.csv.tom.com                   100% 3364     3.3KB/s   00:01
+members_no_sian.csv.tom.com_result.csv        100% 3740     3.7KB/s   00:00
+members_no_sian.csv.yahoo                     100%  129KB  64.5KB/s   00:02
+members_no_sian.csv.yahoo_result.csv          100%   52KB  52.0KB/s   00:00
