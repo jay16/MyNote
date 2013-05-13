@@ -64,10 +64,7 @@ def row_activated(tree_view,tree_store,text_editor,window)
         #该目录下第一个节点
         first_child = iter.first_child
         #若第一个节点都为loading说明该目录子节点还没有加载
-        return if first_child[0] == first_child[1] and first_child[1] == "done"
         if first_child[0] == first_child[1] and first_child[1] == "loading" then
-          first_child[0] = "done"
-          first_child[1] = "done"
           return unless File.directory?(node_path)
           Dir.foreach(node_path) do |file|
             next if file=~ /^\..*/
@@ -85,10 +82,14 @@ def row_activated(tree_view,tree_store,text_editor,window)
               child[1] = file_path
             end  #if
           end    #Dir.foreach
+          
+          #移除loading节点
+          tree_store.remove(first_child)
         end      #if first_child
       else
         #缩回目录 
         tree_view.collapse_row(row_path)
+        #tree_view.expand_row(row_path,true)
       end
     end
    
@@ -126,26 +127,6 @@ end
 def new_file(text_editor,window) 
   text_editor.note_label.text = "new file"
   text_editor.text_view.buffer.text = "please input content..."
-end
-#保存新建文本
-def save_new_file_old(text_editor,window)
-  dialog = Gtk::FileChooserDialog.new(
-    "Save the file ...",
-    window,
-    Gtk::FileChooser::ACTION_SAVE,
-    nil,
-    [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL ],
-    [ Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_APPLY ]
-  )
-  dialog.run do |response|
-    if response == Gtk::Dialog::RESPONSE_APPLY
-      file = dialog.filename
-      content = text_editor.textview.buffer.text
-      # Open for writing, write and close.
-      File.open(file, "w") { |f| f <<  content } 
-    end
-  end
-  dialog.destroy
 end
 
 
@@ -301,17 +282,14 @@ dialog = Gtk::Dialog.new(
   )
   dialog.has_separator = false
  
-   #为减少压力只显示一层
+   #构建笔记列表树
    tree_store = Gtk::TreeStore.new(String, String, Integer)
-
-
+   
    tree_view = Gtk::TreeView.new(tree_store)
    tree_view.selection.mode = Gtk::SELECTION_SINGLE
    tree_view.expand_all
    tree_view.hadjustment.value=100
    tree_view.columns_autosize
-   #SELECTION_NONE
-   #SELECTION_BROWSE
    scrolled_view = Gtk::ScrolledWindow.new
    scrolled_view.border_width = 2
    scrolled_view.add(tree_view)
@@ -321,17 +299,13 @@ dialog = Gtk::Dialog.new(
    renderer = Gtk::CellRendererText.new
    tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
    tree_view.append_column(tree_col)
-
-
-
-
+   tree_view.signal_connect("row-activated") { del_note_dir(tree_view,tree_store)}
   
-
-  add_dir_btn   = Gtk::Button.new(Gtk::Stock::NEW)
-  add_dir_btn.signal_connect("clicked") { }
+  #选择笔记路径
   choo_dir_btt  = Gtk::FileChooserButton.new(
     "Choose a Folder", Gtk::FileChooser::ACTION_SELECT_FOLDER)
   choo_dir_btt.signal_connect('selection_changed') do |w|
+   #笔记列表树中添加节点
    note_dir_sel = tree_store.append(nil)
    note_dir_sel[0] = w.filename
   end
@@ -340,10 +314,10 @@ dialog = Gtk::Dialog.new(
   hbox_1 = Gtk::HBox.new(false, 5)
   hbox_1.pack_start_defaults(scrolled_view);
   hbox_3 = Gtk::HBox.new(false, 5)
+  hbox_3.pack_start_defaults(Gtk::Label.new("Add"));
   hbox_3.pack_start_defaults(choo_dir_btt);
   
   dialog.vbox.add(hbox_1)
-  dialog.vbox.add(hbox_2)
   dialog.vbox.add(hbox_3)
   dialog.show_all
 
@@ -353,4 +327,10 @@ dialog = Gtk::Dialog.new(
     dialog.destroy
   end
   
+end
+
+def del_note_dir(tree_view,tree_store)
+    selection = tree_view.selection
+    iter = selection.selected  
+    tree_store.remove(iter)
 end
