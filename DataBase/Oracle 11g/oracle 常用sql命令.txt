@@ -1,43 +1,43 @@
 
 
-²é¿´database´ò¿ª×´Ì¬
+æŸ¥çœ‹databaseæ‰“å¼€çŠ¶æ€
 SQL> select open_mode from v$database;
 OPEN_MODE----------
 MOUNTED
 SQL> alter database open;
 Database altered.
-²é¿´µ±Ç°ÓÃ»§
+æŸ¥çœ‹å½“å‰ç”¨æˆ·
 SQL> show user;
 USER is "SYS"
 
-²é¿´service_name
+æŸ¥çœ‹service_name
 show parameter service_name;
-²é¿´ÓÃ»§ÏµÍ³È¨ÏŞ
+æŸ¥çœ‹ç”¨æˆ·ç³»ç»Ÿæƒé™
 select * from dba_sys_privs;
 select * from user_sys_privs;
-²é¿´ÓÃ»§¶ÔÏóÈ¨ÏŞ
+æŸ¥çœ‹ç”¨æˆ·å¯¹è±¡æƒé™
 select * from dba_tab_privs;
 select * from all_tab_privs;
 select * from user_tab_privs;
-²é¿´ËùÓĞ½ÇÉ«
+æŸ¥çœ‹æ‰€æœ‰è§’è‰²
 select * from dba_roles;
-²é¿´ÓÃ»§ËùÓµÓĞµÄ½ÇÉ«
+æŸ¥çœ‹ç”¨æˆ·æ‰€æ‹¥æœ‰çš„è§’è‰²
 select * from dba_role_privs;
 select * from user_role_privs;
-²é¿´µ±Ç°ÓÃ»§µÄÈ±Ê¡±í¿Õ¼ä
+æŸ¥çœ‹å½“å‰ç”¨æˆ·çš„ç¼ºçœè¡¨ç©ºé—´
 select username,default_tablespace from user_users;
-²é¿´±í
-select table_name from user_tables; //µ±Ç°ÓÃ»§µÄ±í       
-select table_name from all_tables; //ËùÓĞÓÃ»§µÄ±í   
-select table_name from dba_tables; //°üÀ¨ÏµÍ³±í
-select table_name from dba_tables where owner='ÓÃ»§Ãû'
-²é¿´±í½á¹¹
+æŸ¥çœ‹è¡¨
+select table_name from user_tables; //å½“å‰ç”¨æˆ·çš„è¡¨       
+select table_name from all_tables; //æ‰€æœ‰ç”¨æˆ·çš„è¡¨   
+select table_name from dba_tables; //åŒ…æ‹¬ç³»ç»Ÿè¡¨
+select table_name from dba_tables where owner='ç”¨æˆ·å'
+æŸ¥çœ‹è¡¨ç»“æ„
 desc table_name;
-sqlplusÔ¶³ÌÁ¬½Ó
+sqlplusè¿œç¨‹è¿æ¥
 sqlplus usr/pwd@//host:port/sid
 sqlplus test/test@192.168.0.114:1521/mail
 connect test/test@//192.168.0.114:1521/mail
 
-²åÈëÁĞ
+æ’å…¥åˆ—
 SQL> alter table student add email varchar(50);
 Table altered.
