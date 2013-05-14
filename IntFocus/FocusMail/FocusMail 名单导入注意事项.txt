@@ -1,1 +1,6 @@
 1.name字段中防止单引号',双引号",反斜杠\等符号造成sql语句有误.
+
+yuanzu_nosina    all:87798  distinct:82255
+yuanzu_nosina_mv all:87256  distinct:82099
+
+wangpin_all      all:214417 distinct:209836

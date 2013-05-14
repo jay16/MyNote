@@ -1,4 +1,6 @@
 
+创建以现有表内容为新建表的内容
+create table wangpin_rest as select * from wangpin_all
 
 查看database打开状态
 SQL> select open_mode from v$database;
