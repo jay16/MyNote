@@ -56,6 +56,19 @@ def g_note_tree(tree_store,note_path)
   end
   return tree_store
 end
+def test_notebook(note_book,window)
+      text_editor = TextEditor.new
+      text_editor.text_view = Gtk::TextView.new
+      #text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
+      text_font = Pango::FontDescription.new("Monospace Normal 10")
+      text_editor.text_view.modify_font(text_font)
+      text_editor.note_label  = Gtk::Label.new("notebooxk")
+      scrolled_text = Gtk::ScrolledWindow.new
+      scrolled_text.border_width = 2
+      scrolled_text.add(text_editor.text_view)
+
+      note_book.insert_page(-1,scrolled_text,text_editor.note_label)
+end
 #目录节点被点击反应
 def row_activated(tree_view,tree_store,note_book,window)
     selection = tree_view.selection
@@ -65,24 +78,23 @@ def row_activated(tree_view,tree_store,note_book,window)
       
     node_name = iter[0] 
     node_path = iter[1]
+
+    #puts node_path
+    if File.file? node_path
+      file_content = File.readlines(node_path).join("").to_s
+      #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
+      #新建notebook标签页
       text_editor = TextEditor.new
       text_editor.text_view = Gtk::TextView.new
       #text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
       text_font = Pango::FontDescription.new("Monospace Normal 10")
       text_editor.text_view.modify_font(text_font)
       text_editor.note_label  = Gtk::Label.new("notebooxk")
-    #puts node_path
-    if File.file? node_path
-      file_content = File.readlines(node_path).join("").to_s
-      #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
-          puts node_name
+      #scrolled_text = Gtk::ScrolledWindow.new
+      #scrolled_text.border_width = 2
+      #scrolled_text.add(text_editor.text_view)
+      note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
 
-      scrolled_text = Gtk::ScrolledWindow.new
-      scrolled_text.border_width = 2
-      scrolled_text.add(text_editor.text_view)
-
-      note_book.insert_page(-1,scrolled_text,text_editor.note_label)
-          puts node_path
       #加载文本内容
       begin
       text_editor.text_view.buffer.text =  file_content
@@ -168,7 +180,7 @@ def row_activated(tree_view,tree_store,note_book,window)
         #tree_view.expand_row(row_path,true)
       end
     end
-   
+   window.show_all
 end
 
 #保存文本

@@ -3,6 +3,7 @@ require 'yaml/store'
 require 'yaml'
 require 'gtk2'
 require './SOLife_Action.rb'
+require './SOLife_NoteBook.rb'
 
 
 
@@ -68,6 +69,11 @@ left_vbox.pack_start_defaults(scrolled_notelist_view)
 
 #记事本框架
 note_book = Gtk::Notebook.new
+#自动生成滚动条
+note_book.scrollable  = true
+#标签label等宽
+note_book.homogeneous = true
+note_book.show_border = true
 #记事本内容
 text_editor = TextEditor.new
 text_editor.text_view = Gtk::TextView.new
@@ -77,13 +83,13 @@ text_editor.text_view.modify_font(text_font)
 text_editor.note_label  = Gtk::Label.new("notebooxk")
 
 
-scrolled_text = Gtk::ScrolledWindow.new
-scrolled_text.border_width = 2
-scrolled_text.add(text_editor.text_view)
-scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+#scrolled_text = Gtk::ScrolledWindow.new
+#scrolled_text.border_width = 2
+#scrolled_text.add(text_editor.text_view)
+#scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 #记事本填充
 #note_book.append_page(scrolled_text,text_editor.note_label)
-note_book.insert_page(-1,scrolled_text,text_editor.note_label)
+note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
 
 #整体布局表格
 table = Gtk::Table.new(1, 24,true)
@@ -105,19 +111,25 @@ ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   save_file(tree_view,note_tree_store,text_editor,window)
 }
+window.add_accel_group(ctrl_s)
 #ctrl+z重新加载文本快捷键
 ctrl_z = Gtk::AccelGroup.new
 ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   reload_file(tree_view,note_tree_store,text_editor,window)
 }
+window.add_accel_group(ctrl_z)
 #ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
 ctrl_n = Gtk::AccelGroup.new
 ctrl_n.connect(Gdk::Keyval::GDK_N, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   new_file(text_editor,window)
 }
-window.add_accel_group(ctrl_s)
-window.add_accel_group(ctrl_z)
 window.add_accel_group(ctrl_n)
+#ctrl+p notebook标签页向前切换P
+ctrl_p = Gtk::AccelGroup.new
+ctrl_p.connect(Gdk::Keyval::GDK_P, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  notebook_prepage(note_book,window)
+}
+window.add_accel_group(ctrl_p)
 #编辑文本状态
 text_editor.text_view.buffer.signal_connect("changed"){ write_statu(tree_view,note_tree_store,text_editor,window) }
 
