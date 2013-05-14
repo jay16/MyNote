@@ -57,26 +57,32 @@ def g_note_tree(tree_store,note_path)
   return tree_store
 end
 #目录节点被点击反应
-def row_activated(tree_view,tree_store,text_editor,window)
+def row_activated(tree_view,tree_store,note_book,window)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
     return unless (iter and iter[0] != iter[1])
-    
-
-    iter.next!
-    #iter_path = Gtk::TreePath.new(iter.to_s)
-    row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
-    row_path = row_ref.path
-    tree_view.set_cursor(row_path,nil,true)
       
     node_name = iter[0] 
     node_path = iter[1]
+      text_editor = TextEditor.new
+      text_editor.text_view = Gtk::TextView.new
+      #text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
+      text_font = Pango::FontDescription.new("Monospace Normal 10")
+      text_editor.text_view.modify_font(text_font)
+      text_editor.note_label  = Gtk::Label.new("notebooxk")
     #puts node_path
     if File.file? node_path
       file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
+          puts node_name
 
+      scrolled_text = Gtk::ScrolledWindow.new
+      scrolled_text.border_width = 2
+      scrolled_text.add(text_editor.text_view)
+
+      note_book.insert_page(-1,scrolled_text,text_editor.note_label)
+          puts node_path
       #加载文本内容
       begin
       text_editor.text_view.buffer.text =  file_content
@@ -177,7 +183,7 @@ def save_file(tree_view,tree_store,text_editor,window)
     window.set_title("SoLife #{iter[1]}[saved]")
     window.show_all
  elsif text_editor.note_label.text == "new file"
-   save_new_file(iter,tree_view,text_editor,window)
+   save_new_file(tree_view,tree_store,text_editor,window)
  else
    puts "can not save:"+iter[1]
  end
@@ -201,8 +207,9 @@ end
 
 
 
-def save_new_file(iter,tree_view,text_editor,window)
-
+def save_new_file(tree_view,tree_store,text_editor,window)
+  selection = tree_view.selection
+  iter = selection.selected
   dialog = Gtk::Dialog.new(
       "Information",
       window,
@@ -267,7 +274,7 @@ def save_new_file(iter,tree_view,text_editor,window)
       file = File.open(file_path,"w")
       file.puts text_editor.text_view.buffer.text
       file.close
-      text_editor.note_label.text="F_"+new_name.text
+      #text_editor.note_label.text="F_"+new_name.text
       #目录下添加新节点
       parent = iter.parent
       tree_model = tree_view.model
@@ -275,7 +282,15 @@ def save_new_file(iter,tree_view,text_editor,window)
       new_note = tree_model.append(parent_path)
       new_note[0] = "F_"+new_name.text
       new_note[1] = file_path
-
+      
+     #设置新插入节点为选中点
+    row_path = Gtk::TreePath.new(new_note.to_s)
+    #等同下面两句
+    #row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
+    #row_path = row_ref.path
+    tree_view.set_cursor(row_path,nil,true)
+    #触发点击动作
+    row_activated(tree_view,tree_store,text_editor,window)
     end
     dialog.destroy
   end
