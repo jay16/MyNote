@@ -31,3 +31,17 @@ done
 
 现在，解释 { print } 代码块。在 awk 中，花括号用于将几块代码组合到一起，这一点类似于 C 语言。在代码块中只有一条 print 命令。在 awk 中，如果只出现 print 命令，那么将打印当前行的全部内容。
 
+
+查看某文件下所有csv文件行数，及第二列数值在（1，4，5）中的行数
+[webmail@cloud check_members]$ vi checkMemCount.sh 
+
+csv_dir=/home/webmail/alex/
+
+for file in `ls $csv_dir/*.csv`
+do
+  echo $file
+  a_num=`wc -l $file`
+  v_num=`awk -F "," '{print $2}' $file | grep -E '(1|4|5)' | wc -l`
+  echo $a_num
+  echo $v_num
+done

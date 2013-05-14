@@ -26,6 +26,10 @@ dos2unix: converting file members_no_sian.csv to UNIX format ...
 ps. 新浪郵箱比較麻煩，因此請額外處理
 
 -----------------------------------------------
+查看验证名单脚本是否运行完毕
+[webmail@cloud alex]$ ps -ef | grep reture | grep -v grep
+webmail    634     1  0 May12 ?        00:00:20 /usr/bin/perl ./smtp_reture.pl members_no_sian.csv.qq.com
+-----------------------------------------------
 [webmail@cloud alex]$ dos2unix --help
 dos2unix Copyright (c) 1994-1995 Benjamin Lin
          Copyright (c) 1998      Bernd Johannes Wuebben (Version 3.0)
