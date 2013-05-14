@@ -1,4 +1,61 @@
 
+
+def g_note_list(note_tree_store,note_dir_list)
+   #构建笔记列表树
+   note_list_store = Gtk::TreeStore.new(String, String, Integer)
+   note_dir_list.each do |note_path|
+    note_store = note_list_store.append(nil)
+    note_store[0] = note_path
+   end
+   tree_view = Gtk::TreeView.new(note_list_store)
+   tree_view.selection.mode = Gtk::SELECTION_SINGLE
+   tree_view.expand_all
+   tree_view.hadjustment.value=100
+   tree_view.columns_autosize
+   scrolled_view = Gtk::ScrolledWindow.new
+   scrolled_view.border_width = 2
+   scrolled_view.add(tree_view)
+   scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+
+   #笔记路径树
+   renderer = Gtk::CellRendererText.new
+   tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
+   tree_view.append_column(tree_col)
+   tree_view.signal_connect("row-activated") do
+     note_path = tree_view.selection.selected[0]
+     g_note_tree(note_tree_store,note_path)
+   end
+
+   return scrolled_view
+end
+
+
+def g_note_tree(tree_store,note_path)
+  level_one = Array.new
+  Dir.foreach(note_path) do |file|
+    #跳过隐藏文件
+    next if file=~ /^\..*/
+    file_path = note_path+"\\"+file
+    level_one.push([file,file_path,File.file?(file_path) ? "file" : "dir" ])
+  end
+   
+  tree_store.clear
+  level_one.each do |lo|
+    #level one
+    tree_lo =  tree_store.append(nil)
+    #tree_level_one nodename
+    tree_lo[0] = (File.file?(lo[1]) ? "F_"+lo[0] : lo[0])
+
+    tree_lo[1] = lo[1] #tree_level_one nodepath
+    #tree_lo[2] = lo[2] #tree_level_one nodetype
+    if lo[2]=="dir" then
+     tree_lt = tree_store.append(tree_lo)
+     tree_lt[0] = "loading"
+     tree_lt[1] = "loading"
+    end
+  end
+  return tree_store
+end
 #目录节点被点击反应
 def row_activated(tree_view,tree_store,text_editor,window)
     selection = tree_view.selection
@@ -329,10 +386,14 @@ dialog = Gtk::Dialog.new(
 
   dialog.run do |response|
     if response == Gtk::Dialog::RESPONSE_OK
-      note_dir_list = Array.new
-      tree_store.each do |store|
-        note_dir_list.push(store[0])
-      end
+      note_dir_list = Array.new   
+      #遍历tree_store
+      iter = tree_store.iter_first
+      begin
+         note_dir_list.push(iter[0])
+         puts iter[0]
+      end while iter.next!
+      
       yam_save.transaction do 
         yam_save["NoteDirList"] = note_dir_list
       end
@@ -345,5 +406,6 @@ end
 def del_note_dir(tree_view,tree_store)
     selection = tree_view.selection
     iter = selection.selected  
-    tree_store.remove(iter)
+    #tree_store.remove(iter)
+    tree_store.clear
 end

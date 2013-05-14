@@ -1,0 +1,14 @@
+[webmail@cloud check_members]$ awk '{print}' test.sh 
+echo "script name   : $0"
+echo "# of arguments: $#"
+echo "all arguments : $@"
+echo "arguments in order:"
+for sArg in "$@"; do
+    echo "  $sArg"
+done
+[webmail@cloud check_members]$ 
+ 
+
+您将会见到 /etc/passwd 文件的内容出现在眼前。现在，解释 awk 做了些什么。调用 awk 时，我们指定 /etc/passwd 作为输入文件。执行 awk 时，它依次对 /etc/passwd 中的每一行执行 print 命令。所有输出都发送到 stdout，所得到的结果与与执行catting /etc/passwd完全相同。
+
+现在，解释 { print } 代码块。在 awk 中，花括号用于将几块代码组合到一起，这一点类似于 C 语言。在代码块中只有一条 print 命令。在 awk 中，如果只出现 print 命令，那么将打印当前行的全部内容。
