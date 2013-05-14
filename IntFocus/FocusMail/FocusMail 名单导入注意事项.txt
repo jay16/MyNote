@@ -5,8 +5,10 @@ yuanzu_nosina_mv all:87256  distinct:82099
 
 wangpin_all      all:214417 distinct:209836
 
-wangpin_rest     all:134070  distinct:130268
-
+wangpin_rest        all:134070  distinct:130268
+wangpin_rest        all:134061  distinct:1302559
+wangpin_rest_sina   all:19667   distinct:19243
+wangpin_rest_nosina all:114394  distinct:111016 
 
 A列2行邮箱中的域名
 
