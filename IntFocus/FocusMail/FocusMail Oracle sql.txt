@@ -7,3 +7,8 @@ select count(*) from wangpin where cast(type_email as int) not in (1,4,5)
 --无效名单分布
 select substr(email,instr(email,'@')+1,length(email)-instr(email,'@')) as domain,count(*) from wangpin where cast(type_email as int) not in (1,4,5)
 group by substr(email,instr(email,'@')+1,length(email)-instr(email,'@')) order by count(*) desc
+
+--查找域名中含sina的
+select distinct substr(email,instr(email,'@'),length(email)-instr(email,'@')) from wangpin_rest 
+where instr(email,'sina',instr(email,'@')) > 0
+order by substr(email,instr(email,'@'),length(email)-instr(email,'@')) desc

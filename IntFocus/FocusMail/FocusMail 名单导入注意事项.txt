@@ -4,3 +4,10 @@ yuanzu_nosina    all:87798  distinct:82255
 yuanzu_nosina_mv all:87256  distinct:82099
 
 wangpin_all      all:214417 distinct:209836
+
+wangpin_rest     all:134070  distinct:130268
+
+
+A列2行邮箱中的域名
+
+=RIGHT(A2,LEN(A2)-FIND("@",A2,1))
