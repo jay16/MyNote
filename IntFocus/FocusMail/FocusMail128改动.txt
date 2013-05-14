@@ -2,10 +2,10 @@
 return [source.lstrip.to_s.gsub('210.14.76.206','192.168.0.128'),alink]
 
 2.app/helper/application_helper.rb#get_dashboard_data
-´úÂëĞŞÕı£¬ÒÔ´ËÎª×¼
+ä»£ç ä¿®æ­£ï¼Œä»¥æ­¤ä¸ºå‡†
 
 3.app/model/template.rb#dog_logger 243
  #FocusMail::GmTest::gradetest(@Template.id, self.user_email, self.name)
 
-4.ĞŞ¸Äapp/public/fileÈ¨ÏŞ
+4.ä¿®æ”¹app/public/fileæƒé™
 chmod -R 777 /home/work/focus_mail/app/public
