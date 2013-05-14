@@ -97,7 +97,7 @@ window.signal_connect("destroy") { Gtk.main_quit }
 #目录被双击时，使用记事本打开
 tree_view.signal_connect("row-activated") { row_activated(tree_view,note_tree_store,text_editor,window)}
 #目录被单击时，使用记事本打开
-tree_view.signal_connect("cursor-changed") { row_activated(tree_view,note_tree_store,text_editor,window) }
+#tree_view.signal_connect("cursor-changed") { row_activated(tree_view,note_tree_store,text_editor,window) }
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {

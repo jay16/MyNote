@@ -63,6 +63,13 @@ def row_activated(tree_view,tree_store,text_editor,window)
     #没有选中值则返回
     return unless (iter and iter[0] != iter[1])
     
+
+    iter.next!
+    #iter_path = Gtk::TreePath.new(iter.to_s)
+    row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
+    row_path = row_ref.path
+    tree_view.set_cursor(row_path,nil,true)
+      
     node_name = iter[0] 
     node_path = iter[1]
     #puts node_path
