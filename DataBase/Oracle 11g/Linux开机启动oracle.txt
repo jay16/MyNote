@@ -1,9 +1,9 @@
-1.ÇÐ»»ÖÁoracleÓÃ»§
+1.åˆ‡æ¢è‡³oracleç”¨æˆ·
 
 [root@oracle11g ~]# su oracle
 [oracle@oracle11g root]$ source ~/.bash_profile 
 
-2.ÕÒ¸ö×Ô¼ºÈÏÎªºÏÊÊµÄµØ·½£¬´´½¨shell½Å±¾
+2.æ‰¾ä¸ªè‡ªå·±è®¤ä¸ºåˆé€‚çš„åœ°æ–¹ï¼Œåˆ›å»ºshellè„šæœ¬
 
 [oracle@oracle11g root]$ cd ~
 [oracle@oracle11g ~]$ ls
@@ -13,19 +13,20 @@
 [oracle@oracle11g ~]$ vi oracle_db_start.sh 
 
 
-3.shell½Å±¾ÖÐÓÃµ½oracleµÄ±äÁ¿¿ÉÒÔÔÚ~/.bash_profileÖÐ¿½±´
+3.shellè„šæœ¬ä¸­ç”¨åˆ°oracleçš„å˜é‡å¯ä»¥åœ¨~/.bash_profileä¸­æ‹·è´
 
 [oracle@oracle11g ~]$ find /home/work/oracle/ -name lsnrctl
 /home/work/oracle/product/11.2.0/db_1/bin/lsnrctl
 
 [oracle@oracle11g ~]$ vi oracle_db_start.sh 
+æ³¨æ„ï¼šlistenerä¸­oracle_sidè¦å•ç‹¬æŒ‡å®š,æ–‡ä»¶ä½ç½®
+/home/work/oracle/product/11.2.0/db_1/network/admin/listener.ora
+å†…å®¹å¦‚ä¸‹ï¼š
 
-ÄÚÈÝÈçÏÂ£º
+#è®¾ç½®å¼€æœºå¯åŠ¨oracleæ•°æ®åº“
+#æ‰§è¡Œè¯¥shellä½ç½®åœ¨/etc/rc.local
 
-#ÉèÖÃ¿ª»úÆô¶¯oracleÊý¾Ý¿â
-#Ö´ÐÐ¸ÃshellÎ»ÖÃÔÚ/etc/rc.local
-
-#ÉùÃ÷oracleËùÐè±äÁ¿
+#å£°æ˜Žoracleæ‰€éœ€å˜é‡
 
 ORACLE_SID=IntFocus;export ORACLE_SID
 ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
@@ -33,30 +34,30 @@ ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
 ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
 ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
 
-#sqlplusÆô¶¯Êý¾Ý¿â
+#sqlpluså¯åŠ¨æ•°æ®åº“
 
 sqlplus '/as sysdba'<<eof
 startup;
 exit
 eof
 
-#Æô¶¯¼àÌý  lsnrctlÔÚ$ORACLE_HOME/bin/lsnrctl
+#å¯åŠ¨ç›‘å¬  lsnrctlåœ¨$ORACLE_HOME/bin/lsnrctl
 
 /home/work/oracle/product/11.2.0/db_1/bin/lsnrctl start
 
 
 "oracle_db_start.sh" 21L, 475C written    
 
-4. ¸³Óè½Å±¾¿ÉÖ´ÐÐÈ¨ÏÞ
+4. èµ‹äºˆè„šæœ¬å¯æ‰§è¡Œæƒé™
 
 [oracle@oracle11g ~]$ chmod +x oracle_db_start.sh                         
 
-5.±¾»úÖ´ÐÐÆô¶¯oracleÊý¾Ý¿â½Å±¾oracle_db_start.sh,±ØÐëÊ¹ÓÃrootÓÃ»§
+5.æœ¬æœºæ‰§è¡Œå¯åŠ¨oracleæ•°æ®åº“è„šæœ¬oracle_db_start.sh,å¿…é¡»ä½¿ç”¨rootç”¨æˆ·
 
 [oracle@oracle11g ~]$ exit
 exit
 [root@oracle11g ~]# vi /etc/rc.local 
 
-Ìí¼ÓÈçÏÂÄÚÈÝ
+æ·»åŠ å¦‚ä¸‹å†…å®¹
 
 su - oracle -c "/bin/sh /home/oracle/oracle_db_start.sh"
