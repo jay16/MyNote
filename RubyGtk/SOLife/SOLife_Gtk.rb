@@ -61,15 +61,23 @@ scrolled_notetree_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 #根据note_dir_list数据组显示目录
 scrolled_notelist_view = g_note_list(note_tree_store,note_dir_list)
 
-left_table = Gtk::Table.new(1, 24,true)
+#根据note 点击记录 列表 显示目录
+g_history = g_htg_list(note_dir_list)
+scrolled_history_view = g_history[0]
+tree_htg_view         = g_history[1]
+note_htg_store        = g_history[2]
+
+
+left_table = Gtk::Table.new(4, 1,true)
 
 options = Gtk::EXPAND|Gtk::FILL
-left_table.attach(scrolled_notetree_view,  0,  1,  0,  2, options, options, 0,    0)0012
+left_table.attach(scrolled_notetree_view,  0,  1,  0,  2, options, options, 0,    0)
+left_table.attach(scrolled_notelist_view,  0,  1,  2,  3, options, options, 0,    0)
+left_table.attach(scrolled_history_view,  0,  1,  3,  4, options, options, 0,    0)
 
 #左侧水平容器
 left_vbox = Gtk::VBox.new(homogeneous=false, spacing=nil) 
-left_vbox.pack_start_defaults(scrolled_notetree_view)
-left_vbox.pack_start_defaults(scrolled_notelist_view)
+left_vbox.pack_start_defaults(left_table)
 
 #记事本框架
 note_book = Gtk::Notebook.new
@@ -113,7 +121,9 @@ window = Gtk::Window.new("")
 #点击关闭
 window.signal_connect("destroy") { Gtk.main_quit }
 #目录被双击时，使用记事本打开
-tree_view.signal_connect("row-activated") { row_activated(tree_view,note_tree_store,text_editor,window)}
+tree_view.signal_connect("row-activated") { row_activated(tree_view,note_tree_store,text_editor,note_htg_store,window)}
+#阅读历史列表被双击时，使用记事本打开
+tree_htg_view.signal_connect("row-activated") { read_by_history(tree_htg_view,text_editor,window)}
 #目录被单击时，使用记事本打开
 #tree_view.signal_connect("cursor-changed") { row_activated(tree_view,note_tree_store,text_editor,window) }
 #ctrl+s保存文件快捷键

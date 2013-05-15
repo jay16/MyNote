@@ -70,7 +70,7 @@ def test_notebook(note_book,window)
       note_book.insert_page(-1,scrolled_text,text_editor.note_label)
 end
 #目录节点被点击反应
-def row_activated(tree_view,tree_store,text_editor,window)
+def row_activated(tree_view,tree_store,text_editor,note_htg_store,window)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -126,6 +126,7 @@ def row_activated(tree_view,tree_store,text_editor,window)
           #鼠标悬停显示文本路径
           tooltip = Gtk::Tooltips.new
           tooltip.set_tip(text_editor.note_label,node_path,"private")
+          g_htg_tree(note_htg_store,iter)
         ensure
         end
       else
@@ -133,6 +134,7 @@ def row_activated(tree_view,tree_store,text_editor,window)
         #鼠标悬停显示文本路径
         tooltip = Gtk::Tooltips.new
         tooltip.set_tip(text_editor.note_label,node_path,"private")
+        g_htg_tree(note_htg_store,iter)
       end
 
       #puts File.readlines(node_path).join('\n')
