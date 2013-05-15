@@ -62,7 +62,7 @@ scrolled_notetree_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 scrolled_notelist_view = g_note_list(note_tree_store,note_dir_list)
 
 #根据note 点击记录 列表 显示目录
-g_history = g_htg_list(note_dir_list)
+g_history = g_htglist_view(note_dir_list)
 scrolled_history_view = g_history[0]
 tree_htg_view         = g_history[1]
 note_htg_store        = g_history[2]

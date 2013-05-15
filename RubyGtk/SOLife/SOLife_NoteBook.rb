@@ -17,13 +17,10 @@ def notebook_prepage(notebook,window)
 end
 
 #note点击历史记录
-def g_htg_list(note_htg_list)
+def g_htglist_view(note_htg_list)
    #构建历史记录列表树
    note_list_store = Gtk::TreeStore.new(String, String, Integer)
-   #note_dir_list.each do |note_path|
-   # note_store = note_list_store.append(nil)
-   # note_store[0] = note_path
-   #end
+
    tree_view = Gtk::TreeView.new(note_list_store)
    tree_view.selection.mode = Gtk::SELECTION_SINGLE
    tree_view.expand_all
@@ -47,27 +44,53 @@ def g_htg_list(note_htg_list)
 end
 
 #点击阅读时在history tree中留下记录
-def g_htg_tree(note_htg_store,seled)
+def g_htg_tree(note_htg_store,seled,window)
     is_exist   = false
-    note_store = nil
     iter = note_htg_store.iter_first
-    begin
-      if iter[1] = seled[1] then
-        is_exist = true 
-        note_store = iter
-        break
-      end
-    end while iter.next!
+    if iter then
+      begin
+        if  iter[1] == seled[1] then
+          is_exist = true 
+          break
+        end
+      end while iter.next!
+    else
+      puts "First"
+    end
     
     if is_exist then
       #被点击阅读次数
-      note_store[2] = (note_store[2] ? note_store[2] : 0) + 1 
+      htgtree_resort(note_htg_store,iter,window)
+      puts "restore"
     else
       note_store = note_htg_store.append(nil)
       note_store[1] = seled[1] #path
       note_store[2] = (note_store[2] ? note_store[2] : 0) + 1 
       note_store[0] = seled[0] + " - " + note_store[2].to_s
     end
+end
+def htgtree_resort(note_htg_store,seled,window)
+    htg_list = Array.new
+    iter = note_htg_store.iter_first
+     begin
+       if iter[1] == seled[1] then
+         htg_list.push([iter[0],iter[1],iter[2]+1])
+       else
+         htg_list.push([iter[0],iter[1],iter[2]])
+       end
+     end while iter.next!
+     
+     htg_list.sort!{ |x,y| y <=> x }
+     puts htg_list
+     note_htg_store.clear
+     
+     htg_list.each do |note_path|
+       note_store = note_htg_store.append(nil)
+       note_store[0] = note_path[0]
+       note_store[1] = note_path[1]
+       note_store[2] = note_path[2]
+     end
+   window.show_all
 end
 #点击history列表查看文件
 def read_by_history(tree_view,text_editor,window)
