@@ -1,0 +1,40 @@
+[root@server directory]# scp user@serverdomain:/directory/file .
+command-line: line 0: Bad configuration option: PermitLocalCommand
+
+Thanks.
+
+-------------------------------------------------------------------------------------------
+Hi Buddy,
+
+I fixed this issue, the steps are as follows:
+
+After I checked all the profiles and binary files of SSH, I found the issue is not about the profiles, is the binary files /usr/bin/ssh and /usr/sbin/sshd.
+
+Maybe someone changed them, and gave them some special rights, such as can't be removed and deleted.
+So I got rid of all the special rights of them, reinstalled all the SSH programs. Then it was OK.
+
+After that, I checked some logs, tried to find some information if we were hacked by someone.
+
+But I'm sorry I couldn't find any useful information. Now I think we'd better to change all the passwords of existing users, especially the users who can login this server.
+
+[root@server ssh]# lsattr /usr/bin/ssh
+-u--ia------- /usr/bin/ssh
+[root@server ssh]# lsattr /usr/sbin/sshd
+-u--ia------- /usr/sbin/sshd
+
+[root@server ssh]# chattr -uia /usr/bin/ssh
+[root@server ssh]# chattr -uia /usr/sbin/sshd
+
+[root@server ssh]# lsattr /usr/bin/ssh
+------------- /usr/bin/ssh
+[root@server ssh]# lsattr /usr/sbin/sshd
+------------- /usr/sbin/sshd
+
+yum install openssh-server
+yum install openssh-clients
+yum install openssh
+
+[root@server ssh]# rpm -qa | grep ssh
+openssh-server-4.3p2-72.el5_6.3
+openssh-clients-4.3p2-72.el5_6.3
+openssh-4.3p2-72.el5_6.3
