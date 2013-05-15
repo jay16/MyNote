@@ -1,3 +1,6 @@
+def notebook_new_tab(note_book,window)
+  
+end
 def notebook_prepage(notebook,window)
   if notebook.page == 0
     notebook.set_page(notebook.n_pages - 1)
@@ -6,7 +9,8 @@ def notebook_prepage(notebook,window)
   end
   tab = notebook.get_nth_page(notebook.page)
   tab.child.buffer.text = "HHH"
-  puts tab.child.visible_rect.to_a.to_s
+  tab.child.get_window(Gtk::TextView::WINDOW_TEXT)
+  puts 
   window.show_all
   notebook.show_all
   

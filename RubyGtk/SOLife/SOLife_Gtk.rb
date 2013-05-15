@@ -51,20 +51,24 @@ tree_view.columns_autosize
 tree_view.append_column(tree_col)
 #SELECTION_NONE
 #SELECTION_BROWSE
-scrolled_view = Gtk::ScrolledWindow.new
-scrolled_view.border_width = 2
-scrolled_view.add(tree_view)
-scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+scrolled_notetree_view = Gtk::ScrolledWindow.new
+scrolled_notetree_view.border_width = 2
+scrolled_notetree_view.add(tree_view)
+scrolled_notetree_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
 
 
 #根据note_dir_list数据组显示目录
 scrolled_notelist_view = g_note_list(note_tree_store,note_dir_list)
 
+left_table = Gtk::Table.new(1, 24,true)
+
+options = Gtk::EXPAND|Gtk::FILL
+left_table.attach(scrolled_notetree_view,  0,  1,  0,  2, options, options, 0,    0)0012
 
 #左侧水平容器
 left_vbox = Gtk::VBox.new(homogeneous=false, spacing=nil) 
-left_vbox.pack_start_defaults(scrolled_view)
+left_vbox.pack_start_defaults(scrolled_notetree_view)
 left_vbox.pack_start_defaults(scrolled_notelist_view)
 
 #记事本框架
@@ -109,7 +113,7 @@ window = Gtk::Window.new("")
 #点击关闭
 window.signal_connect("destroy") { Gtk.main_quit }
 #目录被双击时，使用记事本打开
-tree_view.signal_connect("row-activated") { row_activated(tree_view,note_tree_store,note_book,window)}
+tree_view.signal_connect("row-activated") { row_activated(tree_view,note_tree_store,text_editor,window)}
 #目录被单击时，使用记事本打开
 #tree_view.signal_connect("cursor-changed") { row_activated(tree_view,note_tree_store,text_editor,window) }
 #ctrl+s保存文件快捷键
@@ -129,6 +133,7 @@ ctrl_n = Gtk::AccelGroup.new
 ctrl_n.connect(Gdk::Keyval::GDK_N, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   new_file(text_editor,window)
 }
+
 window.add_accel_group(ctrl_n)
 #ctrl+p notebook标签页向前切换P
 ctrl_p = Gtk::AccelGroup.new

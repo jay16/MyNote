@@ -70,7 +70,7 @@ def test_notebook(note_book,window)
       note_book.insert_page(-1,scrolled_text,text_editor.note_label)
 end
 #目录节点被点击反应
-def row_activated(tree_view,tree_store,note_book,window)
+def row_activated(tree_view,tree_store,text_editor,window)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -84,17 +84,17 @@ def row_activated(tree_view,tree_store,note_book,window)
       file_content = File.readlines(node_path).join("").to_s
       #file_content = (file_content.strip.length > 0 ? file_content : "  content is empty")
       #新建notebook标签页
-      text_editor = TextEditor.new
-      text_editor.text_view = Gtk::TextView.new
+      #text_editor = TextEditor.new
+      #text_editor.text_view = Gtk::TextView.new
       #text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
-      text_font = Pango::FontDescription.new("Monospace Normal 10")
-      text_editor.text_view.modify_font(text_font)
-      text_editor.note_label  = Gtk::Label.new("notebooxk")
-      scrolled_text = Gtk::ScrolledWindow.new
-      scrolled_text.border_width = 2
-      scrolled_text.add(text_editor.text_view)
-      note_book.insert_page(-1,scrolled_text,text_editor.note_label)
-       text_editor.text_view.signal_connect("backspace") { puts text_editor.text_view.buffer.text }
+      #text_font = Pango::FontDescription.new("Monospace Normal 10")
+      #text_editor.text_view.modify_font(text_font)
+      #text_editor.note_label  = Gtk::Label.new("notebooxk")
+      #scrolled_text = Gtk::ScrolledWindow.new
+      #scrolled_text.border_width = 2
+      #scrolled_text.add(text_editor.text_view)
+      #note_book.insert_page(-1,scrolled_text,text_editor.note_label)
+      #text_editor.text_view.signal_connect("backspace") { puts text_editor.text_view.buffer.text }
       #加载文本内容
       begin
       text_editor.text_view.buffer.text =  file_content
