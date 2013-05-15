@@ -79,7 +79,13 @@ text_editor = TextEditor.new
 text_editor.text_view = Gtk::TextView.new
 text_editor.text_view.buffer.text = "Your 1st Gtk::TextView widget!"
 text_font = Pango::FontDescription.new("Monospace Normal 10")
+#记事本应用字体
 text_editor.text_view.modify_font(text_font)
+#记事本中允许自动换行
+text_editor.text_view.wrap_mode = Gtk::TextTag::WRAP_WORD
+text_editor.text_view.editable =  true
+text_editor.text_view.cursor_visible =  true
+text_editor.text_view.left_margin = 10
 text_editor.note_label  = Gtk::Label.new("notebooxk")
 
 

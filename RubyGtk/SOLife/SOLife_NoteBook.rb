@@ -4,8 +4,11 @@ def notebook_prepage(notebook,window)
   else
     notebook.prev_page
   end
-  text_view = notebook.get_nth_page(notebook.page)
-  text_view.show
-  puts text_view.buffer.text
+  text_view = notebook.get_nth_page(notebook.page)
+  text_view.buffer.text = "HHH"
+
   window.show_all
+  notebook.show_all
+  
+    text_view.show_all
 end
