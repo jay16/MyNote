@@ -80,13 +80,13 @@ def htgtree_resort(note_htg_store,seled,window)
        end
      end while iter.next!
      
-     htg_list.sort!{ |x,y| y <=> x }
+     htg_list.sort!{ |x,y| y[2] <=> x[2] }
      puts htg_list
      note_htg_store.clear
      
      htg_list.each do |note_path|
        note_store = note_htg_store.append(nil)
-       note_store[0] = note_path[0]
+       note_store[0] = note_path[0].split(" - ")[0] + " - " + note_path[2].to_s
        note_store[1] = note_path[1]
        note_store[2] = note_path[2]
      end

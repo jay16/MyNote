@@ -5,7 +5,8 @@ def g_note_list(note_tree_store,note_dir_list)
    note_list_store = Gtk::TreeStore.new(String, String, Integer)
    note_dir_list.each do |note_path|
     note_store = note_list_store.append(nil)
-    note_store[0] = note_path
+    note_store[0] = File.basename(note_path)
+    note_store[1] = note_path
    end
    tree_view = Gtk::TreeView.new(note_list_store)
    tree_view.selection.mode = Gtk::SELECTION_SINGLE
@@ -22,7 +23,7 @@ def g_note_list(note_tree_store,note_dir_list)
    tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
    tree_view.append_column(tree_col)
    tree_view.signal_connect("row-activated") do
-     note_path = tree_view.selection.selected[0]
+     note_path = tree_view.selection.selected[1]
      g_note_tree(note_tree_store,note_path)
    end
 
@@ -126,7 +127,7 @@ def row_activated(tree_view,tree_store,text_editor,note_htg_store,window)
           #鼠标悬停显示文本路径
           tooltip = Gtk::Tooltips.new
           tooltip.set_tip(text_editor.note_label,node_path,"private")
-          g_htg_tree(note_htg_store,iter)
+          g_htg_tree(note_htg_store,iter,window)
         ensure
         end
       else
@@ -134,7 +135,7 @@ def row_activated(tree_view,tree_store,text_editor,note_htg_store,window)
         #鼠标悬停显示文本路径
         tooltip = Gtk::Tooltips.new
         tooltip.set_tip(text_editor.note_label,node_path,"private")
-        g_htg_tree(note_htg_store,iter)
+        g_htg_tree(note_htg_store,iter,window)
       end
 
       #puts File.readlines(node_path).join('\n')
