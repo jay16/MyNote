@@ -90,10 +90,10 @@ def row_activated(tree_view,tree_store,note_book,window)
       text_font = Pango::FontDescription.new("Monospace Normal 10")
       text_editor.text_view.modify_font(text_font)
       text_editor.note_label  = Gtk::Label.new("notebooxk")
-      #scrolled_text = Gtk::ScrolledWindow.new
-      #scrolled_text.border_width = 2
-      #scrolled_text.add(text_editor.text_view)
-      note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
+      scrolled_text = Gtk::ScrolledWindow.new
+      scrolled_text.border_width = 2
+      scrolled_text.add(text_editor.text_view)
+      note_book.insert_page(-1,scrolled_text,text_editor.note_label)
 
       #加载文本内容
       begin
