@@ -129,7 +129,7 @@ tree_htg_view.signal_connect("row-activated") { read_by_history(tree_htg_view,te
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  save_file(tree_view,note_tree_store,text_editor,window)
+  save_file(tree_view,note_tree_store,text_editor,note_htg_store,window)
 }
 window.add_accel_group(ctrl_s)
 #ctrl+z重新加载文本快捷键

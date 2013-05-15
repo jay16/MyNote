@@ -187,7 +187,7 @@ def row_activated(tree_view,tree_store,text_editor,note_htg_store,window)
 end
 
 #保存文本
-def save_file(tree_view,tree_store,text_editor,window) 
+def save_file(tree_view,tree_store,text_editor,note_htg_store,window) 
  selection = tree_view.selection
  iter = selection.selected
  file_name = text_editor.note_label.text.split("_")[1]
@@ -198,7 +198,7 @@ def save_file(tree_view,tree_store,text_editor,window)
     window.set_title("SoLife #{iter[1]}[saved]")
     window.show_all
  elsif text_editor.note_label.text == "new file"
-   save_new_file(tree_view,tree_store,text_editor,window)
+   save_new_file(tree_view,tree_store,text_editor,note_htg_store,window)
  else
    puts "can not save:"+iter[1]
  end
@@ -222,7 +222,7 @@ end
 
 
 
-def save_new_file(tree_view,tree_store,text_editor,window)
+def save_new_file(tree_view,tree_store,text_editor,note_htg_store,window)
   selection = tree_view.selection
   iter = selection.selected
   dialog = Gtk::Dialog.new(
@@ -305,7 +305,7 @@ def save_new_file(tree_view,tree_store,text_editor,window)
     #row_path = row_ref.path
     tree_view.set_cursor(row_path,nil,true)
     #触发点击动作
-    row_activated(tree_view,tree_store,text_editor,window)
+    row_activated(tree_view,tree_store,text_editor,note_htg_store,window)
     end
     dialog.destroy
   end

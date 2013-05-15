@@ -1,0 +1,3 @@
+解压所有gz压缩文件
+
+ls *.gz|xargs tar -xzvf
