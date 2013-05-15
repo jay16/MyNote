@@ -6,7 +6,7 @@ def notebook_prepage(notebook,window)
   end
   tab = notebook.get_nth_page(notebook.page)
   tab.child.buffer.text = "HHH"
-
+  puts tab.child.visible_rect.to_a.to_s
   window.show_all
   notebook.show_all
   

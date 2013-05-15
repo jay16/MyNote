@@ -94,7 +94,7 @@ def row_activated(tree_view,tree_store,note_book,window)
       scrolled_text.border_width = 2
       scrolled_text.add(text_editor.text_view)
       note_book.insert_page(-1,scrolled_text,text_editor.note_label)
-
+       text_editor.text_view.signal_connect("backspace") { puts text_editor.text_view.buffer.text }
       #加载文本内容
       begin
       text_editor.text_view.buffer.text =  file_content
