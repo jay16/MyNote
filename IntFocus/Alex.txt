@@ -1,4 +1,4 @@
-
+﻿
 格式：email,result(0~5)
 
 0: Domain 不存在
@@ -48,3 +48,15 @@ Usage: dos2unix [-hkqV] [-c convmode] [-o file ...] [-n infile outfile ...]
  -n --newfile     write to new file
  infile           original file in new file mode
  outfile          output file in new file mode
+
+-----------------------------------------------
+[webmail@cloud yuanzu_nosina_rest]$ ls -alrt
+total 40
+-rw-rw-r--  1 webmail webmail 17004 May 14 23:39 yuanzu_nosina_rest.csv
+-rw-rw-r--  1 webmail webmail     0 May 14 23:40 yuanzu_nosina_rest.csv.sina
+-rw-rw-r--  1 webmail webmail     0 May 14 23:40 yuanzu_nosina_rest.csv.qq.com_r
+
+-----------------------------------------------
+[webmail@cloud yuanzu_nosina_rest]$ dig hotmail.com mx
+-----------------------------------------------
+[webmail@cloud yuanzu_nosina_rest]$ more yuanzu_nosina_rest.csv
