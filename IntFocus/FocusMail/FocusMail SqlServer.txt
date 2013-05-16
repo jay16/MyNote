@@ -1,0 +1,16 @@
+-------------------------------------------------
+--查看指定表的列名与类型
+
+ Select        
+  字段名=rtrim(b.name),         
+  主键=CASE WHEN h.id IS NOT NULL  THEN 'PK' ELSE '' END,         
+  字段类型=type_name(b.xusertype)+CASE WHEN b.colstat&11=1 THEN '[ID(' + CONVERT(varchar, ident_seed(a.name))+','+CONVERT(varchar,ident_incr(a.name))+')]' ELSE '' END,         
+  长度=b.length,          
+  允许空=CASE b.isnullable WHEN 0 THEN 'N' ELSE 'Y' END,          
+  默认值=isnull(e.text, '')
+FROM sysobjects a, syscolumns b            
+LEFT OUTER JOIN syscomments e ON b.cdefault = e.id         
+LEFT OUTER JOIN (Select g.id, g.colid FROM sysindexes f, sysindexkeys g Where (f.id=g.id)AND(f.indid=g.indid)AND(f.indid>0)AND(f.indid<255)AND(f.status&2048)<>0) h ON (b.id=h.id)AND(b.colid=h.colid)         
+Where (a.id=b.id)AND(a.id=object_id('kpi_daily_bgt_update'))  --要查询的表改成你要查询表的名称         
+orDER BY b.colid       
+------------------------------------------------------
