@@ -1,36 +1,36 @@
-ÃüÁîÖĞº¬--globalÊ±£¬ĞÅÏ¢¶ÁÈ¡»ò±£´æÔÚC:\Documents and Settings\Administrator\.ssh\configÖĞ
-    ²»º¬--globalÊ±£¬ĞÅÏ¢¶ÁÈ¡»ò±£´æÔÚGit²Ö¿âµÄÒş²ØÎÄ¼ş.git\configÖĞ
+å‘½ä»¤ä¸­å«--globalæ—¶ï¼Œä¿¡æ¯è¯»å–æˆ–ä¿å­˜åœ¨C:\Documents and Settings\Administrator\.ssh\configä¸­
+    ä¸å«--globalæ—¶ï¼Œä¿¡æ¯è¯»å–æˆ–ä¿å­˜åœ¨Gitä»“åº“çš„éšè—æ–‡ä»¶.git\configä¸­
 
  
-# È«¾ÖÌá½»ÓÃ»§ÃûÓëÓÊÏä
+# å…¨å±€æäº¤ç”¨æˆ·åä¸é‚®ç®±
 git config --global user.name "Yuchen Deng"
-git config --global user.email ÓÊÏäÃû@gmail.com
+git config --global user.email é‚®ç®±å@gmail.com
  
-# ÖĞÎÄ±àÂëÖ§³Ö
+# ä¸­æ–‡ç¼–ç æ”¯æŒ
 echo "export LESSCHARSET=utf-8" > $HOME/.profile
 git config --global gui.encoding utf-8
 git config --global i18n.commitencoding utf-8
 git config --global i18n.logoutputencoding gbk
  
-# È«¾Ö±à¼­Æ÷£¬Ìá½»Ê±½«COMMIT_EDITMSG±àÂë×ª»»³ÉUTF-8¿É±ÜÃâÂÒÂë
+# å…¨å±€ç¼–è¾‘å™¨ï¼Œæäº¤æ—¶å°†COMMIT_EDITMSGç¼–ç è½¬æ¢æˆUTF-8å¯é¿å…ä¹±ç 
 git config --global core.editor notepad2
  
-# ²îÒì¹¤¾ßÅäÖÃ
+# å·®å¼‚å·¥å…·é…ç½®
 git config --global diff.external git-diff-wrapper.sh
 git config --global diff.tool tortoise
 git config --global difftool.tortoise.cmd 'TortoiseMerge -base:"$LOCAL" -theirs:"$REMOTE"'
 git config --global difftool.prompt false
  
-# ºÏ²¢¹¤¾ßÅäÖÃ
+# åˆå¹¶å·¥å…·é…ç½®
 git config --global merge.tool tortoise
 git config --global mergetool.tortoise.cmd 'TortoiseMerge -base:"$BASE" -theirs:"$REMOTE" -mine:"$LOCAL" -merged:"$MERGED"'
 git config --global mergetool.prompt false
  
-# ±ğÃûÉèÖÃ
+# åˆ«åè®¾ç½®
 git config --global alias.dt difftool
 git config --global alias.mt mergetool
  
-# È¡Ïû $ git gui µÄÖĞÎÄ½çÃæ£¬¸ÄÓÃÓ¢ÎÄ½çÃæ¸üÒ×¶®
+# å–æ¶ˆ $ git gui çš„ä¸­æ–‡ç•Œé¢ï¼Œæ”¹ç”¨è‹±æ–‡ç•Œé¢æ›´æ˜“æ‡‚
 if [ -f "/share/git-gui/lib/msgs/zh_cn.msg" ]; then
 rm /share/git-gui/lib/msgs/zh_cn.msg
 fi

@@ -8,22 +8,22 @@ def g_note_list(note_tree_store,note_dir_list,conf_save)
     note_store[0] = File.basename(note_path)
     note_store[1] = note_path
    end
-   tree_view = Gtk::TreeView.new(note_list_store)
-   tree_view.selection.mode = Gtk::SELECTION_SINGLE
-   tree_view.expand_all
-   tree_view.hadjustment.value=100
-   tree_view.columns_autosize
+   note_view_tree = Gtk::TreeView.new(note_list_store)
+   note_view_tree.selection.mode = Gtk::SELECTION_SINGLE
+   note_view_tree.expand_all
+   note_view_tree.hadjustment.value=100
+   note_view_tree.columns_autosize
    scrolled_view = Gtk::ScrolledWindow.new
    scrolled_view.border_width = 2
-   scrolled_view.add(tree_view)
+   scrolled_view.add(note_view_tree)
    scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
    #笔记路径树
    renderer = Gtk::CellRendererText.new
    tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
-   tree_view.append_column(tree_col)
-   tree_view.signal_connect("row-activated") do
-     note_path = tree_view.selection.selected[1]
+   note_view_tree.append_column(tree_col)
+   note_view_tree.signal_connect("row-activated") do
+     note_path = note_view_tree.selection.selected[1]
      #更新配置文件中NoteSeledDir
      conf_save.transaction do 
        conf_save["NoteSeledDir"] = note_path
@@ -76,8 +76,8 @@ def test_notebook(note_book,window)
       note_book.insert_page(-1,scrolled_text,text_editor.note_label)
 end
 #目录节点被点击反应
-def row_activated(tree_view,tree_store,text_editor,note_history_store,window,conf_save)
-    selection = tree_view.selection
+def row_activated(note_view_tree,tree_store,text_editor,note_history_store,window,conf_save)
+    selection = note_view_tree.selection
     iter = selection.selected    
     #没有选中值则返回
     return unless (iter and iter[0] != iter[1])
@@ -147,15 +147,15 @@ def row_activated(tree_view,tree_store,text_editor,note_history_store,window,con
     else
       row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
       row_path = row_ref.path
-      is_expand = tree_view.row_expanded?(row_path)
+      is_expand = note_view_tree.row_expanded?(row_path)
       #判断该节点目录是否展开
       if !is_expand then 
         #展开该节点目录
-        tree_view.expand_row(row_path,true)
+        note_view_tree.expand_row(row_path,true)
         #有父节点取得父节点，若没有，则取本身
         parent = iter #iter.parent ? iter.parent : iter
 
-        tree_model = tree_view.model
+        tree_model = note_view_tree.model
         parent_path = tree_model.get_iter(parent.to_s)
         #该目录下第一个节点
         first_child = iter.first_child
@@ -184,17 +184,17 @@ def row_activated(tree_view,tree_store,text_editor,note_history_store,window,con
         end      #if first_child
       else
         #缩回目录 
-        tree_view.collapse_row(row_path)
-        #tree_view.expand_row(row_path,true)
+        note_view_tree.collapse_row(row_path)
+        #note_view_tree.expand_row(row_path,true)
       end
     end
    window.show_all
 end
 
 #保存文本
-def save_file(tree_view,tree_store,text_editor,note_history_store,window) 
- selection = tree_view.selection
- iter = selection.selected
+def save_file(note_view_tree,tree_store,text_editor,note_history_tree,note_history_store,window) 
+ selection = note_view_tree.selection
+ note_iter = selection.selected
  file_name = text_editor.note_label.text.split("_")[1]
  if iter and iter[1] and File.file?(iter[1]) and  file_name== File.basename(iter[1])
     file = File.open(iter[1],"w")
@@ -203,15 +203,15 @@ def save_file(tree_view,tree_store,text_editor,note_history_store,window)
     window.set_title("SoLife #{iter[1]}[saved]")
     window.show_all
  elsif text_editor.note_label.text == "new file"
-   save_new_file(tree_view,tree_store,text_editor,note_history_store,window)
+   save_new_file(note_view_tree,tree_store,text_editor,note_history_store,window)
  else
    puts "can not save:"+iter[1]
    puts text_editor.note_label.tooltip
  end
 end
 #重新加载文本
-def reload_file(tree_view,tree_store,text_editor,window) 
- selection = tree_view.selection
+def reload_file(note_view_tree,tree_store,text_editor,window) 
+ selection = note_view_tree.selection
  if iter = selection.selected
    if iter[1] then 
     text_editor.text_view.buffer.text = File.readlines(iter[1]).join("").to_s.encode("UTF-8")
@@ -228,8 +228,8 @@ end
 
 
 
-def save_new_file(tree_view,tree_store,text_editor,note_history_store,window)
-  selection = tree_view.selection
+def save_new_file(note_view_tree,tree_store,text_editor,note_history_store,window)
+  selection = note_view_tree.selection
   iter = selection.selected
   dialog = Gtk::Dialog.new(
       "Information",
@@ -298,7 +298,7 @@ def save_new_file(tree_view,tree_store,text_editor,note_history_store,window)
       #text_editor.note_label.text="F_"+new_name.text
       #目录下添加新节点
       parent = iter.parent
-      tree_model = tree_view.model
+      tree_model = note_view_tree.model
       parent_path = tree_model.get_iter(parent.to_s)
       new_note = tree_model.append(parent_path)
       new_note[0] = "F_"+new_name.text
@@ -309,9 +309,9 @@ def save_new_file(tree_view,tree_store,text_editor,note_history_store,window)
     #等同下面两句
     #row_ref = Gtk::TreeRowReference.new(tree_store, Gtk::TreePath.new(iter.to_s))
     #row_path = row_ref.path
-    tree_view.set_cursor(row_path,nil,true)
+    note_view_tree.set_cursor(row_path,nil,true)
     #触发点击动作
-    row_activated(tree_view,tree_store,text_editor,note_history_store,window)
+    row_activated(note_view_tree,tree_store,text_editor,note_history_store,window)
     end
     dialog.destroy
   end
@@ -320,8 +320,8 @@ end
 
 
 #编辑文本时状态
-def write_statu(tree_view,tree_store,text_view,window) 
- selection = tree_view.selection
+def write_statu(note_view_tree,tree_store,text_view,window) 
+ selection = note_view_tree.selection
  if iter = selection.selected      
    window.set_title("SoLife #{iter[1]} [writing]")
    window.show_all
@@ -329,8 +329,8 @@ def write_statu(tree_view,tree_store,text_view,window)
  end
 end
 
-def window_exit(tree_view,window,conf_save)
-  seled_iter = tree_view.selection.selected
+def window_exit(note_view_tree,window,conf_save)
+  seled_iter = note_view_tree.selection.selected
   if seled_iter then
     #保存当前选中项，下次启动时默认选中
     conf_save.transaction do 
@@ -397,21 +397,21 @@ dialog = Gtk::Dialog.new(
    #构建笔记列表树
    tree_store = Gtk::TreeStore.new(String, String, Integer)
    
-   tree_view = Gtk::TreeView.new(tree_store)
-   tree_view.selection.mode = Gtk::SELECTION_SINGLE
-   tree_view.expand_all
-   tree_view.hadjustment.value=100
-   tree_view.columns_autosize
+   note_view_tree = Gtk::TreeView.new(tree_store)
+   note_view_tree.selection.mode = Gtk::SELECTION_SINGLE
+   note_view_tree.expand_all
+   note_view_tree.hadjustment.value=100
+   note_view_tree.columns_autosize
    scrolled_view = Gtk::ScrolledWindow.new
    scrolled_view.border_width = 2
-   scrolled_view.add(tree_view)
+   scrolled_view.add(note_view_tree)
    scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
    #笔记路径树
    renderer = Gtk::CellRendererText.new
    tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
-   tree_view.append_column(tree_col)
-   tree_view.signal_connect("row-activated") { del_note_dir(tree_view,tree_store)}
+   note_view_tree.append_column(tree_col)
+   note_view_tree.signal_connect("row-activated") { del_note_dir(note_view_tree,tree_store)}
   
   #选择笔记路径
   choo_dir_btt  = Gtk::FileChooserButton.new(
@@ -458,8 +458,8 @@ table.attach(hbox_3,  0,  1,  9,  10, options, options, 0,    0)
   
 end
 
-def del_note_dir(tree_view,tree_store)
-    selection = tree_view.selection
+def del_note_dir(note_view_tree,tree_store)
+    selection = note_view_tree.selection
     iter = selection.selected  
     tree_store.remove(iter)
     #tree_store.clear

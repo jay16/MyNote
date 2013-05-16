@@ -1,9 +1,9 @@
-Ô­ÍøÖ·£º
+åŸç½‘å€ï¼š
 http://www.gnu.org/software/make/
 http://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html#Makefile-Conventions
 http://www.gnu.org/prep/standards/html_node/Makefile-Basics.html#Makefile-Basics
 
-7.2.1 MakefilesµÄÔ¼¶¨¹ßÀı
+7.2.1 Makefilesçš„çº¦å®šæƒ¯ä¾‹
 
-Ã¿¸öMakefiles¶¼Ó¦¸Ãº¬ÕâĞĞ´úÂë£ºSHELL = /bin/sh £¬À´±ÜÃâÕâÑùÏµÍ³³åÍ»£ºSHELLÕâ¸ö±äÁ¿µ½µ×´ÓÄÇ¸ö»·¾³±äÁ¿¼Ì³Ğ¹ıÀ´¡££¨GNU make´Ó²»»á³öÏÖÕâÑùµÄÎÊÌâ£©
+æ¯ä¸ªMakefileséƒ½åº”è¯¥å«è¿™è¡Œä»£ç ï¼šSHELL = /bin/sh ï¼Œæ¥é¿å…è¿™æ ·ç³»ç»Ÿå†²çªï¼šSHELLè¿™ä¸ªå˜é‡åˆ°åº•ä»é‚£ä¸ªç¯å¢ƒå˜é‡ç»§æ‰¿è¿‡æ¥ã€‚ï¼ˆGNU makeä»ä¸ä¼šå‡ºç°è¿™æ ·çš„é—®é¢˜ï¼‰
 

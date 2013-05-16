@@ -1,36 +1,36 @@
 <script>
 
-    ¡¡¡¡var name = "The Window";
+    ã€€ã€€var name = "The Window";
 
-    ¡¡¡¡var object = {
-    ¡¡¡¡¡¡¡¡name : "My Object",
+    ã€€ã€€var object = {
+    ã€€ã€€ã€€ã€€name : "My Object",
 
-    ¡¡¡¡¡¡¡¡getNameFunc : function(){
-    ¡¡¡¡¡¡¡¡¡¡¡¡return function(){
-    ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡return this.name;
-    ¡¡¡¡¡¡¡¡¡¡¡¡};
+    ã€€ã€€ã€€ã€€getNameFunc : function(){
+    ã€€ã€€ã€€ã€€ã€€ã€€return function(){
+    ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€return this.name;
+    ã€€ã€€ã€€ã€€ã€€ã€€};
 
-    ¡¡¡¡¡¡¡¡}
+    ã€€ã€€ã€€ã€€}
 
-    ¡¡¡¡};
+    ã€€ã€€};
 
-    ¡¡¡¡alert(object.getNameFunc()());
+    ã€€ã€€alert(object.getNameFunc()());
 </script>
 <script>
-¡¡var name = "The Window";
+ã€€var name = "The Window";
 
-¡¡¡¡var object = {
-¡¡¡¡¡¡¡¡name : "My Object",
+ã€€ã€€var object = {
+ã€€ã€€ã€€ã€€name : "My Object",
 
-¡¡¡¡¡¡¡¡getNameFunc : function(){
-¡¡¡¡¡¡¡¡¡¡¡¡var that = this;
-¡¡¡¡¡¡¡¡¡¡¡¡return function(){
-¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡return that.name;
-¡¡¡¡¡¡¡¡¡¡¡¡};
+ã€€ã€€ã€€ã€€getNameFunc : function(){
+ã€€ã€€ã€€ã€€ã€€ã€€var that = this;
+ã€€ã€€ã€€ã€€ã€€ã€€return function(){
+ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€return that.name;
+ã€€ã€€ã€€ã€€ã€€ã€€};
 
-¡¡¡¡¡¡¡¡}
+ã€€ã€€ã€€ã€€}
 
-¡¡¡¡};
+ã€€ã€€};
 
-¡¡¡¡alert(object.getNameFunc()()); 
+ã€€ã€€alert(object.getNameFunc()()); 
 </script>

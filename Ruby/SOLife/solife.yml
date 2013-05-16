@@ -4,4 +4,17 @@ NoteDirList:
 - E:\MyWork
 - E:\MyWork\MyNote\IntFocus
 NoteSeledDir: E:\MyWork\MyNote
-NoteSeledFile: E:\MyWork\MyNote\FocusMail MySql.txt
+NoteSeledFile: E:\MyWork\MyNote\IntFocus\IntFocus.txt
+HistoryList:
+- - IntFocus.txt
+  - E:\MyWork\MyNote\IntFocus\IntFocus.txt
+  - 2
+- - Alex.txt
+  - E:\MyWork\MyNote\IntFocus\Alex.txt
+  - 1
+- - General Conventions for Makefiles.txt
+  - E:\MyWork\MyNote\GNU\General Conventions for Makefiles.txt
+  - 1
+- - FocusMail MySql.txt
+  - E:\MyWork\MyNote\FocusMail MySql.txt
+  - 1

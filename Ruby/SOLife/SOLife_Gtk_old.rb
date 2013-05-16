@@ -67,18 +67,18 @@ end
 #puts level_one.to_s
 
 #为减少压力只显示一层
-tree_store = Gtk::TreeStore.new(String, String, Integer)
+note_view_store = Gtk::TreeStore.new(String, String, Integer)
 
 level_one.each do |lo|
   #level one
-  tree_lo =  tree_store.append(nil)
+  tree_lo =  note_view_store.append(nil)
   #tree_level_one nodename
   tree_lo[0] = (File.file?(lo[1]) ? "F_"+lo[0] : lo[0])
 
   tree_lo[1] = lo[1] #tree_level_one nodepath
   #tree_lo[2] = lo[2] #tree_level_one nodetype
   if lo[2]=="dir" then
-   tree_lt = tree_store.append(tree_lo)
+   tree_lt = note_view_store.append(tree_lo)
    tree_lt[0] = "loading"
    tree_lt[1] = "loading"
   end
@@ -86,7 +86,7 @@ end
 
 
 
-tree_view = Gtk::TreeView.new(tree_store)
+tree_view = Gtk::TreeView.new(note_view_store)
 tree_view.selection.mode = Gtk::SELECTION_SINGLE
 #tree_view.expand_all
 tree_view.hadjustment.value=100
@@ -136,18 +136,18 @@ window = Gtk::Window.new("")
 #点击关闭
 window.signal_connect("destroy") { Gtk.main_quit }
 #目录被双击时，使用记事本打开
-tree_view.signal_connect("row-activated") { row_activated(tree_view,tree_store,text_editor,window)}
+tree_view.signal_connect("row-activated") { row_activated(tree_view,note_view_store,text_editor,window)}
 #目录被单击时，使用记事本打开
-tree_view.signal_connect("cursor-changed") { row_activated(tree_view,tree_store,text_editor,window) }
+tree_view.signal_connect("cursor-changed") { row_activated(tree_view,note_view_store,text_editor,window) }
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  save_file(tree_view,tree_store,text_editor,window)
+  save_file(tree_view,note_view_store,text_editor,window)
 }
 #ctrl+z重新加载文本快捷键
 ctrl_z = Gtk::AccelGroup.new
 ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  reload_file(tree_view,tree_store,text_editor,window)
+  reload_file(tree_view,note_view_store,text_editor,window)
 }
 #ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
 ctrl_n = Gtk::AccelGroup.new
@@ -158,7 +158,7 @@ window.add_accel_group(ctrl_s)
 window.add_accel_group(ctrl_z)
 window.add_accel_group(ctrl_n)
 #编辑文本状态
-text_editor.text_view.buffer.signal_connect("changed"){ write_statu(tree_view,tree_store,text_editor,window) }
+text_editor.text_view.buffer.signal_connect("changed"){ write_statu(tree_view,note_view_store,text_editor,window) }
 
 
 window.add(table)

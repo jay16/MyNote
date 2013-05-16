@@ -57,43 +57,43 @@ end
 
 
 #note_tree
-note_tree_store = Gtk::TreeStore.new(String, String, Integer)
+note_view_store = Gtk::TreeStore.new(String, String, Integer)
 
 #目录框架
 renderer = Gtk::CellRendererText.new
 tree_col = Gtk::TreeViewColumn.new(File.basename(note_seled_dir), renderer, :text => 0)
 
-g_note_tree(note_tree_store,note_seled_dir)
+g_note_tree(note_view_store,note_seled_dir)
 
-tree_note_view = Gtk::TreeView.new(note_tree_store)
-tree_note_view.selection.mode = Gtk::SELECTION_SINGLE
-#tree_note_view.expand_all
-tree_note_view.hadjustment.value=100
-tree_note_view.columns_autosize
-tree_note_view.append_column(tree_col)
+note_view_tree = Gtk::TreeView.new(note_view_store)
+note_view_tree.selection.mode = Gtk::SELECTION_SINGLE
+#note_view_tree.expand_all
+note_view_tree.hadjustment.value=100
+note_view_tree.columns_autosize
+note_view_tree.append_column(tree_col)
 #SELECTION_NONE
 #SELECTION_BROWSE
-scrolled_notetree_note_view = Gtk::ScrolledWindow.new
-scrolled_notetree_note_view.border_width = 2
-scrolled_notetree_note_view.add(tree_note_view)
-scrolled_notetree_note_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+scrolled_notenote_view_tree = Gtk::ScrolledWindow.new
+scrolled_notenote_view_tree.border_width = 2
+scrolled_notenote_view_tree.add(note_view_tree)
+scrolled_notenote_view_tree.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
 
 
 #根据note_dir_list数据组显示目录
-scrolled_notelist_view = g_note_list(note_tree_store,note_dir_list,conf_save)
+scrolled_notelist_view = g_note_list(note_view_store,note_dir_list,conf_save)
 
 #根据note 点击记录 列表 显示目录
 g_history = g_historylist_view(note_dir_list)
 scrolled_history_view = g_history[0]
-tree_history_view         = g_history[1]
+note_history_tree         = g_history[1]
 note_history_store        = g_history[2]
 
 
 left_table = Gtk::Table.new(4, 1,true)
 
 options = Gtk::EXPAND|Gtk::FILL
-left_table.attach(scrolled_notetree_note_view,  0,  1,  0,  2, options, options, 0,    0)
+left_table.attach(scrolled_notenote_view_tree,  0,  1,  0,  2, options, options, 0,    0)
 left_table.attach(scrolled_notelist_view,  0,  1,  2,  3, options, options, 0,    0)
 left_table.attach(scrolled_history_view,  0,  1,  3,  4, options, options, 0,    0)
 
@@ -141,23 +141,23 @@ table.attach(note_book,  7,  24,  0,  1, options, options, 0,    0)
 window = Gtk::Window.new("")
 
 #点击关闭
-window.signal_connect("destroy") { window_exit(tree_note_view,window,conf_save) }
+window.signal_connect("destroy") { window_exit(note_view_tree,window,conf_save) }
 #目录被双击时，使用记事本打开
-tree_note_view.signal_connect("row-activated") { row_activated(tree_note_view,note_tree_store,text_editor,note_history_store,window,conf_save)}
+note_view_tree.signal_connect("row-activated") { row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)}
 #阅读历史列表被双击时，使用记事本打开
-tree_history_view.signal_connect("row-activated") { read_by_history(tree_history_view,text_editor,window,conf_save)}
+note_history_tree.signal_connect("row-activated") { click_history_tree(note_view_tree,note_view_store,note_history_tree,text_editor,window,conf_save)}
 #目录被单击时，使用记事本打开
-#tree_note_view.signal_connect("cursor-changed") { row_activated(tree_note_view,note_tree_store,text_editor,window) }
+#note_view_tree.signal_connect("cursor-changed") { row_activated(note_view_tree,note_view_store,text_editor,window) }
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  save_file(tree_note_view,note_tree_store,text_editor,note_history_store,window)
+  save_file(note_view_tree,note_view_store,text_editor,note_history_tree,note_history_store,window)
 }
 window.add_accel_group(ctrl_s)
 #ctrl+z重新加载文本快捷键
 ctrl_z = Gtk::AccelGroup.new
 ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  reload_file(tree_note_view,note_tree_store,text_editor,window)
+  reload_file(note_view_tree,note_view_store,text_editor,window)
 }
 window.add_accel_group(ctrl_z)
 #ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
@@ -174,7 +174,7 @@ ctrl_p.connect(Gdk::Keyval::GDK_P, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE
 }
 window.add_accel_group(ctrl_p)
 #编辑文本状态
-text_editor.text_view.buffer.signal_connect("changed"){ write_statu(tree_note_view,note_tree_store,text_editor,window) }
+text_editor.text_view.buffer.signal_connect("changed"){ write_statu(note_view_tree,note_view_store,text_editor,window) }
 
 
 window.add(table)

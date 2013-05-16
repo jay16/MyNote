@@ -58,7 +58,7 @@
                       }
                 oldCss.opacity = target.getCss('opacity') || 1;
                 
-                var dragData = {                                           //³õÊ¼Êı¾İ
+                var dragData = {                                           //åˆå§‹æ•°æ®
                     left: oldCss.left || target.getCss('left') || 0,
                     top: oldCss.top || target.getCss('top') || 0,
                     width: target.width() || target.getCss('width'),
