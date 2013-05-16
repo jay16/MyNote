@@ -1,3 +1,3 @@
-²é¿´½ñÌì²åÈëµÄÊı¾İ
+æŸ¥çœ‹ä»Šå¤©æ’å…¥çš„æ•°æ®
 
 select * from members where to_days(now())=to_days(created_at);

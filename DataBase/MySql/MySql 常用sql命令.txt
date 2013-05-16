@@ -1,24 +1,24 @@
-´´½¨±í
+åˆ›å»ºè¡¨
 mysql> create table hello (col1 varchar(10),col2 int);
-ÐÞ¸Ä±íÃû
+ä¿®æ”¹è¡¨å
 mysql> alter table hello rename to world;
-Ìí¼ÓÐÂÁÐ
+æ·»åŠ æ–°åˆ—
 mysql> alter table hello add(tel varchar(20) not Null auto_increment primary key);
-ÐÞ¸ÄÁÐÊôÐÔ(col3¿ÉÒÔÓëcol1ÏàÍ¬)
+ä¿®æ”¹åˆ—å±žæ€§(col3å¯ä»¥ä¸Žcol1ç›¸åŒ)
 mysql> alter table hello change col1 col3 integer;
-É¾³ýÁÐ
+åˆ é™¤åˆ—
 mysql> alter table t1 drop column tel;
-ÉèÖÃÁÐÄ¬ÈÏÖµ
+è®¾ç½®åˆ—é»˜è®¤å€¼
 ALTER TABLE members MODIFY COLUMN type_email int DEFAULT '1';
 
-Çå¿Õ±íÊý¾Ý,idÖØÐÂ´Ó1¿ªÊ¼
-mysql> truncate table ±íÃû
+æ¸…ç©ºè¡¨æ•°æ®,idé‡æ–°ä»Ž1å¼€å§‹
+mysql> truncate table è¡¨å
 
-ÏÔÊ¾ÖÐÎÄ
-mysql> set names 'gbk';»ò 'utf8'
-ÉèÖÃÊý¾Ý¿âºÍÊý¾Ý±í±àÂë
+æ˜¾ç¤ºä¸­æ–‡
+mysql> set names 'gbk';æˆ– 'utf8'
+è®¾ç½®æ•°æ®åº“å’Œæ•°æ®è¡¨ç¼–ç 
 mysql> alter database mail_206 default character set 'utf8';
-ÉèÖÃÁ¬½Ó±àÂë
+è®¾ç½®è¿žæŽ¥ç¼–ç 
 mysql> SET character_set_client='utf8';
 Query OK, 0 rows affected (0.00 sec)
 mysql> SET character_set_connection='utf8';
@@ -26,27 +26,27 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> SET character_set_results='utf8';
 Query OK, 0 rows affected (0.00 sec)
 
-µ¼³öÊý¾Ý¿â½á¹¹
--d Ã»ÓÐÊý¾Ý --add-drop-table ÔÚÃ¿¸öcreateÓï¾äÖ®Ç°Ôö¼ÓÒ»¸ödrop table 
+å¯¼å‡ºæ•°æ®åº“ç»“æž„
+-d æ²¡æœ‰æ•°æ® --add-drop-table åœ¨æ¯ä¸ªcreateè¯­å¥ä¹‹å‰å¢žåŠ ä¸€ä¸ªdrop table 
 $ mysqldump -u root -pFocus_Mail -d --add-drop-table mail_dev>db.sql
-µ¼³öÕû¸öÊý¾Ý¿âÊý¾Ý
+å¯¼å‡ºæ•´ä¸ªæ•°æ®åº“æ•°æ®
 $ mysqldump -u root -pFocus_Mail mail_dev > mail_dev.sql;
-µ¼³öÊý¾Ý¿âÖÐÄ³±íÊý¾Ý
+å¯¼å‡ºæ•°æ®åº“ä¸­æŸè¡¨æ•°æ®
 $ mysqldump -u root -pFocus_Mail mail_dev members > members.sql;
 
-ÊÚÈ¨ipÔ¶³ÌµÇÂ½
+æŽˆæƒipè¿œç¨‹ç™»é™†
 mysql> GRANT ALL PRIVILEGES ON mail_206.* TO 'root'@'210.14.76.206' IDENTIFIED BY 'Focus_Mail' WITH GRANT OPTION;
 mysql> flush privileges;
-Ô¶³ÌµÇÂ½
+è¿œç¨‹ç™»é™†
 [root@mail# mysql -h 210.14.76.205 -u root -pFocus_Mail -D mail_dev;
 
-¿ç±í²éÑ¯
+è·¨è¡¨æŸ¥è¯¢
 mysql> update tracks as T1 inner join campaigns as T2 on T1.uid=T2.uid set T1.time_span=(T1.created_at-T2.created_at);
-¿çÊý¾Ý¿â²éÑ¯
+è·¨æ•°æ®åº“æŸ¥è¯¢
 mysql> insert into mail_206.useradmins (type_user,asset_id,asset_type,created_at,updated_at) select type_user,asset_id,asset_type,created_at,updated_at from mail_dev.useradmins;
 mysql> select name from user_orgs as T1 inner join user_org_objects as T2 on T1.id=T2.user_org_id where T2.asset_id=28;
 
-mysqlÍü¼ÇÃÜÂë
+mysqlå¿˜è®°å¯†ç 
 [root@NetDakVPS ~]# service mysqld stop
 [root@NetDakVPS ~]# mysqld_safe --skip-grant-tables &
 [root@NetDakVPS ~]# mysql -u root
@@ -55,9 +55,9 @@ mysql> update user set password=password('123456') where user='root';
 mysql> flush privileges;
 mysql> quit
 
-ÐÞ¸ÄÃÜÂë
-mysqladmin -uÓÃ»§Ãû -p¾ÉÃÜÂë password ÐÂÃÜÂë
-mysql> UPDATE mysql.user SET password=PASSWORD(¡¯ÐÂÃÜÂë¡¯) WHERE User=¡¯root¡¯;
+ä¿®æ”¹å¯†ç 
+mysqladmin -uç”¨æˆ·å -pæ—§å¯†ç  password æ–°å¯†ç 
+mysql> UPDATE mysql.user SET password=PASSWORD(â€™æ–°å¯†ç â€™) WHERE User=â€™rootâ€™;
 mysql> FLUSH PRIVILEGES;
 
 

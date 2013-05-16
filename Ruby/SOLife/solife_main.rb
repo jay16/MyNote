@@ -31,12 +31,17 @@ end
 #读取配置信息 笔记目录路径数组 上次关闭时点击查看文本
 #不存在配置文件启动显示配置界面
 if check_conf(conf_path) then
+  conf_load       = YAML.load_file(conf_path)
   note_dir_list   = conf_load["NoteDirList"]
   note_seled_dir  = conf_load["NoteSeledDir"]
   note_seled_file = conf_load["NoteSeledFile"]
+  if !note_seled_dir then
+    note_seled_dir  = note_dir_list[0]
+  end
 else
   InitConfig_diaog(conf_save)
   if check_conf(conf_path) then
+    conf_load       = YAML.load_file(conf_path)
     note_dir_list   = conf_load["NoteDirList"]
     note_seled_dir  = note_dir_list[0]
   else
@@ -118,13 +123,13 @@ text_editor.text_view.left_margin = 10
 text_editor.note_label  = Gtk::Label.new("notebooxk")
 
 
-#scrolled_text = Gtk::ScrolledWindow.new
-#scrolled_text.border_width = 2
-#scrolled_text.add(text_editor.text_view)
-#scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
+scrolled_text = Gtk::ScrolledWindow.new
+scrolled_text.border_width = 2
+scrolled_text.add(text_editor.text_view)
+scrolled_text.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 #记事本填充
-#note_book.append_page(scrolled_text,text_editor.note_label)
-note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
+note_book.append_page(scrolled_text,text_editor.note_label)
+#note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
 
 #整体布局表格
 table = Gtk::Table.new(1, 24,true)
@@ -138,9 +143,9 @@ window = Gtk::Window.new("")
 #点击关闭
 window.signal_connect("destroy") { window_exit(tree_note_view,window,conf_save) }
 #目录被双击时，使用记事本打开
-tree_note_view.signal_connect("row-activated") { row_activated(tree_note_view,note_tree_store,text_editor,note_history_store,window)}
+tree_note_view.signal_connect("row-activated") { row_activated(tree_note_view,note_tree_store,text_editor,note_history_store,window,conf_save)}
 #阅读历史列表被双击时，使用记事本打开
-tree_history_view.signal_connect("row-activated") { read_by_history(tree_history_view,text_editor,window)}
+tree_history_view.signal_connect("row-activated") { read_by_history(tree_history_view,text_editor,window,conf_save)}
 #目录被单击时，使用记事本打开
 #tree_note_view.signal_connect("cursor-changed") { row_activated(tree_note_view,note_tree_store,text_editor,window) }
 #ctrl+s保存文件快捷键

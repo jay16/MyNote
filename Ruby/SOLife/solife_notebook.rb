@@ -16,7 +16,7 @@ def notebook_prepage(notebook,window)
   
 end
 
-#note点击历史记录
+#查看文件历史记录目录
 def g_historylist_view(note_history_list)
    #构建历史记录列表树
    note_list_store = Gtk::TreeStore.new(String, String, Integer)
@@ -44,7 +44,7 @@ def g_historylist_view(note_history_list)
 end
 
 #点击阅读时在history tree中留下记录
-def g_history_tree(note_history_store,seled,window)
+def g_history_tree(note_history_store,seled,window,conf_save)
     is_exist   = false
     iter = note_history_store.iter_first
     if iter then
@@ -55,13 +55,11 @@ def g_history_tree(note_history_store,seled,window)
         end
       end while iter.next!
     else
-      puts "First"
     end
     
     if is_exist then
       #被点击阅读次数
-      historytree_resort(note_history_store,iter,window)
-      puts "restore"
+      historytree_resort(note_history_store,iter,window,conf_save)
     else
       note_store = note_history_store.append(nil)
       note_store[1] = seled[1] #path
@@ -69,7 +67,7 @@ def g_history_tree(note_history_store,seled,window)
       note_store[0] = seled[0] + " - " + note_store[2].to_s
     end
 end
-def historytree_resort(note_history_store,seled,window)
+def historytree_resort(note_history_store,seled,window,conf_save)
     history_list = Array.new
     iter = note_history_store.iter_first
      begin
@@ -81,8 +79,12 @@ def historytree_resort(note_history_store,seled,window)
      end while iter.next!
      
      history_list.sort!{ |x,y| y[2] <=> x[2] }
-     puts history_list
      note_history_store.clear
+     
+     #更新查看记录
+     conf_save.transaction do
+       conf_save["HistoryList"] = history_list
+     end
      
      history_list.each do |note_path|
        note_store = note_history_store.append(nil)
@@ -93,7 +95,7 @@ def historytree_resort(note_history_store,seled,window)
    window.show_all
 end
 #点击history列表查看文件
-def read_by_history(tree_view,text_editor,window)
+def read_by_history(tree_view,text_editor,window,conf_save)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -132,7 +134,7 @@ def read_by_history(tree_view,text_editor,window)
           File.rename(node_path+"_new",node_path)
           file_content = File.readlines(node_path).join("").to_s
           text_editor.text_view.buffer.text =  file_content       
-          text_editor.note_label.text = node_name
+          text_editor.note_label.text = "F_"+node_name.split(" - ")[1]
           #鼠标悬停显示文本路径
           tooltip = Gtk::Tooltips.new
           tooltip.set_tip(text_editor.note_label,node_path,"private")
