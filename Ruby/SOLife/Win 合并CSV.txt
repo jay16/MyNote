@@ -1,0 +1,15 @@
+E:\MyWork\元祖 ganso\2013-05-08\验证后>cp *.csv all.csv
+cp: copying multiple files, but last argument `all.csv' is not a directory
+Try `cp --help' for more information.
+
+E:\MyWork\元祖 ganso\2013-05-08\验证后>copy *.csv all.csv
+members_no_sian.csv.126.com_result.csv
+members_no_sian.csv.163.com_result.csv
+members_no_sian.csv.gmail.com_result.csv
+members_no_sian.csv.others.lst_result.csv
+members_no_sian.csv.qq.com_result.csv
+members_no_sian.csv.sina_result.csv
+members_no_sian.csv.sohu.com_result.csv
+members_no_sian.csv.tom.com_result.csv
+members_no_sian.csv.yahoo_result.csv
+已复制         1 个文件。

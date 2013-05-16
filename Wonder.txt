@@ -19,3 +19,5 @@ That will also leave you some space in the volume group for expanding the other 
 FocusMail
 track ip
 113
+yum install -y rsync
+hello world
