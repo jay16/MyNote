@@ -1,0 +1,6 @@
+界面显示中文乱码时设置
+
+mysql> set names 'utf8';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
