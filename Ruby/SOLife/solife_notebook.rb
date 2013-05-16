@@ -44,7 +44,7 @@ def g_historylist_view(note_history_list)
 end
 
 #点击阅读时在history tree中留下记录
-def g_history_tree(note_history_store,seled,window,conf_save)
+def trigger_history_tree(note_history_store,seled,window,conf_save)
     is_exist   = false
     iter = note_history_store.iter_first
     if iter then
@@ -63,8 +63,8 @@ def g_history_tree(note_history_store,seled,window,conf_save)
     else
       note_store = note_history_store.append(nil)
       note_store[1] = seled[1] #path
-      note_store[2] = (note_store[2] ? note_store[2] : 0) + 1 
-      note_store[0] = seled[0] + " - " + note_store[2].to_s
+      note_store[2] = (note_store[1] ? note_store[1] : 0) + 1 
+      note_store[0] = File.basename(seled[1]) + " - " + note_store[2].to_s
     end
 end
 def historytree_resort(note_history_store,seled,window,conf_save)
@@ -72,13 +72,13 @@ def historytree_resort(note_history_store,seled,window,conf_save)
     iter = note_history_store.iter_first
      begin
        if iter[1] == seled[1] then
-         history_list.push([iter[0],iter[1],iter[2]+1])
+         history_list.push([iter[0],iter[1]+1])
        else
-         history_list.push([iter[0],iter[1],iter[2]])
+         history_list.push([iter[0],iter[1]])
        end
      end while iter.next!
      
-     history_list.sort!{ |x,y| y[2] <=> x[2] }
+     history_list.sort!{ |x,y| y[1] <=> x[1] }
      note_history_store.clear
      
      #更新查看记录
@@ -88,14 +88,14 @@ def historytree_resort(note_history_store,seled,window,conf_save)
      
      history_list.each do |note_path|
        note_store = note_history_store.append(nil)
-       note_store[0] = note_path[0].split(" - ")[0] + " - " + note_path[2].to_s
-       note_store[1] = note_path[1]
-       note_store[2] = note_path[2]
+       note_store[0] = File.basename(note_path[0]) + " - " + note_path[2].to_s
+       note_store[1] = note_path[0]
+       note_store[2] = note_path[1]
      end
    window.show_all
 end
 #点击history列表查看文件
-def read_by_history(tree_view,text_editor,window,conf_save)
+def click_history_tree(tree_view,text_editor,window,conf_save)
     selection = tree_view.selection
     iter = selection.selected    
     #没有选中值则返回

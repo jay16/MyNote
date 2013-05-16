@@ -1,42 +1,42 @@
 
-һ����������Զ���style class
-��ʽ��һ�鶨�����Դ������ͼ��Ͳ����ʽ������������IBM Cognos 8 Web �������ۡ�Ʒ
-��ͼ�������Ҳ����ʽ��һ���֡�
-��ʽ����Դλ��c8_location/webcontent/skins Ŀ¼�С�
+一、如何添加自定义style class
+样式是一组定义的资源（例如图像和层叠样式表），它控制IBM Cognos 8 Web 界面的外观。品
+牌图像和字体也是样式的一部分。
+样式的资源位于c8_location/webcontent/skins 目录中。
 
-�������޸�������ʽ������Ԥ������ʽ�����Ա�������֯Web ������ƥ�䡣
-������
-�� ������ɫ�����塢ͼ���ĳЩ�������ԡ�
-�޸�c8_location/webcontent/skins/style Ŀ¼����ص���ʽ����
-�� ʹ�á�IBM Cognos Administration����������ʽ���Ա���Щ���Ƹ��ʺ����Ļ�����
-�� ������c8_location/webcontent/skins Ŀ¼�е���ʽĿ¼��
-����������corporate Ŀ¼��
+您可以修改现有样式（包括预定义样式），以便其与组织Web 界面相匹配。
+您可以
+● 更改颜色、字体、图像和某些布局属性。
+修改c8_location/webcontent/skins/style 目录中相关的样式表。
+● 使用“IBM Cognos Administration”重命名样式，以便这些名称更适合您的环境。
+● 重命名c8_location/webcontent/skins 目录中的样式目录。
+请勿重命名corporate 目录。
 
-c8_location/webcontent/skins/style/portal Ŀ¼�е���ʽ��default.css Ϊÿ����ʽ��������IBM Cognos Connection �����������ۣ�ר�����Ż���ͼ�Σ�������ڣ�λ��images ��Ŀ¼�С�
+c8_location/webcontent/skins/style/portal 目录中的样式表default.css 为每种样式均定义了IBM Cognos Connection 界面的整体外观，专用于门户的图形（如果存在）位于images 子目录中。
 
-ͨ��Ϊ������ʽ�޸�default.css �ļ��������Զ�IBM Cognos Connection ����۽��и��ġ�
-�ڿ�ʼ֮ǰ�����ǽ���������ԭʼdefault.css �ļ�����c8_location/templates/ps/portal/system.xml �ļ��пɶ�IBM Cognos Connection ����۽����������ġ�
-��ʾ�����ס������޸ĺ���������IBM Cognos 8���Ա������Ч��
-�����޸���ʽ������Ϊ�Լ���ģ�壡
-templates.xml �ļ���������Report Studio �д����±���ʱ�ɴ��н���ѡ���ģ�塣�����뽫
-�Զ��屨��ģ�����ӵ����ļ��С�
-����
-1. ��templates.xml �ļ���
-���ļ�λ��c8_location/webcontent/pat/res Ŀ¼�С�
-2. ���Զ��屨��ģ���XML ���븴�Ƶ��ļ��С�
-template Ҫ�ر�����xmlFragment Ҫ�ص���Ҫ�ء�
-3. ���沢�ر��ļ���
-���Զ���ģ����Ϣ���ӵ�Resources.xml �ļ�
-Resources.xml �ļ���Report Studio �ж������±����Ի�������ݡ�������ͨ�����ӱ�ʾ�Զ�
-�屨��ģ�����Ϣ���޸Ĵ��ļ���
-����
-1. ��Resources.xml��
-���ļ�λ��c8_location/webcontent/pat/res��
-2. ʹ����������֮һΪ�Զ��屨��ģ�������µ�listItem Ҫ�أ�
-�� label���������ϣ������ǩת������������
-�� idsLabel�������ϣ������ǩת������������
-ȷ��templateName ������Ϊ�Զ��屨��ģ�崴�������淶ʱָ����������ͬ��
-����Ϊ�ѱ༭��Resources.xml �ļ���ʾ����
+通过为所需样式修改default.css 文件，您可以对IBM Cognos Connection 的外观进行更改。
+在开始之前，我们建议您备份原始default.css 文件。在c8_location/templates/ps/portal/system.xml 文件中可对IBM Cognos Connection 的外观进行其它更改。
+提示：请记住在完成修改后重新启动IBM Cognos 8，以便更改生效。
+二、修改样式，定制为自己的模板！
+templates.xml 文件包含您在Report Studio 中创建新报表时可从中进行选择的模板。您必须将
+自定义报表模板添加到此文件中。
+步骤
+1. 打开templates.xml 文件。
+该文件位于c8_location/webcontent/pat/res 目录中。
+2. 将自定义报表模板的XML 代码复制到文件中。
+template 要素必须是xmlFragment 要素的子要素。
+3. 保存并关闭文件。
+将自定义模板信息添加到Resources.xml 文件
+Resources.xml 文件在Report Studio 中定义了新报表对话框的内容。您必须通过添加表示自定
+义报表模板的信息来修改此文件。
+步骤
+1. 打开Resources.xml。
+该文件位于c8_location/webcontent/pat/res。
+2. 使用以下属性之一为自定义报表模板添加新的listItem 要素：
+● label，如果您不希望将标签转换成其它语言
+● idsLabel，如果您希望将标签转换成其它语言
+确保templateName 属性与为自定义报表模板创建报表规范时指定的属性相同。
+以下为已编辑的Resources.xml 文件的示例：
 <listView id="New" view="icon" clipLabels="false"> <listItems> <!-- Start custom
 templates--> <listItem label="List - Corporate" icon="icon_list_corp.gif"
 templateName=" List - corporate"/> <listItem label="Crosstab - Corporate"
@@ -53,5 +53,5 @@ idsLabel="IDS_LBL_NEW_REPEATER_REPORT" icon="icon_repeater.gif" templateName="Re
 <listItem idsLabel="IDS_LBL_NEW_TEMPLATE_RT" icon="icon_template_qs.gif"
 templateName="Template_RT"/> <listItem idsLabel="IDS_LBL_NEW_BROWSE" icon="browse_32x32.
 gif" idsTooltip="IDS_TOOLTIP_NEWBROWSE" isBrowse="true"/> </listItems> </listView>
-3. ���沢�ر��ļ���
-�����ڱ�����������Report Studio���Ա�ʹ�Զ��屨��ģ����ʾ���±����Ի����С�
+3. 保存并关闭文件。
+您现在必须重新启动Report Studio，以便使自定义报表模板显示在新报表对话框中。

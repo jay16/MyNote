@@ -132,7 +132,7 @@ def row_activated(tree_view,tree_store,text_editor,note_history_store,window,con
           #鼠标悬停显示文本路径
           tooltip = Gtk::Tooltips.new
           tooltip.set_tip(text_editor.note_label,node_path,"private")
-          g_history_tree(note_history_store,iter,window,conf_save)
+          trigger_history_tree(note_history_store,iter,window,conf_save)
         ensure
         end
       else
@@ -140,7 +140,7 @@ def row_activated(tree_view,tree_store,text_editor,note_history_store,window,con
         #鼠标悬停显示文本路径
         tooltip = Gtk::Tooltips.new
         tooltip.set_tip(text_editor.note_label,node_path,"private")
-        g_history_tree(note_history_store,iter,window,conf_save)
+        trigger_history_tree(note_history_store,iter,window,conf_save)
       end
 
       #puts File.readlines(node_path).join('\n')
@@ -206,6 +206,7 @@ def save_file(tree_view,tree_store,text_editor,note_history_store,window)
    save_new_file(tree_view,tree_store,text_editor,note_history_store,window)
  else
    puts "can not save:"+iter[1]
+   puts text_editor.note_label.tooltip
  end
 end
 #重新加载文本
