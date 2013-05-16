@@ -1,3 +1,6 @@
 解压所有gz压缩文件
 
 ls *.gz|xargs tar -xzvf
+
+----------------------------------------
+[root@emd webmail]# scp mailtem_jay.tar.gz webmail@166.63.126.33:/home/webmail/jay
