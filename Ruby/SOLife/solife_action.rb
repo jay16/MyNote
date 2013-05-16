@@ -427,10 +427,10 @@ dialog = Gtk::Dialog.new(
   hbox_3.pack_start_defaults(Gtk::Label.new("Select Dir:"));
   hbox_3.pack_start_defaults(choo_dir_btt);
   #整体布局表格
-table = Gtk::Table.new(9, 1,true)
-options = Gtk::EXPAND|Gtk::FILL
-table.attach(scrolled_view,  0,  1,  0,  9, options, options, 0,    0)
-table.attach(hbox_3,  0,  1,  9,  10, options, options, 0,    0)
+  table = Gtk::Table.new(9, 1,true)
+  options = Gtk::EXPAND|Gtk::FILL
+  table.attach(scrolled_view,  0,  1,  0,  9, options, options, 0,    0)
+  table.attach(hbox_3,  0,  1,  9,  10, options, options, 0,    0)
 
   dialog.vbox.add(table)
   dialog.set_size_request(300, 280)

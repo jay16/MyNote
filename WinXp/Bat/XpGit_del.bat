@@ -23,6 +23,7 @@ echo 当前路径：%cd%
 "D:\Program Files\Git\bin\sh.exe" --login -i -c "git commit -a -m %commit%"
 "D:\Program Files\Git\bin\sh.exe" --login -i -c "git push origin master"
 
+pause
 rem cd E:\MyWork\MyNote\
 
 rem 使用sh.exe调用git命令

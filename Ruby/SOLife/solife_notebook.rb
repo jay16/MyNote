@@ -74,7 +74,7 @@ def historytree_resort(note_history_store,seled,window,conf_save)
        if iter[1] == seled[1] then
          history_list.push([File.basename(iter[1]),iter[1],iter[2]+1])
        else
-         history_list.push([File.basename(iter[1]),iter[1],1])
+         history_list.push([File.basename(iter[1]),iter[1],iter[2]])
        end
      end while iter.next!
      
@@ -95,7 +95,7 @@ def historytree_resort(note_history_store,seled,window,conf_save)
    window.show_all
 end
 #点击history列表查看文件
-def click_history_tree(note_view_tree,noew_view_store,note_history_tree,text_editor,window,conf_save)
+def click_history_tree(note_view_tree,note_view_store,note_history_tree,text_editor,window,conf_save)
     selection = note_history_tree.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -106,6 +106,8 @@ def click_history_tree(note_view_tree,noew_view_store,note_history_tree,text_edi
 
     #puts node_path
     if File.file? node_path
+      trigger_row_activated(note_view_tree,note_view_store,iter)
+=begin
       file_content = File.readlines(node_path).join("").to_s
       #加载文本内容
       begin
@@ -115,8 +117,6 @@ def click_history_tree(note_view_tree,noew_view_store,note_history_tree,text_edi
       else
       end
       
-      trigger_row_activated(note_view_tree,noew_view_store,iter)
-=begin
       #如果文本内容与控件加载内容数量不同表示文本内容格式不对
       if(text_editor.text_view.buffer.text.length == 0 and file_content.length > 0)
         begin
@@ -148,18 +148,57 @@ def click_history_tree(note_view_tree,noew_view_store,note_history_tree,text_edi
         tooltip = Gtk::Tooltips.new
         tooltip.set_tip(text_editor.note_label,node_path,"private")
       end
-=end
-    end
-end
-def trigger_row_activated(note_view_tree,noew_view_store,seled)
-    iter = noew_view_store.iter_first
-    begin
+          begin
+      puts iter[1]
       if iter[1] == seled[1] then
         #设置新插入节点为选中点
-        row_path = Gtk::TreePath.new(iter.to_s)
-        note_view_tree.set_cursor(row_path,nil,true)
+        tree_model = note_view_tree.model
+        iter_path = tree_model.get_iter(iter.to_s)
+        row_path = Gtk::TreePath.new(iter_path.to_s)
+        note_view_tree.set_cursor(iter,nil,true)
         break
       end
     end while iter.next!
+=end
+    end
+end
+def trigger_row_activated(note_view_tree,note_view_store,seled)
+    iter = note_view_store.iter_first
+    tree_array = Array.new
+    traversal_tree(iter,tree_array)
+    geter = tree_array.select { |iter| iter[1] == seled[1] }
+    tree_array.each do |iter|
+      #puts iter[1]
+    end
+    if geter[1] then
+      puts "GET:" + geter[1].to_s
+      note_view_tree.set_cursor(geter,nil,true)
+    else
+      puts "NO GET"
+    end
+end
 
+def traversal_tree(iter,tree_array)
+  begin
+   if iter.first_child then
+     traversal_tree(iter.first_child,tree_array)
+
+   else
+     puts iter.to_s
+   end while iter.next!
+  end 
+end
+
+def travdersal_tree(iter,tree_array)
+  begin
+   puts iter[1]
+   if iter and File.file?(iter[1]) then
+     tree_array.push iter
+   elsif File.directory?(iter[1])
+     iter = iter.first_child
+     if iter then
+       traversal_tree(iter,tree_array)
+     end
+   end while iter.next!
+  end 
 end
