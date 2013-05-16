@@ -27,3 +27,14 @@ from wowprime_rest
 where instr(email,'@') > 0
 group by substr(email,instr(email,'@'),length(email)-instr(email,'@'))
 order by count(*) desc
+
+--分析发信日志
+select count(to_email),count(distinct to_email),
+substr(log_cm,1,800),
+substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
+from dog_totle_bi 
+where campaign_id= 124 --and log_cm = 'OK'
+and substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))='sina.com.cn'
+group by substr(log_cm,1,800)
+  ,substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
+order by substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
