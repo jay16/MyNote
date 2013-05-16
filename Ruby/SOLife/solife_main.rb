@@ -12,32 +12,38 @@ SOLife_dir  = "E:\\MyWork\\MyNote\\"
 SOLife_name = File.basename(SOLife_dir)
 
 conf_path = current_dir+"\\solife.yml"
+
 conf_save = YAML::Store.new(conf_path)
+conf_load = String.new
 
 note_dir_list    = Array.new
 note_seled_dir   = String.new
 note_seled_file  = String.new
 
+def check_conf(conf_path)
+  if File.exists?(conf_path) and YAML.load_file(conf_path)["NoteDirList"] then
+     return true
+  else
+     return false
+  end
+end
+
 #读取配置信息 笔记目录路径数组 上次关闭时点击查看文本
 #不存在配置文件启动显示配置界面
-if File.exists?(conf_path) then
-  conf_load = YAML.load_file(conf_path)
+if check_conf(conf_path) then
   note_dir_list   = conf_load["NoteDirList"]
   note_seled_dir  = conf_load["NoteSeledDir"]
   note_seled_file = conf_load["NoteSeledFile"]
-    
-  if note_dir_list.length == 0 then
-    #配置文件中没有设置显示笔记路径，启动显示配置界面
-    InitConfig_diaog(conf_save)
-  else
-    if !note_seled_dir then
-    
-    end
-  end
-  
 else
   InitConfig_diaog(conf_save)
+  if check_conf(conf_path) then
+    note_dir_list   = conf_load["NoteDirList"]
+    note_seled_dir  = note_dir_list[0]
+  else
+    return false
+  end
 end
+
 
 class TextEditor
   attr_accessor :text_view, :note_label, :search
@@ -50,7 +56,7 @@ note_tree_store = Gtk::TreeStore.new(String, String, Integer)
 
 #目录框架
 renderer = Gtk::CellRendererText.new
-tree_col = Gtk::TreeViewColumn.new(SOLife_name, renderer, :text => 0)
+tree_col = Gtk::TreeViewColumn.new(File.basename(note_seled_dir), renderer, :text => 0)
 
 g_note_tree(note_tree_store,note_seled_dir)
 

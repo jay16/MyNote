@@ -386,10 +386,10 @@ end
 
 def InitConfig_diaog(yam_save)
 dialog = Gtk::Dialog.new(
-      "FileRead Error!",
+      "Config Dialog!",
       nil,
       Gtk::Dialog::MODAL,
-      [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK ]
+      [ Gtk::Stock::OK,Gtk::Dialog::RESPONSE_OK ]
   )
   dialog.has_separator = false
  
@@ -422,14 +422,18 @@ dialog = Gtk::Dialog.new(
   end
     
 
-  hbox_1 = Gtk::HBox.new(false, 5)
-  hbox_1.pack_start_defaults(scrolled_view);
   hbox_3 = Gtk::HBox.new(false, 5)
-  hbox_3.pack_start_defaults(Gtk::Label.new("Add"));
+  hbox_3.pack_start_defaults(Gtk::Label.new("Select Dir:"));
   hbox_3.pack_start_defaults(choo_dir_btt);
-  
-  dialog.vbox.add(hbox_1)
-  dialog.vbox.add(hbox_3)
+  #整体布局表格
+table = Gtk::Table.new(9, 1,true)
+options = Gtk::EXPAND|Gtk::FILL
+table.attach(scrolled_view,  0,  1,  0,  9, options, options, 0,    0)
+table.attach(hbox_3,  0,  1,  9,  10, options, options, 0,    0)
+
+  dialog.vbox.add(table)
+  dialog.set_size_request(300, 280)
+  dialog.set_window_position Gtk::Window::POS_CENTER
   dialog.show_all
 
   dialog.run do |response|
@@ -437,13 +441,15 @@ dialog = Gtk::Dialog.new(
       note_dir_list = Array.new   
       #遍历tree_store
       iter = tree_store.iter_first
-      begin
-         note_dir_list.push(iter[0])
-         puts iter[0]
-      end while iter.next!
-      
-      yam_save.transaction do 
-        yam_save["NoteDirList"] = note_dir_list
+      if iter then
+        begin
+           note_dir_list.push(iter[0])
+           puts iter[0]
+        end while iter.next!
+        
+        yam_save.transaction do 
+          yam_save["NoteDirList"] = note_dir_list
+        end
       end
     end
     dialog.destroy
@@ -454,6 +460,6 @@ end
 def del_note_dir(tree_view,tree_store)
     selection = tree_view.selection
     iter = selection.selected  
-    #tree_store.remove(iter)
-    tree_store.clear
+    tree_store.remove(iter)
+    #tree_store.clear
 end
