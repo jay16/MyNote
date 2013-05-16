@@ -12,3 +12,18 @@ group by substr(email,instr(email,'@')+1,length(email)-instr(email,'@')) order b
 select distinct substr(email,instr(email,'@'),length(email)-instr(email,'@')) from wangpin_rest 
 where instr(email,'sina',instr(email,'@')) > 0
 order by substr(email,instr(email,'@'),length(email)-instr(email,'@')) desc
+
+--复制名单表，查看没有验证的名单
+create table wowprime_rest as 
+select count(distinct email) from wowprime where mark in ('wowprime08-13','wowprime11.21-1.30')
+
+select count(email) from wowprime_rest
+--删除已验证名单
+delete from wowprime_rest where email in (select email from wowprime_mv)
+
+--以邮箱域名数量排名
+select distinct substr(email,instr(email,'@'),length(email)-instr(email,'@')) as domain,count(*) 
+from wowprime_rest
+where instr(email,'@') > 0
+group by substr(email,instr(email,'@'),length(email)-instr(email,'@'))
+order by count(*) desc
