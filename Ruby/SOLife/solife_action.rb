@@ -1,6 +1,6 @@
 
 
-def g_note_list(note_tree_store,note_dir_list)
+def g_note_list(note_tree_store,note_dir_list,conf_save)
    #构建笔记列表树
    note_list_store = Gtk::TreeStore.new(String, String, Integer)
    note_dir_list.each do |note_path|
@@ -24,6 +24,11 @@ def g_note_list(note_tree_store,note_dir_list)
    tree_view.append_column(tree_col)
    tree_view.signal_connect("row-activated") do
      note_path = tree_view.selection.selected[1]
+     #更新配置文件中NoteSeledDir
+     conf_save.transaction do 
+       conf_save["NoteSeledDir"] = note_path
+     end
+     #更新目录树
      g_note_tree(note_tree_store,note_path)
    end
 
@@ -323,10 +328,16 @@ def write_statu(tree_view,tree_store,text_view,window)
  end
 end
 
-def window_exit(tree_view,tree_store,window)
-     
+def window_exit(tree_view,window,conf_save)
+  seled_iter = tree_view.selection.selected
+  if seled_iter then
+    #保存当前选中项，下次启动时默认选中
+    conf_save.transaction do 
+       conf_save["NoteSeledFile"] = seled_iter[1]
+    end
+  end
 
- Gtk.main_quit
+  Gtk.main_quit
 end
 # Search for the entered string within the Gtktext_view.
 # Then tell the user how many times it was found.

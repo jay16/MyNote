@@ -1,115 +1,115 @@
->ĞÂÀËÓÊÏäsmtp·şÎñÆ÷
-Íâ·¢·şÎñÆ÷:smtp.vip.sina.com
-ÊÕ¼ş·şÎñÆ÷:pop3.vip.sina.com
-ĞÂÀËÃâ·ÑÓÊ¼ş
-Íâ·¢·şÎñÆ÷:smtp.sina.com.cn
-ÊÕ¼ş·şÎñÆ÷:pop3.sina.com.cn
+>æ–°æµªé‚®ç®±smtpæœåŠ¡å™¨
+å¤–å‘æœåŠ¡å™¨:smtp.vip.sina.com
+æ”¶ä»¶æœåŠ¡å™¨:pop3.vip.sina.com
+æ–°æµªå…è´¹é‚®ä»¶
+å¤–å‘æœåŠ¡å™¨:smtp.sina.com.cn
+æ”¶ä»¶æœåŠ¡å™¨:pop3.sina.com.cn
  
->163ÓÊÏäsmtp·şÎñÆ÷
-pop£º pop.163.com
-smtp£º smtp.163.com
+>163é‚®ç®±smtpæœåŠ¡å™¨
+popï¼š pop.163.com
+smtpï¼š smtp.163.com
  
->QQÓÊÏäsmtp·şÎñÆ÷¼°¶Ë¿Ú
-½ÓÊÕÓÊ¼ş·şÎñÆ÷£ºimap.qq.com£¬Ê¹ÓÃSSL£¬¶Ë¿ÚºÅ993
-·¢ËÍÓÊ¼ş·şÎñÆ÷£ºsmtp.qq.com£¬Ê¹ÓÃSSL£¬¶Ë¿ÚºÅ465»ò587
+>QQé‚®ç®±smtpæœåŠ¡å™¨åŠç«¯å£
+æ¥æ”¶é‚®ä»¶æœåŠ¡å™¨ï¼šimap.qq.comï¼Œä½¿ç”¨SSLï¼Œç«¯å£å·993
+å‘é€é‚®ä»¶æœåŠ¡å™¨ï¼šsmtp.qq.comï¼Œä½¿ç”¨SSLï¼Œç«¯å£å·465æˆ–587
 
 
->yahooÓÊÏäsmtp·şÎñÆ÷
-½Ó£ºpop.mail.yahoo.com.cn
-·¢£ºsmtp.mail.yahoo.com
+>yahooé‚®ç®±smtpæœåŠ¡å™¨
+æ¥ï¼špop.mail.yahoo.com.cn
+å‘ï¼šsmtp.mail.yahoo.com
  
->126ÓÊÏäsmtp·şÎñÆ÷
-pop£º pop.126.com
-smtp£º smtp.126.com
-ĞÂÀËÃâ·ÑÓÊÏä
-POP3£ºpop.sina.com
-SMTP£ºsmtp.sina.com
-SMTP¶Ë¿ÚºÅ£º25
+>126é‚®ç®±smtpæœåŠ¡å™¨
+popï¼š pop.126.com
+smtpï¼š smtp.126.com
+æ–°æµªå…è´¹é‚®ç®±
+POP3ï¼špop.sina.com
+SMTPï¼šsmtp.sina.com
+SMTPç«¯å£å·ï¼š25
  
-ĞÂÀËVIPÓÊÏä
-POP3£ºpop3.vip.sina.com
-SMTP£ºsmtp.vip.sina.com
-SMTP¶Ë¿ÚºÅ£º25
+æ–°æµªVIPé‚®ç®±
+POP3ï¼špop3.vip.sina.com
+SMTPï¼šsmtp.vip.sina.com
+SMTPç«¯å£å·ï¼š25
  
-ĞÂÀËÆóÒµÓÊÏä
-POP3£ºpop.sina.com
-SMTP£ºsmtp.sina.com
-SMTP¶Ë¿ÚºÅ£º25
+æ–°æµªä¼ä¸šé‚®ç®±
+POP3ï¼špop.sina.com
+SMTPï¼šsmtp.sina.com
+SMTPç«¯å£å·ï¼š25
  
-ÑÅ»¢ÓÊÏä
-POP3£ºpop.mail.yahoo.cn
-SMTP£ºsmtp.mail.yahoo.cn
-SMTP¶Ë¿ÚºÅ£º25
+é›…è™é‚®ç®±
+POP3ï¼špop.mail.yahoo.cn
+SMTPï¼šsmtp.mail.yahoo.cn
+SMTPç«¯å£å·ï¼š25
   
-ËÑºüÓÊÏä
-POP3£ºpop3.sohu.com
-SMTP£ºsmtp.sohu.com
- SMTP¶Ë¿ÚºÅ£º25
+æœç‹é‚®ç®±
+POP3ï¼špop3.sohu.com
+SMTPï¼šsmtp.sohu.com
+ SMTPç«¯å£å·ï¼š25
  
-TOMÓÊÏä
-POP3£ºpop.tom.com
-SMTP£ºsmtp.tom.com
- SMTP¶Ë¿ÚºÅ£º25
+TOMé‚®ç®±
+POP3ï¼špop.tom.com
+SMTPï¼šsmtp.tom.com
+ SMTPç«¯å£å·ï¼š25
  
-GmailÓÊÏä
-POP3£ºpop.gmail.com
-SMTP£ºsmtp.gmail.com
-SMTP¶Ë¿ÚºÅ£º587 »ò 25
+Gmailé‚®ç®±
+POP3ï¼špop.gmail.com
+SMTPï¼šsmtp.gmail.com
+SMTPç«¯å£å·ï¼š587 æˆ– 25
  
-QQÓÊÏä
-POP3£ºpop.qq.com
-SMTP£ºsmtp.qq.com
-SMTP¶Ë¿ÚºÅ£º25
+QQé‚®ç®±
+POP3ï¼špop.qq.com
+SMTPï¼šsmtp.qq.com
+SMTPç«¯å£å·ï¼š25
  
  
-263ÓÊÏä
-ÓòÃû£º263.net
-POP3£º263.net
-SMTP£ºsmtp.263.net
-SMTP¶Ë¿ÚºÅ£º25
+263é‚®ç®±
+åŸŸåï¼š263.net
+POP3ï¼š263.net
+SMTPï¼šsmtp.263.net
+SMTPç«¯å£å·ï¼š25
  
-ÓòÃû£ºx263.net
-POP3£ºpop.x263.net
-SMTP£ºsmtp.x263.net
-SMTP¶Ë¿ÚºÅ£º25
+åŸŸåï¼šx263.net
+POP3ï¼špop.x263.net
+SMTPï¼šsmtp.x263.net
+SMTPç«¯å£å·ï¼š25
  
-ÓòÃû£º263.net.cn
-POP3£º263.net.cn
-SMTP£º263.net.cn
-SMTP¶Ë¿ÚºÅ£º25
+åŸŸåï¼š263.net.cn
+POP3ï¼š263.net.cn
+SMTPï¼š263.net.cn
+SMTPç«¯å£å·ï¼š25
  
-ÓòÃû£ºìÅÎÒĞÍ
-POP3£ºpop.263xmail.com
-SMTP£ºsmtp.263xmail.com
-SMTP¶Ë¿ÚºÅ£º25
+åŸŸåï¼šç‚«æˆ‘å‹
+POP3ï¼špop.263xmail.com
+SMTPï¼šsmtp.263xmail.com
+SMTPç«¯å£å·ï¼š25
  
-21CN  Ãâ·ÑÓÊÏä
-POP3£ºpop.21cn.com
-SMTP£ºsmtp.21cn.com
-IMAP£ºimap.21cn.com
-SMTP¶Ë¿ÚºÅ£º25
+21CN  å…è´¹é‚®ç®±
+POP3ï¼špop.21cn.com
+SMTPï¼šsmtp.21cn.com
+IMAPï¼šimap.21cn.com
+SMTPç«¯å£å·ï¼š25
  
-21CN  ¾­¼ÃÓÊÓÊÏä
-POP3£ºpop.21cn.com
-SMTP£ºsmtp.21cn.com
-SMTP¶Ë¿ÚºÅ£º25
+21CN  ç»æµé‚®é‚®ç®±
+POP3ï¼špop.21cn.com
+SMTPï¼šsmtp.21cn.com
+SMTPç«¯å£å·ï¼š25
  
-21CN  ÉÌÎñÓÊÓÊÏä
-POP3£ºpop.21cn.net
-SMTP£ºsmtp.21cn.net
-SMTP¶Ë¿ÚºÅ£º25
+21CN  å•†åŠ¡é‚®é‚®ç®±
+POP3ï¼špop.21cn.net
+SMTPï¼šsmtp.21cn.net
+SMTPç«¯å£å·ï¼š25
   
-21CN  ¿ì¸ĞÓÊÏä
-POP3£ºvip.21cn.com
-SMTP£ºvip.21cn.com
-SMTP¶Ë¿ÚºÅ£º25
+21CN  å¿«æ„Ÿé‚®ç®±
+POP3ï¼švip.21cn.com
+SMTPï¼švip.21cn.com
+SMTPç«¯å£å·ï¼š25
  
-21CN  YÓÊÏä
-POP3£ºpop.y.vip.21cn.com
-SMTP£ºsmtp.y.vip.21cn.com
-SMTP¶Ë¿ÚºÅ£º25
+21CN  Yé‚®ç®±
+POP3ï¼špop.y.vip.21cn.com
+SMTPï¼šsmtp.y.vip.21cn.com
+SMTPç«¯å£å·ï¼š25
  
-ÖĞ»ªÍøÈÎÎÒÓÊÓÊÏä
-POP3£ºrwpop.china.com
-SMTP£ºrwsmtp.china.com
- SMTP¶Ë¿ÚºÅ£º25
+ä¸­åç½‘ä»»æˆ‘é‚®é‚®ç®±
+POP3ï¼šrwpop.china.com
+SMTPï¼šrwsmtp.china.com
+ SMTPç«¯å£å·ï¼š25
