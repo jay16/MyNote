@@ -9,6 +9,24 @@
 5:其他原因
 
 -------------------------------------------
+两台 EDM 我已经设定好 ssh / scp 免密码，
+所以各位可以在两台上自由切换，
+相关 log 放的路径与规则如下：
+
+当天日志： 队列名称/log/mgmailerd_队列名称.log
+其他天日志： 队列名称/log/mgmailerd_队列名称.log.日期
+ex:
+
+/webmail/mqueue_126_eth0/log/mgmailerd_126_eth0.log
+/webmail/mqueue_126_eth0/log/mgmailerd_126_eth0.log.130116
+
+mqueue 比较特别，当天的日志是 /webmail/mqueue/log/mgmailerd.log 
+其他天的日志放在  /webmail/log_archive/月份/mgmailerd.log.日期
+ex: 
+/webmail/log_archive/2013_01/mgmailerd.log.130106 
+
+
+-------------------------------------------
 需要将上传到Liunx服务上的文件格式化，使用dos2unix
 
 [webmail@cloud alex]$ dos2unix members_no_sian.csv
