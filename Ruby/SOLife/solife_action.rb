@@ -194,7 +194,7 @@ end
 #±£´æÎÄ±¾
 def save_file(note_view_tree,tree_store,text_editor,note_history_tree,note_history_store,window) 
  selection = note_view_tree.selection
- note_iter = selection.selected
+ iter = selection.selected
  file_name = text_editor.note_label.text.split("_")[1]
  if iter and iter[1] and File.file?(iter[1]) and  file_name== File.basename(iter[1])
     file = File.open(iter[1],"w")

@@ -1,9 +1,21 @@
---查看总名单
-select count(*) from wangpin
---(1,4,5)有效名单
-select count(*) from wangpin where cast(type_email as int) in (1,4,5)
---0,2,3无效名单数量
-select count(*) from wangpin where cast(type_email as int) not in (1,4,5)
+﻿--分析发信日志
+select count(to_email),count(distinct to_email),
+substr(log_cm,1,800),
+substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
+from dog_totle_bi 
+where campaign_id= 124 --and log_cm = 'OK'
+and substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))='sina.com.cn'
+group by substr(log_cm,1,800)
+  ,substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
+order by substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
+
+--查看名单邮箱域名分布
+select count(email),LOWER(substr(email,instr(email,'@')+1,length(email)-instr(email,'@'))) as domain
+from members 
+where id in (select member_id from lists_members where list_id = 217)
+group by LOWER(substr(email,instr(email,'@')+1,length(email)-instr(email,'@')))
+order by count(email) desc
+
 --无效名单分布
 select substr(email,instr(email,'@')+1,length(email)-instr(email,'@')) as domain,count(*) from wangpin where cast(type_email as int) not in (1,4,5)
 group by substr(email,instr(email,'@')+1,length(email)-instr(email,'@')) order by count(*) desc
@@ -21,20 +33,4 @@ select count(email) from wowprime_rest
 --删除已验证名单
 delete from wowprime_rest where email in (select email from wowprime_mv)
 
---以邮箱域名数量排名
-select distinct substr(email,instr(email,'@'),length(email)-instr(email,'@')) as domain,count(*) 
-from wowprime_rest
-where instr(email,'@') > 0
-group by substr(email,instr(email,'@'),length(email)-instr(email,'@'))
-order by count(*) desc
 
---分析发信日志
-select count(to_email),count(distinct to_email),
-substr(log_cm,1,800),
-substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
-from dog_totle_bi 
-where campaign_id= 124 --and log_cm = 'OK'
-and substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))='sina.com.cn'
-group by substr(log_cm,1,800)
-  ,substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
-order by substr(to_email,instr(to_email,'@')+1,length(to_email)-instr(to_email,'@'))
