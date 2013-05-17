@@ -5,3 +5,14 @@ ls: unparsable value for LS_COLORS environment variable
 [root@emd bin]# chroot .
 chroot: failed to run command `/bin/bash': No such file or directory
 [root@emd bin]# 
+
+[root@emd webmail]# mkdir /var/chroot
+[root@emd webmail]# ldd  /bin/bas
+basename  bash      
+[root@emd webmail]# ldd  /bin/bash
+        linux-gate.so.1 =>  (0x00eac000)
+        libtinfo.so.5 => /lib/libtinfo.so.5 (0x001d0000)
+        libdl.so.2 => /lib/libdl.so.2 (0x007ee000)
+        libc.so.6 => /lib/libc.so.6 (0x0029e000)
+        /lib/ld-linux.so.2 (0x00b27000)
+[root@emd webmail]# 
