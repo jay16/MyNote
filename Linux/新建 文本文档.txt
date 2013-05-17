@@ -16,3 +16,16 @@ basename  bash
         libc.so.6 => /lib/libc.so.6 (0x0029e000)
         /lib/ld-linux.so.2 (0x00b27000)
 [root@emd webmail]# 
+
+root@emd chroot]# cp /bin/bash bin/
+[root@emd chroot]# cp /lib/libtinfo.so.5 lib
+[root@emd chroot]# cp /lib/libdl.so.2 lib
+[root@emd chroot]# cp /lib/libc.so.6 lib
+[root@emd chroot]# cp /lib/ld-linux.so.2 lib
+[root@emd chroot]# ls lib
+lib/   lib64/ 
+[root@emd chroot]# ls lib
+ls: unrecognized prefix: rs
+ls: unparsable value for LS_COLORS environment variable
+ld-linux.so.2  libc.so.6      libdl.so.2     libtinfo.so.5
+[root@emd chroot]# 
