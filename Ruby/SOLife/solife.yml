@@ -6,6 +6,12 @@ NoteDirList:
 NoteSeledDir: E:\MyWork\MyNote
 NoteSeledFile: E:\MyWork\MyNote\JQuery\closure.html
 HistoryList:
-- - Alex.txt
-  - E:\MyWork\MyNote\IntFocus\Alex.txt
+- - FocusMail Oracle sql.txt
+  - E:\MyWork\MyNote\IntFocus\FocusMail\FocusMail Oracle sql.txt
   - 2
+- - FocusMail MySql.txt
+  - E:\MyWork\MyNote\FocusMail MySql.txt
+  - 1
+- - FocusMail SqlServer.txt
+  - E:\MyWork\MyNote\IntFocus\FocusMail\FocusMail SqlServer.txt
+  - 1
