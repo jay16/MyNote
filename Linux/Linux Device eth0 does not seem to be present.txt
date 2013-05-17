@@ -1,0 +1,24 @@
+ Device eth0 does not seem to be present
+
+
+虚拟机用模板做linux的时候因为网卡配置信息（主要是MAC）也复制过去，但是虚拟服务器会分配另外的一个mac地址，启用的时候会出错，错误信息为：device "eth0" does not seem to be present, delaying initialization
+
+解决方法：
+
+1.打开etc/sysconfig/network-scripts/ ficfg-eth0，确定ONBOOT应该为yes，
+
+2.检查ficfg-eth0的MAC和ifconfig现实的MAC是否相符，并修改ficfg-eth0的MAC。
+
+3.重启服务，service NetworkManager restart ,service network restart.
+
+4.然后系统会自动识别到网卡信息，就ok了。
+
+----------------------------------------------------------------
+
+ 1、
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+ifcfg-eth0的配置文件里保存了以前的MAC地址，就把这一行删除掉在重启网卡
+
+2、
+/etc/udev/rules.d/70-persistent-net.rules 删除后重启机器
+因为这个文件绑定了网卡和mac地址，所以换了网卡以后MAC地址变了，所以不能正常启动，也可以直接编辑这个配置文件把里面的网卡和mac地址修改乘对应的，不过这样多麻烦，直接删除重启，它会自动生成个。
