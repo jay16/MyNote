@@ -1,0 +1,7 @@
+[root@emd bin]# ls
+ls: unrecognized prefix: rs
+ls: unparsable value for LS_COLORS environment variable
+
+[root@emd bin]# chroot .
+chroot: failed to run command `/bin/bash': No such file or directory
+[root@emd bin]# 
