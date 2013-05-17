@@ -1,0 +1,17 @@
+在Controller的每个action中你都可以使用下面变量:
+
+action_name：当前action的名字
+cookies：查看和设置浏览器cookie
+headers：response将要使用的HTTP头信息组成的一个hash，一般设置Content-Type时才用
+params：这个很常用，请求参数组成的一个hash，params[:id]与params['id']相等。
+request：收到的请求，包含以下属性：
+	request_method：返回请求方法，有:delete,:get,:head,:post,:put
+	method：与request_method相同，除了:head会返回:get。因为这两个从程序角度来看功能是一样的。
+	delete?,get?,head?,post?,put?：判断请求方法返回true或false
+	xml_http_request?和xhr?：ajax请求返回true，否则返回false。注意它和method参数是无关的。
+	url：返回request的完整URL
+	remote_ip：返回远程IP地址。如果客户端使用proxy可能返回多于一个地址。
+	headers：请求的http headers
+	body：请求的body构成的I/O流
+response：响应对象
+session：session组成的hash
