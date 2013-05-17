@@ -3,7 +3,7 @@
 解决方法：
 
 1、首先进入sqlplus环境（以sysdba登陆）
-SQL> connect / as sysdba;
+[oracle@oracle11g crond]$ sqlplus / as sysdba;
 
 2、检查flash recovery area的使用情况，archivelog已经很大了，达到99.22
 SQL> select * from V$FLASH_RECOVERY_AREA_USAGE;

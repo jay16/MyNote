@@ -151,7 +151,7 @@ note_history_tree.signal_connect("row-activated") { click_history_tree(note_view
 #ctrl+s保存文件快捷键
 ctrl_s = Gtk::AccelGroup.new
 ctrl_s.connect(Gdk::Keyval::GDK_S, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  save_file(note_view_tree,note_view_store,text_editor,note_history_tree,note_history_store,window)
+  save_file(note_view_tree,note_view_store,text_editor,note_history_tree,note_history_store,window,conf_save)
 }
 window.add_accel_group(ctrl_s)
 #ctrl+z重新加载文本快捷键
