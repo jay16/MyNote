@@ -1,0 +1,65 @@
+1. [ORA-00257: archiver error. Connect internal only, until freed]
+错误原因: archive log 日志已满
+解决方法：
+
+1、首先进入sqlplus环境（以sysdba登陆）
+SQL> connect / as sysdba;
+
+2、检查flash recovery area的使用情况，archivelog已经很大了，达到99.22
+SQL> select * from V$FLASH_RECOVERY_AREA_USAGE;
+
+FILE_TYPE            PERCENT_SPACE_USED PERCENT_SPACE_RECLAIMABLE NUMBER_OF_FILES
+----------------- ------------------ ----------------------------------------
+CONTROL FILE                  0                         0
+              0
+
+REDO LOG                      0                         0
+              0
+
+ARCHIVED LOG  102            99.22                      0
+
+3、计算flash recovery area已经占用的空间，为2.9766G
+SQL> select sum(percent_space_used)*3/100 from v$flash_recovery_area_usage;
+
+SUM(PERCENT_SPACE_USED)*3/100
+-----------------------------
+                       2.9766
+
+4、查看recovery目录, 为$ORACLE_HOME/flash_recovery_area
+SQL> show parameter recover;
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+db_recovery_file_dest                string      /webmail/work/oracle/flash_recovery_area
+db_recovery_file_dest_size           big integer 3852M
+recovery_parallelism                 integer     0
+
+5、进入recovery目录手工删除旧文件（文件以year-month-day格式命名）
+   在删除归档日志后，必须用RMAN维护控制文件，否则空间显示仍然不释放。
+
+6、打开另一界面，或退出sqlplus;进入rman(数据库必须已启动)
+[oracle@mail ~]$ rman target sys/pass
+
+Recovery Manager: Release 11.2.0.1.0 - Production on Sat Jan 5 11:08:03 2013
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+connected to target database: INTFOCUS (DBID=4280293552)
+
+RMAN>
+
+7、检查一些无用的archivelog
+RMAN> crosscheck archivelog all;
+
+8、 删除过期的归档
+RMAN> delete expired archivelog all;
+
+9、删除截止到前一天的所有archivelog
+RMAN> delete archivelog until time 'sysdate-1' ; 
+
+
+解决方法：
+1.修改日志大小
+SQL> alter system set db_recovery_file_dest_size=10G scope=both;
+
+System altered.
