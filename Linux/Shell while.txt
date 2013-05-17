@@ -1,0 +1,57 @@
+bash的while loop:
+Php代码  收藏代码
+
+    语法:  
+    while [ condition ]   
+    do  
+        command1  
+        command1  
+        commandN  
+    done  
+    示例:  
+    #!/bin/bash  
+    c=1  
+    while [ $c -le 5 ]  
+    do  
+        echo "Welcone $c times"  
+        (( c++ ))  
+    done  
+
+
+
+ksh的while loop:
+Php代码  收藏代码
+
+    语法:  
+    while [[ condition ]] ; do  
+        command1  
+        command1  
+        commandN  
+    done  
+      
+    示例：  
+    #!/bin/ksh  
+    c=1  
+    while [[ $c -le 5 ]]; do  
+        echo "Welcome $c times"  
+        (( c++ ))  
+    done  
+
+
+
+csh的while loop:
+Php代码  收藏代码
+
+    while ( condition )  
+             commands  
+         end  
+      
+    #!/bin/csh  
+    set yname="foo"  
+    while ( $yname != "" )  
+        echo -n "Enter your name : "  
+        set yname = $<  
+        if ( $yname != "" ) then  
+            echo "Hi, $yname"  
+        endif  
+    end  
