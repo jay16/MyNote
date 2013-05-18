@@ -1,3 +1,70 @@
 查看今天插入的数据
 
 select * from members where to_days(now())=to_days(created_at);
+
+mysql> alter database mail_206 default character set 'latin1';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> set names 'latin1';
+Query OK, 0 rows affected (0.00 sec)
+
+　　mysql> SET character_set_client='gbk';
+　　mysql> SET character_set_connection='gbk'
+　　mysql> SET character_set_results='gbk'
+　　设置好连接编码，下面便可以成功插入中文了：
+　　
+　　其实，上面设置连接编码的三条命令可以简化为一条：
+　　mysql> set names 'gbk';
+
+mysql> SHOW VARIABLES LIKE '%character%';
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | latin1                     |
+| character_set_connection | latin1                     |
+| character_set_database   | latin1                     |
+| character_set_filesystem | binary                     |
+| character_set_results    | latin1                     |
+| character_set_server     | latin1                     |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.00 sec)
+
+mysql> SHOW VARIABLES LIKE '%collation%';
++----------------------+-------------------+
+| Variable_name        | Value             |
++----------------------+-------------------+
+| collation_connection | utf8_general_ci   |
+| collation_database   | utf8_general_ci   |
+| collation_server     | latin1_swedish_ci |
++----------------------+-------------------+
+3 rows in set (0.01 sec)
+
+
+mysql> show variables like "%char%";
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | utf8                       |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> show create database test;
++----------+---------------------------------------------------------------+
+| Database | Create Database                                               |
++----------+---------------------------------------------------------------+
+| test     | CREATE DATABASE `test` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++----------+---------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> 
