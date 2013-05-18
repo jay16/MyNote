@@ -6,12 +6,15 @@ NoteDirList:
 NoteSeledDir: E:\MyWork\MyNote
 NoteSeledFile: E:\MyWork\MyNote\JScript
 HistoryList:
-- - oracle 日志已满.txt
-  - E:\MyWork\MyNote\DataBase\Oracle 11g/oracle 日志已满.txt
+- - CentOS 配置静态ip.txt
+  - E:\MyWork\MyNote\CentOS\CentOS 配置静态ip.txt
   - 2
-- - Linux java安装.txt
-  - E:\MyWork\MyNote\DataBase\Oracle 11g\Linux java安装.txt
+- - CentOS IP设置.txt
+  - E:\MyWork\MyNote\CentOS/CentOS IP设置.txt
   - 1
-- - oracle 处理日志已满.txt
-  - E:\MyWork\MyNote\DataBase\Oracle 11g\oracle 处理日志已满.txt
+- - MySql 常用sql命令.txt
+  - E:\MyWork\MyNote\DataBase\MySql\MySql 常用sql命令.txt
+  - 1
+- - CentOS SFTP.txt
+  - E:\MyWork\MyNote\CentOS\CentOS SFTP.txt
   - 1
