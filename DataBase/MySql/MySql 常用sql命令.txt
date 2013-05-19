@@ -10,6 +10,9 @@ mysql> alter table hello change col1 col3 integer;
 mysql> alter table t1 drop column tel;
 设置列默认值
 ALTER TABLE members MODIFY COLUMN type_email int DEFAULT '1';
+设置列默认值id自动增长
+ALTER TABLE mail_206.unsubscribes ADD id INT NOT NULL AUTO_INCREMENT;
+
 
 清空表数据,id重新从1开始
 mysql> truncate table 表名
