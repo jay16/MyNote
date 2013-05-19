@@ -2,28 +2,28 @@
 
 %s+E:\\FocusMailBk\\kettle_114\\FocusMailJobs\\MySql_Sync_2_Oracle\\+/home/work/kettle_jobs/MySql_Sync_2_Oracle+gc
 
-µ¼³öÊı¾İ¿â£¨114·şÎñÆ÷£©
+å¯¼å‡ºæ•°æ®åº“ï¼ˆ114æœåŠ¡å™¨ï¼‰
 
-1.ÇĞ»»ÓÃ»§ÖÁoracle
+1.åˆ‡æ¢ç”¨æˆ·è‡³oracle
 
 [root@oracle11g ~]# su oracle 
 
-2.Ö´ĞĞexpÃüÁî£¬intfocus/focus_mail : ÓÃ»§Ãû/ÃÜÂë file=µ¼³öÎÄ¼şÂ·¾¶£¨oracleÓÃ»§ÒªÓĞĞ´ÈëÈ¨ÏŞ£© owner=ÓÃ»§Ãû
+2.æ‰§è¡Œexpå‘½ä»¤ï¼Œintfocus/focus_mail : ç”¨æˆ·å/å¯†ç  file=å¯¼å‡ºæ–‡ä»¶è·¯å¾„ï¼ˆoracleç”¨æˆ·è¦æœ‰å†™å…¥æƒé™ï¼‰ owner=ç”¨æˆ·å
 
 [oracle@oracle11g ~]$ exp intfocus/focus_mail  file=/home/work/oracle/mail_exp.dmp owner=intfocus;
 
-3.²é¿´ÊÇ·ñÉú³É
+3.æŸ¥çœ‹æ˜¯å¦ç”Ÿæˆ
 
 [oracle@oracle11g ~]$ ls /home/work/oracle/
 admin        checkpoints  flash_recovery_area  oracle_data       product
 cfgtoollogs  diag         mail_exp.dmp         oracle_inventory  response
 
-²é¿´Éú³ÉÎÄ¼ş´óĞ¡ 
+æŸ¥çœ‹ç”Ÿæˆæ–‡ä»¶å¤§å° 
 
 [oracle@oracle11g ~]$ du -sh /home/work/oracle/mail_exp.dmp 
 9.7M    /home/work/oracle/mail_exp.dmp
 
-4.scp¿½±´µ½155·şÎñÆ÷
+4.scpæ‹·è´åˆ°155æœåŠ¡å™¨
 [oracle@oracle11g ~]$ scp /home/work/oracle/mail_exp.dmp oracle@192.168.0.155:/home/work/oracle
 The authenticity of host '192.168.0.155 (192.168.0.155)' can't be established.
 RSA key fingerprint is 1f:32:8d:4f:cd:b8:f0:0f:53:ea:5d:5b:14:1d:6d:86.
@@ -33,9 +33,9 @@ oracle@192.168.0.155's password:
 mail_exp.dmp                                      100% 9912KB   9.7MB/s   00:00  
 
 
-µ¼ÈëÊı¾İ£¨155·şÎñÆ÷£©
+å¯¼å…¥æ•°æ®ï¼ˆ155æœåŠ¡å™¨ï¼‰
 
-1.ÇĞ»»ÓÃ»§ÖÁoracle
+1.åˆ‡æ¢ç”¨æˆ·è‡³oracle
 
 [root@oracle11g ~]# su oracle
 [oracle@oracle11g root]$ source ~/.bash_profile 
@@ -44,7 +44,7 @@ mail_exp.dmp                                      100% 9912KB   9.7MB/s   00:00
 IntFocus
 [oracle@oracle11g root]$ 
 
-2.Ö´ĞĞimpÃüÁî£¬
+2.æ‰§è¡Œimpå‘½ä»¤ï¼Œ
 
 [oracle@oracle11g root]$ imp IntFocus/Focus_Mail file=/home/work/oracle/mail_exp.dmp fromuser=intfocus ignore=y
 
