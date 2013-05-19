@@ -1,0 +1,32 @@
+当编辑指令(参照[section 2.2])在命令列上执行时 , 其前必须加上选项 -e 。其命令格式如下 :
+sed -e '编辑指令1' -e '编辑指令2' ... 文件档
+
+ 其中 , 所有编辑指令都紧接在选项 -e 之後 , 并置於两个 " ' " 特殊字元间。
+
+
+删除test.log中的1~4行
+[webmail@cloud jay]$ sed -e '1,4d' test.log 
+
+删除档内第 10 行资料 , 则指令为 10d。
+删除含有 "man" 字串的资料行时 , 则指令为 /man/d。
+删除档内第 10 行到第 200 行资料, 则指令为 10,200d。
+删除档内第 10 行到含 "man" 字串的资料行 , 则指令为 10,/man/d。
+/apple/,/orange/d
+删除资料区 , 由档内含有 "apple" 字串至含有 "orange" 字串的资料行
+
+
+替换文本内容中的echo为show
+[webmail@cloud jay]$ sed -e 's/echo/show/g' test.log
+
+在每行的头添加字符，比如"HEAD"，命令如下：
+[webmail@cloud jay]$ sed 's/^/HEAD&/g' test.log 
+
+在每行的行尾添加字符，比如“TAIL”，命令如下：
+[webmail@cloud jay]$ sed 's/$/&TAIL/g' test.log 
+
+如果想导出文件，在命令末尾加"> outfile_name"
+如果想在原文件上更改，添加选项"-i"，
+[webmail@cloud jay]$ sed -i 's/$/&TAIL/g' test.log 
+
+把行尾添加的TAIL删除
+[webmail@cloud jay]$ sed -ie 's/TAIL//g' test.log 
