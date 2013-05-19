@@ -3,46 +3,46 @@
 
 export NLS_LANG=AMERICAN_AMERICA.UTF8
 
-²é¿´DBNAME
+æŸ¥çœ‹DBNAME
 select name from v$database;
-ÊÚÈ¨
+æŽˆæƒ
 GRANT ALL ON upload_jobs TO public;
 grant connect,resource to intfocus;
 
-SYSÉí·Ý ²é¿´ÓÃ»§Ëù´´½¨µÄ±í
+SYSèº«ä»½ æŸ¥çœ‹ç”¨æˆ·æ‰€åˆ›å»ºçš„è¡¨
 SQL> select table_name from dba_tables where owner = 'INTFOCUS';
-ÆÕÍ¨ÓÃ»§Éí·Ý ²é¿´ÓÃ»§Ëù´´½¨µÄ±í
+æ™®é€šç”¨æˆ·èº«ä»½ æŸ¥çœ‹ç”¨æˆ·æ‰€åˆ›å»ºçš„è¡¨
 SQL> select table_name from all_tables where owner='INTFOCUS';
-ÐÞ¸ÄÃÜÂë
+ä¿®æ”¹å¯†ç 
 SQL> select username,password from dba_users;
 SQL> alter user test identified by intfocus; 
-É¾³ý±í
+åˆ é™¤è¡¨
 SQL> drop table member_bk;
-ÐÞ¸Ä±íÃû
+ä¿®æ”¹è¡¨å
 SQL> alter table upload_temp rename to members_temp;
-²åÈëÁÐ
+æ’å…¥åˆ—
 SQL> alter table student add email varchar(50);	
-É¾³ýÁÐ
+åˆ é™¤åˆ—
 alter table dog_day_bi drop column time_tag
-ÐÞ¸ÄÁÐ½á¹¹ (ÐÞ¸ÄÀàÐÍ¡¢ÁÐÃû)
+ä¿®æ”¹åˆ—ç»“æž„ (ä¿®æ”¹ç±»åž‹ã€åˆ—å)
 SQL> alter table student modify (email varchar(150))
 SQL> alter table dog_day_data rename column camaign_id to campaign_id
-¸´ÖÆ±í½á¹¹
+å¤åˆ¶è¡¨ç»“æž„
 SQL> create table dog_day_bi as select * from log_bi where 1=2
-²é¿´µÚ4ÐÐµ½µÚ7ÐÐµÄÊý¾Ý
+æŸ¥çœ‹ç¬¬4è¡Œåˆ°ç¬¬7è¡Œçš„æ•°æ®
 SQL> select * from dog_day_org where rownum <= 7  
 minus 
 select * from dog_day_org where rownum  <= 4
-²é¿´±í½á¹¹
+æŸ¥çœ‹è¡¨ç»“æž„
 SQL> select * from all_col_comments where table_name = 'MEMBERS'
 SQL> select * from all_tab_columns where table_name = 'DOG_DAY_ORG'
-ÊÇ·ñÏÔÊ¾Ìá½»
+æ˜¯å¦æ˜¾ç¤ºæäº¤
 SQL> show autocommit;
 SQL> set autocommit on;
-²é¿´ÉèÖÃÊý¾Ý¿â×Ö·û¼¯
+æŸ¥çœ‹è®¾ç½®æ•°æ®åº“å­—ç¬¦é›†
 SQL> ALTER DATABASE CHARACTER SET AMERICAN_AMERICA.UTF8
 
-²é¿´Êý¾Ý¿âµÄ¹éµµÄ£Ê½¼°ÉÁ»ØÊÇ·ñÆôÓÃ
+æŸ¥çœ‹æ•°æ®åº“çš„å½’æ¡£æ¨¡å¼åŠé—ªå›žæ˜¯å¦å¯ç”¨
 SQL> select log_mode,open_mode,flashback_on from v$database;
 
 LOG_MODE     OPEN_MODE            FLASHBACK_ON
