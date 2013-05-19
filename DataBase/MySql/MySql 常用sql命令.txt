@@ -12,7 +12,9 @@ mysql> alter table t1 drop column tel;
 ALTER TABLE members MODIFY COLUMN type_email int DEFAULT '1';
 设置列默认值id自动增长
 ALTER TABLE mail_206.unsubscribes ADD id INT NOT NULL AUTO_INCREMENT;
+mysql> create table unsub(id int unsigned primary key auto_increment,email varchar(255),campaign_id int,created_at datetime);
 
+mysql> insert into unsub(email,campaign_id,created_at)  (select email,campaign_id,created_at from unsubscribes)
 
 清空表数据,id重新从1开始
 mysql> truncate table 表名
