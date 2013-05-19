@@ -1,12 +1,12 @@
 http://stackoverflow.com/questions/2896485/no-such-file-to-load-rubygems-loaderror
-ÏµÍ³ÖØÆôºó£¬Æô¶¯resqueÊ±±¨´í
+ç³»ç»Ÿé‡å¯åï¼Œå¯åŠ¨resqueæ—¶æŠ¥é”™
 
 [webmail@emd focus_mail]$ rake resque:workers COUNT=2 QUEUE=* VERBOSE=1
 /usr/local/bin/rake:9:in `require': no such file to load -- rubygems (LoadError)
         from /usr/local/bin/rake:9
 
 
-½â¾ö·½·¨
+è§£å†³æ–¹æ³•
 [webmail@emd focus_mail]$ which ruby
 /usr/bin/ruby
 
@@ -17,7 +17,7 @@ http://stackoverflow.com/questions/2896485/no-such-file-to-load-rubygems-loaderr
 /usr/local/bin/gem
 
 [webmail@emd focus_mail]$ vi ~/.bash_profile 
-×·¼ÓÄÚÈİ
+è¿½åŠ å†…å®¹
 ....
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin/ruby:$PATH"
 

@@ -1,0 +1,28 @@
+ down vote accepted
+	
+
+This thread has some suggestions...
+
+Depending on your webserver you may have to change the following setting in config/environments/prodcution.rb from:
+
+config.serve_static_assets = false
+
+To:
+
+config.serve_static_assets = true
+
+---------------------------------------------------------
+rails3中production模式下找不到css、js和图片文件
+
+在rails3中，production模式默认是不处理静态文件的。在config/environments/production.rb中有这么一段：
+
+ 
+Ruby代码  收藏代码
+
+    # Disable Rails's static asset server  
+    # In production, Apache or nginx will already do this  
+    config.serve_static_assets = false  
+
+ 
+
+原因是，Rails希望在产品模式下，静态文件由站在rails前边的web server来处理。所以如果你没有安装nginx等web server，那么把false改为true就能解决问题了。

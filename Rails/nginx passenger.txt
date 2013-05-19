@@ -1,31 +1,31 @@
-passengerºóÌ¨ÔËĞĞFocusMail
+passengeråå°è¿è¡ŒFocusMail
 
 [root@localhost focus_mail]# passenger start -p 80 -d --user webmail
 
-²é¿´passengerÊÇ·ñÆô¶¯£¬ĞèÒªÖ¸¶¨¶Ë¿ÚºÅ
+æŸ¥çœ‹passengeræ˜¯å¦å¯åŠ¨ï¼Œéœ€è¦æŒ‡å®šç«¯å£å·
 
 [root@localhost focus_mail]# passenger status -p 80
 
 
-¹Ø±Õpassenger,ĞèÒªµ½Æô¶¯Ä¿Â¼£¬²¢Ö¸¶¨¶Ë¿ÚºÅ
+å…³é—­passenger,éœ€è¦åˆ°å¯åŠ¨ç›®å½•ï¼Œå¹¶æŒ‡å®šç«¯å£å·
 
 [root@localhost focus_mail]# passenger stop -p 80
 
 --------------------------------------------------------
 
-°²×°nginx passenger
+å®‰è£…nginx passenger
 
 [root@localhost focus_mail]# gem install passenger
 [root@localhost focus_mail]# passenger-install-nginx-module
 
-°²×°¹ı³ÌÖĞĞèÒªÓĞÊäÈëÌáÊ¾
+å®‰è£…è¿‡ç¨‹ä¸­éœ€è¦æœ‰è¾“å…¥æç¤º
 
 Enter your choice (1 or 2) or press Ctrl-C to abort: 1
-Please specify a prefix directory [/opt/nginx]: »Ø³µ
+Please specify a prefix directory [/opt/nginx]: å›è½¦
 
 
-²âÊÔpassengerÆô¶¯FocusMail
+æµ‹è¯•passengerå¯åŠ¨FocusMail
 
 [root@localhost focus_mail]# passenger start
 
-Èç¹û³öÏÖÏÂÃæĞÅÏ¢£¬°´ÌáÊ¾°²×°¼´¿É£¬°²×°Íê³Éºó»á¼ÌĞøÆô¶¯FocusMail
+å¦‚æœå‡ºç°ä¸‹é¢ä¿¡æ¯ï¼ŒæŒ‰æç¤ºå®‰è£…å³å¯ï¼Œå®‰è£…å®Œæˆåä¼šç»§ç»­å¯åŠ¨FocusMail
