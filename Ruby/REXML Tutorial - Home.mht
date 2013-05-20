@@ -1,0 +1,960 @@
+From: <Saved by Mozilla 5.0 (Windows)>
+Subject: REXML Tutorial - Home
+Date: Mon, 20 May 2013 17:44:01 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_5A91F805.686355FA"
+X-MAF-Information: Produced By MAF V2.0.9
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_5A91F805.686355FA
+Content-Type: text/html;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.germane-software.com/software/rexml/docs/tutorial.html
+
+<html><head>
+<meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<title>REXML Tutorial - Home</title>
+<style type=3D"text/css" media=3D"all"><!--
+
+/* Effective stylesheet produced by snapshot save */
+
+@import url("urn:snapshot-F645C75D:http://www.germane-software.com/styles/s=
+tyle.css");
+
+--></style>
+</head>
+<body>
+<div id=3D"banner" align=3D"center"><h1>REXML Tutorial - Home</h1></div>
+<h4 align=3D"center">$Revision: 1.1.2.1 $</h4>
+<div id=3D"menu">
+<div class=3D"menuitem">
+<a href=3D"http://www.germane-software.com/software/rexml/docs/index.html">=
+Home</a><div class=3D"menusubitem"><a href=3D"http://www.germane-software.c=
+om/software/rexml/docs/index.html#id2247749">Overview</a></div>
+    <div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.co=
+m/software/rexml/docs/index.html#id2247751">Abstract</a></div>
+
+    <div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.co=
+m/software/rexml/docs/index.html#id2247766">Introduction</a></div>
+  </div>
+<div class=3D"menuitem"><a href=3D"http://www.germane-software.com/software=
+/rexml/docs/credits.html">Credits</a></div>
+<div class=3D"menuitem" style=3D"margin-top:10px;">Downloads</div>
+<div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.com/ar=
+chives/rexml_api_3.1.7.3.tgz">API docs (tgz)</a></div>
+<div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.com/ar=
+chives/rexml_api_3.1.7.3.zip">API docs (zip)</a></div>
+<div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.com/ar=
+chives/rexml_3.1.7.3.tgz">Development (tgz)</a></div>
+<div class=3D"menusubsubitem"><a href=3D"http://www.germane-software.com/ar=
+chives/rexml_3.1.7.3.zip">Development (zip)</a></div>
+</div>
+<div id=3D"centercontent">
+ =20
+
+  <a name=3D"id2247749"></a><h2>Overview</h2>
+    <a name=3D"id2247751"></a><h3>Abstract</h3>
+      <p>This is a tutorial for using <a href=3D"http://www.germane-softwar=
+e.com/%7Eser/software/rexml">REXML</a>,
+      a pure Ruby XML processor.</p>
+   =20
+
+    <a name=3D"id2247766"></a><h3>Introduction</h3>
+      <p>REXML was inspired by the Electric XML library for Java, which
+      features an easy-to-use API, small size, and speed. Hopefully, REXML,
+      designed with the same philosophy, has these same features. I've tried
+      to keep the API as intuitive as possible, and have followed the Ruby
+      methodology for method naming and code flow, rather than mirroring the
+      Java API.</p>
+
+      <p>REXML supports both tree and stream document parsing. Stream parsi=
+ng
+      is faster (about 1.5 times as fast). However, with stream parsing, you
+      don't get access to features such as XPath.</p>
+
+      <p>The <a href=3D"http://www.germane-software.com/software/rexml/doc/=
+index.html">API</a> documentation also
+      contains code snippits to help you learn how to use various methods.
+      This tutorial serves as a starting point and quick guide to using
+      REXML.</p>
+
+      <a name=3D"id2247797"></a><h3>Tree Parsing XML and accessing Elements=
+</h3>
+        <p>We'll start with parsing an XML document</p>
+
+        <div class=3D"example"><pre>require "rexml/document"
+file =3D File.new( "mydoc.xml" )
+doc =3D REXML::Document.new file</pre></div>
+
+        <p>Line 3 creates a new document and parses the supplied file. You=
+ can
+        also do the following</p>
+
+        <div class=3D"example"><pre>require "rexml/document"
+include REXML  # so that we don't have to prefix everything with REXML::...
+string =3D &lt;&lt;EOF
+  &lt;mydoc&gt;
+    &lt;someelement attribute=3D"nanoo"&gt;Text, text, text&lt;/someelement=
+&gt;
+  &lt;/mydoc&gt;
+EOF
+doc =3D Document.new string</pre></div>
+
+        <p>So parsing a string is just as easy as parsing a file. For future
+        examples, I'm going to omit both the <tt>require</tt> and
+        <tt>include</tt> lines.</p>
+
+        <p>Once you have a document, you can access elements in that docume=
+nt
+        in a number of ways:</p>
+
+        <ul>
+          <li>The <tt>Element</tt> class itself has
+          <tt>each_element_with_attribute</tt>, a common way of accessing
+          elements.</li>
+
+          <li>The attribute <tt>Element.elements</tt> is an
+          <tt>Elements</tt> class instance which has the <tt>each</tt>
+          and <tt>[]</tt> methods for accessing elements. Both methods can
+          be supplied with an XPath for filtering, which makes them very
+          powerful.</li>
+
+          <li>Since <tt>Element</tt> is a subclass of Parent, you can
+          also access the element's children directly through the Array-like
+          methods <tt>Element[], Element.each, Element.find,
+          Element.delete</tt>. This is the fastest way of accessing
+          children, but note that, being a true array, XPath searches are=
+ not
+          supported, and that all of the element children are contained in
+          this array, not just the Element children.</li>
+        </ul>
+
+        <p>Here are a few examples using these methods. First is the source
+        document used in the examples. Save this as mydoc.xml before running
+        any of the examples that require it:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">The source document</div>
+<pre>&lt;inventory title=3D"OmniCorp Store #45x10^3"&gt;
+  &lt;section name=3D"health"&gt;
+    &lt;item upc=3D"123456789" stock=3D"12"&gt;
+      &lt;name&gt;Invisibility Cream&lt;/name&gt;
+      &lt;price&gt;14.50&lt;/price&gt;
+      &lt;description&gt;Makes you invisible&lt;/description&gt;
+    &lt;/item&gt;
+    &lt;item upc=3D"445322344" stock=3D"18"&gt;
+      &lt;name&gt;Levitation Salve&lt;/name&gt;
+      &lt;price&gt;23.99&lt;/price&gt;
+      &lt;description&gt;Levitate yourself for up to 3 hours per applicatio=
+n&lt;/description&gt;
+    &lt;/item&gt;
+  &lt;/section&gt;
+  &lt;section name=3D"food"&gt;
+    &lt;item upc=3D"485672034" stock=3D"653"&gt;
+      &lt;name&gt;Blork and Freen Instameal&lt;/name&gt;
+      &lt;price&gt;4.95&lt;/price&gt;
+      &lt;description&gt;A tasty meal in a tablet; just add water&lt;/descr=
+iption&gt;
+    &lt;/item&gt;
+    &lt;item upc=3D"132957764" stock=3D"44"&gt;
+      &lt;name&gt;Grob winglets&lt;/name&gt;
+      &lt;price&gt;3.56&lt;/price&gt;
+      &lt;description&gt;Tender winglets of Grob. Just add water&lt;/descri=
+ption&gt;
+    &lt;/item&gt;
+  &lt;/section&gt;
+&lt;/inventory&gt;</pre>
+</div>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Accessing Elements</div>
+<pre>doc =3D Document.new File.new("mydoc.xml")
+doc.elements.each("inventory/section") { |element| puts element.attributes[=
+"name"] }
+# -&gt; health
+# -&gt; food
+doc.elements.each("*/section/item") { |element| puts element.attributes["up=
+c"] }
+# -&gt; 123456789
+# -&gt; 445322344
+# -&gt; 485672034
+# -&gt; 132957764
+root =3D doc.root
+puts root.attributes["title"]
+# -&gt; OmniCorp Store #45x10^3
+puts root.elements["section/item[@stock=3D'44']"].attributes["upc"]
+# -&gt; 132957764
+puts root.elements["section"].attributes["name"]=20
+# -&gt; health (returns the first encountered matching element)=20
+puts root.elements[1].attributes["name"]=20
+# -&gt; health (returns the FIRST child element)=20
+root.detect {|node| node.kind_of? Element and node.attributes["name"] =3D=
+=3D "food" }</pre>
+</div>
+
+        <p>Notice the second-to-last line of code. Element children in REXML
+        are indexed starting at 1, not 0. This is because XPath itself coun=
+ts
+        elements from 1, and REXML maintains this relationship; IE,
+        <tt>root.elements['*[1]'] =3D=3D root.elements[1]</tt>. The last li=
+ne
+        finds the first child element with the name of "food". As you can=
+ see
+        in this example, accessing attributes is also straightforward.</p>
+
+        <p>You can also access xpaths directly via the XPath class.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Using XPath</div>
+<pre># The invisibility cream is the first &lt;item&gt;
+invisibility =3D XPath.first( doc, "//item" )=20
+# Prints out all of the prices
+XPath.each( doc, "//price") { |element| puts element.text }
+# Gets an array of all of the "name" elements in the document.
+names =3D XPath.match( doc, "//name" ) </pre>
+</div>
+
+        <p>Another way of getting an array of matching nodes is through
+        Element.elements.to_a(). Although this is a method on elements, if
+        passed an XPath it can return an array of arbitrary objects. This is
+        due to the fact that XPath itself can return arbitrary nodes
+        (Attribute nodes, Text nodes, and Element nodes).</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Using to_a()</div>
+<pre>all_elements =3D doc.elements.to_a
+all_children =3D doc.to_a
+all_upc_strings =3D doc.elements.to_a( "//item/attribute::upc" )
+all_name_elements =3D doc.elements.to_a( "//name" )</pre>
+</div>
+     =20
+
+      <a name=3D"id2248057"></a><h3>Text Nodes</h3>
+        <p>REXML attempts to make the common case simple, but this means th=
+at
+        the uncommon case can be complicated. This is especially true with
+        Text nodes.</p>
+
+        <p>Text nodes have a lot of behavior, and in the case of internal
+        entities, what you get may be different from what you expect. When
+        REXML reads an XML document, in parses the DTD and creates an inter=
+nal
+        table of entities. If it finds any of these entities in the documen=
+t,
+        it replaces them with their values:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Entity Replacement</div>
+<pre>doc =3D Document.new '&lt;!DOCTYPE foo [
+&lt;!ENTITY ent "replace"&gt;
+]&gt;&lt;a&gt;&amp;ent;&lt;/a&gt;'
+doc.root.text   #-&gt; "replace"
+</pre>
+</div>
+
+        <p>When you write the document back out, REXML replaces the values
+        with the entity reference:</p>
+
+        <div class=3D"example"><pre>doc.to_s
+# Generates:
+# &lt;!DOCTYPE foo [
+# &lt;!ENTITY ent "replace"&gt;
+# ]&gt;&lt;a&gt;&amp;ent;&lt;/a&gt;</pre></div>
+
+        <p>But there's a problem. What happens if only some of the words are
+        also entity reference values?</p>
+
+        <div class=3D"example"><pre>doc =3D Document.new '&lt;!DOCTYPE foo [
+&lt;!ENTITY ent "replace"&gt;
+]&gt;&lt;a&gt;replace &amp;ent;&lt;/a&gt;'
+doc.root.text   #-&gt; "replace replace"
+</pre></div>
+
+        <p>Well, REXML does the only thing it can:</p>
+
+        <div class=3D"example"><pre>doc.to_s
+# Generates:
+# &lt;!DOCTYPE foo [
+# &lt;!ENTITY ent "replace"&gt;
+# ]&gt;&lt;a&gt;&amp;ent; &amp;ent;&lt;/a&gt;</pre></div>
+
+        <p>This is probably not what you expect. However, when designing
+        REXML, I had a choice between this behavior, and using immutable te=
+xt
+        nodes. The problem is that, if you can change the text in a node,
+        REXML can never tell which tokens you want to have replaced with
+        entities. There is a wrinkle: REXML will write what it gets in as=
+ long
+        as you don't access the text. This is because REXML does lazy
+        evaluation of entities. Therefore,</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Lazy Evaluation</div>
+<pre>doc =3D Document.new( '&lt;!DOCTYPE foo
+        [ &lt;!ENTITY ent "replace"&gt; ]&gt;&lt;a&gt;replace
+        &amp;ent;&lt;/a&gt;' ) doc.to_s # Generates: # &lt;!DOCTYPE foo [=
+ #
+        &lt;!ENTITY ent "replace"&gt; # ]&gt;&lt;a&gt;replace
+        &amp;ent;&lt;/a&gt; doc.root.text #-&gt; Now accessed,
+        entities have been resolved doc.to_s # Generates: # &lt;!DOCTYPE fo=
+o [
+        # &lt;!ENTITY ent "replace"&gt; # ]&gt;&lt;a&gt;&amp;ent;
+        &amp;ent;&lt;/a&gt;</pre>
+</div>
+
+        <p>There is a programmatic solution: <tt>:raw</tt>. If you set the
+        <tt>:raw</tt> flag on any Text or Element node, the entities
+        within that node will not be processed. This means that you'll have=
+ to
+        deal with entities yourself:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Entity Replacement</div>
+<pre>doc =3D Document.new('&lt;!DOCTYPE
+        foo [ &lt;!ENTITY ent "replace"&gt; ]&gt;&lt;a&gt;replace
+        &amp;ent;&lt;/a&gt;',{:raw=3D&gt;:all})
+        doc.root.text #-&gt; "replace &amp;ent;" doc.to_s # Generates: #
+        &lt;!DOCTYPE foo [ # &lt;!ENTITY ent "replace"&gt; #
+        ]&gt;&lt;a&gt;replace &amp;ent;&lt;/a&gt;</pre>
+</div>
+     =20
+
+      <a name=3D"id2248191"></a><h3>Creating XML documents</h3>
+        <p>Again, there are a couple of mechanisms for creating XML documen=
+ts
+        in REXML. Adding elements by hand is faster than the convenience
+        method, but which you use will probably be a matter of aesthetics.<=
+/p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Creating elements</div>
+<pre>el =3D someelement.add_element "myel"=20
+# creates an element named "myel", adds it to "someelement", and returns it=
+=20
+el2 =3D el.add_element "another", {"id"=3D&gt;"10"}=20
+# does the same, but also sets attribute "id" of el2 to "10"=20
+el3 =3D Element.new "blah"=20
+el1.elements &lt;&lt; el3=20
+el3.attributes["myid"] =3D "sean"=20
+# creates el3 "blah", adds it to el1, then sets attribute "myid" to "sean"<=
+/pre>
+</div>
+
+        <p>If you want to add text to an element, you can do it by either
+        creating Text objects and adding them to the element, or by using=
+ the
+        convenience method <tt>text=3D</tt></p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Adding text</div>
+<pre>el1 =3D Element.new "myelement"=20
+el1.text =3D "Hello world!"=20
+# -&gt; &lt;myelement&gt;Hello world!&lt;/myelement&gt;=20
+el1.add_text "Hello dolly"=20
+# -&gt; &lt;myelement&gt;Hello world!Hello dolly&lt;/element&gt;=20
+el1.add Text.new("Goodbye")=20
+# -&gt; &lt;myelement&gt;Hello world!Hello dollyGoodbye&lt;/element&gt;=20
+el1 &lt;&lt; Text.new(" cruel world")=20
+# -&gt; &lt;myelement&gt;Hello world!Hello dollyGoodbye cruel world&lt;/ele=
+ment&gt;</pre>
+</div>
+
+        <p>But note that each of these text objects are still stored as
+        separate objects; <tt>el1.text</tt> will return "Hello world!";
+        <tt>el1[2]</tt> will return a Text object with the contents
+        "Goodbye".</p>
+
+        <p>Please be aware that all text nodes in REXML are UTF-8 encoded,=
+ and
+        all of your code must reflect this. You may input and output other
+        encodings (UTF-8, UTF-16, ISO-8859-1, and UNILE are all supported,
+        input and output), but within your program, you must pass REXML UTF=
+-8
+        strings.</p>
+
+        <p>I can't emphasize this enough, because people do have problems=
+ with
+        this. REXML can't possibly alway guess correctly how your text is
+        encoded, so it always assumes the text is UTF-8. It also does not=
+ warn
+        you when you try to add text which isn't properly encoded, for the
+        same reason. You must make sure that you are adding UTF-8 text.
+        =C2=A0If you're adding standard 7-bit ASCII, which is most common,=
+ you
+        don't have to worry. =C2=A0If you're using ISO-8859-1 text (charact=
+ers
+        above 0x80), you must convert it to UTF-8 before adding it to an
+        element. =C2=A0You can do this with the shard:
+        <tt>text.unpack("C*").pack("U*")</tt>. If you ignore this warning
+        and add 8-bit ASCII characters to your documents, your code may
+        work... or it may not. =C2=A0In either case, REXML is not at fault.
+        You have been warned.</p>
+
+        <p>One last thing: alternate encoding output support only works from
+        Document.write() and Document.to_s(). If you want to write out other
+        nodes with a particular encoding, you must wrap your output object
+        with Output:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Encoded Output</div>
+<pre>e =3D Element.new "&lt;a/&gt;"
+e.text =3D "f\xfcr"   # ISO-8859-1 '??'
+o =3D ''
+e.write( Output.new( o, "ISO-8859-1" ) )
+</pre>
+</div>
+
+        <p>You can pass Output any of the supported encodings.</p>
+
+        <p>If you want to insert an element between two elements, you can=
+ use
+        either the standard Ruby array notation, or
+        <tt>Parent.insert_before</tt> and
+        <tt>Parent.insert_after</tt>.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Inserts</div>
+<pre>doc =3D Document.new "&lt;a&gt;&lt;one/&gt;&lt;three/&gt;&lt;/a&gt;"=20
+doc.root[1,0] =3D Element.new "two"=20
+# -&gt; &lt;a&gt;&lt;one/&gt;&lt;two/&gt;&lt;three/&gt;&lt;/a&gt;=20
+three =3D doc.elements["a/three"]=20
+doc.root.insert_after three, Element.new "four"=20
+# -&gt; &lt;a&gt;&lt;one/&gt;&lt;two/&gt;&lt;three/&gt;&lt;four/&gt;&lt;/a&=
+gt;=20
+# A convenience method allows you to insert before/after an XPath:=20
+doc.root.insert_after( "//one", Element.new("one-five") )=20
+# -&gt; &lt;a&gt;&lt;one/&gt;&lt;one-five/&gt;&lt;two/&gt;&lt;three/&gt;&lt=
+;four/&gt;&lt;/a&gt;=20
+# Another convenience method allows you to insert after/before an element:=
+=20
+four =3D doc.elements["//four"]=20
+four.previous_sibling =3D Element.new("three-five")=20
+# -&gt; &lt;a&gt;&lt;one/&gt;&lt;one-five/&gt;&lt;two/&gt;&lt;three/&gt;&lt=
+;three-five/&gt;&lt;four/&gt;&lt;/a&gt;</pre>
+</div>
+
+        <p>The <tt>raw</tt> flag in the <tt>Text</tt> constructor can
+        be used to tell REXML to leave strings which have entities defined=
+ for
+        them alone.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Raw text</div>
+<pre>doc =3D Document.new( "&lt;?xml version=3D'1.0?&gt;
+&lt;!DOCTYPE foo SYSTEM 'foo.dtd' [
+&lt;!ENTITY % s "Sean"&gt;
+]&gt;
+&lt;a/&gt;"
+t =3D Text.new( "Sean", false, nil, false )
+doc.root.text =3D t
+t.to_s     # -&gt; &amp;s;
+t =3D Text.new( "Sean", false, nil, true )
+doc.root.text =3D t
+t.to_s     # -&gt; Sean</pre>
+</div>
+
+        <p>Note that, in all cases, the <tt>value()</tt> method returns
+        the text with entities expanded, so the <tt>raw</tt> flag only
+        affects the <tt>to_s()</tt> method. If the <tt>raw</tt> is set
+        for a text node, then <tt>to_s()</tt> will not entities will not
+        normalize (turn into entities) entity values. You can not create raw
+        text nodes that contain illegal XML, so the following will generate=
+ a
+        parse error:</p>
+
+        <div class=3D"example"><pre>t =3D Text.new( "&amp;", false, nil, tr=
+ue )</pre></div>
+
+        <p>You can also tell REXML to set the Text children of given elemen=
+ts
+        to raw automatically, on parsing or creating:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Automatic raw text handling</div>
+<pre>doc =3D REXML::Document.new( source, { :raw =3D&gt; %w{ tag1 tag2 tag3=
+ } }</pre>
+</div>
+
+        <p>In this example, all tags named "tag1", "tag2", or "tag3" will=
+ have
+        any Text children set to raw text. If you want to have all of the=
+ text
+        processed as raw text, pass in the :all tag:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Raw documents</div>
+<pre>doc =3D REXML::Document.new( source, { :raw =3D&gt; :all })</pre>
+</div>
+     =20
+
+      <a name=3D"id2248463"></a><h3>Writing a tree</h3>
+        <p>There aren't many things that are more simple than writing a REX=
+ML
+        tree. Simply pass an object that supports <tt>&lt;&lt;( String
+        )</tt> to the <tt>write</tt> method of any object. In Ruby, both
+        IO instances (File) and String instances support &lt;&lt;.</p>
+
+        <div class=3D"example"><pre>doc.write $stdout=20
+output =3D ""=20
+doc.write output</pre></div>
+
+        <p>If you want REXML to pretty-print output, pass <tt>write()</tt>
+        an indent value greater than -1:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Write with pretty-printing</div>
+<pre>doc.write( $stdout, 0 )</pre>
+</div>
+
+        <p>REXML will not, by default, write out the XML declaration unless
+        you specifically ask for them. If a document is read that contains=
+ an
+        XML declaration, that declaration will be written
+        faithfully. The other way you can tell REXML to write the declarati=
+on
+        is to specifically add the declaration:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Adding an XML Declaration to a Document</div>
+<pre>doc =3D Document.new=20
+doc.add_element 'foo'
+doc.to_s   #-&gt; &lt;foo/&gt;
+doc &lt;&lt; XMLDecl.new
+doc.to_s   #-&gt; &lt;?xml version=3D'1.0'?&gt;&lt;foo/&gt;</pre>
+</div>
+     =20
+
+      <a name=3D"id2248534"></a><h3>Iterating</h3>
+        <p>There are four main methods of iterating over children.
+        <tt>Element.each</tt>, which iterates over all the children;
+        <tt>Element.elements.each</tt>, which iterates over just the child
+        Elements; <tt>Element.next_element</tt> and
+        <tt>Element.previous_element</tt>, which can be used to fetch the
+        next Element siblings; and <tt>Element.next_sibling</tt> and
+        <tt>Eleemnt.previous_sibling</tt>, which fetches the next and
+        previous siblings, regardless of type.</p>
+     =20
+
+      <a name=3D"id2248571"></a><h3>Stream Parsing</h3>
+        <p>REXML stream parsing requires you to supply a Listener class. Wh=
+en
+        REXML encounters events in a document (tag start, text, etc.) it
+        notifies your listener class of the event. You can supply any subset
+        of the methods, but make sure you implement method_missing if you
+        don't implement them all. A StreamListener module has been supplied=
+ as
+        a template for you to use.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Stream parsing</div>
+<pre>list =3D MyListener.new=20
+source =3D File.new "mydoc.xml"=20
+REXML::Document.parse_stream(source, list)</pre>
+</div>
+
+        <p>Stream parsing in REXML is much like SAX, where events are
+        generated when the parser encounters them in the process of parsing
+        the document. When a tag is encountered, the stream listener's
+        <tt>tag_start()</tt> method is called. When the tag end is
+        encountered, <tt>tag_end()</tt> is called. When text is
+        encountered, <tt>text()</tt> is called, and so on, until the end
+        of the stream is reached. One other note: the method
+        <tt>entity()</tt> is called when an <tt>&amp;entity;</tt> is
+        encountered in text, and only then.</p>
+
+        <p>Please look at the <a href=3D"http://www.germane-software.com/so=
+ftware/rexml/doc/classes/REXML/StreamListener.html">StreamListener
+        API</a> for more information.<sup><a href=3D"#id2248634">1</a></sup=
+></p>
+     =20
+
+      <a name=3D"id2248641"></a><h3>Whitespace</h3>
+        <p>By default, REXML respects whitespace in your document. In many
+        applications, you want the parser to compress whitespace in your
+        document. In these cases, you have to tell the parser which elements
+        you want to respect whitespace in by passing a context to the
+        parser:</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Compressing whitespace</div>
+<pre>doc =3D REXML::Document.new( source, { :compress_whitespace =3D&gt; %w=
+{ tag1 tag2 tag3 } }</pre>
+</div>
+
+        <p>Whitespace for tags "tag1", "tag2", and "tag3" will be compresse=
+d;
+        all other tags will have their whitespace respected. Like :raw, you
+        can set :compress_whitespace to :all, and have all elements have th=
+eir
+        whitespace compressed.</p>
+
+        <p>You may also use the tag <tt>:respect_whitespace</tt>, which
+        flip-flops the behavior. If you use <tt>:respect_whitespace</tt>
+        for one or more tags, only those elements will have their whitespace
+        respected; all other tags will have their whitespace compressed.</p>
+     =20
+
+      <a name=3D"id2248688"></a><h3>Automatic Entity Processing</h3>
+        <p>REXML does some automatic processing of entities for your
+        convenience. The processed entities are &amp;, &lt;, &gt;, ", and '.
+        If REXML finds any of these characters in Text or Attribute values,=
+ it
+        automatically turns them into entity references when it writes them
+        out. Additionally, when REXML finds any of these entity references=
+ in
+        a document source, it converts them to their character equivalents.
+        All other entity references are left unprocessed. If REXML finds an
+        &amp;, &lt;, or &gt; in the document source, it will generate a
+        parsing error.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Entity processing</div>
+<pre>bad_source =3D "&lt;a&gt;Cats &amp; dogs&lt;/a&gt;"=20
+good_source =3D "&lt;a&gt;Cats &amp;amp; &amp;#100;ogs&lt;/a&gt;"=20
+doc =3D REXML::Document.new bad_source=20
+# Generates a parse error=20
+doc =3D REXML::Document.new good_source=20
+puts doc.root.text=20
+# -&gt; "Cats &amp; &amp;#100;ogs"=20
+doc.root.write $stdout=20
+# -&gt; "&lt;a&gt;Cats &amp;amp; &amp;#100;ogs&lt;/a&gt;"=20
+doc.root.attributes["m"] =3D "x'y\"z"=20
+puts doc.root.attributes["m"]=20
+# -&gt; "x'y\"z"=20
+doc.root.write $stdout=20
+# -&gt; "&lt;a m=3D'x&amp;apos;y&amp;quot;z'&gt;Cats &amp;amp; &amp;#100;og=
+s&lt;/a&gt;"</pre>
+</div>
+     =20
+
+      <a name=3D"id2248735"></a><h3>Namespaces</h3>
+        <p>Namespaces are fully supported in REXML and within the XPath
+        parser. There are a few caveats when using XPath, however:</p>
+
+        <ul>
+          <li>If you don't supply a namespace mapping, the default namespace
+          mapping of the context element is used. This has its limitations,
+          but is convenient for most purposes.</li>
+
+          <li>If you need to supply a namespace mapping, you must use the
+          XPath methods <tt>each</tt>, <tt>first</tt>, and
+          <tt>match</tt> and pass them the mapping.</li>
+        </ul>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Using namespaces</div>
+<pre>source =3D "&lt;a xmlns:x=3D'foo' xmlns:y=3D'bar'&gt;&lt;x:b id=3D'1'/=
+&gt;&lt;y:b id=3D'2'/&gt;&lt;/a&gt;"
+doc =3D Document.new source
+doc.elements["/a/x:b"].attributes["id"]	                     # -&gt; '1'
+XPath.first(doc, "/a/m:b", {"m"=3D&gt;"bar"}).attributes["id"]   # -&gt; '2'
+doc.elements["//x:b"].prefix                                # -&gt; 'x'
+doc.elements["//x:b"].namespace	                             # -&gt; 'foo'
+XPath.first(doc, "//m:b", {"m"=3D&gt;"bar"}).prefix              # -&gt; 'y=
+'</pre>
+</div>
+     =20
+
+      <a name=3D"id2248794"></a><h3>Pull parsing</h3>
+        <p>The pull parser API is not yet stable. When it settles down, I'll
+        fill in this section. For now, you'll have to bite the bullet and=
+ read
+        the <a href=3D"http://www.germane-software.com/software/rexml_doc/c=
+lasses/REXML/PullParser.html">PullParser</a>
+        API docs. Ignore the PullListener class; it is a private helper
+        class.</p>
+     =20
+
+      <a name=3D"id2248814"></a><h3>SAX2 Stream Parsing</h3>
+        <p>The original REXML stream parsing API is very minimal. This also
+        means that it is fairly fast. For a more complex, more "standard"=
+ API,
+        REXML also includes a streaming parser with a SAX2+ API. This API
+        differs from SAX2 in a couple of ways, such as having more filters=
+ and
+        multiple notification mechanisms, but the core API is SAX2.</p>
+
+        <p>The two classes in the SAX2 API are <a href=3D"http://www.german=
+e-software.com/software/rexml_doc/classes/REXML/SAX2Parser.html"><tt>SAX2Pa=
+rser</tt></a>
+        and <a href=3D"http://www.germane-software.com/software/rexml_doc/c=
+lasses/REXML/SAX2Listener.html"><tt>SAX2Listener</tt></a>.
+        You can use the parser in one of five ways, depending on your needs.
+        Three of the ways are useful if you are filtering for a small number
+        of events in the document, such as just printing out the names of=
+ all
+        of the elements in a document, or getting all of the text in a
+        document. The other two ways are for more complex processing, where
+        you want to be notified of multiple events. The first three involve
+        Procs, and the last two involve listeners. The listener mechanisms=
+ are
+        very similar to the original REXML streaming API, with the addition=
+ of
+        filtering options, and are faster than the proc mechanisms.</p>
+
+        <p>An example is worth a thousand words, so we'll just take a look=
+ at
+        a small example of each of the mechanisms. The first example involv=
+es
+        printing out only the text content of a document.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Filtering for Events with Procs</div>
+<pre>require 'rexml/sax2parser'
+parser =3D REXML::SAX2Parser.new( File.new( 'documentation.xml' ) )
+parser.listen( :characters ) {|text| puts text }
+parser.parse</pre>
+</div>
+
+        <p>In this example, we tell the parser to call our block for every
+        <tt>characters</tt> event. "characters" is what SAX2 calls Text
+        nodes. The event is identified by the symbol <tt>:characters</tt>.
+        There are a number of these events, including
+        <tt>:element_start</tt>, <tt>:end_prefix_mapping</tt>, and so
+        on; the events are named after the methods in the
+        <tt>SAX2Listener</tt> API, so refer to that document for a
+        complete list.</p>
+
+        <p>You can additionally filter for particular elements by passing an
+        array of tag names to the <tt>listen</tt> method. In further
+        examples, we will not include the <tt>require</tt> or parser
+        construction lines, as they are the same for all of these
+        examples.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Filtering for Events on Particular Elements wit=
+h Procs</div>
+<pre>parser.listen( :characters, %w{ changelog todo } ) {|text| puts text=
+ }
+parser.parse</pre>
+</div>
+
+        <p>In this example, only the text content of changelog and todo
+        elements will be printed. The array of tag names can also contain
+        regular expressions which the element names will be matched
+        against.</p>
+
+        <p>Finally, as a shortcut, if you do not pass a symbol to the listen
+        method, it will default to <tt>:element_start</tt></p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Default Events</div>
+<pre>parser.listen( %w{ item }) do |uri,localname,qname,attributes|=20
+  puts attributes['version']
+end
+parser.parse</pre>
+</div>
+
+        <p>This example prints the "version" attribute of all "item" elemen=
+ts
+        in the document. Notice that the number of arguments passed to the
+        block is larger than for <tt>:text</tt>; again, check the
+        SAX2Listener API for a list of what arguments are passed the blocks
+        for a given event.</p>
+
+        <p>The last two mechanisms for parsing use the SAX2Listener API. Li=
+ke
+        StreamListener, SAX2Listener is a <tt>module</tt>, so you can
+        <tt>include</tt> it in your class to give you an adapter. To use
+        the listener model, create a class that implements some of the
+        SAX2Listener methods, or all of them if you don't include the
+        SAX2Listener model. Add them to a parser as you would blocks, and=
+ when
+        the parser is run, the methods will be called when events occur.
+        Listeners do not use event symbols, but they can filter on element
+        names.</p>
+
+        <div class=3D"example">
+<div class=3D"exampletitle">Filtering for Events with Listeners</div>
+<pre>listener1 =3D MySAX2Listener.new
+listener2 =3D MySAX2Listener.new
+parser.listen( listener1 )
+parser.listen( %{ changelog, todo, credits }, listener2 )
+parser.parse</pre>
+</div>
+
+        <p>In the previous example, <tt>listener1</tt> will be notified of
+        all events that occur, and <tt>listener2</tt> will only be
+        notified of events that occur in <tt>changelog</tt>,
+        <tt>todo</tt>, and <tt>credits</tt> elements. We also see that
+        multiple listeners can be added to the same parser; multiple blocks
+        can also be added, and listeners and blocks can be mixed together.<=
+/p>
+
+        <p>There is, as yet, no mechanism for recursion. Two upcoming featu=
+res
+        of the SAX2 API will be the ability to filter based on an XPath, and
+        the ability to specify filtering on an elemnt and all of its
+        descendants.</p>
+
+        <p>WARNING: The SAX2 API for dealing with doctype (DTD)
+        events almost certainly will change.</p>
+     =20
+
+      <a name=3D"id2249064"></a><h3>Convenience methods</h3>
+        <p>Michael Neumann contributed some convenience functions for nodes,
+        and they are general enough that I've included. Michael's use-case
+        examples follow: </p><div class=3D"example">
+<div class=3D"exampletitle">Node convenience functions</div>
+<pre>#
+        Starting with +root_node+, we recursively look for a node with the
+        given # +tag+, the given +attributes+ (a Hash) and whoose text equa=
+ls
+        or matches the # +text+ string or regular expression. # # To find=
+ the
+        following node: # # &lt;td class=3D'abc'&gt;text&lt;/td&gt; # # We=
+ use:
+        # # find_node(root, 'td', {'class' =3D&gt; 'abc'}, "text") # # Retu=
+rns
+        +nil+ if no matching node was found. def find_node(root_node, tag,
+        attributes, text) root_node.find_first_recursive {|node| node.name=
+ =3D=3D
+        tag and attributes.all? {|attr, val| node.attributes[attr] =3D=3D=
+ val} and
+        text =3D=3D=3D node.text } end # # Extract specific columns (specif=
+ied by
+        the position of it's corrensponding # header column) from a table.=
+ # #
+        Given the following table: # # &lt;table&gt; # &lt;tr&gt; #
+        &lt;td&gt;A&lt;/td&gt; # &lt;td&gt;B&lt;/td&gt; #
+        &lt;td&gt;C&lt;/td&gt; # &lt;/tr&gt; # &lt;tr&gt; #
+        &lt;td&gt;A.1&lt;/td&gt; # &lt;td&gt;B.1&lt;/td&gt; #
+        &lt;td&gt;C.1&lt;/td&gt; # &lt;/tr&gt; # &lt;tr&gt; #
+        &lt;td&gt;A.2&lt;/td&gt; # &lt;td&gt;B.2&lt;/td&gt; #
+        &lt;td&gt;C.2&lt;/td&gt; # &lt;/tr&gt; # &lt;/table&gt; # # To extr=
+act
+        the first (A) and last (C) column: # # extract_from_table(root_node,
+        ["A", "C"]) # # And you get this as result: # # [ # ["A.1", "C.1"],=
+ #
+        ["A.2", "C.2"] # ] # def extract_from_table(root_node, headers) #
+        extract and collect all header nodes header_nodes =3D headers.colle=
+ct {
+        |header| find_node(root_node, 'td', {}, header) } raise "some heade=
+rs
+        not found" if header_nodes.compact.size &lt; headers.size # assert
+        that all headers have the same parent 'header_row', which is the ro=
+w #
+        in which the header_nodes are contained. 'table' is the surrounding
+        table tag. header_row =3D header_nodes.first.parent table =3D
+        header_row.parent raise "different parents" unless header_nodes.all?
+        {|n| n.parent =3D=3D header_row} # we now iterate over all rows in=
+ the
+        table that follows the header_row. # for each row we collect the
+        elements at the same positions as the header_nodes. # this is what=
+ we
+        finally return from the method. (header_row.index_in_parent+1 ..
+        table.elements.size).collect do |inx| row =3D table.elements[inx]
+        header_nodes.collect { |n| row.elements[ n.index_in_parent ].text=
+ }
+        end end</pre>
+</div><p></p>
+     =20
+
+      <a name=3D"id2249165"></a><h3>Conclusion</h3>
+        <p>This isn't everything there is to REXML, but it should be enough=
+ to
+        get started. Check the <a href=3D"http://www.germane-software.com/s=
+oftware/rexml/doc/index.html">API
+        documentation</a><sup><a href=3D"#id2249178">2</a></sup> for partic=
+ulars and more examples.
+        There are plenty of unit tests in the <tt>test/</tt> directory,
+        and these are great sources of working examples.</p>
+     =20
+   =20
+ =20
+
+ =20
+</div>
+<div class=3D"footnotes">
+<div class=3D"footnote">
+<a name=3D"id2248634">1) </a>You must generate the API
+        documentation with rdoc or download the API documentation from the
+        REXML website for this documentation.</div>
+<div class=3D"footnote">
+<a name=3D"id2249178">2) </a>You must generate the API documentation
+        with rdoc or download the API documentation from the REXML website=
+ for
+        this documentation.</div>
+</div>
+<div id=3D"footer">
+<div style=3D"float:left;"><a href=3D"http://www.germane-software.com/%7Ese=
+r">[ Home ]</a></div>
+<div style=3D"float:right;"><a href=3D"mailto:ser@germane-software.com">[=
+ EMail ]</a></div>
+<a href=3D"http://www.germane-software.com/cgi-bin/software">[ Software ]</=
+a>
+</div>
+
+
+</body></html>
+------=_NextPart_000_0000_5A91F805.686355FA
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: urn:snapshot-F645C75D:http://www.germane-software.com/styles/style.css
+
+/* Effective stylesheet produced by snapshot save */
+body { font: 1em serif; margin: 1em 1em 0em; padding: 0px; background: none=
+ repeat scroll 0% 0% rgb(255, 255, 255); }
+#menu { float: right; width: 12em; background: none repeat scroll 0% 0% rgb=
+(221, 221, 221); color: rgb(0, 0, 0); border: 2px solid rgb(0, 0, 0); margi=
+n-left: 2em; margin-bottom: 2em; padding-bottom: 1em; padding-top: 0.5em;=
+ }
+.menuitem { font-family: sans-serif; }
+.menusubitem { text-align: left; font-family: sans-serif; margin-left: 0.5e=
+m; }
+.menusubsubitem { text-align: left; font-family: serif; margin-left: 1em;=
+ }
+#centercontent { background: none repeat scroll 0% 0% rgb(255, 255, 255);=
+ border: 0px none; margin: 1em; }
+div#menu > div { margin-left: 1em; }
+html > body #centercontent {  }
+p { margin-top: 1em; margin-left: 1em; margin-bottom: 1em; }
+dt { margin-top: 1em; margin-left: 1em; margin-bottom: 0.5em; font-weight:=
+ bold; }
+dd { margin: 1em 1em 1em 2em; }
+#footer { background: none repeat scroll 0% 0% rgb(238, 238, 238); border:=
+ 1px solid rgb(0, 0, 0); margin-top: 1em; margin-bottom: 1em; text-align:=
+ center; }
+#banner { background: none repeat scroll 0% 0% rgb(255, 255, 255); text-ali=
+gn: center; }
+h2, h3, pre { margin: 0px 1em 1em; }
+h2 { margin-top: 2em; padding-top: 0.5em; padding-left: 0.5em; margin-left:=
+ 0px; border-top: 1px solid rgb(187, 187, 187); border-left: 1px solid rgb(=
+187, 187, 187); }
+#banner h1 { font-size: 3em; margin: 0px; text-align: center; }
+h3 { margin: 1em; }
+.box { margin: 1em; border: 1px solid rgb(0, 0, 0); }
+.title { float: left; background: none repeat scroll 0% 0% rgb(153, 153, 25=
+5); font-weight: bold; padding-left: 0.5em; }
+.version { background: none repeat scroll 0% 0% rgb(153, 153, 255); text-al=
+ign: right; padding-right: 0.5em; }
+.abstract { background: none repeat scroll 0% 0% rgb(238, 238, 238); border=
+-top: 1px solid rgb(85, 85, 85); border-bottom: 1px solid rgb(85, 85, 85); }
+.date { float: left; background: none repeat scroll 0% 0% rgb(153, 255, 153=
+); padding-left: 0.5em; }
+.links { background: none repeat scroll 0% 0% rgb(153, 255, 153); width: 10=
+0%; text-align: right; }
+.example, .example_numbered { font-family: monospace; border: 1px solid rgb=
+(0, 0, 119); background: none repeat scroll 0% 0% rgb(238, 238, 238); margi=
+n: 1em; }
+.exampletitle { font-family: sans-serif; font-weight: bold; background-colo=
+r: rgb(238, 255, 238); padding-left: 1em; }
+.example_numbered:before {  }
+.screenshot { background-color: rgb(238, 238, 255); padding-top: 1em; }
+.screenshottitle { background-color: rgb(238, 255, 238); }
+a { text-decoration: none; font-weight: bold; color: rgb(204, 0, 0); }
+pre { color: blue; }
+ol { margin-right: 1em; }
+ul { margin-right: 1em; }
+h1 { font: 3em Verdana,Arial,Helvetica,sans-serif; }
+h2 {  }
+.footnotes { border-top: 1px solid rgb(34, 34, 34); margin-top: 3em; margin=
+-left: 1em; margin-right: 1em; padding-left: 1em; }
+.footnote { text-indent: -1em; font-size: 0.75em; }
+
+------=_NextPart_000_0000_5A91F805.686355FA--
