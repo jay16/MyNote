@@ -32,7 +32,14 @@ passenger stop -p80
 
 7.查看生成信数量
 
-ls -R | grep eml | wc -l
+[root@emd webmail]# ls -R | grep eml | wc -l
+9758
+
+查看指定文件夹或文件大小 
+
+[root@emd webmail]# du -sh tar_bk/
+79M     tar_bk/
+
 
 
 1. config/readfile.yml 
