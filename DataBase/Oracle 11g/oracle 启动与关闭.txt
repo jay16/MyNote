@@ -1,23 +1,23 @@
-µÇÂ½²½Öè
+ç™»é™†æ­¥éª¤
 
-1 ÇĞ»»ÓÃ»§£¬²¢Ë¢ĞÂ±äÁ¿
+1 åˆ‡æ¢ç”¨æˆ·ï¼Œå¹¶åˆ·æ–°å˜é‡
 [oracle@oracle11g root]$ su  oracle;
 [oracle@oracle11g root]$ source ~/.bash_profile
 
-2 ĞŞ¸Äoratab
+2 ä¿®æ”¹oratab
 [oracle@oracle11g ~]$ vi /etc/oratab 
 
-Ñ¡ÔñÒªÆô¶¯µÄÊı¾İ¿âÊµÀıÃû
+é€‰æ‹©è¦å¯åŠ¨çš„æ•°æ®åº“å®ä¾‹å
 IntFocus:/home/work/oracle/product/11.2.0/db_1:Y
 mail:/home/work/oracle/product/11.2.0/db_1:N
 
-3 ÉùÃ÷ORACLE_SIDÊµÀıÃû
+3 å£°æ˜ORACLE_SIDå®ä¾‹å
 [oracle@oracle11g root]$ echo $ORACLE_SID
 mail
 [oracle@oracle11g root]$ export ORACLE_SID=IntFocus;
 
-4. ¿ªÆô¼àÌı
-[oracle@oracle11g root]$ lsnrctl start //»ò$ORACLE_HOME/bin/lsnrctl start
+4. å¼€å¯ç›‘å¬
+[oracle@oracle11g root]$ lsnrctl start //æˆ–$ORACLE_HOME/bin/lsnrctl start
 
 .....
 Service "IntFocusXDB" has 1 instance(s).
@@ -26,12 +26,12 @@ Service "maill_dev" has 1 instance(s).
   Instance "IntFocus", status READY, has 1 handler(s) for this service...
 The command completed successfully
 
-5 Æô¶¯oralceÊı¾İ¿â
-[oracle@oracle11g root]$ dbstart //»ò dbstart $ORACLE_HOME //»ò $ORACLE_HOME/bin/dbshut
+5 å¯åŠ¨oralceæ•°æ®åº“
+[oracle@oracle11g root]$ dbstart //æˆ– dbstart $ORACLE_HOME //æˆ– $ORACLE_HOME/bin/dbshut
 Processing Database instance "IntFocus": log file /home/work/oracle/product/11.2.0/db_1/startup.log
 
 
-6 sqlplusµÇÂ½oracle
+6 sqlplusç™»é™†oracle
 [oracle@oracle11g root]$ sqlplus /nolog;     
 
 SQL*Plus: Release 11.2.0.1.0 Production on Mon May 6 22:34:43 2013
@@ -51,7 +51,7 @@ Redo Buffers               11718656 bytes
 Database mounted.
 Database opened.
 
-²âÊÔselectÃüÁî£¬²é¿´µ±Ç°ÊµÀıÃû
+æµ‹è¯•selectå‘½ä»¤ï¼ŒæŸ¥çœ‹å½“å‰å®ä¾‹å
 SQL> select instance_name from v$instance;
 
 INSTANCE_NAME
@@ -61,8 +61,8 @@ hello
 
 
 
-²é¿´¼àÌı×´Ì¬
-[oracle@oracle11g root]$ lsnrctl status //»ò $ORACLE_HOME/bin/lsnrctl status
+æŸ¥çœ‹ç›‘å¬çŠ¶æ€
+[oracle@oracle11g root]$ lsnrctl status //æˆ– $ORACLE_HOME/bin/lsnrctl status
 
 Services Summary...
 Service "IntFocusXDB" has 1 instance(s).
@@ -72,10 +72,10 @@ Service "maill_dev" has 1 instance(s).
 The command completed successfully
 
 
-ÍË³öoracle
+é€€å‡ºoracle
 
-1. ¹Ø±Õ¼àÌı
-[oracle@oracle11g root]$ lsnrctl stop  //»ò $ORACLE_HOME/bin/lsnrctl stop
+1. å…³é—­ç›‘å¬
+[oracle@oracle11g root]$ lsnrctl stop  //æˆ– $ORACLE_HOME/bin/lsnrctl stop
 
 LSNRCTL for Linux: Version 11.2.0.1.0 - Production on 11-MAY-2013 14:26:27
 
@@ -84,32 +84,32 @@ Copyright (c) 1991, 2009, Oracle.  All rights reserved.
 Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC1522)))
 The command completed successfully
 
-2. ¹Ø±ÕoracleÊı¾İ¿â
+2. å…³é—­oracleæ•°æ®åº“
 
-[oracle@oracle11g root]$ dbshut $ORACLE_HOME //»ò $ORACLE_HOME/bin/dbshut $ORACLE_HOME
+[oracle@oracle11g root]$ dbshut $ORACLE_HOME //æˆ– $ORACLE_HOME/bin/dbshut $ORACLE_HOME
 Processing Database instance "IntFocus": log file /home/work/oracle/product/11.2.0/db_1/shutdown.log
 
 
 
 
-dbstart/dbshutÃüÁî£º
+dbstart/dbshutå‘½ä»¤ï¼š
 
-ĞŞ¸Ä$ORACLE_HOME/binÏÂµÄdbstart/dbshutÎÄ¼şÖĞÏÂÃæµÄÌõÄ¿
+ä¿®æ”¹$ORACLE_HOME/binä¸‹çš„dbstart/dbshutæ–‡ä»¶ä¸­ä¸‹é¢çš„æ¡ç›®
 ORACLE_HOME_LISTNER=$ORACLE_HOME
 
 
 
-oracleÊı¾İ¿â¿ªÆô¹Ø±Õ½Å±¾£º
+oracleæ•°æ®åº“å¼€æœºå¯åŠ¨è„šæœ¬ï¼š
 
 
-¿ªÆôoracle½Å±¾£º
+å¼€å¯oracleè„šæœ¬ï¼š
 
 [oracle@oracle11g ~]$ vi oracle_db_start.sh 
 -------------------------------------------------------------------
-#ÉèÖÃ¿ª»úÆô¶¯oracleÊı¾İ¿â
-#Ö´ĞĞ¸ÃshellÎ»ÖÃÔÚ/etc/rc.local
+#è®¾ç½®å¼€æœºå¯åŠ¨oracleæ•°æ®åº“
+#æ‰§è¡Œè¯¥shellä½ç½®åœ¨/etc/rc.local
 
-#ÉùÃ÷oracleËùĞè±äÁ¿
+#å£°æ˜oracleæ‰€éœ€å˜é‡
 
 ORACLE_SID=IntFocus;export ORACLE_SID
 ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
@@ -117,22 +117,22 @@ ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
 ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
 ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
 
-#sqlplusÆô¶¯Êı¾İ¿â
+#sqlpluså¯åŠ¨æ•°æ®åº“
 
 sqlplus '/as sysdba'<<eof
 startup;
 exit
 eof
 
-#Æô¶¯¼àÌı  lsnrctlÔÚ$ORACLE_HOME/bin/lsnrctl
+#å¯åŠ¨ç›‘å¬  lsnrctlåœ¨$ORACLE_HOME/bin/lsnrctl
 
 /home/work/oracle/product/11.2.0/db_1/bin/lsnrctl start
 -------------------------------------------------------------------
 
-¹Ø±Õoracle:
+å…³é—­oracle:
 [oracle@oracle11g ~]$ vi oracle_db_shut.sh 
 --------------------------------------------------------------------
-#ÉùÃ÷oracleËùĞè±äÁ¿
+#å£°æ˜oracleæ‰€éœ€å˜é‡
 
 ORACLE_SID=IntFocus;export ORACLE_SID
 ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
@@ -141,12 +141,12 @@ ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
 ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
 
 
-#±Õ¹Ø¼àÌı  lsnrctlÔÚ$ORACLE_HOME/bin/lsnrctl
+#é—­å…³ç›‘å¬  lsnrctlåœ¨$ORACLE_HOME/bin/lsnrctl
 
 $ORACLE_HOME/bin/lsnrctl stop
 
 
-#¹Ø±ÕÊı¾İ¿â
+#å…³é—­æ•°æ®åº“
 
 $ORACLE_HOME/bin/dbshut $ORACLE_HOME
 
