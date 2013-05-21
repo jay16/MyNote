@@ -1,17 +1,54 @@
+注意事项
+
+1. 关闭防火墙
+
+service iptables stop
+
+2.启动mysql
+
+service mysqld start
+
+3.启动redis
+
+/home/tools/redis/src/redis-server /ect/redis/redis.conf
+
+4.启动resque使用webmail身份
+
+#cd /home/work/focus_mail
+#nohup rake resque:work RAILS_ENV=development VERBOSE=1 QUEUES=* &
+nohup rake resque:workers COUNT=4 QUEUE=* VERBOSE=1 &
+#nohup rake resque:scheduler &
+
+5.启动rails使用webmail身份
+
+passenger start -p 80 -d --user webmail
+
+passenger status -p 80
+passenger stop -p80
+
+6.导入新名单没有type_email,需要进入数据库设置（1.4.5)
+
+原因：只生成（1.4.5)类型邮箱的信
+
+7.查看生成信数量
+
+ls -R | grep eml | wc -l
+
+
 1. config/readfile.yml 
-#������λ��
+#生成信位置
 sendmail: /home/webmail/mailtem/
-#��������׷����������Ip
+#生成信中追踪信链接中Ip
 sendip: 220.248.30.60
 sendport: 80
 reply: adm@online-edm.com
 mgtest: /home/work/focus_mail/lib/gm_test/
-#MailGatesλ��
+#MailGates位置
 filepath: /webmail/
 
 2. app/models/sendmail_job.rb
 
-�޸�ips����
+修改ips数组
 
 3. app/models/sendmail_job.rb
 
