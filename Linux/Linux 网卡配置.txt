@@ -1,4 +1,7 @@
 网卡配置文件 
+即时生效（重启后失效）:
+ifconfig eth0 192.168.1.102 netmask 255.255.255.0  //添加IP地址
+route add default gw 192.168.1.1   //添加网关
 
 （1）/etc/sysconfig/network-scripts/ifcfg-interface-name 
 配置文件ifcfg-interface-name包含了初始化接口所需的大部分详细信息。其中interface-name将根据网卡的类型和排序而不同，一般其名字为eth0、eth1、ppp0等，其中eth表示以太（eth0）类型网卡，0表示第一块网卡，1表示第二块网卡，而ppp0则表示第一个point-to-poirt protocol网络接口。在ifcfg文件中定义的各项目取决于接口类型。下面的值较问常见： 

@@ -1,6 +1,57 @@
+df: Disk free
+du: Disk usage
+
+查看指定文件(夹)大小
 [root@emd tools]# du -sh focus_mail_128/
 132M    focus_mail_128/
-[root@emd tools]# 
+
+查看当前文件大小
+[root@localhost work]# du -sh
+927M    .
+[root@localhost work]# du -h --max-depth=0
+927M    .
+[root@localhost work]# du --max-depth=0 -h
+927M    .
+[root@localhost work]# 
+
+查看当前文件夹下各文件大小
+[root@localhost work]# du --max-depth=1 -h
+5.1M    ./ipwork
+248K    ./126
+563M    ./rails
+60K     ./crond
+4.0K    ./sh
+20M     ./163
+24K     ./nohup
+339M    ./tools
+108K    ./ruby
+927M    .
+
+查看系统大小使用情况
+[root@localhost work]# df -kh
+文件系统              容量  已用  可用 已用%% 挂载点
+/dev/sda2             5.0G  333M  4.4G   7% /
+tmpfs                 947M     0  947M   0% /dev/shm
+/dev/sda1             485M   28M  432M   7% /boot
+/dev/sda8              82G  1.7G   76G   3% /home
+/dev/sda3             4.0G  136M  3.7G   4% /swap
+/dev/sda7            1008M   34M  924M   4% /tmp
+/dev/sda5             4.0G  2.7G  1.2G  70% /usr
+/dev/sda6             3.0G  606M  2.3G  22% /var
+[root@localhost work]# 
+
+查看系统大小使用情况,同时包含硬盘类型
+[root@localhost work]# df -Th
+文件系统    类型      容量  已用  可用 已用%% 挂载点
+/dev/sda2     ext4    5.0G  333M  4.4G   7% /
+tmpfs        tmpfs    947M     0  947M   0% /dev/shm
+/dev/sda1     ext4    485M   28M  432M   7% /boot
+/dev/sda8     ext4     82G  1.7G   76G   3% /home
+/dev/sda3     ext4    4.0G  136M  3.7G   4% /swap
+/dev/sda7     ext4   1008M   34M  924M   4% /tmp
+/dev/sda5     ext4    4.0G  2.7G  1.2G  70% /usr
+/dev/sda6     ext4    3.0G  606M  2.3G  22% /var
+
 [root@emd tools]# du --help
 用法：du [选项]... [文件]...
 　或：du [选项]... --files0-from=F
