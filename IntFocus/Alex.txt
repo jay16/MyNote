@@ -78,3 +78,23 @@ total 40
 [webmail@cloud yuanzu_nosina_rest]$ dig hotmail.com mx
 -----------------------------------------------
 [webmail@cloud yuanzu_nosina_rest]$ more yuanzu_nosina_rest.csv
+-----------------------------------------------
+ps axuw|grep sina |eth1
+-----------------------------------------------
+sh -c 'for i in `ls |head -n 4000`;do mv {} /webmail/mqueue_sina_eth3/wait \;
+-----------------------------------------------
+find . -type f -exec cp {} /webmail//mqueue_sina_eth4/wait/ \;
+-----------------------------------------------
+grep OK mgmailerd_yahoo.* |wc -l
+-----------------------------------------------
+ls -alrt
+-----------------------------------------------
+grep OK ./mqueue_sina_eth4/log/mgmailerd_sina_eth4.log.130520 |wc -l
+-----------------------------------------------
+find . -type f -name '*sina*.log.*' -exec ls -al {} \;
+-----------------------------------------------
+find . -type f -name '*sina*.log.*'
+-----------------------------------------------
+grep -v RETRY mgmailerd_163_eth0.log|wc -l
+-----------------------------------------------
+cat /tmp/kk.sh |awk -F"'"  '{print $2}'
