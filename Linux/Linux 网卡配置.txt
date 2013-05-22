@@ -1,0 +1,40 @@
+网卡配置文件 
+
+（1）/etc/sysconfig/network-scripts/ifcfg-interface-name 
+配置文件ifcfg-interface-name包含了初始化接口所需的大部分详细信息。其中interface-name将根据网卡的类型和排序而不同，一般其名字为eth0、eth1、ppp0等，其中eth表示以太（eth0）类型网卡，0表示第一块网卡，1表示第二块网卡，而ppp0则表示第一个point-to-poirt protocol网络接口。在ifcfg文件中定义的各项目取决于接口类型。下面的值较问常见： 
+》DEVICE=name ，其中，name是物理设备名。 
+》IPADDR=addr，其中，addr是IP地址。 
+》NETMASK=mask，其中，mask是网络掩码值。 
+》NETWORK=addr，其中addr是网络地址。 
+》BROADCAST=addr，其中，addr是广播地址。 
+》GATEWAY=addr，其中addr是网关地址。 
+》ONBOOT=answer，其中，answer是yes（引导时激活设备）或no（引导时不激活设备） 
+》USERCTL=answer，其中，answer是yes（非root用户可以控制该设备）或no 
+》BOOTPROTO=proto，其中，proto取下列值之一：none，引导时不使用协议；static静态分配地址；bootp，使用BOOTP协议，或dhcp，使用DHCP协议。 
+
+（2）根据上述各参数的意义，设定linpcl.lintec.edu.cn机器的设置文件如下： 
+[root@linpcl root]#cat /etc/sysconfig/networking/devices/ifcfg-rth0 
+DEVICE=eth0   www.2cto.com  
+ONBOOT=yes 
+BOOTPROTO=static 
+IPADDR=192.168.0.2 
+NETMASK=255.255.255.0 
+GATEWAY=192.168.0.1 
+
+（3）参数配置完毕后保存文件，并使用/etc/init.d/network restart命令重启网络设备，最新设值即可生效。 
+[root@linpcl root]# /etc/rc.d/init.d/network restart 
+正在关闭接口 eth0：                                [确定] 
+关闭环回接口：                                     [确定] 
+设置网络参数：                                     [确定] 
+弹出环回接口：                                     [确定] 
+弹出界面eth0：                                     [确定] 
+
+（4）使用ifconfig命令查看网络设备状况。 
+[root@linpcl root]# ifconfig 
+eth0      Link encap: Ethernet HWassr 52：54：AB：28：EE：37 
+          linet addr：192.168.0.2 bcast：192.168.0.255 Mask：255.255.255.0 
+ 
+（还有一些参数文件自动显示，在此省略）。。。 
+禁用网卡： 
+ifconfig eth0 down 
+永久禁用，就要修改一下配置文件了。 
