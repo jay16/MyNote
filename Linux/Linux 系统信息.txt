@@ -1,0 +1,84 @@
+# 查看活动用户
+[root@oracle11g crond]# w
+ 15:16:18 up 20:59,  1 user,  load average: 0.05, 0.06, 0.02
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    192.168.0.105    10:07    0.00s  0.52s  0.01s w
+
+# 查看指定用户信息  id <用户名>
+[root@oracle11g crond]# id root
+uid=0(root) gid=0(root) groups=0(root)
+
+# 查看用户登录日志
+[root@oracle11g webmail_log]# last
+root     pts/1        192.168.0.105    Thu May 23 15:23   still logged in   
+root     pts/0        192.168.0.105    Thu May 23 10:07   still logged in   
+root     pts/0        192.168.0.105    Wed May 22 18:45 - 20:27  (01:41)    
+reboot   system boot  2.6.32-279.14.1. Wed May 22 18:16 - 15:23  (21:07)    
+root     pts/1        192.168.0.105    Wed May 22 10:40 - down   (02:07)    
+root     pts/0        192.168.0.105    Wed May 22 10:17 - down   (02:30)    
+root     pts/0        192.168.0.105    Tue May 21 21:04 - 21:07  (00:02)    
+root     tty1                          Tue May 21 21:03 - down   (15:44)    
+reboot   system boot  2.6.32-279.14.1. Tue May 21 21:02 - 12:47  (15:45)    
+
+# 查看系统所有用户
+[root@oracle11g webmail_log]# cut -d: -f1 /etc/passwd
+root
+bin
+daemon
+adm
+lp
+sync
+shutdown
+
+# 查看系统所有组
+[root@oracle11g webmail_log]# cut -d: -f1 /etc/group
+root
+bin
+daemon
+sys
+adm
+tty
+
+# 查看当前用户的计划任务 
+[root@oracle11g webmail_log]# crontab -l
+1 */2 * * * /home/work/crond/mysql_sync_2_oracle.sh
+30 4 * * * /home/work/crond/dogday_deal_oracle.sh
+30 5 * * * /home/work/crond/dogdata_sync_mysql.sh
+[root@oracle11g webmail_log]# 
+
+# 列出所有系统服务
+[root@oracle11g webmail_log]# chkconfig --list 
+NetworkManager  0:off   1:off   2:on    3:on    4:on    5:on    6:off
+auditd          0:off   1:off   2:on    3:on    4:on    5:on    6:off
+avahi-daemon    0:off   1:off   2:off   3:on    4:on    5:on    6:off
+crond           0:off   1:off   2:on    3:on    4:on    5:on    6:off
+dnsmasq         0:off   1:off   2:off   3:off   4:off   5:off   6:off
+firstboot       0:off   1:off   2:off   3:off   4:off   5:off   6:off
+freenx-server   0:off   1:off   2:on    3:on    4:on    5:on    6:off
+haldaemon       0:off   1:off   2:off   3:on    4:on    5:on    6:off
+httpd           0:off   1:off   2:off   3:off   4:off   5:off   6:off
+ip6tables       0:off   1:off   2:on    3:on    4:on    5:on    6:off
+
+# 列出所有启动的系统服务 
+[root@oracle11g webmail_log]# chkconfig --list | grep on 
+NetworkManager  0:off   1:off   2:on    3:on    4:on    5:on    6:off
+auditd          0:off   1:off   2:on    3:on    4:on    5:on    6:off
+avahi-daemon    0:off   1:off   2:off   3:on    4:on    5:on    6:off
+crond           0:off   1:off   2:on    3:on    4:on    5:on    6:off
+freenx-server   0:off   1:off   2:on    3:on    4:on    5:on    6:off
+haldaemon       0:off   1:off   2:off   3:on    4:on    5:on    6:off
+ip6tables       0:off   1:off   2:on    3:on    4:on    5:on    6:off
+mdmonitor       0:off   1:off   2:on    3:on    4:on    5:on    6:off
+messagebus      0:off   1:off   2:on    3:on    4:on    5:on    6:off
+
+# 查看所有安装的软件包
+[root@oracle11g webmail_log]# rpm -qa
+wacomexpresskeys-0.4.2-3.el6.i686
+cpio-2.10-11.el6_3.i686
+yum-3.2.29-30.el6.centos.noarch
+tcl-8.5.7-6.el6.i686
+initscripts-9.03.31-2.el6.centos.1.i686
+pycairo-1.8.6-2.1.el6.i686
+xorg-x11-fonts-misc-7.2-9.1.el6.noarch
+openssh-5.3p1-81.el6_3.i686
+newt-python-0.52.11-3.el6.i686
