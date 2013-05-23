@@ -13,3 +13,10 @@ OS 名称:          Microsoft Windows XP Professional
 范例：
 [root@localhost ~]# echo $HOSTTYPE
 i686
+
+
+查看系统是否支持64位计算(结果大于0, 说明支持64bit计算. lm指long mode, 支持lm则是64bit) 
+[root@emd ~]# cat /proc/cpuinfo | grep flags | grep lm | wc -l
+0
+[root@emd ~]# cat /proc/cpuinfo | grep flags | grep ' lm ' | wc -l
+0

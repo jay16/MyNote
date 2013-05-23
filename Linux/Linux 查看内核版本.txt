@@ -17,3 +17,21 @@ Distributor ID: CentOS
 Description:    CentOS release 5.5 (Final)
 Release:        5.5
 Codename:       Final
+
+# 查看系统运行时间、用户数、负载
+[root@oracle11g crond]# uptime
+ 15:06:21 up 20:50,  1 user,  load average: 0.25, 0.11, 0.02
+
+# 查看内存使用量和交换区使用量
+[root@oracle11g crond]# free -m
+             total       used       free     shared    buffers     cached
+Mem:          3925       3046        878          0        147       2658
+-/+ buffers/cache:        240       3684
+Swap:          319          0        319
+[root@oracle11g crond]# free -g
+             total       used       free     shared    buffers     cached
+Mem:             3          2          0          0          0          2
+-/+ buffers/cache:          0          3
+Swap:            0          0          0
+[root@oracle11g crond]# 
+
