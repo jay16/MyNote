@@ -16,6 +16,11 @@ mysql> create table unsub(id int unsigned primary key auto_increment,email varch
 
 mysql> insert into unsub(email,campaign_id,created_at)  (select email,campaign_id,created_at from unsubscribes)
 
+复制表
+mysql> create table dog_data_cache as (select * from dog_data);
+Query OK, 58 rows affected (0.15 sec)
+Records: 58  Duplicates: 0  Warnings: 0
+
 清空表数据,id重新从1开始
 mysql> truncate table 表名
 
