@@ -12,6 +12,21 @@ model name      : Pentium(R) Dual-Core  CPU      E5700  @ 3.00GHz
 [root@emd ~]# cat /proc/cpuinfo  | grep name |cut -f2 -d:| uniq -c
       2  Pentium(R) Dual-Core  CPU      E5700  @ 3.00GHz
 
+查看系统是否支持64位计算(结果大于0, 说明支持64bit计算. lm指long mode, 支持lm则是64bit) 
+[root@emd ~]# cat /proc/cpuinfo | grep flags | grep lm | wc -l
+0
+[root@emd ~]# cat /proc/cpuinfo | grep flags | grep ' lm ' | wc -l
+0
+
+查看网卡信息 
+[root@emd ~]# dmesg | grep -i eth
+eth0: registered as PCnet/PCI II 79C970A
+eth1: registered as PCnet/PCI II 79C970A
+eth0: link up
+eth0: no IPv6 routers present
+[root@emd ~]# 
+
+
 [root@emd ~]# uniq --help
 用法：uniq [选项]... [文件]
 从输入文件或者标准输入中筛选相邻的匹配行并写入到输出文件或标准输出。
