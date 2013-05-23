@@ -1,30 +1,30 @@
-/ÏµÍ³»·¾³£ºcentos 5.5
+/ç³»ç»Ÿç¯å¢ƒï¼šcentos 5.5
 
-ĞèÒªÎÄ¼ş£º
-sqlite-amalgamation-3.6.16.tar.gz (sqlite°²×°°ü£©
-ruby-1.9.2-p180.tar.gz            (ruby1.9.2°²×°°ü)
-node-v0.4.8.tar.gz                (nodejs°²×°°ü)
-redis-2.4.16.tar.gz               (redis°²×°°ü)
-focus_mail.tar.gz                 (FocusMailÔ´´úÂë,½âÑ¹ºóÎÄ¼ş¼ĞÃûÎªfocus_mail_128,Ó¦ĞŞ¸ÄÎªfocus_mail)
-mail206.tar.gz                    (FocusMailÊı¾İ¿âÄÚÈİ)
-redis.conf                        (redisÅäÖÃÎÄ¼ş£¬·ÅÖÃ/etcÏÂ)
+éœ€è¦æ–‡ä»¶ï¼š
+sqlite-amalgamation-3.6.16.tar.gz (sqliteå®‰è£…åŒ…ï¼‰
+ruby-1.9.2-p180.tar.gz            (ruby1.9.2å®‰è£…åŒ…)
+node-v0.4.8.tar.gz                (nodejså®‰è£…åŒ…)
+redis-2.4.16.tar.gz               (rediså®‰è£…åŒ…)
+focus_mail.tar.gz                 (FocusMailæºä»£ç ,è§£å‹åæ–‡ä»¶å¤¹åä¸ºfocus_mail_128,åº”ä¿®æ”¹ä¸ºfocus_mail)
+mail206.tar.gz                    (FocusMailæ•°æ®åº“å†…å®¹)
+redis.conf                        (redisé…ç½®æ–‡ä»¶ï¼Œæ”¾ç½®/etcä¸‹)
 
-ËµÃ÷£º
-1.ÏÂÁĞ²Ù×÷ÖĞËùÓĞ°²×°°ü¶¼·ÅÖÃÔÚ/home/toolsÏÂ
-2.FocusMail²¿ÊğÔÚ/home/work/ÏÂ
-3.FocusMailÎÄ¼ş¼ĞµÄÈ¨ÏŞÎªwebmail:webmail;
-  resque¡¢passengerµÄÆô¶¯ĞèÒªÊ¹ÓÃwebmailÓÃ»§
-3.ËùĞè°²×°°üÏÂÔØÁ´½Ó
-  ÆÕÍ¨ÏÂÔØ£ºhttps://codeload.github.com/jay16/FocusMail_SOP/zip/master
-  gitÏÂÔØ£º https://github.com/jay16/FocusMail_SOP.git
+è¯´æ˜ï¼š
+1.ä¸‹åˆ—æ“ä½œä¸­æ‰€æœ‰å®‰è£…åŒ…éƒ½æ”¾ç½®åœ¨/home/toolsä¸‹
+2.FocusMailéƒ¨ç½²åœ¨/home/work/ä¸‹
+3.FocusMailæ–‡ä»¶å¤¹çš„æƒé™ä¸ºwebmail:webmail;
+  resqueã€passengerçš„å¯åŠ¨éœ€è¦ä½¿ç”¨webmailç”¨æˆ·
+3.æ‰€éœ€å®‰è£…åŒ…ä¸‹è½½é“¾æ¥
+  æ™®é€šä¸‹è½½ï¼šhttps://codeload.github.com/jay16/FocusMail_SOP/zip/master
+  gitä¸‹è½½ï¼š https://github.com/jay16/FocusMail_SOP.git
 
-1. °²×°gcc
+1. å®‰è£…gcc
 
 [root@localhost ~]#  yum install gcc gcc-c++ gcc-g77 
 [root@localhost ~]#  yum install flex autoconf zlib curl readline-devel libxslt libxml2-devel libxslt-devel zlib-devel curl-devel bzip2 bzip2-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel 
 
 
-2.°²×°ruby1.92
+2.å®‰è£…ruby1.92
 
 [root@localhost ~]# cd /home/tools/
 [root@localhost tools]# tar -xvzf ruby-1.9.2-p180.tar.gz 
@@ -36,22 +36,22 @@ redis.conf                        (redisÅäÖÃÎÄ¼ş£¬·ÅÖÃ/etcÏÂ)
 ruby 1.9.2p180 (2011-02-18 revision 30909) [i686-linux]
 [root@localhost ruby-1.9.2-p180]# 
 
-3.¸üĞÂgem
+3.æ›´æ–°gem
 
 [root@localhost ruby-1.9.2-p180]# gem update --system
 [root@localhost ruby-1.9.2-p180]# gem update 
 [root@localhost ruby-1.9.2-p180]# gem -v
 2.0.3
 
-4.°²×°rails
+4.å®‰è£…rails
 
 [root@localhost ruby-1.9.2-p180]# gem  install rails -v=3.2.3
 [root@localhost ruby-1.9.2-p180]# rails -v
 Rails 3.2.3
 
-5.°²×°Êı¾İ¿âsqlite,mysql
+5.å®‰è£…æ•°æ®åº“sqlite,mysql
 
-5.1°²×°sqlite
+5.1å®‰è£…sqlite
 
 [root@localhost ruby-1.9.2-p180]# yum -y install expat-devel gettext-devel
 [root@localhost ruby-1.9.2-p180]# cd /home/tools/
@@ -63,28 +63,28 @@ Rails 3.2.3
 [root@localhost sqlite-3.6.16]# sqlite3 -version
 3.6.16
 
-°²×°sqliteÏà¹ØÌ×¼ş
+å®‰è£…sqliteç›¸å…³å¥—ä»¶
 
 [root@localhost sqlite-3.6.16]# gem install sqlite3-ruby
 
 
-5.2°²×°mysql 
+5.2å®‰è£…mysql 
 
 [root@localhost sqlite-3.6.16]# yum install mysql-server
 [root@localhost sqlite-3.6.16]# yum install mysql
 [root@localhost sqlite-3.6.16]# yum install mysql-devel 
 
-Æô¶¯mysql·şÎñ
+å¯åŠ¨mysqlæœåŠ¡
 
 [root@localhost sqlite-3.6.16]# service mysqld start
 
-µÇÂ½mysql,Ä¬ÈÏ³õÊ¼µÇÂ½ÃÜÂëÎª¿Õ
+ç™»é™†mysql,é»˜è®¤åˆå§‹ç™»é™†å¯†ç ä¸ºç©º
 
 [root@localhost sqlite-3.6.16]# mysql -u root -p
-Enter password:  (Ä¬ÈÏÃÜÂëÎª¿Õ£¬Ö±½Ó»Ø³µ)
+Enter password:  (é»˜è®¤å¯†ç ä¸ºç©ºï¼Œç›´æ¥å›è½¦)
 
-ĞŞ¸Ämysql rootµÇÂ½ÃÜÂëÎªFocus_Mail
-´´½¨mail_206Êı¾İ¿â£¬²¢µ¼ÈëÊı¾İ
+ä¿®æ”¹mysql rootç™»é™†å¯†ç ä¸ºFocus_Mail
+åˆ›å»ºmail_206æ•°æ®åº“ï¼Œå¹¶å¯¼å…¥æ•°æ®
 
 mysql> use mysql
 Database changed
@@ -100,13 +100,13 @@ mysql> source /home/tools/mail206_bk.sql;
 mysql> exit
 Bye
 
-6.²âÊÔ rails
+6.æµ‹è¯• rails
 
 [root@localhost ruby-1.9.2-p180]# cd /home/tools
 [root@localhost tools]# rails new rails_app
 [root@localhost tools]# cd rails_app/
 [root@localhost rails_app]# vi Gemfile
-ĞŞ¸ÄGemfile,Ìí¼ÓÈçÏÂÄÚÈİ
+ä¿®æ”¹Gemfile,æ·»åŠ å¦‚ä¸‹å†…å®¹
 
 gem 'rb-readline'
 gem 'execjs'
@@ -128,7 +128,7 @@ Make sure that `gem install therubyracer -v '0.11.4'` succeeds before bundling.
 [root@localhost rails_app]# rm -fr Gemfile.lock
 [root@localhost rails_app]# bundle install
 [root@localhost rails_app]# rails s
-³öÏÖÒÔÏÂÌáÊ¾±íÊ¾Æô¶¯³É¹¦
+å‡ºç°ä»¥ä¸‹æç¤ºè¡¨ç¤ºå¯åŠ¨æˆåŠŸ
 => Booting WEBrick
 => Rails 3.2.3 application starting in development on http://0.0.0.0:3000
 => Call with -d to detach
@@ -138,40 +138,40 @@ Make sure that `gem install therubyracer -v '0.11.4'` succeeds before bundling.
 [2013-04-29 07:29:36] INFO  ruby 1.9.2 (2011-02-18) [i686-linux]
 [2013-04-29 07:29:36] INFO  WEBrick::HTTPServer#start: pid=4894 port=3000
 
-7.²¿ÊğFocusMail
+7.éƒ¨ç½²FocusMail
 
 [root@localhost tools]# tar xzvf focus_mail.tar.gz 
 [root@localhost tools]# mv focus_mail_128 focus_mail
 [root@localhost tools]# mkdir /home/work
 [root@localhost tools]# cp -R focus_mail /home/work/
 [root@localhost tools]# cd /home/work/focus_mail/
-ĞŞ¸Äfocus_mailÎÄ¼ş¼ĞÈ¨ÏŞ
+ä¿®æ”¹focus_mailæ–‡ä»¶å¤¹æƒé™
 [root@localhost focus_mail]# chown -R webmail:webmail /home/work/focus_mail
 
-ĞŞ¸ÄÊı¾İ¿âÅäÖÃÎÄ¼ş
+ä¿®æ”¹æ•°æ®åº“é…ç½®æ–‡ä»¶
 
 [root@localhost focus_mail]# vi config/databases.yml
-(1)ĞŞ¸ÄÎÄ¼şconfig/databases.yml
+(1)ä¿®æ”¹æ–‡ä»¶config/databases.yml
 
-½«ÎÄ¼şÖĞip Ìæ»»Îªlocalhost
+å°†æ–‡ä»¶ä¸­ip æ›¿æ¢ä¸ºlocalhost
 
-ĞŞ¸ÄGemfile
+ä¿®æ”¹Gemfile
 [root@localhost focus_mail]# vi Gemfile
-(2)ĞŞ¸ÄÎÄ¼şGemfile
-gem 'lazy_high_charts', '~> 1.1.5' ĞŞ¸ÄÎª£º gem 'lazy_high_charts'
-Ìí¼Ó
+(2)ä¿®æ”¹æ–‡ä»¶Gemfile
+gem 'lazy_high_charts', '~> 1.1.5' ä¿®æ”¹ä¸ºï¼š gem 'lazy_high_charts'
+æ·»åŠ 
 gem 'rb-readline'
 
 [root@localhost focus_mail]# rm -f Gemfile.lock
 [root@localhost focus_mail]# bundle install
-¹Ø±Õ·À»ğÇ½
+å…³é—­é˜²ç«å¢™
 [root@localhost focus_mail]# service iptables stop
-Æô¶¯FocusMail
+å¯åŠ¨FocusMail
 [root@localhost focus_mail]# rails s
 
 
-Æô¶¯¹ı³Ì¿ÉÄÜ³öÏÖÈçÏÂÎÊÌâ£º
-¿ÉÄÜÎÊÌâ1
+å¯åŠ¨è¿‡ç¨‹å¯èƒ½å‡ºç°å¦‚ä¸‹é—®é¢˜ï¼š
+å¯èƒ½é—®é¢˜1
 gem nokogiri error: checking for libxml/parser.h.
 
 [root@localhost focus_mail]# yum install libxslt libxml2-devel libxslt-devel
@@ -179,21 +179,21 @@ gem nokogiri error: checking for libxml/parser.h.
 [root@localhost focus_mail]# rm -f Gemfile.lock
 [root@localhost focus_mail]# bundle install
 
-¿ÉÄÜÎÊÌâ2
+å¯èƒ½é—®é¢˜2
 /usr/local/lib/ruby/gems/1.9.1/gems/activesupport-3.2.3/lib/active_support/dependencies.rb:251:in `require':
  /usr/local/lib/ruby/gems/1.9.1/gems/therubyracer-0.11.4/lib/v8/init.so: 
 cannot restore segment prot after reloc: Permission denied
 
 [root@localhost focus_mail]# vi /etc/sysconfig/selinux 
-ĞŞ¸ÄÎª £ºSELINUX=disabled
+ä¿®æ”¹ä¸º ï¼šSELINUX=disabled
 
-¸ù¾İ´íÎóÌáÊ¾ÖĞµÄÎÄ¼şÂ·¾¶µ÷ÕûÏÂÃæ´úÂë
+æ ¹æ®é”™è¯¯æç¤ºä¸­çš„æ–‡ä»¶è·¯å¾„è°ƒæ•´ä¸‹é¢ä»£ç 
 [root@localhost focus_mail]# chcon -t texrel_shlib_t /usr/local/lib/ruby/gems/1.9.1/gems/therubyracer-0.11.4/lib/v8/init.so
 [root@localhost focus_mail]# 
 [root@localhost focus_mail]# rm -f Gemfile.lock
 [root@localhost focus_mail]# bundle install
 
-¿ÉÄÜÎÊÌâ3
+å¯èƒ½é—®é¢˜3
 [root@localhost focus_mail]# rails s
 You're running a version of ruby with no Readline support
 Please `gem install rb-readline` or recompile ruby --with-readline.
@@ -221,25 +221,25 @@ gem 'rb-readline'
 >> Maximum connections set to 1024
 >> Listening on 0.0.0.0:3000, CTRL+C to stop
 
-°´CTRL+CÖĞ¶Ïrails
+æŒ‰CTRL+Cä¸­æ–­rails
 
 
-8.°²×°nginx
+8.å®‰è£…nginx
 
 [root@localhost focus_mail]# gem install passenger
 [root@localhost focus_mail]# passenger-install-nginx-module
 
-°²×°¹ı³ÌÖĞĞèÒªÓĞÊäÈëÌáÊ¾
+å®‰è£…è¿‡ç¨‹ä¸­éœ€è¦æœ‰è¾“å…¥æç¤º
 
 Enter your choice (1 or 2) or press Ctrl-C to abort: 1
-Please specify a prefix directory [/opt/nginx]: »Ø³µ
+Please specify a prefix directory [/opt/nginx]: å›è½¦
 
 
-²âÊÔpassengerÆô¶¯FocusMail
+æµ‹è¯•passengerå¯åŠ¨FocusMail
 
 [root@localhost focus_mail]# passenger start
 
-Èç¹û³öÏÖÏÂÃæĞÅÏ¢£¬°´ÌáÊ¾°²×°¼´¿É£¬°²×°Íê³Éºó»á¼ÌĞøÆô¶¯FocusMail
+å¦‚æœå‡ºç°ä¸‹é¢ä¿¡æ¯ï¼ŒæŒ‰æç¤ºå®‰è£…å³å¯ï¼Œå®‰è£…å®Œæˆåä¼šç»§ç»­å¯åŠ¨FocusMail
 Nginx core 1.2.6 isn't installed
 
 Phusion Passenger Standalone will automatically install it into:
@@ -253,50 +253,50 @@ Accessible via: http://0.0.0.0:3000/
 
 You can stop Phusion Passenger Standalone by pressing Ctrl-C.
 ==================================================================
- Ctrl-C ÖĞ¶Ï
+ Ctrl-C ä¸­æ–­
 
 
-ä¯ÀÀÆ÷ÖĞÊäÈëÆ½Ì¨ip,³öÏÖFocusMailµÇÂ½½çÃæ£¬±íÊ¾FocusMail³É¹¦Æô¶¯
+æµè§ˆå™¨ä¸­è¾“å…¥å¹³å°ip,å‡ºç°FocusMailç™»é™†ç•Œé¢ï¼Œè¡¨ç¤ºFocusMailæˆåŠŸå¯åŠ¨
 
-Ê¹ÓÃjay_li@intfocus.com/123456µÇÂ½
+ä½¿ç”¨jay_li@intfocus.com/123456ç™»é™†
 
-²é¿´logÊä³öÈôÓĞÏÂÃæÌáÊ¾
+æŸ¥çœ‹logè¾“å‡ºè‹¥æœ‰ä¸‹é¢æç¤º
 
 ===============================================================================
 Rails Error: Unable to access log file. Please ensure that /home/work/focus_mail/log/development.log exists and is chmod 0666. 
 The log level has been raised to WARN and the output directed to STDERR until the problem is fixed
 
 ==================================================================
- Ctrl-C ÖĞ¶Ï
+ Ctrl-C ä¸­æ–­
 
 
-ĞŞ¸ÄlogÈ¨ÏŞ
+ä¿®æ”¹logæƒé™
 
 [root@localhost focus_mail]# chmod 777 log/
 
-ÔÙ´ÎÆô¶¯FocusMail²é¿´Êä³ö
+å†æ¬¡å¯åŠ¨FocusMailæŸ¥çœ‹è¾“å‡º
 [root@localhost focus_mail]# passenger start
 
-ĞŞ¸ÄFocusMailÎÄ¼ş¼ĞÈ¨ÏŞÎªwebmail:webmail
-ÈôÃ»ÓĞwebmail:webmailÈº×é»òÓÃ»§
+ä¿®æ”¹FocusMailæ–‡ä»¶å¤¹æƒé™ä¸ºwebmail:webmail
+è‹¥æ²¡æœ‰webmail:webmailç¾¤ç»„æˆ–ç”¨æˆ·
 
-Ìí¼ÓÓÃ»§webmail
+æ·»åŠ ç”¨æˆ·webmail
 [root@localhost ~]# useradd webmail
 
-Ìí¼ÓÓÃ»§Èº×éwebmail
+æ·»åŠ ç”¨æˆ·ç¾¤ç»„webmail
 [root@localhost ~]# groupadd webmail
-groupadd£ºwebmail ×éÒÑ´æÔÚ
+groupaddï¼šwebmail ç»„å·²å­˜åœ¨
 
-ÏòwebmailÈº×éÖĞÌí¼ÓwebmailÓÃ»§
+å‘webmailç¾¤ç»„ä¸­æ·»åŠ webmailç”¨æˆ·
 [root@localhost ~]# useradd -G webmail webmail
-useradd£ºÓÃ»§ webmail ÒÑ´æÔÚ
+useraddï¼šç”¨æˆ· webmail å·²å­˜åœ¨
 
 
-ĞŞ¸ÄFocusMailÎÄ¼ş¼ĞËùÊôÈº×éÎªwebmail:webmail
+ä¿®æ”¹FocusMailæ–‡ä»¶å¤¹æ‰€å±ç¾¤ç»„ä¸ºwebmail:webmail
 [root@localhost focus_mail]# chown -R webmail:webmail /home/work/focus_mail
 
 
-passengerºóÌ¨Ê¹ÓÃwebmailÔËĞĞFocusMail
+passengeråå°ä½¿ç”¨webmailè¿è¡ŒFocusMail
 
 [root@localhost focus_mail]# passenger start -p 80 -d --user webmail
 =============== Phusion Passenger Standalone web server started ===============
@@ -309,16 +309,16 @@ Serving in the background as a daemon.
 ===============================================================================
 [root@localhost focus_mail]# 
 
-²é¿´passengerÊÇ·ñÆô¶¯
+æŸ¥çœ‹passengeræ˜¯å¦å¯åŠ¨
 [root@localhost focus_mail]# passenger status -p 80
 Phusion Passenger Standalone is running on PID 4555, according to PID file /home/work/focus_mail/tmp/pids/passenger.80.pid
 [root@localhost focus_mail]# 
 
-ÈçÓĞĞèÒªÖØÆôpassenger£¬ĞèÏÈÔİÍ££¬È»ºóÔÙÆô¶¯
+å¦‚æœ‰éœ€è¦é‡å¯passengerï¼Œéœ€å…ˆæš‚åœï¼Œç„¶åå†å¯åŠ¨
 [root@localhost focus_mail]# passenger stop -p 80
 
 
-9.°²×°redis
+9.å®‰è£…redis
 
 [root@localhost focus_mail]# cd /home/tools
 [root@localhost tools]# tar xzvf redis-2.4.16.tar.gz 
@@ -327,13 +327,13 @@ Phusion Passenger Standalone is running on PID 4555, according to PID file /home
 [root@localhost redis-2.4.16]# make install
 [root@localhost redis-2.4.16]# cp /home/tools/redis.conf /etc
 
-Æô¶¯redis
+å¯åŠ¨redis
 
 [root@localhost redis-2.4.16]# redis-server /etc/redis.conf 
-»ò
+æˆ–
 [root@localhost redis-2.4.16]# ./src/redis-server /etc/redis/redis.conf 
 
-²é¿´redisÊÇ·ñÔËĞĞ
+æŸ¥çœ‹redisæ˜¯å¦è¿è¡Œ
 
 [root@localhost redis-2.4.16]# ps -ef | grep redis
 root     14209     1  0 21:49 ?        00:00:00 redis-server /etc/redis.conf
@@ -341,30 +341,30 @@ root     14214  3375  0 21:49 pts/0    00:00:00 grep redis
 
 [root@localhost redis-2.4.16]# cd /home/work
 
-´´½¨resqueÆô¶¯shellÎÄ¼ş
+åˆ›å»ºresqueå¯åŠ¨shellæ–‡ä»¶
 
 [root@localhost work]# vi focus_mail_resquework.sh 
 
-Ìí¼ÓÈçÏÂÄÚÈİ
+æ·»åŠ å¦‚ä¸‹å†…å®¹
 
 cd /home/work/focus_mail
 nohup rake resque:workers COUNT=4 QUEUE=* VERBOSE=1 &
 nohup rake resque:scheduler &
 
-¸³ÓèÈ¨ÏŞ
+èµ‹äºˆæƒé™
 
 [root@localhost work]# chmod +x focus_mail_start.sh
 [root@localhost work]# chown webmail:webmail focus_mail_resquework.sh 
 
-ÇĞ»»ÖÁwebmailÓÃ»§Æô¶¯
+åˆ‡æ¢è‡³webmailç”¨æˆ·å¯åŠ¨
 
 [root@localhost work]# su webmail
 [webmail@localhost work]$ 
 [webmail@localhost work]$ ./focus_mail_resquework.sh 
-nohup: appending output to ¡°nohup.out¡±
-nohup: appending output to ¡°nohup.out¡±
+nohup: appending output to â€œnohup.outâ€
+nohup: appending output to â€œnohup.outâ€
 
-²é¿´ºóÌ¨ÊÇ·ñÔËĞĞ
+æŸ¥çœ‹åå°æ˜¯å¦è¿è¡Œ
 [webmail@localhost work]$ ps -ef | grep resque
 webmail   4412     1 26 05:45 pts/1    00:00:07 /usr/local/bin/ruby /usr/local/bin/rake resque:workers COUNT=4 QUEUE=* VERBOSE=1
 webmail   4413     1 32 05:45 pts/1    00:00:09 /usr/local/bin/ruby /usr/local/bin/rake resque:scheduler
@@ -375,5 +375,5 @@ webmail   4446  4412 15 05:45 pts/1    00:00:01 /usr/local/bin/ruby /usr/local/b
 webmail   4451  4372  0 05:46 pts/1    00:00:00 grep resque
 [webmail@localhost work]$ 
 
-Ö÷Òª²é¿´½ø³ÌËùÊôÓÃ»§ÊÇ·ñÊÇwebmail.
+ä¸»è¦æŸ¥çœ‹è¿›ç¨‹æ‰€å±ç”¨æˆ·æ˜¯å¦æ˜¯webmail.
 
