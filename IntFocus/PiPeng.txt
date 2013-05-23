@@ -1,0 +1,3 @@
+http://192.168.0.166/zabbix/dashboard.php?ddreset=1&sid=fec8990e7576df4e
+user: admin
+pwd : zabbix
