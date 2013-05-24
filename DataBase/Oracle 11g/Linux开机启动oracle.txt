@@ -20,7 +20,6 @@
 
 [oracle@oracle11g ~]$ vi oracle_db_start.sh 
 注意：listener中oracle_sid要单独指定,文件位置
-/home/work/oracle/product/11.2.0/db_1/network/admin/listener.ora
 内容如下：
 
 #设置开机启动oracle数据库

@@ -1,3 +1,19 @@
+FSF - Free Software Foundation 自由软件基金会
+是一个推广自由软件的美国民间非盈利性组织，致力于消除对计算机程序在复制、分发、理解和修改方面的限制
+
+GNU - GNU is Not Unix 革奴计划
+是由Richard Stallman在1983年9月27日公开发起的,目标是创建一套完全自由的操作系统.GNU通用公共许可证（GNU General Public License，GPL）。即“反版权”（或称Copyleft）概念。
+
+GPL - General Public License 通用公共授权
+是一份GNU通用公共授权非正式的中文翻译。它并非由自由软件基金会所发表，亦非使用GNU通用公共授权的软件的法定发布条款─只有GNU通用公共授权英文原文的版本始具有此等效力。
+
+GCC - GNU Compiler Collection GNU编译器集合
+是一套由GNU工程开发的支持多种编程语言的编译器。GCC是自由软件发展过程中的著名例子，由自由软件基金会以GPL协议发布。GCC是大多数类Unix操作系统（如Linux、BSD、Mac OS X等）的标准的编译器，GCC同样适用于微软的Windows。
+GCC 原名为 GNU C 语言编译器（GNU C Compiler），因为它原本只能处理 C语言。GCC 很快地扩展，变得可处理 C++。之后也变得可处理 Fortran、Pascal、Objective-C、Java, 以及 Ada与其他语言
+
+EMACS - Editor MACroS 编辑器宏
+最初由Richard Stallman(理查德·马修·斯托曼)于1975年在MIT协同Guy Steele共同完成。这一创意的灵感来源于TECMAC和TMACS，它们是由Guy Steele、Dave Moon、Richard Greenblatt、Charles Frankston等人编写的宏文本编辑器。
+
 ls：list(列出目录内容)
 
 cd：Change Directory（改变目录）
