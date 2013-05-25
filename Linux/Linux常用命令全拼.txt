@@ -14,6 +14,7 @@ GCC 原名为 GNU C 语言编译器（GNU C Compiler），因为它原本只能�
 EMACS - Editor MACroS 编辑器宏
 最初由Richard Stallman(理查德·马修·斯托曼)于1975年在MIT协同Guy Steele共同完成。这一创意的灵感来源于TECMAC和TMACS，它们是由Guy Steele、Dave Moon、Richard Greenblatt、Charles Frankston等人编写的宏文本编辑器。
 
+LDP - Linux Documentation Project http://tldp.org/
 ls：list(列出目录内容)
 
 cd：Change Directory（改变目录）
