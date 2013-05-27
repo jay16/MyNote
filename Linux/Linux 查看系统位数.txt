@@ -20,3 +20,45 @@ i686
 0
 [root@emd ~]# cat /proc/cpuinfo | grep flags | grep ' lm ' | wc -l
 0
+
+[root@emd ~]# getconf LONG_BIT
+32
+
+[root@emd ~]# uname -r
+2.6.32-279.el6.i686
+[root@emd ~]# uname -a
+Linux emd.mailhok.com 2.6.32-279.el6.i686 #1 SMP Fri Jun 22 10:59:55 UTC 2012 i686 i686 i386 GNU/Linux
+[root@emd ~]# 
+
+查看selinux状态
+[root@emd ~]# sestatus
+SELinux status:                 disabled
+[root@emd ~]# 
+
+查询大小超过100M的文件
+[root@emd ~]# find /home/work/focus_mail -type f -size +100000k -ls
+2230678 306960 -rwxr-xr-x   1 root     root     314323000 5月 27 17:13 /home/work/focus_mail/log/development.log
+[root@emd ~]# 
+
+查看分区
+[root@emd ~]# fdisk -l
+
+Disk /dev/sda: 107.4 GB, 107374182400 bytes
+255 heads, 63 sectors/track, 13054 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00098c14
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1          64      512000   83  Linux
+Partition 1 does not end on cylinder boundary.
+/dev/sda2              64         717     5242880   83  Linux
+Partition 2 does not end on cylinder boundary.
+/dev/sda3             717        1239     4194304   83  Linux
+/dev/sda4            1239       13055    94907392    5  Extended
+/dev/sda5            1239        1762     4194304   83  Linux
+/dev/sda6            1762        2153     3145728   83  Linux
+/dev/sda7            2153        2284     1048576   83  Linux
+/dev/sda8            2284       13055    86514688   83  Linux
+[root@emd ~]# 
