@@ -8,6 +8,52 @@ iptables是基于内核的防火墙，功能非常强大，iptables内置了filt
     prerouting 用来修改目的地址用来做DNAT，
     postrouting用来修改源地址用来做SNAT。
 
+
+打开主动模式21端口
+
+    iptables -A INPUT -p tcp --dport 21 -j ACCEPT  
+
+永久性关闭防火墙
+
+    chkconfig --level 35 iptables off  
+     
+    /etc/init.d/iptables stop  
+     
+    iptables -P INPUT DROP
+
+修改vi /etc/sysconfig/iptables命令添加使防火墙开放80端口
+
+    -A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT  
+     
+
+查看iptables状态
+方法一：
+[root@emd etc]# service iptables status
+表格：filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+方法二：
+[root@emd etc]# /etc/init.d/iptables status
+表格：filter
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+1    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 
+
+Chain FORWARD (policy ACCEPT)
+num  target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination         
+
+[root@emd etc]# 
+
 查看iptables文件
 [root@localhost ~]# vi /etc/sysconfig/iptables
 # Firewall configuration written by system-config-firewall
