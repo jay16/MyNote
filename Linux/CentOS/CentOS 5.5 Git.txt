@@ -1,0 +1,140 @@
+CentOS的yum源中没有git，只能自己编译安装
+
+确保已安装了依赖的包
+[root@localhost tools]# yum install curl curl-devel zlib-devel openssl-devel perl cpio expat-devel gettext-devel
+
+
+下载最新的git包
+
+[root@localhost tools]# wget http://www.codemonkey.org.uk/projects/git-snapshots/git/git-latest.tar.gz
+[root@localhost tools]# tar xzvf git-latest.tar.gz 
+[root@localhost tools]# cd git-2013-04-29/  #你的目录可能不是这个
+[root@localhost git-2013-04-29]# autoconf
+[root@localhost git-2013-04-29]# ./configure 
+[root@localhost git-2013-04-29]# make
+[root@localhost git-2013-04-29]# make install
+[root@localhost git-2013-04-29]# git --version
+git version 1.8.3-rc0
+[root@localhost git-2013-04-29]# gem install git
+[root@localhost git-2013-04-29]# gem list git
+
+*** LOCAL GEMS ***
+
+git (1.2.5)
+
+配置 使用 Git
+
+[root@localhost FocusMail_SOP]# git config --global user.name "jay16"
+[root@localhost FocusMail_SOP]# git config --global user.email "jay_li@intfocus.com"
+
+查看已配置用户信息
+[root@localhost FocusMail_SOP]# git config --list
+user.name=jay16
+user.email=jay_li@intfocus.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+remote.origin.url=https://github.com/jay16/FocusMail_SOP.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
+[root@localhost FocusMail_SOP]# 
+同步上传文件
+
+初始化
+[root@localhost FocusMail_SOP]# git init
+初始化空的 Git 版本库于 /home/tools/FocusMail_SOP/.git/
+
+选择同步上传文件夹下所有文件
+[root@localhost FocusMail_SOP]# git add .
+
+提交
+[root@localhost FocusMail_SOP]# git commit -m "FocusMail 部署SOP"
+[master（根提交） e7076dc] FocusMail 部署SOP
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 mail206.tar.gz
+ create mode 100644 node-v0.4.8.tar.gz
+ create mode 100644 redis-2.4.16.tar.gz
+ create mode 100644 ruby-1.9.2-p180.tar.gz
+ create mode 100644 sqlite-amalgamation-3.6.16.tar.gz
+
+建立连接
+[root@localhost FocusMail_SOP]# git remote add origin https://github.com/jay16/FocusMail_SOP.git
+
+上传
+[root@localhost FocusMail_SOP]# git push -u origin master
+
+(gnome-ssh-askpass:21385): Gtk-WARNING **: cannot open display:  
+error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
+Username for 'https://github.com': jay16
+
+(gnome-ssh-askpass:21396): Gtk-WARNING **: cannot open display:  
+error: unable to read askpass response from '/usr/libexec/openssh/gnome-ssh-askpass'
+Password for 'https://jay16@github.com': 
+Counting objects: 7, done.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 19.26 MiB | 1.13 MiB/s, done.
+Total 7 (delta 0), reused 0 (delta 0)
+To https://github.com/jay16/FocusMail_SOP.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+查看服务git资源
+[root@localhost FocusMail_SOP]# git remote -v
+origin  https://github.com/jay16/FocusMail_SOP.git (fetch)
+origin  https://github.com/jay16/FocusMail_SOP.git (push)
+[root@localhost FocusMail_SOP]# 
+
+[root@localhost ~]# git config --global http.proxy http://proxy:8081
+[root@localhost ~]# git config --get http.proxy
+http://proxy:8081
+[root@localhost ~]# 
+
+
+删除文件
+git rm file1.txt
+git commit -m "remove file1.txt"
+
+
+My "c:\Documents and Settings\xxx.gitconfig" file is
+
+[http]
+    proxy = 
+[user]
+    name = xxxx
+    email = xxx@xxx.com
+
+[root@localhost FocusMail_SOP]# git --help
+用法：git [--version] [--help] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+最常用的 git 命令有：
+   add        添加文件内容至索引
+   bisect     通过二分查找定位引入 bug 的变更
+   branch     列出、创建或删除分支
+   checkout   检出一个分支或路径到工作区
+   clone      克隆一个版本库到一个新目录
+   commit     记录变更到版本库
+   diff       显示提交之间、提交和工作区之间等的差异
+   fetch      从另外一个版本库下载对象和引用
+   grep       输出和模式匹配的行
+   init       创建一个空的 Git 版本库或重新初始化一个已存在的版本库
+   log        显示提交日志
+   merge      合并两个或更多开发历史
+   mv         移动或重命名一个文件、目录或符号链接
+   pull       获取并合并另外的版本库或一个本地分支
+   push       更新远程引用和相关的对象
+   rebase     本地提交转移至更新后的上游分支中
+   reset      重置当前HEAD到指定状态
+   rm         从工作区和索引中删除文件
+   show       显示各种类型的对象
+   status     显示工作区状态
+   tag        创建、列出、删除或校验一个GPG签名的 tag 对象
+
+'git help -a' and 'git help -g' lists available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept

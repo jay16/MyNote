@@ -1,0 +1,62 @@
+[jay@localhost ~]$ ifconfig
+bash: ifconfig: command not found
+
+[jay@localhost ~]$ echo $PATH
+/usr/kerberos/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/home/jay/bin
+
+[jay@localhost ~]$ whereis ifconfig
+ifconfig: /sbin/ifconfig /usr/share/man/man8/ifconfig.8.gz
+
+[jay@localhost ~]$ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:0C:29:ED:33:9E  
+          inet addr:192.168.184.129  Bcast:192.168.184.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:feed:339e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:93 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:62 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:40515 (39.5 KiB)  TX bytes:8556 (8.3 KiB)
+          Interrupt:67 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:560 (560.0 b)  TX bytes:560 (560.0 b)
+
+[jay@localhost ~]$ vi ~/.bash_profile 
+modify
+PATH=$PATH:$HOME/bin
+to
+PATH=$PATH:$HOME/bin:/sbin
+
+[jay@localhost ~]$ source ~/.bash_profile 
+
+[jay@localhost ~]$ echo $PATH
+/usr/kerberos/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/home/jay/bin:/home/jay/bin:/sbin
+
+[jay@localhost ~]$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:0C:29:ED:33:9E  
+          inet addr:192.168.184.129  Bcast:192.168.184.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:feed:339e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:98 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:62 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:43100 (42.0 KiB)  TX bytes:8556 (8.3 KiB)
+          Interrupt:67 Base address:0x2000 
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:560 (560.0 b)  TX bytes:560 (560.0 b)
+
+[jay@localhost ~]$ 
+
