@@ -1,0 +1,34 @@
+case ?p_measure?
+when 'units'      then 
+ [units]
+when 'revenue' then 
+ case
+   when (?p_currency? = 'USD'  and ?p_tax?=1) then
+    cast([revenue],integer) * cast([rmb_rate],integer)*1.17
+  when (?p_currency? = 'USD'  and ?p_tax?=0) then
+    cast([revenue],integer) * cast([rmb_rate],integer)
+  when ?p_currency? = 'RMB'  and ?p_tax?=1 then
+    cast([revenue],integer) * 1.17
+  when ?p_currency? = 'USD'  and ?p_tax?=0 then
+    cast([revenue],integer) 
+  else
+     [revenue]
+  end
+when 'traffic'     then 
+[Q_Data].[traffic]
+when 'mark_down' then 
+ [revenue]/[retail_sales_et]
+when 'gm' then 
+(1-[cost]/[retail_sales_et])
+when 'conversion_rate' then 
+ [deal_num]/[traffic]
+when 'upt'  then
+ [units]/[deal_num]
+when 'adpt' then
+ [revenue]/[deal_num]
+when 'sales_per_sqm' then
+ [revenue]/[deal_num]
+else 
+[units]
+end
+------------------------------------------------------------------------------------
