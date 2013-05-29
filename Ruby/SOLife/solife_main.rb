@@ -4,6 +4,7 @@ require 'yaml'
 require 'gtk2'
 require './solife_action.rb'
 require './solife_notebook.rb'
+require './solife_accel.rb'
 
 
 
@@ -160,13 +161,21 @@ ctrl_z.connect(Gdk::Keyval::GDK_Z, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE
   reload_file(note_view_tree,note_view_store,text_editor,window)
 }
 window.add_accel_group(ctrl_z)
+
 #ctrl+n新建文本快捷键,直接创建textview，保存时再选新文本位置与文本名称
 ctrl_n = Gtk::AccelGroup.new
 ctrl_n.connect(Gdk::Keyval::GDK_N, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
   new_file(text_editor,window)
 }
-
 window.add_accel_group(ctrl_n)
+
+#ctrl+m隐藏/显示目录
+ctrl_m = Gtk::AccelGroup.new
+ctrl_m.connect(Gdk::Keyval::GDK_M, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  hide_show_cattree(left_vbox,window)
+}
+window.add_accel_group(ctrl_m)
+
 #ctrl+p notebook标签页向前切换P
 ctrl_p = Gtk::AccelGroup.new
 ctrl_p.connect(Gdk::Keyval::GDK_P, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
