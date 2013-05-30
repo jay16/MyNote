@@ -14,6 +14,8 @@ GCC 原名为 GNU C 语言编译器（GNU C Compiler），因为它原本只能�
 EMACS - Editor MACroS 编辑器宏
 最初由Richard Stallman(理查德·马修·斯托曼)于1975年在MIT协同Guy Steele共同完成。这一创意的灵感来源于TECMAC和TMACS，它们是由Guy Steele、Dave Moon、Richard Greenblatt、Charles Frankston等人编写的宏文本编辑器。
 
+Yum - Yellow dog Updater, Modified 是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。
+
 LDP - Linux Documentation Project http://tldp.org/
 ls：list(列出目录内容)
 
