@@ -1,1 +1,4 @@
 cast(replace(concat([Year Month],'/01'),'/','-'),timestamp)
+--------------------------------------------------------------
+动态计算百分比-[Division]含app,acc,fw，计算[ON HAND SKU]在每一分部的比重
+percentage([ON HAND SKU] for [Division])

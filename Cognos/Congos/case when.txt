@@ -32,3 +32,16 @@ else
 [units]
 end
 ------------------------------------------------------------------------------------
+case
+when ?p_currency? = 'USD' and ?p_tax? = 1 then
+ [Q_Data_].[Revenue]*[rmb_rate]*1.17
+when ?p_currency? = 'USD' and ?p_tax? = 0 then
+ [Q_Data_].[Revenue]*[rmb_rate]
+when ?p_currency? = 'RMB' and ?p_tax? = 1 then
+ [Q_Data_].[Revenue]*1.17
+when ?p_currency? = 'RMB' and ?p_tax? = 0 then
+ [Q_Data_].[Revenue]
+else
+ [Q_Data_].[Revenue]
+when 
+------------------------------------------------------------------------------------
