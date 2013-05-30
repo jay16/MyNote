@@ -1,0 +1,31 @@
+select distinct store_code from dw_store_dim where store_code is not null
+-------------------------------------------------------------------------
+case 10 - [Q_Dim].[month_index]
+when 1 then 'Month01'
+when 2 then 'Month02'
+when 3 then 'Month03'
+when 4 then 'Month04'
+when 5 then 'Month05'
+when 6 then 'Month06'
+when 7 then 'Month07'
+when 8 then 'Month08'
+when 9 then 'Month09'
+when 10 then 'Month10'
+else
+'Month00'
+end
+-------------------------------------------------------------------------
+ select  month_flag=min(year_month),month_date=min(replace(year_month,'/','-')+'-01')
+from dw_date_dim
+where date_date between  dateadd(month,-16,getdate()) and  dateadd(month,-1,getdate())
+group by year_month
+order by year_month desc
+--------------------------------------------------------------------------
+function subtractDay (num){
+var dtToday = new Date();
+var dtYesterday = new Date( dtToday - num*60*60*24*1000);
+var strYesterday = [dtYesterday.getUTCFullYear(), dtYesterday.getMonth()+1, dtYesterday.getDate()].join("-");
+return strYesterday;
+}
+var form = getFormWarpRequest();
+form.txtDateC_Date1.value=subtractDay(1);

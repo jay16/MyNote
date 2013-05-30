@@ -1,0 +1,36 @@
+case ?p_order?
+when 'asc'   then
+  case ?p_sort?
+  when 'on_hand' then 
+     rank([on_hand] asc for report)
+  when 'monthly_sales_qty' then
+    rank([Monthly Sales QTY] asc for report)
+  when 'stock_ratio' then
+   rank([STOCK RATIO] asc for report)
+  else
+     rank([on_hand] asc for report)
+  end
+when 'desc' then
+  case ?p_sort?
+  when 'on_hand' then 
+     rank([on_hand] desc for report)
+  when 'monthly_sales_qty' then
+    rank([Monthly Sales QTY] desc for report)
+  when 'stock_ratio' then
+   rank([STOCK RATIO] desc for report)
+  else
+     rank([on_hand] desc for report)
+  end
+else
+  case ?p_sort?
+  when 'on_hand' then 
+     rank([on_hand] desc for report)
+  when 'monthly_sales_qty' then
+    rank([Monthly Sales QTY] desc for report)
+  when 'stock_ratio' then
+   rank([STOCK RATIO] desc for report)
+  else
+     rank([on_hand] desc for report)
+  end
+end
+----------------------------------------------------------
