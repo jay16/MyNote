@@ -20,12 +20,63 @@ from dw_date_dim
 where date_date between  dateadd(month,-16,getdate()) and  dateadd(month,-1,getdate())
 group by year_month
 order by year_month desc
---------------------------------------------------------------------------
+------------------------------------------------------------------------
+if (_days_between (
+ cast(?p_date?,timestamp),
+cast([sales_date],timestamp)) >= 0
+and 
+_days_between (
+cast(?p_date?,timestamp),
+cast([sales_date],timestamp)) < 7)
+then (
+
+case 6- _days_between( cast(?p_date?,timestamp),cast([sales_date],timestamp)) 
+when 0 then 'day 1'
+when 1 then 'day 2'
+when 2 then 'day 3'
+when 3 then 'day 4'
+when 4 then 'day 5'
+when 5 then 'day 6'
+when 6 then 'day 7'
+else 'day0' 
+end
+
+)
+else (
+case 6 - _days_between( _add_years(cast(?p_date?,timestamp),-1),cast([sales_date],timestamp)) 
+when 0 then 'day 1'
+when 1 then 'day 2'
+when 2 then 'day 3'
+when 3 then 'day 4'
+when 4 then 'day 5'
+when 5 then 'day 6'
+when 6 then 'day 7'
+else 'day0' 
+end
+
+)
+--------------------------------------------------------------------------------------
+<script language="javascript">
 function subtractDay (num){
 var dtToday = new Date();
 var dtYesterday = new Date( dtToday - num*60*60*24*1000);
 var strYesterday = [dtYesterday.getUTCFullYear(), dtYesterday.getMonth()+1, dtYesterday.getDate()].join("-");
 return strYesterday;
 }
+
+function remove_two(dropdown){
+dropdown.remove(1); 
+dropdown.remove(0); 
+dropdown .removeAttribute("hasLabel");  
+
+}
 var form = getFormWarpRequest();
 form.txtDateC_Date1.value=subtractDay(1);
+
+//delete the first two options
+
+
+setTimeout('promptButtonFinish()', 500); 
+
+</script>
+--------------------------------------------------------------------------------------
