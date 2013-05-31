@@ -1,5 +1,5 @@
 
-
+   #构建笔记列表树
 def g_note_list(note_tree_store,note_dir_list,conf_save)
    #构建笔记列表树
    note_list_store = Gtk::TreeStore.new(String, String, Integer)
@@ -32,7 +32,7 @@ def g_note_list(note_tree_store,note_dir_list,conf_save)
      g_note_tree(note_tree_store,note_path)
    end
 
-   return scrolled_view
+   return [scrolled_view,note_view_tree,note_list_store]
 end
 
 
@@ -385,7 +385,7 @@ dialog = Gtk::Dialog.new(
   
 end
 
-def InitConfig_diaog(yam_save)
+def InitConfig_diaog(conf_save,conf_load)
 dialog = Gtk::Dialog.new(
       "Config Dialog!",
       nil,
@@ -412,7 +412,17 @@ dialog = Gtk::Dialog.new(
    tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
    note_view_tree.append_column(tree_col)
    note_view_tree.signal_connect("row-activated") { del_note_dir(note_view_tree,tree_store)}
-  
+   
+   #显示已配置路径列表
+   if conf_load and conf_load["NoteDirList"] then
+     note_dir_list   = conf_load["NoteDirList"]
+     note_dir_list.each do |note_path|
+      note_store = tree_store.append(nil)
+      note_store[0] = note_path
+      note_store[1] = note_path
+     end
+   end
+   
   #选择笔记路径
   choo_dir_btt  = Gtk::FileChooserButton.new(
     "Choose a Folder", Gtk::FileChooser::ACTION_SELECT_FOLDER)
@@ -448,8 +458,8 @@ dialog = Gtk::Dialog.new(
            puts iter[0]
         end while iter.next!
         
-        yam_save.transaction do 
-          yam_save["NoteDirList"] = note_dir_list
+        conf_save.transaction do 
+          conf_save["NoteDirList"] = note_dir_list
         end
       end
     end

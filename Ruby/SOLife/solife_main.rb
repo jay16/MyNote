@@ -40,7 +40,7 @@ if check_conf(conf_path) then
     note_seled_dir  = note_dir_list[0]
   end
 else
-  InitConfig_diaog(conf_save)
+  InitConfig_diaog(conf_save,conf_load)
   if check_conf(conf_path) then
     conf_load       = YAML.load_file(conf_path)
     note_dir_list   = conf_load["NoteDirList"]
@@ -60,7 +60,7 @@ end
 #note_tree
 note_view_store = Gtk::TreeStore.new(String, String, Integer)
 
-#目录框架
+#目录主要框架
 renderer = Gtk::CellRendererText.new
 tree_col = Gtk::TreeViewColumn.new(File.basename(note_seled_dir), renderer, :text => 0)
 
@@ -80,15 +80,18 @@ scrolled_notenote_view_tree.add(note_view_tree)
 scrolled_notenote_view_tree.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
 
 
-
+#常用路径目录
 #根据note_dir_list数据组显示目录
-scrolled_notelist_view = g_note_list(note_view_store,note_dir_list,conf_save)
+g_notelist_tree = g_note_list(note_view_store,note_dir_list,conf_save)
+scrolled_notelist_view = g_notelist_tree[0]
+note_list_tree         = g_notelist_tree[1]
+note_list_store        = g_notelist_tree[2]
 
 #根据note 点击记录 列表 显示目录
-g_history = g_historylist_view(note_dir_list)
-scrolled_history_view = g_history[0]
-note_history_tree         = g_history[1]
-note_history_store        = g_history[2]
+g_history_tree = g_historylist_view(note_dir_list)
+scrolled_history_view     = g_history_tree[0]
+note_history_tree         = g_history_tree[1]
+note_history_store        = g_history_tree[2]
 
 
 left_table = Gtk::Table.new(4, 1,true)
@@ -176,6 +179,13 @@ ctrl_m.connect(Gdk::Keyval::GDK_M, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE
 }
 window.add_accel_group(ctrl_m)
 
+#F1显示配置档
+F1 = Gtk::AccelGroup.new
+F1.connect(Gdk::Keyval::GDK_F1, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+  InitConfig_diaog(conf_save,conf_load)
+}
+window.add_accel_group(F1)
+
 #ctrl+p notebook标签页向前切换P
 ctrl_p = Gtk::AccelGroup.new
 ctrl_p.connect(Gdk::Keyval::GDK_P, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
@@ -184,6 +194,35 @@ ctrl_p.connect(Gdk::Keyval::GDK_P, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE
 window.add_accel_group(ctrl_p)
 #编辑文本状态
 text_editor.text_view.buffer.signal_connect("changed"){ write_statu(note_view_tree,note_view_store,text_editor,window) }
+
+#详细目录列表树 - 鼠标右键pop-up menu
+note_view_popmenu = Gtk::Menu.new
+note_view_popmenu.append(mitem_new_file = Gtk::MenuItem.new("New File"))
+note_view_popmenu.append(mitem_new_dir = Gtk::MenuItem.new("New Dir"))
+note_view_popmenu.append(mitem_add_dir_tolist = Gtk::MenuItem.new("Add Dir To Fav"))
+note_view_popmenu.show_all
+note_view_tree.add_events(Gdk::Event::BUTTON_PRESS_MASK)
+note_view_tree.signal_connect("button_press_event") do |widget, event|
+   if (event.button == 3) then
+     note_view_popaction(widget,event,note_view_popmenu)
+   end
+end
+#点击菜单项后响应-详细目录树中某常用路径添加至常用NoteList tree中
+mitem_add_dir_tolist.signal_connect('activate') { |w| add_dir_tolist(note_view_tree,note_list_store,window,conf_save) }
+
+
+note_list_popmenu = Gtk::Menu.new
+note_list_popmenu.append(mitem_remove_fromlist = Gtk::MenuItem.new("Remove It"))
+note_list_popmenu.show_all
+note_list_tree.add_events(Gdk::Event::BUTTON_PRESS_MASK)
+note_list_tree.signal_connect("button_press_event") do |widget, event|
+   if (event.button == 3) then
+     #只是弹出菜单项这个动作而已
+     note_view_popaction(widget,event,note_list_popmenu)
+   end
+end
+mitem_remove_fromlist.signal_connect('activate') { |w| del_dir_fromlist(note_list_tree,note_list_store,window,conf_save) }
+
 
 
 window.add(layout_table)
