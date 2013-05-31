@@ -133,11 +133,11 @@ note_book.append_page(scrolled_text,text_editor.note_label)
 #note_book.insert_page(-1,text_editor.text_view,text_editor.note_label)
 
 #整体布局表格
-table = Gtk::Table.new(1, 24,true)
+layout_table = Gtk::Table.new(1, 24,true)
 
 options = Gtk::EXPAND|Gtk::FILL
-table.attach(left_vbox,  0,  7,  0,  1, options, options, 0,    0)
-table.attach(note_book,  7,  24,  0,  1, options, options, 0,    0)
+layout_table.attach(left_vbox,  0,  7,  0,  1, options, options, 0,    0)
+layout_table.attach(note_book,  7,  24,  0,  1, options, options, 0,    0)
 
 window = Gtk::Window.new("")
 
@@ -172,7 +172,7 @@ window.add_accel_group(ctrl_n)
 #ctrl+m隐藏/显示目录
 ctrl_m = Gtk::AccelGroup.new
 ctrl_m.connect(Gdk::Keyval::GDK_M, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
-  hide_show_cattree(left_vbox,window)
+  hide_show_cattree(layout_table,left_vbox,window)
 }
 window.add_accel_group(ctrl_m)
 
@@ -186,7 +186,7 @@ window.add_accel_group(ctrl_p)
 text_editor.text_view.buffer.signal_connect("changed"){ write_statu(note_view_tree,note_view_store,text_editor,window) }
 
 
-window.add(table)
+window.add(layout_table)
 window.set_title("SoLife")
 window.border_width = 5
 window.set_size_request(800, 680)
