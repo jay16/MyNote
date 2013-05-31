@@ -104,3 +104,6 @@ else
 'Week 00'
 end
 ---------------------------------------------------------------------------------------
+[root@emd ~]# yum whatprovides whois
+
+[root@emd ~]# yum install jwhois
