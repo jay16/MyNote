@@ -86,3 +86,21 @@ where week_id between (select top 1 week_id-9 from dw_week_dim where getdate() b
   and (select top 1 week_id from dw_week_dim where getdate() between w_start and w_end ) 
 order by week_id desc
 ---------------------------------------------------------------------------------------
+case 9 - [Q_Union].[week_index]
+when 9 then 'Week 01'
+when 8 then 'Week 02'
+when 7 then 'Week 03'
+when 6 then 'Week 04'
+when 5 then 'Week 05'
+when 4 then 'Week 06'
+when 3 then 'Week 07'
+when 2 then 'Week 08'
+when 1 then 'Week 09'
+when 0 then 'Week 10'
+when 9 then 'Week 01'
+when 9 then 'Week 01'
+when 9 then 'Week 01'
+else
+'Week 00'
+end
+---------------------------------------------------------------------------------------
