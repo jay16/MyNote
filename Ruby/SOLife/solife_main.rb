@@ -90,6 +90,7 @@ scrolled_notelist_view = g_notelist_tree[0]
 note_list_tree         = g_notelist_tree[1]
 note_list_store        = g_notelist_tree[2]
 
+#点击历史路径目录
 #根据note 点击记录 列表 显示目录
 g_history_tree = g_historylist_view(note_dir_list)
 scrolled_history_view     = g_history_tree[0]
@@ -237,15 +238,22 @@ window.move(600,10)
 
 #打开上次关闭前最后打开的文件,判断文件存在，并且属性是文件
 if note_seled_file and File.exist?(note_seled_file) and File.file?(note_seled_file) then
-  #加载内容
-  text_editor.text_view.buffer.text = File.readlines(note_seled_file).join("").to_s
-  text_editor.note_label.text = File.basename(note_seled_file)
-  tooltip = Gtk::Tooltips.new
-  tooltip.set_tip(text_editor.note_label,note_seled_file,"private")
+
   #详细目录列表中设置该文件处于选中状态
-  trigger_row_activated(note_view_tree,note_view_store,[File.basename(note_seled_file),note_seled_file]) 
-  #修改标题  
-  window.set_title("SoLife #{note_seled_file} [writing]")
+  trigger_row_activated(note_view_tree,note_view_store,[File.basename(note_seled_file),note_seled_file])
+  #激活虚拟点击详细目录动作，加载内容
+  row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
+end
+
+#加载点击文件历史列表目录
+#过滤出当前详细目录中的点击文件路径
+current_dir_list = note_dir_list.select { |n| n[1].include?(note_seled_dir) == true }
+current_dir_list.sort!{ |x,y| y[2] <=> x[2] }
+current_dir_list.each do |note_path|
+  note_store = note_history_store.append(nil)
+  note_store[0] = File.basename(note_path[1]) + " - " + note_path[2].to_s
+  note_store[1] = note_path[1]
+  note_store[2] = note_path[2]
 end
 
 window.show_all

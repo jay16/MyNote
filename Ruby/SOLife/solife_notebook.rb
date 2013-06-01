@@ -107,59 +107,6 @@ def click_history_tree(note_view_tree,note_view_store,note_history_tree,text_edi
     #puts node_path
     if File.file? node_path
       trigger_row_activated(note_view_tree,note_view_store,iter)
-=begin
-      file_content = File.readlines(node_path).join("").to_s
-      #加载文本内容
-      begin
-      text_editor.text_view.buffer.text =  file_content
-      rescue => error
-        puts "TextViewBufferText ERROR (%s): %s\n" % [error.class, error]
-      else
-      end
-      
-      #如果文本内容与控件加载内容数量不同表示文本内容格式不对
-      if(text_editor.text_view.buffer.text.length == 0 and file_content.length > 0)
-        begin
-          file_content = file_content.encode("UTF-8")
-        rescue => error #Encoding::InvalidByteSequenceError
-          puts "FileContent ERROR (%s): %s\n" % [error.class, error]
-          #显示错误提示框
-          FileReadError_diaog(node_path,window)
-        else 
-          #强制转换编码重新写入文本
-          file = File.open(node_path+"_new","w")
-          file.puts file_content
-          file.close
-          #成功写入后,删除原始
-          puts "return:"+File.delete(node_path).to_s+"-delete:"+node_path
-          #修改文件名称
-          File.rename(node_path+"_new",node_path)
-          file_content = File.readlines(node_path).join("").to_s
-          text_editor.text_view.buffer.text =  file_content       
-          text_editor.note_label.text = "F_"+node_name.split(" - ")[1]
-          #鼠标悬停显示文本路径
-          tooltip = Gtk::Tooltips.new
-          tooltip.set_tip(text_editor.note_label,node_path,"private")
-        ensure
-        end
-      else
-        text_editor.note_label.text = node_name
-        #鼠标悬停显示文本路径
-        tooltip = Gtk::Tooltips.new
-        tooltip.set_tip(text_editor.note_label,node_path,"private")
-      end
-          begin
-      puts iter[1]
-      if iter[1] == seled[1] then
-        #设置新插入节点为选中点
-        tree_model = note_view_tree.model
-        iter_path = tree_model.get_iter(iter.to_s)
-        row_path = Gtk::TreePath.new(iter_path.to_s)
-        note_view_tree.set_cursor(iter,nil,true)
-        break
-      end
-    end while iter.next!
-=end
     end
 end
 
@@ -171,60 +118,12 @@ def trigger_row_activated(note_view_tree,note_view_store,seled)
       
      else
        if iter[1] == seled[1] then
-         note_view_tree.set_cursor(iter,nil,true)
+         row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
+         row_path = row_ref.path
+         note_view_tree.set_cursor(row_path,nil,true)
          puts "match:#{iter[1]}-#{seled[1]}"
          break
        end
      end while iter.next!
     end 
-end
-
-def trigger_row_activatedtt(note_view_tree,note_view_store,seled)
-    iter = note_view_store.iter_first
-    tree_array = Array.new
-    traversal_tree(iter,tree_array)
-    
-    geter = tree_array.select { |iter| iter[-1] == seled[-1] }
-    tree_array.each do |iter|
-      if iter[-1] == seled[-1] then
-        geter = iter[0]
-        puts "match:#{iter[-1]}-#{seled[-1]}"
-      else
-        puts "not match:#{iter[-1]}-#{seled[-1]}"
-      end
-      
-    end
-    if geter[1] then
-      puts "GET:" + geter[1].to_s
-      note_view_tree.set_cursor(geter,nil,true)
-    else
-      puts "NO GET"
-    end
-end
-
-
-def traversal_tree(iter,tree_array)
-  begin
-   if iter.first_child then
-     tree_array.push([iter,iter[0],iter[1]])
-     traversal_tree(iter.first_child,tree_array)
-   else
-     tree_array.push([iter,iter[0],iter[1]])
-     #puts "else:#{iter[1]}"
-   end while iter.next!
-  end 
-end
-
-def travdersal_tree(iter,tree_array)
-  begin
-   puts iter[1]
-   if iter and File.file?(iter[1]) then
-     tree_array.push iter
-   elsif File.directory?(iter[1])
-     iter = iter.first_child
-     if iter then
-       traversal_tree(iter,tree_array)
-     end
-   end while iter.next!
-  end 
 end

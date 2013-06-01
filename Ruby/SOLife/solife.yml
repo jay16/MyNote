@@ -1,24 +1,15 @@
----
+﻿---
 NoteDirList:
 - DataBase
 - Oracle 11g
 - E:\MyWork\IntFocus
 - E:\MyWork\MyNote
 NoteSeledDir: E:\MyWork\MyNote
-NoteSeledFile: E:\MyWork\MyNote\ReadMe.txt
+NoteSeledFile: E:\MyWork\MyNote\Linux\Linux 修改系统时间.txt
 HistoryList:
-- - Linux常用命令全拼.txt
-  - E:\MyWork\MyNote\Linux\Linux常用命令全拼.txt
+- - CentOS ping unkunow host.txt
+  - E:\MyWork\MyNote\Linux\CentOS ping unkunow host.txt
   - 2
-- - Linux 查看内核版本.txt
-  - E:\MyWork\MyNote\Linux\Linux 查看内核版本.txt
-  - 1
-- - Linux 系统信息.txt
-  - E:\MyWork\MyNote\Linux\Linux 系统信息.txt
-  - 1
-- - Linux 查看系统位数.txt
-  - E:\MyWork\MyNote\Linux\Linux 查看系统位数.txt
-  - 1
-- - Linus du df.txt
-  - E:\MyWork\MyNote\Linux\Linus du df.txt
+- - ReadMe.txt
+  - E:\MyWork\MyNote\ReadMe.txt
   - 1
