@@ -33,8 +33,11 @@ end
 #不存在配置文件启动显示配置界面
 if check_conf(conf_path) then
   conf_load       = YAML.load_file(conf_path)
+  #常用路径列表
   note_dir_list   = conf_load["NoteDirList"]
+  #关闭前最后打开目录路径
   note_seled_dir  = conf_load["NoteSeledDir"]
+  #闭关前最后打开的文件路径
   note_seled_file = conf_load["NoteSeledFile"]
   if !note_seled_dir then
     note_seled_dir  = note_dir_list[0]
@@ -197,7 +200,7 @@ text_editor.text_view.buffer.signal_connect("changed"){ write_statu(note_view_tr
 
 #详细目录列表树 - 鼠标右键pop-up menu
 note_view_popmenu = Gtk::Menu.new
-note_view_popmenu.append(mitem_new_file = Gtk::MenuItem.new("New File"))
+note_view_popmenu.append(mitem_rname_file = Gtk::MenuItem.new("Rename File"))
 note_view_popmenu.append(mitem_new_dir = Gtk::MenuItem.new("New Dir"))
 note_view_popmenu.append(mitem_add_dir_tolist = Gtk::MenuItem.new("Add Dir To Fav"))
 note_view_popmenu.show_all
@@ -209,6 +212,7 @@ note_view_tree.signal_connect("button_press_event") do |widget, event|
 end
 #点击菜单项后响应-详细目录树中某常用路径添加至常用NoteList tree中
 mitem_add_dir_tolist.signal_connect('activate') { |w| add_dir_tolist(note_view_tree,note_list_store,window,conf_save) }
+mitem_rname_file.signal_connect('activate') { |w| rname_file(note_view_tree,note_list_store,window,conf_save) }
 
 
 note_list_popmenu = Gtk::Menu.new
@@ -223,6 +227,18 @@ note_list_tree.signal_connect("button_press_event") do |widget, event|
 end
 mitem_remove_fromlist.signal_connect('activate') { |w| del_dir_fromlist(note_list_tree,note_list_store,window,conf_save) }
 
+
+#打开上次关闭前最后打开的文件,判断文件存在，并且属性是文件
+if note_seled_file and File.exist?(note_seled_file) and File.file?(note_seled_file) then
+  #加载内容
+  text_editor.text_view.buffer.text = File.readlines(note_seled_file).join("").to_s
+  tooltip = Gtk::Tooltips.new
+  tooltip.set_tip(text_editor.note_label,note_seled_file,"private")
+  #详细目录列表中设置该文件处于选中状态
+  trigger_row_activated(note_view_tree,note_view_store,[File.basename(note_seled_file),note_seled_file]) 
+  #修改标题  
+  window.set_title("SoLife #{note_seled_file} [writing]")
+end
 
 
 window.add(layout_table)
