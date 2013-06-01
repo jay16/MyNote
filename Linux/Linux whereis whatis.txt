@@ -1,0 +1,29 @@
+which - shows the full path of (shell) commands.
+
+
+[root@localhost ~]# which which
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+        /usr/bin/which
+[root@localhost ~]# which iptables
+/sbin/iptables
+[root@localhost ~]# whatis iptables
+iptables-ipv6       (rpm) - IPv6 support for iptables.
+iptables            (rpm) - Tools for managing Linux kernel packet filtering capabilities.
+[root@localhost ~]# whereis iptables
+iptables: /sbin/iptables /lib/iptables /usr/share/man/man8/iptables.8.gz
+[root@localhost ruby-1.9.2-p180]# locate iptables
+/etc/rc.d/init.d/iptables
+/etc/rc.d/rc0.d/K92iptables
+/etc/rc.d/rc1.d/K92iptables
+/etc/rc.d/rc2.d/S08iptables
+/etc/rc.d/rc3.d/S08iptables
+/etc/rc.d/rc4.d/S08iptables
+/etc/rc.d/rc5.d/S08iptables
+/etc/rc.d/rc6.d/K92iptables
+/etc/sysconfig/iptables
+/etc/sysconfig/iptables-config
+/lib/iptables
+/lib/iptables/libip6t_CONNMARK.so
+/lib/iptables/libip6t_DSCP.so
+/lib/iptables/libip6t_HL.so
+.....

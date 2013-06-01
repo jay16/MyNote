@@ -1,3 +1,7 @@
+﻿iptables - administration tool for IPv4 packet filtering and NAT
+
+
+
 http://www.liusuping.com/ubuntu-linux/iptables-firewall-setting.html
 iptables是基于内核的防火墙，功能非常强大，iptables内置了filter，nat和mangle三张表。
 1.filter负责过滤数据包，包括的规则链有，input，output和forward；
