@@ -17,9 +17,10 @@ conf_path = current_dir+"\\solife.yml"
 conf_save = YAML::Store.new(conf_path)
 conf_load = String.new
 
-note_dir_list    = Array.new
-note_seled_dir   = String.new
-note_seled_file  = String.new
+note_dir_list     = Array.new
+note_seled_dir    = String.new
+note_seled_file   = String.new
+note_history_list = Array.new
 
 def check_conf(conf_path)
   if File.exists?(conf_path) and YAML.load_file(conf_path)["NoteDirList"] then
@@ -39,6 +40,8 @@ if check_conf(conf_path) then
   note_seled_dir  = conf_load["NoteSeledDir"]
   #闭关前最后打开的文件路径
   note_seled_file = conf_load["NoteSeledFile"]
+  #历史点击记录列表
+  note_history_list = conf_load["HistoryList"]
   if !note_seled_dir then
     note_seled_dir  = note_dir_list[0]
   end
@@ -153,7 +156,9 @@ window.signal_connect("destroy") { window_exit(note_view_tree,window,conf_save) 
 #目录被双击时，使用记事本打开
 note_view_tree.signal_connect("row-activated") { row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)}
 #阅读历史列表被双击时，使用记事本打开
-note_history_tree.signal_connect("row-activated") { click_history_tree(note_view_tree,note_view_store,note_history_tree,text_editor,window,conf_save)}
+note_history_tree.signal_connect("row-activated") { 
+ click_history_tree(note_view_tree,note_view_store,note_history_tree,note_history_store,text_editor,window,conf_save)
+}
 #目录被单击时，使用记事本打开
 #note_view_tree.signal_connect("cursor-changed") { row_activated(note_view_tree,note_view_store,text_editor,window) }
 #ctrl+s保存文件快捷键
@@ -240,14 +245,21 @@ window.move(600,10)
 if note_seled_file and File.exist?(note_seled_file) and File.file?(note_seled_file) then
 
   #详细目录列表中设置该文件处于选中状态
-  trigger_row_activated(note_view_tree,note_view_store,[File.basename(note_seled_file),note_seled_file])
+  trigger_row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,[File.basename(note_seled_file),note_seled_file],conf_save)
   #激活虚拟点击详细目录动作，加载内容
   row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
 end
 
 #加载点击文件历史列表目录
 #过滤出当前详细目录中的点击文件路径
-current_dir_list = note_dir_list.select { |n| n[1].include?(note_seled_dir) == true }
+current_dir_list = Array.new
+note_history_list.select do |node|
+  if node[1].include?(note_seled_dir)
+    current_dir_list.push(node)
+  else
+    puts "history not include:#{node[1]}-#{note_seled_dir}"
+  end
+end
 current_dir_list.sort!{ |x,y| y[2] <=> x[2] }
 current_dir_list.each do |note_path|
   note_store = note_history_store.append(nil)

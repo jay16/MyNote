@@ -95,7 +95,7 @@ def historytree_resort(note_history_store,seled,window,conf_save)
    window.show_all
 end
 #点击history列表查看文件
-def click_history_tree(note_view_tree,note_view_store,note_history_tree,text_editor,window,conf_save)
+def click_history_tree(note_view_tree,note_view_store,note_history_tree,note_history_store,text_editor,window,conf_save)
     selection = note_history_tree.selection
     iter = selection.selected    
     #没有选中值则返回
@@ -106,11 +106,34 @@ def click_history_tree(note_view_tree,note_view_store,note_history_tree,text_edi
 
     #puts node_path
     if File.file? node_path
-      trigger_row_activated(note_view_tree,note_view_store,iter)
+      trigger_row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,iter,conf_save)
     end
 end
 
-def trigger_row_activated(note_view_tree,note_view_store,seled)
+def trigger_row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,seled,conf_save)
+    iter = note_view_store.iter_first
+   
+    begin   
+     if iter.first_child then
+      
+     else
+       if iter[1] == seled[1] then
+         row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
+         row_path = row_ref.path
+         note_view_tree.set_cursor(row_path,nil,true)
+         puts "match:#{iter[1]}-#{seled[1]}"
+         break
+       elsif seled[1].include?(iter[1])
+         row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
+       end
+     end while iter.next!
+    end 
+    
+  #激活虚拟点击详细目录动作，加载内容
+  row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
+end
+
+def trigger_row_activated1(note_view_tree,note_view_store,text_editor,note_history_store,window,seled,conf_save)
     iter = note_view_store.iter_first
    
     begin   
@@ -126,4 +149,7 @@ def trigger_row_activated(note_view_tree,note_view_store,seled)
        end
      end while iter.next!
     end 
+    
+  #激活虚拟点击详细目录动作，加载内容
+  row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
 end

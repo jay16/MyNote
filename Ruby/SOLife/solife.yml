@@ -1,15 +1,18 @@
-﻿---
+---
 NoteDirList:
 - DataBase
 - Oracle 11g
 - E:\MyWork\IntFocus
 - E:\MyWork\MyNote
 NoteSeledDir: E:\MyWork\MyNote
-NoteSeledFile: E:\MyWork\MyNote\Linux\Linux 修改系统时间.txt
+NoteSeledFile: E:\MyWork\MyNote\ReadMe.txt
 HistoryList:
+- - ReadMe.txt
+  - E:\MyWork\MyNote\ReadMe.txt
+  - 6
+- - ReadMe.txt
+  - E:\MyWork\MyNote\ReadMe.txt
+  - 5
 - - CentOS ping unkunow host.txt
   - E:\MyWork\MyNote\Linux\CentOS ping unkunow host.txt
   - 2
-- - ReadMe.txt
-  - E:\MyWork\MyNote\ReadMe.txt
-  - 1

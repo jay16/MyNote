@@ -12,7 +12,7 @@
         valid_num = 0
         file_path = csv_dir +"\\"+csv_file
         puts file_path
-        #∂¡»°
+        #ËØªÂèñ
         CSV.foreach(file_path) do |row|
            all_num += 1
            if [1,4,5].include?(row[1].to_i) then
