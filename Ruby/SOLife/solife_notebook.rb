@@ -113,34 +113,38 @@ end
 def trigger_row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,seled,conf_save)
     iter = note_view_store.iter_first
     is_find = false
-    while !is_find
+    puts "-"*15
+    begin
       begin   
        is_find = false
        if iter then
-         puts "#else:#{iter[1]}-#{seled[1]}"
+         #puts "#else:#{iter[1]}-#{seled[1]}"
          if iter[1] == seled[1] then
            row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
            row_path = row_ref.path
            note_view_tree.set_cursor(row_path,nil,true)
            is_find = true
-           puts "match:#{iter[1]}-#{seled[1]}"
+           #puts "match:#{iter[1]}-#{seled[1]}"
            break
+         #匹配到父节点，则继续搜索子节点
          elsif seled[1].include?(iter[1])
            row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
            row_path = row_ref.path
-           note_view_tree.set_cursor(row_path,nil,true)
-           puts "match ancestor:#{iter[1]}-#{seled[1]}"
+           note_view_tree.set_cursor(row_path,nil,true) 
+           note_view_tree.collapse_row(row_path)
+           #puts "match ancestor:#{iter[1]}-#{seled[1]}"
            is_find = false
            break
          end
        end while iter.next!
       end 
+
     #激活虚拟点击详细目录动作，加载内容
     row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
     #获取选中节点的第一个子节点，为下次查找提供条件
     selection = note_view_tree.selection.selected
     iter = selection.first_child
-   end
+   end while !is_find
 
 end
 
