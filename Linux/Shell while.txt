@@ -1,14 +1,14 @@
-bashµÄwhile loop:
-Php´úÂë  ÊÕ²Ø´úÂë
+bashçš„while loop:
+Phpä»£ç   æ”¶è—ä»£ç 
 
-    Óï·¨:  
+    è¯­æ³•:  
     while [ condition ]   
     do  
         command1  
         command1  
         commandN  
     done  
-    Ê¾Àı:  
+    ç¤ºä¾‹:  
     #!/bin/bash  
     c=1  
     while [ $c -le 5 ]  
@@ -19,17 +19,17 @@ Php´úÂë  ÊÕ²Ø´úÂë
 
 
 
-kshµÄwhile loop:
-Php´úÂë  ÊÕ²Ø´úÂë
+kshçš„while loop:
+Phpä»£ç   æ”¶è—ä»£ç 
 
-    Óï·¨:  
+    è¯­æ³•:  
     while [[ condition ]] ; do  
         command1  
         command1  
         commandN  
     done  
       
-    Ê¾Àı£º  
+    ç¤ºä¾‹ï¼š  
     #!/bin/ksh  
     c=1  
     while [[ $c -le 5 ]]; do  
@@ -39,8 +39,8 @@ Php´úÂë  ÊÕ²Ø´úÂë
 
 
 
-cshµÄwhile loop:
-Php´úÂë  ÊÕ²Ø´úÂë
+cshçš„while loop:
+Phpä»£ç   æ”¶è—ä»£ç 
 
     while ( condition )  
              commands  

@@ -51,6 +51,7 @@ def trigger_history_tree(note_history_store,seled,window,conf_save)
       begin
         if  iter[1] == seled[1] then
           is_exist = true 
+          puts "History:exists:#{iter[1]}"
           break
         end
       end while iter.next!
@@ -65,6 +66,7 @@ def trigger_history_tree(note_history_store,seled,window,conf_save)
       note_store[1] = seled[1] #path
       note_store[2] = (note_store[2] ? note_store[2] : 0) + 1 
       note_store[0] = File.basename(seled[1]) + " - " + note_store[2].to_s
+      puts "History Insert-#{note_store[1]}"
     end
 end
 def historytree_resort(note_history_store,seled,window,conf_save)

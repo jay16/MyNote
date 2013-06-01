@@ -253,20 +253,36 @@ end
 #加载点击文件历史列表目录
 #过滤出当前详细目录中的点击文件路径
 current_dir_list = Array.new
-note_history_list.select do |node|
-  if node[1].include?(note_seled_dir)
-    current_dir_list.push(node)
-  else
-    puts "history not include:#{node[1]}-#{note_seled_dir}"
+if note_history_list.length > 0 then
+  note_history_list.select do |node|
+    if node[1].include?(note_seled_dir)
+      current_dir_list.push(node)
+      puts "history include:#{node[1]}-#{note_seled_dir}"
+    else
+      puts "history not include:#{node[1]}-#{note_seled_dir}"
+    end
+  end
+  current_dir_list.sort!{ |x,y| y[2] <=> x[2] }
+  puts "current_dir_list:#{current_dir_list.length}"
+  current_dir_list.each do |note_path|
+    is_exist = false
+    iter = note_history_store.iter_first
+    if iter then
+      begin
+        if  iter[1] == note_path[1] then
+          is_exist = true
+          break
+        end
+      end while iter.next!
+    end
+    if !is_exist then
+     note_store = note_history_store.append(nil)
+     note_store[0] = File.basename(note_path[1]) + " - " + note_path[2].to_s
+     note_store[1] = note_path[1]
+     note_store[2] = note_path[2]
+     puts "History Insert:#{note_path[1]}"
+    end
   end
 end
-current_dir_list.sort!{ |x,y| y[2] <=> x[2] }
-current_dir_list.each do |note_path|
-  note_store = note_history_store.append(nil)
-  note_store[0] = File.basename(note_path[1]) + " - " + note_path[2].to_s
-  note_store[1] = note_path[1]
-  note_store[2] = note_path[2]
-end
-
 window.show_all
 Gtk.main
