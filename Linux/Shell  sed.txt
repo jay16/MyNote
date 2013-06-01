@@ -1,0 +1,72 @@
+当编辑指令(参照[section 2.2])在命令列上执行时 , 其前必须加上选项 -e 。其命令格式如下 :
+sed -e '编辑指令1' -e '编辑指令2' ... 文件档
+
+ 其中 , 所有编辑指令都紧接在选项 -e 之後 , 并置於两个 " ' " 特殊字元间。
+
+
+删除test.log中的1~4行
+[webmail@cloud jay]$ sed -e '1,4d' test.log 
+
+删除档内第 10 行资料 , 则指令为 10d。
+删除含有 "man" 字串的资料行时 , 则指令为 /man/d。
+删除档内第 10 行到第 200 行资料, 则指令为 10,200d。
+删除档内第 10 行到含 "man" 字串的资料行 , 则指令为 10,/man/d。
+/apple/,/orange/d
+删除资料区 , 由档内含有 "apple" 字串至含有 "orange" 字串的资料行
+
+
+替换文本内容中的echo为show
+[webmail@cloud jay]$ sed -e 's/echo/show/g' test.log
+
+在每行的头添加字符，比如"HEAD"，命令如下：
+[webmail@cloud jay]$ sed 's/^/HEAD&/g' test.log 
+
+在每行的行尾添加字符，比如“TAIL”，命令如下：
+[webmail@cloud jay]$ sed 's/$/&TAIL/g' test.log 
+
+如果想导出文件，在命令末尾加"> outfile_name"
+如果想在原文件上更改，添加选项"-i"，
+[webmail@cloud jay]$ sed -i 's/$/&TAIL/g' test.log 
+命令中有变量时使用双引号
+[webmail@cloud jay]$ sed -i "s/$/&,$log_name/g" $log_file
+
+把文本中的TAIL删除
+[webmail@cloud jay]$ sed -ie 's/TAIL//g' test.log 
+
+
+[root@oracle11g crond]# vi sed.sh
+ymd=$(date -d last-day +%y%m%d)
+y_m=$(date -d last-day +20%y_%m)
+
+log_dir="/home/work/webmail_log"
+
+for log_name in $(ls $log_dir | grep log.$ymd)
+do
+   log_file="$log_dir/$log_name"
+
+   #file exist and is not empty
+   if [ -s $log_file ]; then
+     $(sed -i "s/$/&,$log_name/g" $log_file)
+   fi
+done
+
+
+
+对文件或文件夹是否存在的判断
+
+
+    –b 当file存在并且是块文件时返回真
+    -c 当file存在并且是字符文件时返回真
+    -d 当pathname存在并且是一个目录时返回真
+    -e 当pathname指定的文件或目录存在时返回真
+    -f 当file存在并且是正规文件时返回真
+    -g 当由pathname指定的文件或目录存在并且设置了SGID位时返回为真
+    -h 当file存在并且是符号链接文件时返回真，该选项在一些老系统上无效
+    -k 当由pathname指定的文件或目录存在并且设置了“粘滞”位时返回真
+    -p 当file存在并且是命令管道时返回为真
+    -r 当由pathname指定的文件或目录存在并且可读时返回为真
+    -s 当file存在文件大小大于0时返回真
+    -u 当由pathname指定的文件或目录存在并且设置了SUID位时返回真
+    -w 当由pathname指定的文件或目录存在并且可执行时返回真。一个目录为了它的内容被访问必然是可执行的。
+    -o 当由pathname指定的文件或目录存在并且被子当前进程的有效用户ID所指定的用户拥有时返回真。
+    -x 参数判断$myPath是否存在并且是否具有可执行权限 

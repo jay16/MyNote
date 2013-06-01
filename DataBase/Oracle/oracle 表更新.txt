@@ -1,0 +1,51 @@
+/home/work/kettle_jobs/Import_Member_CSV
+/home/work/upload_files
+
+export NLS_LANG=AMERICAN_AMERICA.UTF8
+
+查看DBNAME
+select name from v$database;
+授权
+GRANT ALL ON upload_jobs TO public;
+grant connect,resource to intfocus;
+
+SYS身份 查看用户所创建的表
+SQL> select table_name from dba_tables where owner = 'INTFOCUS';
+普通用户身份 查看用户所创建的表
+SQL> select table_name from all_tables where owner='INTFOCUS';
+修改密码
+SQL> select username,password from dba_users;
+SQL> alter user test identified by intfocus; 
+删除表
+SQL> drop table member_bk;
+修改表名
+SQL> alter table upload_temp rename to members_temp;
+插入列
+SQL> alter table student add email varchar(50);	
+删除列
+alter table dog_day_bi drop column time_tag
+修改列结构 (修改类型、列名)
+SQL> alter table student modify (email varchar(150))
+SQL> alter table dog_day_data rename column camaign_id to campaign_id
+复制表结构
+SQL> create table dog_day_bi as select * from log_bi where 1=2
+查看第4行到第7行的数据
+SQL> select * from dog_day_org where rownum <= 7  
+minus 
+select * from dog_day_org where rownum  <= 4
+查看表结构
+SQL> select * from all_col_comments where table_name = 'MEMBERS'
+SQL> select * from all_tab_columns where table_name = 'DOG_DAY_ORG'
+是否显示提交
+SQL> show autocommit;
+SQL> set autocommit on;
+查看设置数据库字符集
+SQL> ALTER DATABASE CHARACTER SET AMERICAN_AMERICA.UTF8
+
+查看数据库的归档模式及闪回是否启用
+SQL> select log_mode,open_mode,flashback_on from v$database;
+
+LOG_MODE     OPEN_MODE            FLASHBACK_ON
+------------ -------------------- ------------------
+ARCHIVELOG   READ WRITE           NO
+

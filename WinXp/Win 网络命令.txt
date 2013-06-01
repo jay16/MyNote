@@ -1,0 +1,32 @@
+--dos启动远程桌面连接
+mstsc  -- Microsoft terminal services client
+--dos启动远程桌面连接并直接进入指定ip桌面
+mstsc /v: 192.168.0.163 /console
+--检查网络是否通畅或网络连接速度
+ping
+-t - 不间断的向目标IP发送数据包，直接手工强迫其停止
+-l - 定义发送数据包的大小，默认大小为32字节，最大定义为65500字节
+-n - 定义发送数据包的次数，默认为3次，网络较慢时可以定义为一次
+--查看网络状态的命令
+netstat
+ -a - 查看本地机器的所有开放端口，可以有效发现和预防木马，可以知道机器所开的服务等信息 
+用法： netstat -a IP
+ -r 列出当前的路由信息，告诉我们本地机器的网关、子网掩码等信息
+用法：netstat -r IP。 
+-- 跟踪路由信息， 查出数据从本地机器传输到目标主机所经过的所有途径
+ tracert 
+ 用法：tracert IP
+-- 网络命令中最重要的一个
+net 
+net view - 查看远程主机的所以共享资源，  用法：net view IP  
+net use - 把远程主机的某个共享资源影射为本地盘符
+net start - 启动远程主机上的服务，  用 法：net start servername  
+net stop - 停止远程主机上的服务
+net user -   查看和帐户有关的情况，包括新建帐户、删除帐户、查看特定帐户、激活帐户、帐户禁用等
+net user abcd 1234 /add - 新建一个用户名为abcd，密码为1234的帐户，默认为user组成员
+net user abcd /del - 将用户名为abcd的用户删除。  
+net user abcd /active:no  - 将用户名为abcd的用户禁用。 
+net user abcd /active:yes - 激活用户名为abcd的用户
+net user abcd - 查看用户名为abcd的用户的情况　
+net localgroup  -  查看所有和用户组有关的信息和进行相关操作。键入不带参数的net localgroup即列出当前所有的用户组
+net time - 查看远程主机当前的时间， 用法：net time IP

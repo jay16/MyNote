@@ -1,0 +1,847 @@
+1，比较当前时间与指定时间相差分钟数：
+
+select sysdate,
+sysdate - to_date('2007-04-03 13:45:39','yyyy-mm-dd hh24:mi:ss')
+from dual
+输出结果：2007-4-4 AM 10:45:56    0.875196759259259
+
+select sysdate,to_date('2009-2-20 17:45:39','yyyy-mm-dd hh24:mi:ss'),
+ROUND(TO_NUMBER(sysdate - to_date('2009-2-20 17:45:39','yyyy-mm-dd hh24:mi:ss')) * 24 * 60)
+from dual;
+输出结果：2009-2-20 17:36:14    2009-2-20 17:45:39       -9
+
+2，同理，可比较相差天数、小时数、秒数等，只需根据需要替换下面的参数：
+
+两个Date类型字段：START_DATE，END_DATE，计算这两个日期的时间差（分别以天，小时，分钟，秒，毫秒）：
+天：
+ROUND(TO_NUMBER(END_DATE - START_DATE))
+小时：
+ROUND(TO_NUMBER(END_DATE - START_DATE) * 24)
+分钟：
+ROUND(TO_NUMBER(END_DATE - START_DATE) * 24 * 60)
+秒：
+ROUND(TO_NUMBER(END_DATE - START_DATE) * 24 * 60 * 60)
+毫秒：
+ROUND(TO_NUMBER(END_DATE - START_DATE) * 24 * 60 * 60 * 1000)
+
+
+1、日期字符转换函数to_date(),to_char()
+   SQL：select to_date('20080229132545','yyyy-mm-dd hh24:mi:ss') from dual ； RESULT：2008-2-29 13:25:45
+   SQL：select to_char(sysdate,'hh:mi:ss') TIME from dual; RESULT:10:51:43
+2、
+   SQL：select to_char( to_date(2008,'J'),'Jsp') from dual； RESULT：Two Thousand Eight
+3、查看哪天的年份
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'year') from dual;     RESULT：two thousand eight
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'yyyy') from dual;     RESULT：2008
+4、查看哪天的月份
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'month') from dual；RESULT：2月
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'mm') from dual；    RESULT：02
+5、查看哪天是星期几
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'day') from dual;      RESULT：星期五
+   SQL：select to_char(to_date('2008-02-29','yyyy-mm-dd'),'day','NLS_DATE_LANGUAGE = American') from dual;
+   RESULT：friday
+   SQL：select to_char(to_date('2008-2-29','yyyy-mm-dd'),'dd') from dual；RESULT：29
+6、查看两个日期之间的天数
+   SQL：select floor(sysdate - to_date('20080201','yyyymmdd')) from dual; RESULT：28
+   注：sysdate是2008-02-29
+7、取两个日期之间除了周六周日的天数
+   SQL：
+   select count(*)
+   from ( select rownum-1 rnum
+   from all_objects
+   where rownum <= to_date('2008-02-29','yyyy-mm-dd') - to_date('2008-
+   02-01','yyyy-mm-dd')+1
+   )
+   where to_char( to_date('2008-02-01','yyyy-mm-dd')+rnum-1, 'D' )
+   not
+   in ( '6', '7' )
+   RESULT：
+   21
+8、查看两个日期之间的月数
+   SQL：select months_between(to_date('2-29-2008', 'MM-DD-YYYY'),to_date('10-1-2007', 'MM-DD-YYYY')) "MONTHS" FROM DUAL;
+   RESULT：4.90322580645161
+9、next_day函数
+   next_day(sysdate,6)是从当前开始下一个星期五。后面的数字是从星期日开始算起。
+   1 2 3 4 5 6 7
+   日 一 二 三 四 五 六
+10、查看小时分秒
+   select sysdate ,to_char(sysdate,'hh') from dual;
+   select sysdate ,to_char(sysdate,'mi') from dual;
+   select sysdate ,to_char(sysdate,'ss') from dual;
+11、取一年的天数（例如今年2008）
+   SQL：select add_months(trunc(sysdate,'year'), 12) - trunc(sysdate,'year') from dual ；RESULT：366
+12、 yyyy与rrrr的区别
+   yyyy 99 0099
+   rrrr 99 1999
+   yyyy 01 0001
+   rrrr 01 2001
+13、一年的第几天
+   SQL：select TO_CHAR(SYSDATE,'DDD'),sysdate from dual ；RESULT：060
+   注：sysdate是2008-02-29
+14、add_months()用于从一个日期值增加或减少一些月份
+   SQL：select add_months(sysdate,12) from dual;                      RESULT：2009-2-28 11:23:50
+15、extract()找出日期或间隔值的字段值
+   SQL：select extract(month from sysdate) from dual; RESULT：2
+   SQL：select extract(year from add_months(sysdate,36)) from dual; RESULT：2011
+16、last_day()返回包含了日期参数的月份的最后一天的日期
+   SQL：select last_day(sysdate) from dual;                                         RESULT：2008-2-29
+
+ 
+
+===================================================================================================================
+
+TO_DATE格式
+　 Day:　　　
+　 dd　　　 number　　　　 12
+　 dy　　　 abbreviated　　fri　　　　　
+　 day　　　spelled out　　friday　　　　　　　　　　　　
+　 ddspth　 spelled out,　 ordinal　 twelfth
+　 Month:　　
+　 mm　　　 number　　　　 03
+　 mon　　　abbreviated　　mar
+　 month　　spelled out　　march　
+　 Year:　　　　　　　　　　　　　
+　 yy　　　 two　digits　　98
+　 yyyy　　 four　digits　 1998　　
+　　
+　 24小时格式下时间范围为： 0:00:00 - 23:59:59....
+　 12小时格式下时间范围为： 1:00:00 - 12:59:59 ....　　
+1.
+　 日期和字符转换函数用法（to_date,to_char） 　　　
+　
+2.
+　 select to_char( to_date(222,'J'),'Jsp')　from dual
+　　
+　 显示Two Hundred Twenty-Two
+　
+3.求某天是星期几
+　 select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day') from dual;　
+　 星期一
+　 select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day','NLS_DATE_LANGUAGE = American') from dual;　
+　 monday　　
+　 设置日期语言
+　 ALTER SESSION SET NLS_DATE_LANGUAGE='AMERICAN';
+　 也可以这样
+　 TO_DATE ('2002-08-26', 'YYYY-mm-dd', 'NLS_DATE_LANGUAGE = American')
+　
+4.两个日期间的天数
+　 select floor(sysdate - to_date('20020405','yyyymmdd')) from dual;
+　
+5. 　　 时间为null的用法
+　 select id, active_date from table1
+　　 UNION
+　 select 1, TO_DATE(null) from dual;
+　　
+　 注意要用TO_DATE(null)
+　
+6.　
+　 a_date between to_date('20011201','yyyymmdd') and to_date('20011231','yyyymmdd')
+　 那么12月31号中午12点之后和12月1号的12点之前是不包含在这个范围之内的。
+　 所以，当时间需要精确的时候，觉得to_char还是必要的
+7.　　　日期格式冲突问题
+　　　　 输入的格式要看你安装的ORACLE字符集的类型, 比如: US7ASCII, date格式的类型就是: '01-Jan-01'
+　 alter system set NLS_DATE_LANGUAGE = American
+　　　　 alter session set NLS_DATE_LANGUAGE = American
+　 或者在to_date中写
+　 select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day','NLS_DATE_LANGUAGE = American') from dual;　
+　 注意我这只是举了NLS_DATE_LANGUAGE，当然还有很多，
+　 可查看
+　 select * from nls_session_parameters
+　 select * from V$NLS_PARAMETERS
+
+　日期和字符转换函数用法（to_date,to_char）
+　　　　 We overwrite NLS_DATE_FORMAT into different formats for the session.　
+　　　　 sql> alter session set nls_date_format = 'DD-MON-RR'; Session altered.
+　　　　 sql> set pagesize 0
+　　 sql> set linesize 130
+　　 sql> select * from nls_session_parameters;
+　　 NLS_LANGUAGE　　　　　　　　　 AMERICAN
+　　 NLS_TERRITORY　　　　　　　　　AMERICA
+　　 NLS_CURRENCY　　　　　　　　　 $
+　　 NLS_ISO_CURRENCY　　　　　　　 AMERICA
+　　 NLS_NUMERIC_CHARACTERS　　　　 .,
+　　 NLS_CALENDAR　　　　　　　　　 GREGORIAN
+　　 NLS_DATE_FORMAT　　　　　　　　DD-MON-RR
+　　 NLS_DATE_LANGUAGE　　　　　　　AMERICAN
+　　 NLS_SORT　　　　　　　　　　　 BINARY
+　　 NLS_TIME_FORMAT　　　　　　　　HH.MI.SSXFF AM
+　　 NLS_TIMESTAMP_FORMAT　　　　　 DD-MON-RR HH.MI.SSXFF AM
+　　 NLS_TIME_TZ_FORMAT　　　　　　 HH.MI.SSXFF AM TZH:TZM
+　　 NLS_TIMESTAMP_TZ_FORMAT　　　　DD-MON-RR HH.MI.SSXFF AM TZH:TZM
+　　 NLS_DUAL_CURRENCY　　　　　　　$
+　　 NLS_COMP　　　　　　　　　　　 BINARY
+
+　　 15 rows selected.
+　　　　　specify it in sql statement:
+　　　　　
+　　　　sql> select to_date('03-SEP-1999','DD-MON-YYYY') from dual;
+　　　　 03-SEP-99
+　　　　sql> alter session set nls_date_format = 'MM-DD-YYYY';
+　　　　　　 Session altered.
+　　　　　　
+　　　　sql> select to_date('03-SEP-99','DD-MON-YY') from dual;
+　　　　　　 TO_DATE('0
+　　　　　　 ----------
+　　　　　　 09-03-1999　
+　　　　sql> alter session set nls_date_format = 'RRRR-MM-DD';
+　　　　　　 Session altered.　
+　　　　　　
+　　　　sql> select to_date('03-SEP-1999','DD-MON-YYYY') from dual;
+　　　　　　 TO_DATE('0
+　　　　　　 ----------
+　　　　　　 1999-09-03　
+　　　　　　
+　　When we use TO_CHAR function, we get expected results of format from　current sql statement:　
+　　　　sql> alter session set nls_date_format = 'MM-DD-YY';
+　　　　　　 Session altered.　
+　　　　sql> select to_char(sysdate,'dd-mm-yyyy') from dual;
+　　　　　　 TO_CHAR(SYSDATE,'DD-MM-YYYY')　
+　　　　　　 07-09-1999　
+　　　　sql> alter session set nls_date_format = 'RR-MON-DD';
+　　　　　　 Session altered.　
+　　　　sql> select to_char(sysdate,'dd-mon-yy') from dual;
+　　　　　　 TO_CHAR(SYSDATE,'DD-MON-YY')　
+　　　　　　 07-sep-99　
+　　　　sql> select to_char(sysdate,'dd-Mon-yy') from dual;
+　　　　　　 TO_CHAR(SYSDATE,'DD-MON-YY')　
+　　　　　　 07-Sep-99
+8.
+　 select count(*)　
+　 from ( select rownum-1 rnum　
+　　　　　from all_objects　
+　　　　　where rownum <= to_date('2002-02-28','yyyy-mm-dd') - to_date('2002-
+　　　　　 02-01','yyyy-mm-dd')+1　
+　　　　 )　
+　 where to_char( to_date('2002-02-01','yyyy-mm-dd')+rnum-1, 'D' )
+　 not　
+　 in ( '1', '7' )
+　　
+　 查找2002-02-28至2002-02-01间除星期一和七的天数
+　 在前后分别调用DBMS_UTILITY.GET_TIME, 让后将结果相减(得到的是1/100秒, 而不是毫秒).　　
+　
+9.
+　 select months_between(to_date('01-31-1999','MM-DD-YYYY'),　
+　　 to_date('12-31-1998','MM-DD-YYYY')) "MONTHS" FROM DUAL;　
+　 1
+　　
+　 select months_between(to_date('02-01-1999','MM-DD-YYYY'),　　
+　　 to_date('12-31-1998','MM-DD-YYYY')) "MONTHS" FROM DUAL;　
+　　
+　 1.03225806451613
+10.　　 Next_day的用法
+　 Next_day(date, day)
+　　
+　 Monday-Sunday, for format code DAY　　　
+　 Mon-Sun, for format code DY　　　　　
+　 1-7, for format code D　
+　
+11　　　
+　 select to_char(sysdate,'hh:mi:ss') TIME from all_objects
+　 注意：第一条记录的TIME 与最后一行是一样的
+　 可以建立一个函数来处理这个问题
+　 create or replace function sys_date return date is　
+　 begin　
+　 return sysdate;　
+　 end;　
+　　
+　 select to_char(sys_date,'hh:mi:ss') from all_objects;　
+12.
+　　　　 获得小时数
+　　　　　
+　　　　 SELECT EXTRACT(HOUR FROM TIMESTAMP '2001-02-16 2:38:40') from offer
+　　　　 sql>　 select sysdate ,to_char(sysdate,'hh')　from dual;
+　　　　　
+　　　　 SYSDATE　　　　　　　TO_CHAR(SYSDATE,'HH')
+　　　　 -------------------- ---------------------
+　　　　 2003-10-13 19:35:21　07
+　　　　　
+　　　　 sql>　 select sysdate ,to_char(sysdate,'hh24')　from dual;
+　　　　　
+　　　　 SYSDATE　　　　　　　TO_CHAR(SYSDATE,'HH24')
+　　　　 -------------------- -----------------------
+　　　　 2003-10-13 19:35:21　19
+　　　　　
+　　　　 获取年月日与此类似
+13.
+　 年月日的处理
+　 select older_date,
+　　　　　　newer_date,
+　　　　　　years,
+　　　　　　months,
+　　　　　　abs(
+　　　　　　　trunc(
+　　　　　　　　 newer_date-
+　　　　　　　　　　 add_months( older_date,years*12+months )
+　　　　　　　　　 )
+　　　　　　　) days
+　　　from ( select　
+　　　　 trunc(months_between( newer_date, older_date )/12) YEARS,
+　　　 mod(trunc(months_between( newer_date, older_date )),　
+　　　　　　 12 )　MONTHS,
+　　　　　　　　　　newer_date,
+　　　　　　　　　　 older_date
+　　　　　　　 from ( select hiredate older_date,
+　　　　　　　　　 add_months(hiredate,rownum)+rownum newer_date
+　　　　　　　　　　　　from emp )
+　　　　　 )
+　
+14.
+　 处理月份天数不定的办法
+　 select to_char(add_months(last_day(sysdate) +1, -2), 'yyyymmdd'),last_day(sysdate) from dual
+　
+16.
+　 找出今年的天数
+　 select add_months(trunc(sysdate,'year'), 12) - trunc(sysdate,'year') from dual
+　　
+　 闰年的处理方法
+　 to_char( last_day( to_date('02' || :year,'mmyyyy') ), 'dd' )
+　 如果是28就不是闰年
+　
+17.
+　 yyyy与rrrr的区别
+　 'YYYY99 TO_C
+　 ------- ----
+　 yyyy 99 0099
+　 rrrr 99 1999
+　 yyyy 01 0001
+　 rrrr 01 2001
+　
+18.不同时区的处理
+　 select to_char( NEW_TIME( sysdate, 'GMT','EST'), 'dd/mm/yyyy hh:mi:ss') ,sysdate
+　 from dual;　
+　
+19.
+　 5秒钟一个间隔
+　 Select TO_DATE(FLOOR(TO_CHAR(sysdate,'SSSSS')/300) * 300,'SSSSS') ,TO_CHAR(sysdate,'SSSSS')
+　　from dual
+　　
+　　2002-11-1 9:55:00　35786
+　　SSSSS表示5位秒数
+　
+20.
+　 一年的第几天
+　 select TO_CHAR(SYSDATE,'DDD'),sysdate from dual　
+　 310　2002-11-6 10:03:51
+　
+21.计算小时,分,秒,毫秒
+　 select
+　　　　　 Days,
+　　　　　 A,
+　　　　　 TRUNC(A*24)　　　　　　　　　　　　　　　　　　 Hours,
+　　　　　 TRUNC(A*24*60 - 60*TRUNC(A*24))　　　　　　　　 Minutes,
+　　　　　 TRUNC(A*24*60*60 - 60*TRUNC(A*24*60))　　　　　 Seconds,
+　　　　　 TRUNC(A*24*60*60*100 - 100*TRUNC(A*24*60*60))　 mSeconds
+　 from
+　 (
+　 select
+　　　　　 trunc(sysdate)　　　　　　 Days,
+　　　　　 sysdate - trunc(sysdate)　　　A
+　 from dual
+　 )
+　
+　　
+9i以上版本
+　　-----------------------------
+　　sql>select to_char(systimestamp,'yyyy-mm-dd hh24:mi:ssxff') time1,
+　　to_char(current_timestamp) time2 from dual;
+　　
+　　TIME1　　　　　　　　　　　　 TIME2
+　　----------------------------- ----------------------------------------------------------------
+　　 2003-10-24 10:48:45.656000　　24-OCT-03 10.48.45.656000 AM +08:00
+　　可以看到，毫秒在to_char中对应的是FF。
+　　
+　　sql> select to_timestamp('2003-10-24 10:48:45.656000','yyyy-mm-dd hh24:mi:ssxff') from dual;
+　　
+　　 TO_TIMESTAMP('2003-10-2410:48:
+　　 -------------------------------------------------
+　　24-10月-03 10.48.45.656000000 上午
+　
+22.
+floor((date2-date1) /365) 作为年
+floor((date2-date1, 365) /30) 作为月
+mod(mod(date2-date1, 365), 30)作为日.
+23.next_day函数
+next_day(sysdate,6) 是从当前开始下一个星期五。后面的数字是从星期日开始算起。　
+1　2　3　4　5　6　7　
+日 一 二 三 四 五 六　
+　
+24.取出一个时间段中星期日星期六的天数
+function weekends( p_date1 in date, p_date2 in date )
+return number
+as
+　　 l_date1 date default least(p_date1,p_date2);
+　　 l_date2 date default greatest(p_date1,p_date2);
+　　 l_days　number default trunc(l_date2-l_date1)+1;
+　　 l_cnt　 number;
+begin
+　　 select count(*) into l_cnt
+　　　 from (select rownum r　
+　　　　　　　 from all_objects where rownum <= l_days)
+　　　where to_char(l_date1+r-1,'dy') in ( 'sat','sun' );
+　
+　　 return l_cnt;
+end;O
+
+
+
+
+
+
+ORACLE日期时间函数大全
+
+   TO_DATE格式(以时间:2007-11-02   13:45:25为例)
+ 
+        Year:    
+        yy two digits 两位年                显示值:07
+        yyy three digits 三位年                显示值:007
+        yyyy four digits 四位年                显示值:2007
+          
+        Month:    
+        mm    number     两位月              显示值:11
+        mon    abbreviated 字符集表示          显示值:11月,若是英文版,显示nov   
+        month spelled out 字符集表示          显示值:11月,若是英文版,显示november
+        
+        Day:    
+        dd    number         当月第几天        显示值:02
+        ddd    number         当年第几天        显示值:02
+        dy    abbreviated 当周第几天简写    显示值:星期五,若是英文版,显示fri
+        day    spelled out   当周第几天全写    显示值:星期五,若是英文版,显示friday      
+        ddspth spelled out, ordinal twelfth
+           
+              Hour:
+              hh    two digits 12小时进制            显示值:01
+              hh24 two digits 24小时进制            显示值:13
+            
+              Minute:
+              mi    two digits 60进制                显示值:45
+            
+              Second:
+              ss    two digits 60进制                显示值:25
+            
+              其它
+              Q     digit         季度                  显示值:4
+              WW    digit         当年第几周            显示值:44
+              W    digit          当月第几周            显示值:1
+            
+        24小时格式下时间范围为： 0:00:00 - 23:59:59....    
+        12小时格式下时间范围为： 1:00:00 - 12:59:59 ....
+          
+1. 日期和字符转换函数用法（to_date,to_char）
+       
+select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') as nowTime from dual;   //日期转化为字符串 
+select to_char(sysdate,'yyyy') as nowYear   from dual;   //获取时间的年 
+select to_char(sysdate,'mm')    as nowMonth from dual;   //获取时间的月 
+select to_char(sysdate,'dd')    as nowDay    from dual;   //获取时间的日 
+select to_char(sysdate,'hh24') as nowHour   from dual;   //获取时间的时 
+select to_char(sysdate,'mi')    as nowMinute from dual;   //获取时间的分 
+select to_char(sysdate,'ss')    as nowSecond from dual;   //获取时间的秒
+
+  
+select to_date('2004-05-07 13:23:44','yyyy-mm-dd hh24:mi:ss')    from dual//
+
+2.    
+    select to_char( to_date(222,'J'),'Jsp') from dual    
+  
+    显示Two Hundred Twenty-Two   
+
+3.求某天是星期几    
+   select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day') from dual;    
+   星期一    
+   select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day','NLS_DATE_LANGUAGE = American') from dual;    
+   monday    
+   设置日期语言    
+   ALTER SESSION SET NLS_DATE_LANGUAGE='AMERICAN';    
+   也可以这样    
+   TO_DATE ('2002-08-26', 'YYYY-mm-dd', 'NLS_DATE_LANGUAGE = American')   
+
+4. 两个日期间的天数    
+    select floor(sysdate - to_date('20020405','yyyymmdd')) from dual;   
+
+5. 时间为null的用法    
+   select id, active_date from table1    
+   UNION    
+   select 1, TO_DATE(null) from dual;    
+ 
+   注意要用TO_DATE(null)   
+
+6.月份差 
+   a_date between to_date('20011201','yyyymmdd') and to_date('20011231','yyyymmdd')    
+   那么12月31号中午12点之后和12月1号的12点之前是不包含在这个范围之内的。    
+   所以，当时间需要精确的时候，觉得to_char还是必要的
+    
+7. 日期格式冲突问题    
+    输入的格式要看你安装的ORACLE字符集的类型, 比如: US7ASCII, date格式的类型就是: '01-Jan-01'    
+    alter system set NLS_DATE_LANGUAGE = American    
+    alter session set NLS_DATE_LANGUAGE = American    
+    或者在to_date中写    
+    select to_char(to_date('2002-08-26','yyyy-mm-dd'),'day','NLS_DATE_LANGUAGE = American') from dual;    
+    注意我这只是举了NLS_DATE_LANGUAGE，当然还有很多，    
+    可查看    
+    select * from nls_session_parameters    
+    select * from V$NLS_PARAMETERS   
+
+8.    
+   select count(*)    
+   from ( select rownum-1 rnum    
+       from all_objects    
+       where rownum <= to_date('2002-02-28','yyyy-mm-dd') - to_date('2002-    
+       02-01','yyyy-mm-dd')+1    
+      )    
+   where to_char( to_date('2002-02-01','yyyy-mm-dd')+rnum-1, 'D' )    
+        not in ( '1', '7' )    
+ 
+   查找2002-02-28至2002-02-01间除星期一和七的天数    
+   在前后分别调用DBMS_UTILITY.GET_TIME, 让后将结果相减(得到的是1/100秒, 而不是毫秒).   
+
+9. 查找月份   
+    select months_between(to_date('01-31-1999','MM-DD-YYYY'),to_date('12-31-1998','MM-DD-YYYY')) "MONTHS" FROM DUAL;    
+    1    
+   select months_between(to_date('02-01-1999','MM-DD-YYYY'),to_date('12-31-1998','MM-DD-YYYY')) "MONTHS" FROM DUAL;    
+    1.03225806451613
+     
+10. Next_day的用法    
+    Next_day(date, day)    
+  
+    Monday-Sunday, for format code DAY    
+    Mon-Sun, for format code DY    
+    1-7, for format code D   
+
+11    
+   select to_char(sysdate,'hh:mi:ss') TIME from all_objects    
+   注意：第一条记录的TIME 与最后一行是一样的    
+   可以建立一个函数来处理这个问题    
+   create or replace function sys_date return date is    
+   begin    
+   return sysdate;    
+   end;    
+ 
+   select to_char(sys_date,'hh:mi:ss') from all_objects; 
+   
+12.获得小时数    
+     extract()找出日期或间隔值的字段值
+    SELECT EXTRACT(HOUR FROM TIMESTAMP '2001-02-16 2:38:40') from offer    
+    SQL> select sysdate ,to_char(sysdate,'hh') from dual;    
+  
+    SYSDATE TO_CHAR(SYSDATE,'HH')    
+    -------------------- ---------------------    
+    2003-10-13 19:35:21 07    
+  
+    SQL> select sysdate ,to_char(sysdate,'hh24') from dual;    
+  
+    SYSDATE TO_CHAR(SYSDATE,'HH24')    
+    -------------------- -----------------------    
+    2003-10-13 19:35:21 19   
+
+     
+13.年月日的处理    
+   select older_date,    
+       newer_date,    
+       years,    
+       months,    
+       abs(    
+        trunc(    
+         newer_date-    
+         add_months( older_date,years*12+months )    
+        )    
+       ) days
+     
+   from ( select    
+        trunc(months_between( newer_date, older_date )/12) YEARS,    
+        mod(trunc(months_between( newer_date, older_date )),12 ) MONTHS,    
+        newer_date,    
+        older_date    
+        from (
+              select hiredate older_date, add_months(hiredate,rownum)+rownum newer_date    
+              from emp
+             )    
+      )   
+
+14.处理月份天数不定的办法    
+   select to_char(add_months(last_day(sysdate) +1, -2), 'yyyymmdd'),last_day(sysdate) from dual   
+
+16.找出今年的天数    
+   select add_months(trunc(sysdate,'year'), 12) - trunc(sysdate,'year') from dual   
+
+   闰年的处理方法    
+   to_char( last_day( to_date('02'    | | :year,'mmyyyy') ), 'dd' )    
+   如果是28就不是闰年   
+
+17.yyyy与rrrr的区别    
+   'YYYY99 TO_C    
+   ------- ----    
+   yyyy 99 0099    
+   rrrr 99 1999    
+   yyyy 01 0001    
+   rrrr 01 2001   
+
+18.不同时区的处理    
+   select to_char( NEW_TIME( sysdate, 'GMT','EST'), 'dd/mm/yyyy hh:mi:ss') ,sysdate    
+   from dual;   
+
+19.5秒钟一个间隔    
+   Select TO_DATE(FLOOR(TO_CHAR(sysdate,'SSSSS')/300) * 300,'SSSSS') ,TO_CHAR(sysdate,'SSSSS')    
+   from dual   
+
+   2002-11-1 9:55:00 35786    
+   SSSSS表示5位秒数   
+
+20.一年的第几天    
+   select TO_CHAR(SYSDATE,'DDD'),sysdate from dual
+      
+   310 2002-11-6 10:03:51   
+
+21.计算小时,分,秒,毫秒    
+    select    
+     Days,    
+     A,    
+     TRUNC(A*24) Hours,    
+     TRUNC(A*24*60 - 60*TRUNC(A*24)) Minutes,    
+     TRUNC(A*24*60*60 - 60*TRUNC(A*24*60)) Seconds,    
+     TRUNC(A*24*60*60*100 - 100*TRUNC(A*24*60*60)) mSeconds    
+    from    
+    (    
+     select    
+     trunc(sysdate) Days,    
+     sysdate - trunc(sysdate) A    
+     from dual    
+   )   
+
+
+   select * from tabname    
+   order by decode(mode,'FIFO',1,-1)*to_char(rq,'yyyymmddhh24miss');    
+ 
+   //    
+   floor((date2-date1) /365) 作为年    
+   floor((date2-date1, 365) /30) 作为月    
+   d(mod(date2-date1, 365), 30)作为日.
+
+23.next_day函数      返回下个星期的日期,day为1-7或星期日-星期六,1表示星期日
+   next_day(sysdate,6)是从当前开始下一个星期五。后面的数字是从星期日开始算起。    
+   1 2 3 4 5 6 7    
+   日 一 二 三 四 五 六  
+ 
+   ---------------------------------------------------------------
+ 
+   select    (sysdate-to_date('2003-12-03 12:55:45','yyyy-mm-dd hh24:mi:ss'))*24*60*60 from ddual
+   日期 返回的是天 然后 转换为ss
+   
+24,round[舍入到最接近的日期](day:舍入到最接近的星期日)
+   select sysdate S1,
+   round(sysdate) S2 ,
+   round(sysdate,'year') YEAR,
+   round(sysdate,'month') MONTH ,
+   round(sysdate,'day') DAY from dual
+
+25,trunc[截断到最接近的日期,单位为天] ,返回的是日期类型
+   select sysdate S1,                   
+     trunc(sysdate) S2,                 //返回当前日期,无时分秒
+     trunc(sysdate,'year') YEAR,        //返回当前年的1月1日,无时分秒
+     trunc(sysdate,'month') MONTH ,     //返回当前月的1日,无时分秒
+     trunc(sysdate,'day') DAY           //返回当前星期的星期天,无时分秒
+   from dual
+
+26,返回日期列表中最晚日期
+   select greatest('01-1月-04','04-1月-04','10-2月-04') from dual
+
+27.计算时间差
+     注:oracle时间差是以天数为单位,所以换算成年月,日
+   
+      select floor(to_number(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))/365) as spanYears from dual        //时间差-年
+      select ceil(moths_between(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))) as spanMonths from dual        //时间差-月
+      select floor(to_number(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))) as spanDays from dual             //时间差-天
+      select floor(to_number(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))*24) as spanHours from dual         //时间差-时
+      select floor(to_number(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))*24*60) as spanMinutes from dual    //时间差-分
+      select floor(to_number(sysdate-to_date('2007-11-02 15:55:03','yyyy-mm-dd hh24:mi:ss'))*24*60*60) as spanSeconds from dual //时间差-秒
+
+28.更新时间
+     注:oracle时间加减是以天数为单位,设改变量为n,所以换算成年月,日
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sysdate+n*365,'yyyy-mm-dd hh24:mi:ss') as newTime from dual        //改变时间-年
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),add_months(sysdate,n) as newTime from dual                                 //改变时间-月
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sysdate+n,'yyyy-mm-dd hh24:mi:ss') as newTime from dual            //改变时间-日
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sysdate+n/24,'yyyy-mm-dd hh24:mi:ss') as newTime from dual         //改变时间-时
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sysdate+n/24/60,'yyyy-mm-dd hh24:mi:ss') as newTime from dual      //改变时间-分
+     select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),to_char(sysdate+n/24/60/60,'yyyy-mm-dd hh24:mi:ss') as newTime from dual   //改变时间-秒
+
+29.查找月的第一天,最后一天
+     SELECT Trunc(Trunc(SYSDATE, 'MONTH') - 1, 'MONTH') First_Day_Last_Month,
+       Trunc(SYSDATE, 'MONTH') - 1 / 86400 Last_Day_Last_Month,
+       Trunc(SYSDATE, 'MONTH') First_Day_Cur_Month,
+       LAST_DAY(Trunc(SYSDATE, 'MONTH')) + 1 - 1 / 86400 Last_Day_Cur_Month
+   FROM dual;
+
+
+三. 字符函数(可用于字面字符或数据库列)
+
+1，字符串截取
+   select substr('abcdef',1,3) from dual
+
+2,查找子串位置
+   select instr('abcfdgfdhd','fd') from dual
+
+3,字符串连接
+   select 'HELLO'||'hello world' from dual;
+
+4, 1)去掉字符串中的空格
+    select ltrim(' abc') s1,
+    rtrim('zhang ') s2,
+    trim(' zhang ') s3 from dual
+   2)去掉前导和后缀
+    select trim(leading 9 from 9998767999) s1,
+    trim(trailing 9 from 9998767999) s2,
+    trim(9 from 9998767999) s3 from dual;
+ 
+5, 返回字符串首字母的Ascii值
+   select ascii('a') from dual
+
+6,返回ascii值对应的字母
+   select chr(97) from dual
+
+7,计算字符串长度
+   select length('abcdef') from dual
+
+8,initcap（首字母变大写） ,lower(变小写),upper(变大写)
+   select lower('ABC') s1,
+       upper('def') s2,
+       initcap('efg') s3
+   from dual;
+
+9,Replace
+   select replace('abc','b','xy') from dual;
+
+10,translate
+   select translate('abc','b','xx') from dual; -- x是1位
+
+11,lpad [左添充] rpad [右填充](用于控制输出格式)
+   select lpad('func',15,'=') s1, rpad('func',15,'-') s2 from dual;
+   select lpad(dname,14,'=') from dept;
+
+12, decode[实现if ..then 逻辑]   注:第一个是表达式,最后一个是不满足任何一个条件的值
+   select deptno,decode(deptno,10,'1',20,'2',30,'3','其他') from dept;
+   例:
+   select seed,account_name,decode(seed,111,1000,200,2000,0) from t_userInfo//如果seed为111,则取1000;为200,取2000;其它取0
+   select seed,account_name,decode(sign(seed-111),1,'big seed',-1,'little seed','equal seed') from t_userInfo//如果seed>111,则显示大;为200,则显示小;其它则显
+
+示相等
+
+13 case[实现switch ..case 逻辑]
+    SELECT CASE X-FIELD
+         WHEN X-FIELD < 40 THEN 'X-FIELD 小于 40'
+         WHEN X-FIELD < 50 THEN 'X-FIELD 小于 50'
+         WHEN X-FIELD < 60 THEN 'X-FIELD 小于 60'
+         ELSE 'UNBEKNOWN'
+        END
+   FROM DUAL
+ 
+   注:CASE语句在处理类似问题就显得非常灵活。当只是需要匹配少量数值时，用Decode更为简洁。
+
+四.数字函数
+1，取整函数（ceil 向上取整,floor 向下取整）
+   select ceil(66.6) N1,floor(66.6) N2 from dual;
+
+2, 取幂(power) 和 求平方根(sqrt)
+   select power(3,2) N1,sqrt(9) N2 from dual;
+
+3,求余
+   select mod(9,5) from dual;
+
+4,返回固定小数位数 (round:四舍五入，trunc:直接截断)
+   select round(66.667,2) N1,trunc(66.667,2) N2 from dual;
+
+5,返回值的符号(正数返回为1,负数为-1)
+   select sign(-32),sign(293) from dual;
+
+五.转换函数
+1，to_char()[将日期和数字类型转换成字符类型]
+   1) select to_char(sysdate) s1,
+        to_char(sysdate,'yyyy-mm-dd') s2,
+        to_char(sysdate,'yyyy') s3,
+        to_char(sysdate,'yyyy-mm-dd hh12:mi:ss') s4,
+        to_char(sysdate, 'hh24:mi:ss') s5,
+        to_char(sysdate,'DAY') s6
+    from dual;
+   2) select sal,to_char(sal,'＄99999') n1,to_char(sal,'＄99,999') n2 from emp
+
+2, to_date()[将字符类型转换为日期类型]
+    insert into emp(empno,hiredate) values(8000,to_date('2004-10-10','yyyy-mm-dd'));
+ 
+3, to_number() 转换为数字类型
+    select to_number(to_char(sysdate,'hh12')) from dual; //以数字显示的小时数
+ 
+六.其他函数
+   1.user:
+    返回登录的用户名称
+    select user from dual;
+  
+   2.vsize:
+    返回表达式所需的字节数
+    select vsize('HELLO') from dual;
+ 
+   3.nvl(ex1,ex2): 　
+    ex1值为空则返回ex2,否则返回该值本身ex1（常用）
+    例：如果雇员没有佣金，将显示0，否则显示佣金
+    select comm,nvl(comm,0) from emp;
+ 
+   4.nullif(ex1,ex2):
+    值相等返空，否则返回第一个值
+    例：如果工资和佣金相等，则显示空，否则显示工资
+    select nullif(sal,comm),sal,comm from emp;
+ 
+   5.coalesce: 　
+    返回列表中第一个非空表达式
+    select comm,sal,coalesce(comm,sal,sal*10) from emp;
+ 
+   6.nvl2(ex1,ex2,ex3) :
+    如果ex1不为空，显示ex2,否则显示ex3
+    如：查看有佣金的雇员姓名以及他们的佣金
+    　　select nvl2(comm,ename,') as HaveCommName,comm from emp;
+ 
+ 
+七.分组函数
+max min avg count sum
+1，整个结果集是一个组
+   1) 求部门30 的最高工资，最低工资,平均工资，总人数，有工作的人数，工种数量及工资总和
+     select max(ename),max(sal),
+     min(ename),min(sal),
+     avg(sal),
+     count(*) ,count(job),count(distinct(job)) ,
+     sum(sal) from emp where deptno=30;
+2, 带group by 和 having 的分组
+   1)按部门分组求最高工资，最低工资，总人数，有工作的人数，工种数量及工资总和
+    select deptno, max(ename),max(sal),
+    min(ename),min(sal),
+    avg(sal),
+    count(*) ,count(job),count(distinct(job)) ,
+    sum(sal) from emp group by deptno;
+ 
+   2)部门30的最高工资，最低工资，总人数，有工作的人数，工种数量及工资总和
+    select deptno, max(ename),max(sal),
+    min(ename),min(sal),
+    avg(sal),
+    count(*) ,count(job),count(distinct(job)) ,
+    sum(sal) from emp group by deptno having deptno=30;
+ 
+3, stddev 返回一组值的标准偏差
+    select deptno,stddev(sal) from emp group by deptno;
+    variance 返回一组值的方差差
+    select deptno,variance(sal) from emp group by deptno;
+
+4, 带有rollup和cube操作符的Group By
+    rollup 按分组的第一个列进行统计和最后的小计
+    cube 按分组的所有列的进行统计和最后的小计
+    select deptno,job ,sum(sal) from emp group by deptno,job;
+    select deptno,job ,sum(sal) from emp group by rollup(deptno,job);
+    cube 产生组内所有列的统计和最后的小计
+    select deptno,job ,sum(sal) from emp group by cube(deptno,job);
+
+八、临时表
+   只在会话期间或在事务处理期间存在的表.
+   临时表在插入数据时，动态分配空间
+   create global temporary table temp_dept
+   (dno number,
+   dname varchar2(10))
+   on commit delete rows;
+   insert into temp_dept values(10,'ABC');
+   commit;
+   select * from temp_dept; --无数据显示,数据自动清除
+   on commit preserve rows:在会话期间表一直可以存在（保留数据）
+   on commit delete rows:事务结束清除数据（在事务结束时自动删除表的数据）

@@ -1,0 +1,97 @@
+　表的连接是指在一个SQL语句中通过表与表之间的关连,从一个或多个表中检索相关的数据,大体上表与表之间的连接主要可分四种,分别为相等连接,外连接,不等连接和自连接,本文将主要从以下几个典型的例子来分析Oracle表的四种不同连接方式:
+
+　　1. 相等连接
+
+　　通过两个表具有相同意义的列，可以建立相等连接条件。
+
+　　只有连接列上在两个表中都出现且值相等的行才会出现在查询结果中。
+
+　　例 查询员工信息以及对应的员工所在的部门信息;
+
+
+　　SELECT * FROM EMP,DEPT;
+　　SELECT * FROM EMP,DEPT
+　　WHERE EMP.DEPTNO = DEPT.DEPTNO;
+
+　　REM 显示工资超过2000的员工信息以及对应的员工的部门名称。
+
+　　2. 外连接
+
+　　对于外连接，Oracle中可以使用“(+)”来表示，9i可以使用LEFT/RIGHT/FULL OUTER JOIN，下面将配合实例一一介绍。除了显示匹配相等连接条件的信息之外,还显示无法匹配相等连接条件的某个表的信息。
+
+　　外连接采用(+)来识别。
+
+　　A) 左条件(+) = 右条件;
+
+　　代表除了显示匹配相等连接条件的信息之外,还显示右条件所在的表中无法匹配相等连接条件的信息。
+
+　　此时也称为"右外连接".另一种表示方法是:
+
+　　SELECT ... FROM 表1 RIGHT OUTER JOIN 表2 ON 连接条件
+
+　　B) 左条件 = 右条件(+);
+
+　　代表除了显示匹配相等连接条件的信息之外,还显示左条件所在的表中无法匹配相等连接条件的信息。
+
+　　此时也称为"左外连接".
+
+　　SELECT ... FROM 表1 LEFT OUTER JOIN 表2 ON 连接条件
+
+　　例 显示员工信息以及所对应的部门信息
+
+　　--无法显示没有部门的员工信息
+
+　　--无法显示没有员工的部门信息
+
+
+　　--SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO = DEPT.DEPTNO;
+
+　　--直接做相等连接:
+
+
+　　SELECT * FROM EMP JOIN DEPT ON EMP.DEPTNO = DEPT.DEPTNO;
+
+　　REM 显示员工信息以及所对应的部门信息,显示没有员工的部门信息
+
+
+　　--SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO(+) = DEPT.DEPTNO;
+　　SELECT * FROM EMP RIGHT OUTER JOIN DEPT ON EMP.DEPTNO = DEPT.DEPTNO;
+
+　　REM 显示员工信息以及所对应的部门信息,显示没有部门的员工信息
+
+
+　　--SELECT * FROM EMP,DEPT WHERE EMP.DEPTNO = DEPT.DEPTNO(+);
+　　SELECT * FROM EMP LEFT OUTER JOIN DEPT ON EMP.DEPTNO = DEPT.DEPTNO;
+
+　　3. 不等连接
+
+　　两个表中的相关的两列进行不等连接,比较符号一般为>,<,...,BETWEEN.. AND..
+
+
+　　REM SALGRADE
+　　--DESC SALGRADE;
+　　--SELECT * FROM SALGRADE;
+
+　　REM 显示员工的编号,姓名,工资,以及工资所对应的级别。
+
+
+　　SELECT EMPNO,ENAME,SAL,SALGRADE.* FROM SALGRADE,EMP
+　　WHERE EMP.SAL BETWEEN LOSAL AND HISAL;
+
+　　REM 显示雇员的编号,姓名,工资,工资级别,所在部门的名称;
+
+
+　　SELECT EMPNO,ENAME,SAL,GRADE,DNAME FROM EMP,DEPT,SALGRADE
+　　WHERE EMP.DEPTNO = DEPT.DEPTNO AND EMP.SAL BETWEEN LOSAL AND HISAL;
+
+　　4. 自连接
+
+　　自连接是数据库中经常要用的连接方式，使用自连接可以将自身表的一个镜像当作另一个表来对待，从而能够得到一些特殊的数据。下面介绍一下自连接的方法:
+
+　　将原表复制一份作为另一个表,两表做笛卡儿相等连接。
+
+　　例 显示雇员的编号,名称,以及该雇员的经理名称
+
+　　SELECT WORKER.ENAME,WORKER.MGR,MANAGER.EMPNO,MANAGER.ENAME FROM EMP WORKER,EMP MANAGER
+
+　　WHERE WORKER.MGR = MANAGER.EMPNO;

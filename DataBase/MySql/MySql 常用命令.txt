@@ -1,0 +1,94 @@
+﻿创建表
+mysql> create table hello (col1 varchar(10),col2 int);
+
+修改表名
+mysql> alter table hello rename to world;
+添加新列
+mysql> alter table hello add(tel varchar(20) not Null auto_increment primary key);
+修改列属性(col3可以与col1相同)
+mysql> alter table hello change col1 col3 integer;
+删除列
+mysql> alter table t1 drop column tel;
+---------------------------------------------------------------------
+设置列默认值
+ALTER TABLE members MODIFY COLUMN type_email int DEFAULT '1';
+--取消默认值为1
+ALTER TABLE mail_206.members MODIFY COLUMN type_email int;
+
+
+设置列默认值id自动增长
+ALTER TABLE mail_206.unsubscribes ADD id INT NOT NULL AUTO_INCREMENT;
+mysql> create table unsub(id int unsigned primary key auto_increment,email varchar(255),campaign_id int,created_at datetime);
+---------------------------------------------------------------------
+--MySql正则匹配邮箱地址
+select email from members where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' ;
+--去空格：不符合正则匹配邮箱地址是否前后有空格
+update members set email = trim(email) where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' ;
+---------------------------------------------------------------------
+insert select配合用法 
+mysql> insert into unsub(email,campaign_id,created_at)  (select email,campaign_id,created_at from unsubscribes)
+
+create as创建表用法
+mysql> create table dog_data_cache as (select * from dog_data);
+Query OK, 58 rows affected (0.15 sec)
+Records: 58  Duplicates: 0  Warnings: 0
+---------------------------------------------------------------------
+
+清空表数据,id重新从1开始
+mysql> truncate table 表名
+
+显示中文
+mysql> set names 'gbk';或 'utf8'
+设置数据库和数据表编码
+mysql> alter database mail_206 default character set 'utf8';
+设置连接编码
+mysql> SET character_set_client='utf8';
+Query OK, 0 rows affected (0.00 sec)
+mysql> SET character_set_connection='utf8';
+Query OK, 0 rows affected (0.00 sec)
+mysql> SET character_set_results='utf8';
+Query OK, 0 rows affected (0.00 sec)
+
+---------------------------------------------------------------------
+导出数据库结构
+-d 没有数据 --add-drop-table 在每个create语句之前增加一个drop table 
+$ mysqldump -u root -pFocus_Mail -d --add-drop-table mail_dev>db.sql
+导出整个数据库数据
+$ mysqldump -u root -pFocus_Mail mail_dev > mail_dev.sql;
+导出数据库中某表数据
+$ mysqldump -u root -pFocus_Mail mail_dev members > members.sql;
+---------------------------------------------------------------------
+授权ip远程登陆
+mysql> GRANT ALL PRIVILEGES ON mail_206.* TO 'root'@'210.14.76.206' IDENTIFIED BY 'Focus_Mail' WITH GRANT OPTION;
+mysql> flush privileges;
+远程登陆
+[root@mail# mysql -h 210.14.76.205 -u root -pFocus_Mail -D mail_dev;
+---------------------------------------------------------------------
+跨表查询
+mysql> update tracks as T1 inner join campaigns as T2 on T1.uid=T2.uid set T1.time_span=(T1.created_at-T2.created_at);
+跨数据库查询
+mysql> insert into mail_206.useradmins (type_user,asset_id,asset_type,created_at,updated_at) select type_user,asset_id,asset_type,created_at,updated_at from mail_dev.useradmins;
+mysql> select name from user_orgs as T1 inner join user_org_objects as T2 on T1.id=T2.user_org_id where T2.asset_id=28;
+
+---------------------------------------------------------------------
+字符串截取
+mysql> select  count(*),right(email,length(email)-locate("@",email)+1) from members group by right(email,length(email)-locate("@",email)+1);
+select 
+
+
+
+mysql忘记密码
+[root@NetDakVPS ~]# service mysqld stop
+[root@NetDakVPS ~]# mysqld_safe --skip-grant-tables &
+[root@NetDakVPS ~]# mysql -u root
+mysql> use mysql
+mysql> update user set password=password('123456') where user='root';
+mysql> flush privileges;
+mysql> quit
+
+修改密码
+mysqladmin -u用户名 -p旧密码 password 新密码
+mysql> UPDATE mysql.user SET password=PASSWORD(’新密码’) WHERE User=’root’;
+mysql> FLUSH PRIVILEGES;
+
+

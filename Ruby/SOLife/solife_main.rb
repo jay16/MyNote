@@ -71,7 +71,8 @@ note_view_store = Gtk::TreeStore.new(String, String, Integer)
 renderer = Gtk::CellRendererText.new
 tree_col = Gtk::TreeViewColumn.new(File.basename(note_seled_dir), renderer, :text => 0)
 
-g_note_tree(note_view_store,note_seled_dir)
+#更新目录内容
+update_tree_view(note_view_store,note_seled_dir)
 
 note_view_tree = Gtk::TreeView.new(note_view_store)
 note_view_tree.selection.mode = Gtk::SELECTION_SINGLE
@@ -194,7 +195,7 @@ F10 = Gtk::AccelGroup.new
 F10.connect(Gdk::Keyval::GDK_F10, 0, Gtk::ACCEL_VISIBLE) {
   InitConfig_diaog(conf_save,conf_load)
 }
-window.add_accel_group(F1)
+window.add_accel_group(F10)
 
 #ctrl+p notebook标签页向前切换P
 ctrl_p = Gtk::AccelGroup.new

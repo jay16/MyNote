@@ -1,0 +1,106 @@
+http://oracle.chinaitlab.com/optimize/803825.html
+ 一、SGA
+
+    1、Shared pool tunning
+    Shared pool的优化应该放在优先考虑，因为一个cache miss在shared pool中发生比在data buffer中发生导致的成本更高，由于dictionary数据一般比library cache中的数据在内存中保存的时间长，所以关键是library cache的优化。
+    Gets：（parse）在namespace中查找对象的次数；
+    Pins：（execution）在namespace中读取或执行对象的次数；
+    Reloads：(reparse)在执行阶段library cache misses的次数，导致sql需要重新解析。
+
+    1） 检查v$librarycache中sql area的gethitratio是否超过90％，如果未超过90％，应该检查应用代码，提高应用代码的效率。
+    Select gethitratio from v$librarycache where namespace=’sql area’;
+
+    2) v$librarycache中reloads/pins的比率应该小于1％，如果大于1％，应该增加参数shared_pool_size的值。
+    Select sum(pins) “executions”,sum(reloads) “cache misses”,sum(reloads)/sum(pins) from v$librarycache;
+
+    reloads/pins>1%有两种可能，一种是library cache空间不足，一种是sql中引用的对象不合法。
+
+    3）shared pool reserved size一般是shared pool size的10％，不能超过50％。V$shared_pool_reserved中的request misses＝0或没有持续增长，或者free_memory大于shared pool reserved size的50%，表明shared pool reserved size过大，可以压缩。
+
+    4）将大的匿名pl/sql代码块转换成小的匿名pl/sql代码块调用存储过程。
+
+    5）从9i开始，可以将execution plan与sql语句一起保存在library cache中，方便进行性能诊断。从v$sql_plan中可以看到execution plans。
+
+    6）保留大的对象在shared pool中。大的对象是造成内存碎片的主要原因，为了腾出空间许多小对象需要移出内存，从而影响了用户的性能。因此需要将一些常用的大的对象保留在shared pool中，下列对象需要保留在shared pool中：
+    a. 经常使用的存储过程；
+    b. 经常操作的表上的已编译的触发器
+    c. Sequence，因为Sequence移出shared pool后可能产生号码丢失。
+    查找没有保存在library cache中的大对象：
+    Select * from v$db_object_cache where sharable_mem>10000 and type in ('PACKAGE','PROCEDURE','FUNCTION','PACKAGE BODY') and kept='NO';
+    将这些对象保存在library cache中：
+    Execute dbms_shared_pool.keep(‘package_name’);
+    对应脚本：dbmspool.sql
+
+    7)查找是否存在过大的匿名pl/sql代码块。两种解决方案：
+    A．转换成小的匿名块调用存储过程
+    B．将其保留在shared pool中
+    查找是否存在过大的匿名pl/sql块：
+    Select sql_text from v$sqlarea where command_type=47 and length(sql_text)>500;
+
+    8）Dictionary cache的 优化
+    避免出现Dictionary cache的misses，或者misses的数量保持稳定,只能通过调整shared_pool_size来间接调整dictionary cache的大小。
+
+    Percent misses应该很低：大部分应该低于2％，合计应该低于15％
+    Select sum(getmisses)/sum(gets) from v$rowcache;
+    若超过15％，增加shared_pool_size的值。
+
+  2、Buffer Cache
+
+    1）granule大小的设置，db_cache_size以字节为单位定义了default buffer pool的大小。
+    如果SGA<128M，granule=4M,否则granule＝16M，即需要调整sga的时候以granule为单位增加大小，并且sga的大小应该是granule的整数倍。
+
+    2) 根据v$db_cache_advice调整buffer cache的大小
+    SELECT size_for_estimate,buffers_for_estimate,estd_physical_read_factor,estd_physical_reads FROM v$db_cache_advice WHERE NAME='DEFAULT' AND advice_status='ON' AND block_size=(SELECT Value FROM v$parameter WHERE NAME='db_block_size');
+
+    estd_physical_read_factor<=1
+
+    3) 统计buffer cache的cache hit ratio>90%，如果低于90％，可以用下列方案解决：
+
+    增加buffer cache的值；
+    使用多个buffer pool；
+    Cache table；
+    为 sorting and parallel reads 建独立的buffer cache；
+
+    SELECT NAME,value FROM v$sysstat WHERE NAME IN ('session logical reads','physical reads','physical reads direct','physical reads direct(lob)');
+
+    Cache hit ratio=1-(physical reads-physical reads direct-physical reads direct (lob))/session logical reads;
+
+    Select 1-(phy.value-dir.value-lob.value)/log.value from v$sysstat log, v$sysstat phy, v$sysstat dir, v$sysstat LOB where log.name='session logical reads' and phy.name='physical reads' and dir.name='physical reads direct' and lob.name='physical reads direct (lob)';
+
+    影响cache hit ratio的因素：
+    全表扫描；应用设计；大表的随机访问；cache hits的不均衡分布
+
+    4）表空间使用自动空间管理，消除了自由空间列表的需求，可以减少数据库的竞争
+ 3、其他SGA对象
+
+    1）redo log buffer
+    对应的参数是log_buffer，缺省值与 OS相关，一般是500K。检查v$session_wait中是否存在log buffer wait,v$sysstat中是否存在redo buffer allocation retries
+
+    A、检查是否存在log buffer wait：
+    Select * from v$session_wait where event=’log buffer wait’ ;
+    如果出现等待，一是可以增加log buffer的大小，也可以通过将log 文件移到访问速度更快的磁盘来解决。
+
+    B、Select name,value from v$sysstat where name in (‘redo buffer allocation retries’,’redo entries’)
+    Redo buffer allocation retries接近0，小于redo entries 的1％，如果一直在增长，表明进程已经不得不等待redo buffer的空间。如果Redo buffer allocation retries过大，增加log_buffer的值。
+
+    C、检查日志文件上是否存在磁盘IO竞争现象
+    Select event,total_waits,time_waited,average_wait from v$system_event where event like ‘log file switch completion%’;
+    如果存在竞争，可以考虑将log文件转移到独立的、更快的存储设备上或增大log文件。
+
+    D、检查点的设置是否合理
+    检查alert.log文件中，是否存在‘checkpoint not complete’；
+    Select event,total_waits,time_waited,average_wait from v$system_event where event like ‘log file switch (check%’;
+
+    如果存在等待，调整log_checkpoint_interval、log_checkpoint_timeout的设置。
+
+    E、检查log archiver的工作
+    Select event,total_waits,time_waited,average_wait from v$system_event where event like ‘log file switch (arch%’;
+
+    如果存在等待，检查保存归档日志的存储设备是否已满，增加日志文件组，调整log_archiver_max_processes。
+
+    F、DB_block_checksum=true，因此增加了性能负担。（为了保证数据的一致性，oracle的写数据的时候加一个checksum在block上，在读数据的时候对checksum进行验证）
+
+    2）java pool
+    对于大的应用，java_pool_size应>=50M，对于一般的java存储过程，缺省的20M已经够用了。
+    3）检查是否需要调整DBWn
+    Select total_waits from v$system_event where event=’free buffer waits’;

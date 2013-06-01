@@ -1,0 +1,153 @@
+登陆步骤
+
+1 切换用户，并刷新变量
+[oracle@oracle11g root]$ su  oracle;
+[oracle@oracle11g root]$ source ~/.bash_profile
+
+2 修改oratab
+[oracle@oracle11g ~]$ vi /etc/oratab 
+
+选择要启动的数据库实例名
+IntFocus:/home/work/oracle/product/11.2.0/db_1:Y
+mail:/home/work/oracle/product/11.2.0/db_1:N
+
+3 声明ORACLE_SID实例名
+[oracle@oracle11g root]$ echo $ORACLE_SID
+mail
+[oracle@oracle11g root]$ export ORACLE_SID=IntFocus;
+
+4. 开启监听
+[oracle@oracle11g root]$ lsnrctl start //或$ORACLE_HOME/bin/lsnrctl start
+
+.....
+Service "IntFocusXDB" has 1 instance(s).
+  Instance "IntFocus", status READY, has 1 handler(s) for this service...
+Service "maill_dev" has 1 instance(s).
+  Instance "IntFocus", status READY, has 1 handler(s) for this service...
+The command completed successfully
+
+5 启动oralce数据库
+[oracle@oracle11g root]$ dbstart //或 dbstart $ORACLE_HOME //或 $ORACLE_HOME/bin/dbshut
+Processing Database instance "IntFocus": log file /home/work/oracle/product/11.2.0/db_1/startup.log
+
+
+6 sqlplus登陆oracle
+[oracle@oracle11g root]$ sqlplus /nolog;     
+
+SQL*Plus: Release 11.2.0.1.0 Production on Mon May 6 22:34:43 2013
+
+Copyright (c) 1982, 2009, Oracle.  All rights reserved.
+
+SQL> connect / as sysdba;
+Connected to an idle instance.
+SQL> startup
+ORACLE instance started.
+
+Total System Global Area 1657225216 bytes
+Fixed Size                  1336904 bytes
+Variable Size             956303800 bytes
+Database Buffers          687865856 bytes
+Redo Buffers               11718656 bytes
+Database mounted.
+Database opened.
+
+测试select命令，查看当前实例名
+SQL> select instance_name from v$instance;
+
+INSTANCE_NAME
+----------------
+hello
+
+
+
+
+查看监听状态
+[oracle@oracle11g root]$ lsnrctl status //或 $ORACLE_HOME/bin/lsnrctl status
+
+Services Summary...
+Service "IntFocusXDB" has 1 instance(s).
+  Instance "IntFocus", status READY, has 1 handler(s) for this service...
+Service "maill_dev" has 1 instance(s).
+  Instance "IntFocus", status READY, has 1 handler(s) for this service...
+The command completed successfully
+
+
+退出oracle
+
+1. 关闭监听
+[oracle@oracle11g root]$ lsnrctl stop  //或 $ORACLE_HOME/bin/lsnrctl stop
+
+LSNRCTL for Linux: Version 11.2.0.1.0 - Production on 11-MAY-2013 14:26:27
+
+Copyright (c) 1991, 2009, Oracle.  All rights reserved.
+
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=IPC)(KEY=EXTPROC1522)))
+The command completed successfully
+
+2. 关闭oracle数据库
+
+[oracle@oracle11g root]$ dbshut $ORACLE_HOME //或 $ORACLE_HOME/bin/dbshut $ORACLE_HOME
+Processing Database instance "IntFocus": log file /home/work/oracle/product/11.2.0/db_1/shutdown.log
+
+
+
+
+dbstart/dbshut命令：
+
+修改$ORACLE_HOME/bin下的dbstart/dbshut文件中下面的条目
+ORACLE_HOME_LISTNER=$ORACLE_HOME
+
+
+
+oracle数据库开机启动脚本：
+
+
+开启oracle脚本：
+
+[oracle@oracle11g ~]$ vi oracle_db_start.sh 
+-------------------------------------------------------------------
+#设置开机启动oracle数据库
+#执行该shell位置在/etc/rc.local
+
+#声明oracle所需变量
+
+ORACLE_SID=IntFocus;export ORACLE_SID
+ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
+
+ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
+ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
+
+#sqlplus启动数据库
+
+sqlplus '/as sysdba'<<eof
+startup;
+exit
+eof
+
+#启动监听  lsnrctl在$ORACLE_HOME/bin/lsnrctl
+
+/home/work/oracle/product/11.2.0/db_1/bin/lsnrctl start
+-------------------------------------------------------------------
+
+关闭oracle:
+[oracle@oracle11g ~]$ vi oracle_db_shut.sh 
+--------------------------------------------------------------------
+#声明oracle所需变量
+
+ORACLE_SID=IntFocus;export ORACLE_SID
+ORACLE_UNQNAME=ora11g;export ORACLE_UNQNAME
+
+ORACLE_BASE=/home/work/oracle;export ORACLE_BASE
+ORACLE_HOME=$ORACLE_BASE/product/11.2.0/db_1;export ORACLE_HOME
+
+
+#闭关监听  lsnrctl在$ORACLE_HOME/bin/lsnrctl
+
+$ORACLE_HOME/bin/lsnrctl stop
+
+
+#关闭数据库
+
+$ORACLE_HOME/bin/dbshut $ORACLE_HOME
+
+-------------------------------------------------------------------

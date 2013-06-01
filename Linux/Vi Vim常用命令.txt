@@ -1,0 +1,142 @@
+﻿-------------------------------------------------
+设置使用vi编辑文本时自动启动各种功能
+自动启动的命令写在$HOME/.exrc (如果是vi)或者$HOME/.vimrc(如果是vim)
+
+[root@emd work]# echo $HOME
+/root
+[root@emd work]# vi /root/.exrc 
+:syntax on
+:set si
+:set ff=unix
+:set showmatch
+-------------------------------------------------
+vi set用法:
+
+set autoindent     
+在插入模式下，对每行按与上行同样的标准进行缩进，与shiftwidth选项结合使用
+set list   
+把制表符显示为^I ,用$标示行尾（使用list分辨尾部的字符是tab还是空格）
+set number/nonumber  num/nonum
+显示行号
+set shiftwidth
+反向制表符中的空格数目
+set showmatch/noshowmatch
+在vi中输入），}时，光标会暂时的回到相匹配的（，{   （如果没有相匹配的就发出错误信息的铃声），编程时很有用
+set tabstop
+指定tab缩进的字符数目
+set wrapscan
+授索在文件的两端绕回
+set readonly
+文件只读，除非使用！可写
+set ai / noai
+让vi自动对齐.
+set tabstop=4 shiftwidth=4
+设置制表停止位(tabstop)的长度:当使用移动(shift)命令时移动的字符数
+set encoding=utf-8 
+设置编码格式
+set ff=unix 
+将文件格式转为unix格式
+set list 
+在每行的行末显示美元符号，并用Ctrl+I表示制表符 
+set window=value
+定义屏幕上显示的文本行的行数 
+set wrapmargin=value
+设置显示器的右页边。当输入进入所设置的页边时，编辑器自动回车换行 
+--------------------------------------------------
+vim set 在vi的基础上增加了如下（常用）：
+
+set smartindent    
+set cindent
+以上两行都是编程用的c自动缩进
+--------------------------------------------------
+linux vim
+* dd - 删除/剪切 整行内容
+* dw - 从当前光标当前位置直到单字/单词末尾，包括空格。
+* de - 从当前光标当前位置直到单字/单词末尾，但是 *不* 包括空格。
+* x - 删除光标下的字符（"dl"的缩写）
+* X  - 删除光标前的字符（"dh"的缩写）
+* d$ - 从当前光标删除到行末 
+* D 从当前位置删除到行尾（"d$"的缩写）
+* diw -  删除光标上的单词（不包括空白字符）
+* daw - 删除光标上的单词（包括空白字符）（Delete A Word）
+* dG - 删除到文末
+* dgg - 删除到文首
+*  p 将最后一次删除（dd）的内容复制到光标之后
+*  r 和一个字符 - 替换光标所在位置的字符
+* Ctrl+g - 显示当前光标所在行位置以及文件状态信息
+* 0 - 零,移到当前行首
+* ^ - 移到行首第一个非空格字符位置
+* $ - 移到行尾
+* gg  - 跳转到文件中的第一行
+* G - 跳转到文件中的最后一行
+* 33G - 跳到第 33 行
+* 75% - 跳到内容75%位置
+* w - 跳到下一个单词的词首
+* e - 跳到下一个单词的词尾
+* b - 跳到上一个单词的词尾
+* ge - 跳到上一个单词的词尾
+* W - 跳到下一个字符串的开始
+* E  - 跳到下一个字符串的结尾
+* B - 跳到上一个字符串的开始
+* gE - 跳到上一个字符串的结尾
+* 3H - 跳到距窗口顶部第3行的位置
+* 3L - 跳到距窗口底部第3行的位置
+* zz/zt/zb -  以当前光标位置做为参照, 把光标所在行移动窗口的顶端、中间或底部
+
+:set number - 显示行号
+:set number - 取消显示行号
+:set background=dark
+:close
+:previous  -  要回到前一个文件
+:next  -  要回到后一个文件
+:2next - 例如要向后跳两个文件，在":next"和":previous"前面加次数前缀
+:wprevious - 保存再移动
+:last - 要移动到列表中的最后一个文件
+:first - 要移动到列表中的第一个文件
+:set fileformats=unix,dos 
+:syntax enable/reset 
+:syntax on - 语法高亮
+:colorscheme evening 
+:set autoindent - 设置自动缩进，每行的缩进值与上一行相同
+:set noautoindent - 取消自动缩进
+:set smartindent - 识别{} #等符号
+:set tabstop=4 - 设置制表符等于多少空格
+:set softtabstop=4 - 设置软制表符（？）
+:set shiftwidth=4 -设置每一级缩进的长度为4空格，一般设置与softtabstop等长
+:set expandtab (?)
+:set sm - set showmatch 显示括号匹配
+:set matchtime=1 - 显示匹配时间，单位是十分之一秒
+
+ nyy: 复制光标当前行到当前行以下的n-1行
+:1,100 co 200 将1~100的内容复制到第200行。
+:100,102 co $ 将100~102行的内容复制到最后一行。
+
+ :1,100d  删除1~100
+:100d    删除第100行
+:1,100 mo $  将1~100行的内容移动到最后一行。
+
+ :%s/replace_words/\r&/gc -把“replace_words”换为“\r&”，\r表示回车，&表示被替换的部分，即"replace_words”；%则表示全文；/gc表示一直替换，并且要用户确认。
+ :%s/replace_words../\r&/gc -把“replace_words"后任意两个字符
+firefox  Vimperator
+* f - 显示tab hint 输入对应tab值相当于点击
+* H,L - 前进后退键
+* Ctrl+n - 下一个tab
+* Ctrl+p - 上一个tab
+* Ctrl+6 - 前后两个tab切换
+* Ctrl+f - 向下翻页
+* Ctrl+b -向上翻页
+* Ctrl+d -向下翻半页
+* Ctrl+u -向上翻半页
+* o - url 在当前tab打开url
+* o - 关键字 用浏览器的缺省搜索引擎搜索关键字(用当前tab）
+* t - url 在新tab打开url
+* t - 关键字 用浏览器的缺省搜索引擎搜索关键字（用新tab）
+* / - 在当前页面搜索
+* Ctrl+w - 关闭当前tab
+* d - 关闭当前tab
+* u - 重新打开之前关闭的tab
+* zi - 页面放大
+* zo - 页面缩小
+* zz - 恢复页面大小
+* gf - 查看页面源代码 
+* r - F5

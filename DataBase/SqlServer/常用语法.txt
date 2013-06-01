@@ -1,0 +1,52 @@
+--查看指定表名的所有列名
+select name from syscolumns where id=(select id from sysobjects where name = 'kpi_sales_key_figure') 
+
+--游标；逐行更新数据
+declare c1 cursor for select traffic_num, traffic_accum      
+  from dbo.kpi_weekly_traffic where week_id is not null
+declare @tnum int, @taccum int ,@ttmp int , @ttindex int
+Open c1
+
+set @ttindex = 1
+Fetch c1 into @tnum,@taccum
+
+While(@@fetch_status =0)
+Begin
+  if @ttindex > 0
+    begin
+       update kpi_weekly_traffic set traffic_num = @ttindex  where current of c1
+       set @ttindex = @ttindex + 1
+    end
+  else
+    begin
+      set @ttindex = 0
+      update kpi_weekly_traffic set traffic_num = @ttindex where current of c1
+   end
+ 
+  Fetch c1 into   @tnum, @taccum
+
+end
+
+Close c1
+deallocate  c1      
+--游标；逐行累积值
+declare c1 cursor for select traffic_num, traffic_accum from dbo.kpi_weekly_traffic where week_id is not null
+declare @tnum int, @taccum int ,@ttaccum int , @ttpre int
+
+Open c1
+
+Fetch c1 into @tnum,@taccum
+set @ttaccum = 0
+set @ttpre = 0
+
+While(@@fetch_status =0)
+Begin
+  set @ttaccum = @ttpre + @tnum
+  update kpi_weekly_traffic set traffic_accum = @ttaccum   where current of c1
+  set @ttpre = @ttaccum
+ 
+  Fetch c1 into   @tnum, @taccum
+end
+
+Close c1
+deallocate  c1      

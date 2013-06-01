@@ -1,0 +1,227 @@
+﻿
+创建以现有表内容为新建表的内容
+create table wangpin_rest as select * from wangpin_all
+
+查看database打开状态
+SQL> select open_mode from v$database;
+OPEN_MODE----------
+MOUNTED
+SQL> alter database open;
+Database altered.
+查看当前用户
+SQL> show user;
+USER is "SYS"
+
+查看service_name
+show parameter service_name;
+查看用户系统权限
+select * from dba_sys_privs;
+select * from user_sys_privs;
+查看用户对象权限
+select * from dba_tab_privs;
+select * from all_tab_privs;
+select * from user_tab_privs;
+查看所有角色
+select * from dba_roles;
+查看用户所拥有的角色
+select * from dba_role_privs;
+select * from user_role_privs;
+查看当前用户的缺省表空间
+select username,default_tablespace from user_users;
+查看表
+select table_name from user_tables; //当前用户的表       
+select table_name from all_tables; //所有用户的表   
+select table_name from dba_tables; //包括系统表
+select table_name from dba_tables where owner='用户名'
+查看表结构
+desc table_name;
+sqlplus远程连接
+sqlplus usr/pwd@//host:port/sid
+sqlplus test/test@192.168.0.114:1521/mail
+connect test/test@//192.168.0.114:1521/mail
+
+插入列
+SQL> alter table student add email varchar(50);
+Table altered.
+
+
+--ORACLE正则匹配邮箱地址
+-- \w 单词字符：[a-zA-Z_0-9]
+-- +是一次或多次
+-- []里出现一个
+-- *是0或多次
+-- ()是捕获组  标记一个子表达式的开始和结束位置
+select email,type_email
+from members
+where type_email in (1,4,5)
+and not   regexp_like(email,'\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*' )
+--RUBY正则匹配邮箱地址
+--去除前后空格
+email = params[:member][ :email].to_s.strip
+--正则匹配邮箱格式
+ret = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/. match(email)
+if ret.to_s == email then
+  @is_valid = true
+else
+  @is_valid = false
+end 
+--MySql正则匹配邮箱地址
+select email from members where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' ;
+--去空格：不符合正则匹配邮箱地址是否前后有空格
+update members set email = trim(email) where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' ;
+--删除含有不合格邮箱名单的lists_members
+--
+
+--查找指定list id的邮箱
+select count (distinct email) from members
+where id in (select member_id from lists_members where list_id = 200 )
+--Lists_Members无用邮箱数量
+select count (*) from lists_members
+where member_id in (
+select id from members where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' )
+--Lists_Members删除无用关联
+delete from lists_members
+where member_id in (
+select id from members where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' )
+--清除Members数据，首先清除Lists_Members
+delete from members where email not regexp '^[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Z]{2,4}$' ;
+
+
+
+--查看有效邮箱名名单
+select count (distinct email)
+from members
+where id in
+(select distinct member_id from lists_members where list_id in (183,184 ,185 ,186 ,187 ,188 ,189 ,190 ,191 ,192 ,196 ,197 ))
+and substr(email,instr(email,'@' )+1 ,length(email)-instr(email,'@')) like '%139%'
+--(178,180))
+and type_email in (1,4,5)
+--查看log_cm=OK
+select count (distinct to_email)
+from dog_totle_bi
+where substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'stnc.cn'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'intfocus.com'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'online-edm.com'
+--and to_email in (select distinct to_email from dog_totle_bi where log_cm = 'OK')
+and campaign_id in (105,110,112) --(106)--(106,105,110,112)
+and log_cm not like '%rejected%'
+select * from campaigns;
+
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) like '%139%'
+
+
+select distinct campaign_id from dog_day_bi where campaign_id in (105,106 )
+select * from campaigns where id in (105 ,110 ,106 ,112 )
+
+select * from lists;
+--查看漏掉的邮箱数量
+select count (distinct email)
+from members
+where id in (select distinct member_id from lists_members where list_id in (183 ,184 ,185 ,186 ,187 ,188 ,189 ,190 ,191 ,192 ,196 ,197 ))
+and type_email in (1,4,5)
+and email not  in (
+select distinct to_email
+from dog_totle_bi
+where substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'stnc.cn'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'intfocus.com'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'online-edm.com'
+and campaign_id in (105,110,106,112))
+--更新指定lists.id的member_count
+select * from lists where id = 206;
+update lists
+set lists.member_count =
+(select count(distinct lists_members.member_id) from lists_members where lists_members.list_id = 206 )
+where lists.id = 206
+
+
+
+--mysql更新datetime字段加减时间
+--在原来基础上+8小时
+update tracks set created_at = date_add(created_at, interval '08:00:00' hour_second);
+--在原来基础上+1天8小时
+update tracks set created_at = date_add(created_at, interval '1 08:00:00' hour_second);
+--在原来基础上-1天8小时
+update tracks set created_at = date_sub(created_at, interval '1 08:00:00' hour_second);
+--加1小时
+update tracks set created_at = date_add(created_at, interval 1 hour );
+--减1小时
+update tracks set created_at = date_add(created_at, interval -1 hour );
+
+
+--以小时查看点击、打开
+select count (distinct member_id) from tracks ;
+select count (distinct member_id) from clicks ;
+--以小时查看点击、打开
+select to_char(updated_at,'hh24' ), count(*) from tracks
+where campaign_id in (105,106)
+group by to_char(updated_at,'hh24')
+order by to_char(updated_at,'hh24') desc
+--mysql
+select count (member_id)  from  tracks where campaign_id in (105,106 ,110 ,112 )
+select count (distinct member_id)  from  tracks where campaign_id in (105,106 ,110 ,112 )
+select count (member_id)  from  clicks where campaign_id in (105,106 ,110 ,112 )
+select count (distinct member_id)  from  clicks where campaign_id in (105,106 ,110 ,112 )
+select (hour (created_at)+8)%24,count(*) from tracks where campaign_id in (105,106 ,110 ,112 ) group by hour(created_at) order by (hour(created_at)+8 )%24 ;    
+select (hour (created_at)+8)%24,count(*) from clicks where campaign_id in (105,106 ,110 ,112 ) group by hour(created_at) order by (hour(created_at)+8 )%24 ;    
+
+
+--查看漏掉的邮箱域名与数量
+select distinct substr(email,instr(email,'@' )+1 ,length(email)-instr(email,'@')) as domain,
+count(substr(email,instr(email,'@' )+1 ,length(email)-instr(email,'@')))
+from members
+where id in (select distinct member_id from lists_members where list_id in (183 ,184 ,185 ,186 ,187 ,188 ,189 ,190 ,191 ,192 ,196 ,197 ))
+and type_email in (1,4,5)
+and email not in (
+select distinct to_email
+from dog_totle_bi
+where substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'stnc.cn'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'intfocus.com'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'online-edm.com'
+and campaign_id in (105,110,106,112))
+group by substr(email,instr(email,'@')+1,length(email)-instr(email, '@'))
+order by count(substr(email,instr(email,'@' )+1 ,length(email)-instr(email,'@'))) desc
+
+--查看名称列表中存在但log中不存在的qq名单
+select distinct email
+from members
+where id in (select distinct member_id from lists_members where list_id =180)
+and substr(email,instr(email,'@' )+1 ,length(email)-instr(email,'@')) like '%qq%'
+and email not in (
+select distinct to_email
+from dog_totle_bi
+where substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'stnc.cn'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'intfocus.com'
+and substr(to_email,instr(to_email,'@' )+1 ,length(to_email)-instr(to_email, '@')) != 'online-edm.com'
+and campaign_id in (106,105))
+
+--查看星期几
+select to_char(to_date('2002-08-26' ,'yyyy-mm-dd' ),'day' ,'NLS_DATE_LANGUAGE = China') from dual ; 
+select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss' ) as nowTime from dual ;
+
+--分解原始log
+select
+substr(content,instr(content, '-> <')+ 4,instr(content, '>',instr(content, '-> <' )+3 )-(instr(content, '-> <')+ 4))
+as to_email
+,substr(content,2,19)
+as log_time
+,substr(content,instr(content,'[',10)+1,instr(content, ']',22 )-(instr(content,'[',10)+1))
+as eml_file
+,substr(content,instr(content,'<')-8,7)
+as mail_type
+, case when regexp_like(
+substr(substr(content,instr(content, '<')+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ),
+instr(substr(content,instr(content, '<')+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ),'_' ,-1 ,1 )+1 ,
+length(substr(content,instr(content,'<' )+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ))-instr(substr(content,instr(content,'<')+1,instr(content, '@',instr(content,'<' ))-instr(content,'<')-3),'_',-1,1))
+,'^[[:digit:]]+$') then
+  substr(substr(content,instr(content,'<' )+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ),
+instr(substr(content,instr(content, '<')+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ),'_' ,-1 ,1 )+1 ,
+length(substr(content,instr(content,'<' )+1 ,instr(content,'@',instr(content, '<'))-instr(content,'<' )-3 ))-instr(substr(content,instr(content,'<')+1,instr(content, '@',instr(content,'<' ))-instr(content,'<')-3),'_',-1,1))
+else '-1' end
+as campaign_id
+,substr(content，instr(content, '>',instr(content, '-> <')+3)+3,instr(content, ')[')-instr(content, '>' ,instr(content, '-> <')-4))
+as campaign_subject
+,substr(content,instr(content,')[')+2,case when instr(content,']',instr(content,')[' ))-instr(content,')[')< 0 then  length(content)-instr(content,')[' ) else instr(content,']',instr(content,')[' ))-instr(content,')[') end - 2)
+as log_cm
+ from dog_day_org
+where instr(content,'-> <' ) > 0 and substr(content,instr(content,'@' ,instr(content,'<'))- 2, 3) = '_0@'
+

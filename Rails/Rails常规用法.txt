@@ -1,0 +1,32 @@
+﻿如果"1.jpg"放在app/assets/images下面，那就image_tag("1.jpg")就行了~~
+如果"1.jpg"放在public下面，应该是image_tag("/1.jpg")，有一个斜杠的区别~~
+
+
+提高rails new时bundle install运行速度
+rails new my_app --skip-bundle
+cd my_app
+bundle install --local
+gem install bundler --pre
+-----------------------------------------------------------
+will_paginate 设置
+
+<%= will_paginate @members,:inner_window => 0,:outer_window => 0,:previous_label => '上一页 ', :next_label => '下一页 ' %>
+-----------------------------------------------------------
+rescue_from
+  
+  rescue_from Exception do | exception|
+    render :inline => "<pre>#{ exception.backtrace.join( '<br>' )}</pre>" , :type => "html"
+  end
+exception debugger message
+
+-----------------------------------------------------------
+rake assets:clean
+rake assets:precompile
+
+
+This will add a line to your app/assets/css/bootstrap_overrides.css.less file like
+@fontAwesomeEotPath_iefix: asset-path("fontawesome-webfont.eot#iefix");
+-----------------------------------------------------------
+
+
+

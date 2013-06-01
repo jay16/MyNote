@@ -1,67 +1,4 @@
 
-   #构建笔记列表树
-def g_note_list(note_tree_store,note_dir_list,conf_save)
-   #构建笔记列表树
-   note_list_store = Gtk::TreeStore.new(String, String, Integer)
-   note_dir_list.each do |note_path|
-    note_store = note_list_store.append(nil)
-    note_store[0] = File.basename(note_path)
-    note_store[1] = note_path
-   end
-   note_view_tree = Gtk::TreeView.new(note_list_store)
-   note_view_tree.selection.mode = Gtk::SELECTION_SINGLE
-   note_view_tree.expand_all
-   note_view_tree.hadjustment.value=100
-   note_view_tree.columns_autosize
-   scrolled_view = Gtk::ScrolledWindow.new
-   scrolled_view.border_width = 2
-   scrolled_view.add(note_view_tree)
-   scrolled_view.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC)
-
-   #笔记路径树
-   renderer = Gtk::CellRendererText.new
-   tree_col = Gtk::TreeViewColumn.new("Note Dir List", renderer, :text => 0)
-   note_view_tree.append_column(tree_col)
-   note_view_tree.signal_connect("row-activated") do
-     note_path = note_view_tree.selection.selected[1]
-     #更新配置文件中NoteSeledDir
-     conf_save.transaction do 
-       conf_save["NoteSeledDir"] = note_path
-     end
-     #更新目录树
-     g_note_tree(note_tree_store,note_path)
-   end
-
-   return [scrolled_view,note_view_tree,note_list_store]
-end
-
-
-def g_note_tree(tree_store,note_path)
-  level_one = Array.new
-  Dir.foreach(note_path) do |file|
-    #跳过隐藏文件
-    next if file=~ /^\..*/
-    file_path = note_path+"\\"+file
-    level_one.push([file,file_path,File.file?(file_path) ? "file" : "dir" ])
-  end
-   
-  tree_store.clear
-  level_one.each do |lo|
-    #level one
-    tree_lo =  tree_store.append(nil)
-    #tree_level_one nodename
-    tree_lo[0] = (File.file?(lo[1]) ? "F_"+lo[0] : lo[0])
-
-    tree_lo[1] = lo[1] #tree_level_one nodepath
-    #tree_lo[2] = lo[2] #tree_level_one nodetype
-    if lo[2]=="dir" then
-     tree_lt = tree_store.append(tree_lo)
-     tree_lt[0] = "loading"
-     tree_lt[1] = "loading"
-    end
-  end
-  return tree_store
-end
 def test_notebook(note_book,window)
       text_editor = TextEditor.new
       text_editor.text_view = Gtk::TextView.new
@@ -75,7 +12,7 @@ def test_notebook(note_book,window)
 
       note_book.insert_page(-1,scrolled_text,text_editor.note_label)
 end
-#目录节点被点击反应
+#详细目录树中节点被点击时响应处理
 def row_activated(note_view_tree,tree_store,text_editor,note_history_store,window,conf_save)
     selection = note_view_tree.selection
     iter = selection.selected    
@@ -226,8 +163,7 @@ def new_file(text_editor,window)
   text_editor.text_view.buffer.text = "please input content..."
 end
 
-
-
+#保存新文件时对话框
 def save_new_file(note_view_tree,tree_store,text_editor,note_history_store,window,conf_save)
   selection = note_view_tree.selection
   iter = selection.selected
@@ -355,6 +291,7 @@ def search(ent, txtvu)
   end
 end
 
+#读取文件失败，提示框
 def FileReadError_diaog(file_path,window)
 dialog = Gtk::Dialog.new(
       "FileRead Error!",
@@ -385,6 +322,7 @@ dialog = Gtk::Dialog.new(
   
 end
 
+#配置目录列表树对话框
 def InitConfig_diaog(conf_save,conf_load)
 dialog = Gtk::Dialog.new(
       "Config Dialog!",
@@ -468,6 +406,7 @@ dialog = Gtk::Dialog.new(
   
 end
 
+#删除目录树中某一节点
 def del_note_dir(note_view_tree,tree_store)
     selection = note_view_tree.selection
     iter = selection.selected  

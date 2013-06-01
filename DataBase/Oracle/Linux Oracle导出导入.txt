@@ -1,0 +1,76 @@
+%s+E:\\FocusMailBk\\kettle_114\\FocusMailJobs\\Upload_CSV_2_Oracle_2_Mysql_MAIL206_ALEX\\+/home/work/kettle_jobs/Upload_CSV_2_Oracle_2_Mysql_MV/+gc
+
+%s+E:\\FocusMailBk\\kettle_114\\FocusMailJobs\\MySql_Sync_2_Oracle\\+/home/work/kettle_jobs/MySql_Sync_2_Oracle+gc
+
+导出数据库（114服务器）
+
+1.切换用户至oracle
+
+[root@oracle11g ~]# su oracle 
+
+2.执行exp命令，intfocus/focus_mail : 用户名/密码 file=导出文件路径（oracle用户要有写入权限） owner=用户名
+
+[oracle@oracle11g ~]$ exp intfocus/focus_mail  file=/home/work/oracle/mail_exp.dmp owner=intfocus;
+
+3.查看是否生成
+
+[oracle@oracle11g ~]$ ls /home/work/oracle/
+admin        checkpoints  flash_recovery_area  oracle_data       product
+cfgtoollogs  diag         mail_exp.dmp         oracle_inventory  response
+
+查看生成文件大小 
+
+[oracle@oracle11g ~]$ du -sh /home/work/oracle/mail_exp.dmp 
+9.7M    /home/work/oracle/mail_exp.dmp
+
+4.scp拷贝到155服务器
+[oracle@oracle11g ~]$ scp /home/work/oracle/mail_exp.dmp oracle@192.168.0.155:/home/work/oracle
+The authenticity of host '192.168.0.155 (192.168.0.155)' can't be established.
+RSA key fingerprint is 1f:32:8d:4f:cd:b8:f0:0f:53:ea:5d:5b:14:1d:6d:86.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.155' (RSA) to the list of known hosts.
+oracle@192.168.0.155's password: 
+mail_exp.dmp                                      100% 9912KB   9.7MB/s   00:00  
+
+
+导入数据（155服务器）
+
+1.切换用户至oracle
+
+[root@oracle11g ~]# su oracle
+[oracle@oracle11g root]$ source ~/.bash_profile 
+[oracle@oracle11g root]$ export ORACLE_SID=IntFocus;
+[oracle@oracle11g root]$ echo $ORACLE_SID
+IntFocus
+[oracle@oracle11g root]$ 
+
+2.执行imp命令，
+
+[oracle@oracle11g root]$ imp IntFocus/Focus_Mail file=/home/work/oracle/mail_exp.dmp fromuser=intfocus ignore=y
+
+Import: Release 11.2.0.1.0 - Production on Sat May 11 11:59:00 2013
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+
+Connected to: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+Export file created by EXPORT:V11.02.00 via conventional path
+import done in US7ASCII character set and AL16UTF16 NCHAR character set
+import server uses ZHS16GBK character set (possible charset conversion)
+export client uses ZHS16GBK character set (possible charset conversion)
+. importing INTFOCUS's objects into INTFOCUS
+. . importing table                    "CAMPAIGNS"         29 rows imported
+. . importing table                       "CLICKS"        467 rows imported
+. . importing table                   "DOG_DAY_BI"         16 rows imported
+. . importing table                 "DOG_DAY_DATA"          2 rows imported
+. . importing table            "DOG_DAY_DATA_TEMP"          2 rows imported
+. . importing table                  "DOG_DAY_ORG"        158 rows imported
+. . importing table                 "DOG_TOTLE_BI"         16 rows imported
+. . importing table               "DOG_TOTLE_DATA"          2 rows imported
+. . importing table                "LISTS_MEMBERS"      74770 rows imported
+. . importing table                      "MEMBERS"      41135 rows imported
+. . importing table                        "YUNZU"      92810 rows imported
+Import terminated successfully without warnings.
+[oracle@oracle11g root]$ 

@@ -1,0 +1,68 @@
+　　内存的优化历来都是数据库或者操作系统优化的重中之重。在Oracle数据库体系结构中内存优化也是性能优化的关键。优化内存主要是通过优化内存结构来提高系统性能。这里所说的内存结构主要由专用SQL及PL／SQL区、共享池、日志缓冲区和高速缓冲存储区构成。
+
+　　由于0racle的内存结构需求与应用密切相关，所以内存结构优化应在SQL语句和应用程序优化之后以及输入/输出（I/O）优化之前进行。而且首先要优化操作系统，并在处理共享池前考虑私有SQL和PL/SQL区。
+
+　　优化SGA SGA是对数据库数据进行快速访问的一个系统全局区，其大小在实例启动时被确定。若SGA本身需要频繁地进行释放、分配，则不可能达到快速访问数据的目的。因此为了优化系统性能，应确保SGA全部被驻留在实际内存中，而不应采用虚拟内存，以免使整个系统性能下降。
+
+　　编辑提示：SGA小常识SGA是Oracle为一个实例分配的一组共享内存缓冲区。它包含该实例的数据和控制信息。如果有多个用户同时与同一个实例相连接时，则其SGA中的数据可为多个用户共享，所以也叫它共享全局区。SGA在实例启动时被自动分配，当实例关闭时被收回。SGA中的数据和控制信息可被多个进程所使用，但只能由几个持殊进程能对其进行写操作。SGA中所包含的存储区根据其存放的信息类型大致可分为“数据库缓冲存储区”、“日志缓冲区”、“共享池”和“请求和响应队列”四大区域。
+
+　　查看SGA大小用户可以通过两种命令方式来查看SGA的大小。
+
+　　（1）使用“SHOW SGA”命令说明：用户可以连接到Sever Manager和数据库，然后执行“SHOW SGA”命令来查看SGA的大小。如果数据库实例没有启动，那么使用“SHOW SGA”命令将会报错。
+
+　　（2）使用“SELECT * FROM V$SGA；”查询试图命令说明：使用“SELECT * FROM V$SGA；”要在“SVRMGR>”提示符下。
+
+　　预装SGA可以在init.ora文件中将参数PRE_PAGE_SGA的值设为“yes”，而将SGA预装到物理内存中，即设置PRE_PAGE_SGA=yes.
+
+　　优化专用SQL区及PL／SQL区要优化专用的SQL区及PL／SQL区，就必须知道是否有不必要的语法分析调用，用户必须尽量少的调用Parse.如果有过多的不必要的语法分析调用，就应当设法减少它。
+
+　　可用跟踪功能来为每个SQL语句输出跟踪信息，以检测其语法分析步的统计数字count.若分析步的count统计值与执行步的count统计值非常接近，则应减少语法分析调用。
+
+　　减少语法分析调用的方法是通过所用的应用开发工具（如PRO*C、OCI和SQL*Forms等）来控制语法分析调用以及分配和释放专用的SQL区的频率，例如：在用PRO*C时，可用HOLD_CURSOR、RELEASE_CURSOR以及MAX_OPENCURSOR参数来控制专用SQL区。在使用OCI时，可使用OSQL3或OPARSE调用来为SQL语句分配专用SQL区，用OCLOSE调用关闭光标和释放专用SQL区。在使用SQL *Forms时，同样也可控制是否重用专用SQL区：可在触发器级、Form级或在运行时减少语法分析调用，以减少或重用专用SQL区。
+
+　　优化日志缓冲区日志缓冲区也称为重做日志缓冲区，它包含所有变化了的数据块。这些变化的数据块通过Oracle日志书写进程以一种邻接的方式写到重做日志文件中。
+
+　　（1）获取缓冲区活动情况优化日志缓冲区时，首先应了解缓冲区的活动情况。这对通过查询动态性能表（需有SELECT  ANY TABLE特权）V$SYSSTAT来获得。
+
+　　SVRMGR> select sum（value）"Redo Buffer Waits" from v$sysstat  where name='redo log space wait time'；
+   （2）计算日志缓冲区的申请失败率数据库管理员可以通过执行下述语句：
+    SQL>select name，value from v$sysstat where name in （'redo entries'，'redo log space requests'）；
+     查看日志缓冲区的使用情况。查询出的结果可以计算出日志缓冲区的申请失败率。
+
+　　申请失败率＝requests/entries.申请失败率应该接近于0，否则说明日志缓冲区开设太小，需要增加ORACLE数据库的日志缓冲区。
+
+　　（3）优化日志缓冲区如果重做缓冲区的等待大于零，进程就要等待重做日志缓冲区的空间变成可用。此时就会影响数据库的性能。可以通过逐步提高init.ora中参数LOG_BUFFER的值来达到优化日志缓冲区的目的。在增加LOG_BUFFER的值时，可通过查询动态性能表来了解和检查日志缓冲区的活动情况。
+
+　　优化共享池共享池由库高速缓存、字典高速缓存和SQL区组成。整个共享池的大小由参数SHARED_POOL_SIZE确定。共享池的优化主要考虑库高速缓冲区、数据字典高速缓冲区以及会话期间信息的优化。
+
+　　优化库高速缓冲区要优化库高速缓冲区，必须首先了解该缓冲区的活动情况。库高速缓冲区的活动统计信息保留在动态性能表V$LIBRARYCACHE中。优化时应使数据字典高速缓存里的内存数据库块尽可能多。
+
+　　（1）确定库高速缓存的性能通过查询V$LIBRARYCACHE表（需有SELECT ANY TABLE特权）来了解其活动情况，以决定如何优化。例如：SQL＞SELECT SUM（pins），SUM（reloads） FROM V$LIBRARYCACHE；说明：动态性能表V$LIBRARYCACHE中包含有NAMESPACE、PINS和RELOAD等列。其中NAMESPACE列反映了SQL语句及PL／SQL块的库缓冲区的活动，其值可能是‘SQL AREA’，‘TABLE／PROCEDURE’，‘BODY’和‘TRIGGER’等；而PINS和RELOADS列给出执行调用时的错误信息。PINS列给出SQL语句、PL／SQL块及被访问对象定义的总次数；RELOADS给出SQL语句或PL／SQL块的隐式分析或对象定义重装载时在库程序缓冲区中发生的错误。
+
+　　（2）查看reloads和pins的比率可以使用以下查询语句来查看reloads和pins的比率：SELECT（SUM（reloads）/SUM（pins））×100“Library Cache Ratio”FROM V$LIBRARYCACHE；用户必须保证reloads和pins的比率尽可能低，其值应低于1%，若RELOADS／PINS＞1％，则应给缓冲区分配附加的存储及写等同的SQL语句，使SQL语句与PL/SQL块共享一个共享SQL区，这样可减少错误。如果库高速缓冲区无错误，则可设置初始化参数CUTSOR_SPACE_FOR_TIME为TRUE，以加速执行调用。这可使性能稍有改善。若每个用户可用的专用SQL区不足时，则不要将CUTSOR_SPACE_FOR_TIME设置为TRUE.（3）优化库高速缓存区优化库高速缓存时，可以通过增加init.ora文件中SHARED_POOL_SIZE或OPEN_CURSORS的参数值而达到满意的优化比率。
+
+　　优化数据字典缓冲区数据字典缓冲区在功能上与库高速缓存类似，但主要用于Oracle字典高速SQL语句。要优化数据字典缓冲区，也必须先查看数据字典缓冲区的使用情况及效果，然后依此来进行优化。数据字典缓冲区的使用情况记录在动态性能表V$ROWCHACHE中，其中有如下几列：PARAMETER：记录某类特写数据字典项的统计，其值以‘de_’开始，例如某文件描述的统计为‘de_files’。
+
+　　GETS：是对相应项请求次数的统计。
+
+　　GETTMISSES：是引起缓冲区出错的数据请求次数。
+
+　　可用如下语句来查询V$ROWCHACHE表：SQL＞SELECT （SUM（getmisses）/SUM（gets））*100 “DaTa Dictionary Cache Ratio”FROM V$ROWCHACHE；对于贫繁访问的数据字典缓冲区，GETMISSES与GETS之比要小于10％到15%.若大于此百分数时，则应考虑增加数据字典缓冲区的容量，即要增加SHARED_POOL_SIZE或者DB_BLOCK_BUFFERS初始化参数的值。
+
+　　使用多线索服务器时共享池的优化在多线索服务器结构中，会话期信息被存放在共享池中，它包括SQL专用区和排序区。在使用多线索服务器时，要增大共享池，以满足需要。这也可通过增加SHARED_POOL_SIZE的参数值来实现。
+
+　　可通过查询（要求有SELECT ANY TABLE特权）动态性能表V$SESSTAT来衡量会话信息的多少。例如：
+   SQL＞SELEC SUM（value） ||‘bytes’ “Total memory for all session”
+
+　　2＞FROM V$SESSTAT 3＞WHERK name=‘session memory’；
+   SQL＞SELECT UM（value）|| ‘bytes’ “Total max men for all sessions”
+
+　　2＞FROM  V$SESSTAT 3＞WHERE  name＝‘max session memory’；其中，“session memory”是分配给会话的内存字节数：“max session memory”是分配给会话的最大内存字节数。
+
+　　优化缓冲区（1）获取缓冲区活动情况为了优化缓冲区，首先应了解缓冲区的活动情况。这可以通过查询动态性能表（需有SELECT  ANY TABLE特权）V$SYSSTAT来获得。
+
+　　SVRMGR> select name ，value from v$sysstat 2> where name in（'db block gets'，'consistent gets'，'physical reads'）；NAME    VALUE db  blockgets   3437 consistent gets   30500 physica  reads   1963 3 rows selected.其中，“db block gets”和“consistent gets”的值是请求数据缓冲区中读的总次数。“physical reads”为请求数据时引起从盘中读文件的次数。
+
+　　（2）缓冲区命中率从缓冲区读的可能性的高低称为缓冲区命中率。它可用如下公式计算：Hot Ratio＝1-（physical reads／（db block gets＋consistent gets）
+
+　　缓冲区命中率越高，其速度就越快。如果命中率低于60％或70％时。则应增加缓冲区（即DB_BLOCK_BUFFERS），以改进性能。根据公式可以计算出本例中的Hot Ratio=1-（1963/（3437+30500）=92％。 如果缓冲区的命中率很高，希望在保持良好性能下适当减少缓冲区，这时可减少DB_BLOCK_BUFFERS的值，其最小值为4.
