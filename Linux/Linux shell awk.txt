@@ -1,4 +1,4 @@
-[root@emd ~]# ps -axuw | grep resque | grep -v grep | awk -F" " '{printf("%s--%s\n",$1,$2) }'
+[root@emd ~]# ps axuw | grep resque | grep -v grep | awk -F" " '{printf("%s--%s\n",$1,$2) }'
 Warning: /boot/System.map-2.6.32-279.el6.i686 has an incorrect kernel version.
 webmail--1891
 webmail--1908

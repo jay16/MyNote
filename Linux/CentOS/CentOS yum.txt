@@ -2,6 +2,28 @@
 /etc/yum.conf
 /etc/yum.repos.d/
 
+1.
+[root@localhost ~]# yum  -y install flex autoconf zlib curl readline-devel libxslt libxml2-devel libxslt-devel zlib-devel curl-devel bzip2 bzip2-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel
+http://mirror.neu.edu.cn/centos/5.9/os/i386/CentOS/zlib-devel-1.2.3-7.el5.i386.rpm: [Errno 4] IOError: <urlopen error (-3, '\xe5\x9f\x9f\xe5\x90\x8d\xe8\xa7\xa3\xe6\x9e\x90\xe6\x9a\x82\xe6\x97\xb6\xe5\xa4\xb1\xe8\xb4\xa5')>
+Trying other mirror.
+2.
+[root@localhost tools]# yum -y install yum-fastestmirror
+http://mirror.bit.edu.cn/centos/5.9/addons/i386/repodata/repomd.xml: [Errno 4] IOError: <urlopen error (-3, '\xe5\x9f\x9f\xe5\x90\x8d\xe8\xa7\xa3\xe6\x9e\x90\xe6\x9a\x82\xe6\x97\xb6\xe5\xa4\xb1\xe8\xb4\xa5')>
+Trying other mirror.
+
+重新下载CentOS-Base.repo
+[root@localhost tools]# mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bk
+[root@localhost tools]# wget http://sudone.com/download/CentOS-Base.repo -O /etc/yum.repos.d/CentOS-Base.repo
+--2013-06-01 23:17:42--  http://sudone.com/download/CentOS-Base.repo
+正在解析主机 sudone.com... 失败：域名解析暂时失败。
+
+手动下载，把内容粘贴到对应位置
+
+还是不行
+
+先删掉自带的yum：
+[root@localhost yum.repos.d]# rpm -aq|grep yum|xargs rpm -e --nodeps
+
 [root@localhost ~]# yum --help
 Loaded plugins: fastestmirror, security
 usage: yum [options] COMMAND
