@@ -1,11 +1,9 @@
 ---
 NoteDirList:
-- DataBase
-- Oracle 11g
 - E:\MyWork\IntFocus
 - E:\MyWork\MyNote
 NoteSeledDir: E:\MyWork\MyNote
-NoteSeledFile: E:\MyWork\MyNote\Linux\Linux cp.txt
+NoteSeledFile: E:\MyWork\MyNote\Linux
 HistoryList:
 - - Linux cp.txt
   - E:\MyWork\MyNote\Linux\Linux cp.txt

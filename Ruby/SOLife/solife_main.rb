@@ -2,8 +2,9 @@
 require 'yaml/store'
 require 'yaml'
 require 'gtk2'
-require './solife_action.rb'
+require './solife_treeview.rb'
 require './solife_notebook.rb'
+require './solife_action.rb'
 require './solife_accel.rb'
 
 
@@ -188,9 +189,9 @@ ctrl_m.connect(Gdk::Keyval::GDK_M, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE
 }
 window.add_accel_group(ctrl_m)
 
-#F1显示配置档
-F1 = Gtk::AccelGroup.new
-F1.connect(Gdk::Keyval::GDK_F1, Gdk::Window::CONTROL_MASK, Gtk::ACCEL_VISIBLE) {
+#F10显示帮助档
+F10 = Gtk::AccelGroup.new
+F10.connect(Gdk::Keyval::GDK_F10, 0, Gtk::ACCEL_VISIBLE) {
   InitConfig_diaog(conf_save,conf_load)
 }
 window.add_accel_group(F1)
@@ -206,7 +207,7 @@ text_editor.text_view.buffer.signal_connect("changed"){ write_statu(note_view_tr
 
 #详细目录列表树 - 鼠标右键pop-up menu
 note_view_popmenu = Gtk::Menu.new
-note_view_popmenu.append(mitem_rname_file = Gtk::MenuItem.new("Rename File"))
+note_view_popmenu.append(mitem_new_file = Gtk::MenuItem.new("New File"))
 note_view_popmenu.append(mitem_new_dir = Gtk::MenuItem.new("New Dir"))
 note_view_popmenu.append(mitem_add_dir_tolist = Gtk::MenuItem.new("Add Dir To Fav"))
 note_view_popmenu.show_all
@@ -218,7 +219,7 @@ note_view_tree.signal_connect("button_press_event") do |widget, event|
 end
 #点击菜单项后响应-详细目录树中某常用路径添加至常用NoteList tree中
 mitem_add_dir_tolist.signal_connect('activate') { |w| add_dir_tolist(note_view_tree,note_list_store,window,conf_save) }
-mitem_rname_file.signal_connect('activate') { |w| rname_file(note_view_tree,note_list_store,window,conf_save) }
+mitem_new_file.signal_connect('activate') { |w| new_file(text_editor,window) }
 
 
 note_list_popmenu = Gtk::Menu.new
