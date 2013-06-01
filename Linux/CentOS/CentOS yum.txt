@@ -1,4 +1,8 @@
-﻿[root@localhost ~]# yum --help
+﻿yum修改信息位置
+/etc/yum.conf
+/etc/yum.repos.d/
+
+[root@localhost ~]# yum --help
 Loaded plugins: fastestmirror, security
 usage: yum [options] COMMAND
 
