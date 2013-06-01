@@ -162,13 +162,37 @@ def click_history_tree(note_view_tree,note_view_store,note_history_tree,text_edi
 =end
     end
 end
+
 def trigger_row_activated(note_view_tree,note_view_store,seled)
+    iter = note_view_store.iter_first
+   
+    begin   
+     if iter.first_child then
+      
+     else
+       if iter[1] == seled[1] then
+         note_view_tree.set_cursor(iter,nil,true)
+         puts "match:#{iter[1]}-#{seled[1]}"
+         break
+       end
+     end while iter.next!
+    end 
+end
+
+def trigger_row_activatedtt(note_view_tree,note_view_store,seled)
     iter = note_view_store.iter_first
     tree_array = Array.new
     traversal_tree(iter,tree_array)
-    geter = tree_array.select { |iter| iter[1] == seled[1] }
+    
+    geter = tree_array.select { |iter| iter[-1] == seled[-1] }
     tree_array.each do |iter|
-      #puts iter[1]
+      if iter[-1] == seled[-1] then
+        geter = iter[0]
+        puts "match:#{iter[-1]}-#{seled[-1]}"
+      else
+        puts "not match:#{iter[-1]}-#{seled[-1]}"
+      end
+      
     end
     if geter[1] then
       puts "GET:" + geter[1].to_s
@@ -178,13 +202,15 @@ def trigger_row_activated(note_view_tree,note_view_store,seled)
     end
 end
 
+
 def traversal_tree(iter,tree_array)
   begin
    if iter.first_child then
+     tree_array.push([iter,iter[0],iter[1]])
      traversal_tree(iter.first_child,tree_array)
-
    else
-     puts iter.to_s
+     tree_array.push([iter,iter[0],iter[1]])
+     #puts "else:#{iter[1]}"
    end while iter.next!
   end 
 end

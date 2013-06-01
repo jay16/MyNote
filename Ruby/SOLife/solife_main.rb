@@ -228,10 +228,18 @@ end
 mitem_remove_fromlist.signal_connect('activate') { |w| del_dir_fromlist(note_list_tree,note_list_store,window,conf_save) }
 
 
+
+window.add(layout_table)
+window.set_title("SoLife")
+window.border_width = 5
+window.set_size_request(800, 680)
+window.move(600,10)
+
 #打开上次关闭前最后打开的文件,判断文件存在，并且属性是文件
 if note_seled_file and File.exist?(note_seled_file) and File.file?(note_seled_file) then
   #加载内容
   text_editor.text_view.buffer.text = File.readlines(note_seled_file).join("").to_s
+  text_editor.note_label.text = File.basename(note_seled_file)
   tooltip = Gtk::Tooltips.new
   tooltip.set_tip(text_editor.note_label,note_seled_file,"private")
   #详细目录列表中设置该文件处于选中状态
@@ -240,11 +248,5 @@ if note_seled_file and File.exist?(note_seled_file) and File.file?(note_seled_fi
   window.set_title("SoLife #{note_seled_file} [writing]")
 end
 
-
-window.add(layout_table)
-window.set_title("SoLife")
-window.border_width = 5
-window.set_size_request(800, 680)
-window.move(600,10)
 window.show_all
 Gtk.main
