@@ -5,14 +5,20 @@ NoteDirList:
 - E:\MyWork\IntFocus
 - E:\MyWork\MyNote
 NoteSeledDir: E:\MyWork\MyNote
-NoteSeledFile: E:\MyWork\MyNote\ReadMe.txt
+NoteSeledFile: E:\MyWork\MyNote\Linux
 HistoryList:
 - - ReadMe.txt
   - E:\MyWork\MyNote\ReadMe.txt
-  - 6
+  - 17
 - - ReadMe.txt
   - E:\MyWork\MyNote\ReadMe.txt
-  - 5
+  - 16
+- - ReadMe.txt
+  - E:\MyWork\MyNote\ReadMe.txt
+  - 13
+- - ReadMe.txt
+  - E:\MyWork\MyNote\ReadMe.txt
+  - 10
 - - CentOS ping unkunow host.txt
   - E:\MyWork\MyNote\Linux\CentOS ping unkunow host.txt
-  - 2
+  - 6

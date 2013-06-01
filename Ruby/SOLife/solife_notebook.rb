@@ -112,25 +112,36 @@ end
 
 def trigger_row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,seled,conf_save)
     iter = note_view_store.iter_first
-   
-    begin   
-     if iter.first_child then
-      
-     else
-       if iter[1] == seled[1] then
-         row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
-         row_path = row_ref.path
-         note_view_tree.set_cursor(row_path,nil,true)
-         puts "match:#{iter[1]}-#{seled[1]}"
-         break
-       elsif seled[1].include?(iter[1])
-         row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
-       end
-     end while iter.next!
-    end 
-    
-  #激活虚拟点击详细目录动作，加载内容
-  row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
+    is_find = false
+    while !is_find
+      begin   
+       is_find = false
+       if iter then
+         puts "#else:#{iter[1]}-#{seled[1]}"
+         if iter[1] == seled[1] then
+           row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
+           row_path = row_ref.path
+           note_view_tree.set_cursor(row_path,nil,true)
+           is_find = true
+           puts "match:#{iter[1]}-#{seled[1]}"
+           break
+         elsif seled[1].include?(iter[1])
+           row_ref = Gtk::TreeRowReference.new(note_view_store, Gtk::TreePath.new(iter.to_s))
+           row_path = row_ref.path
+           note_view_tree.set_cursor(row_path,nil,true)
+           puts "match ancestor:#{iter[1]}-#{seled[1]}"
+           is_find = false
+           break
+         end
+       end while iter.next!
+      end 
+    #激活虚拟点击详细目录动作，加载内容
+    row_activated(note_view_tree,note_view_store,text_editor,note_history_store,window,conf_save)
+    #获取选中节点的第一个子节点，为下次查找提供条件
+    selection = note_view_tree.selection.selected
+    iter = selection.first_child
+   end
+
 end
 
 def trigger_row_activated1(note_view_tree,note_view_store,text_editor,note_history_store,window,seled,conf_save)
