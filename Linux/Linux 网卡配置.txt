@@ -1,3 +1,53 @@
+﻿修改对应网卡的网关的配置文件
+[root@centos]# vi /etc/sysconfig/network
+
+修改以下内容
+NETWORKING=yes(表示系统是否使用网络，一般设置为yes。如果设为no，则不能使用网络，而且很多系统服务程序将无法启动)
+HOSTNAME=centos(设置本机的主机名，这里设置的主机名要和/etc/hosts中设置的主机名对应)
+GATEWAY=192.168.1.1(设置本机连接的网关的IP地址。例如，网关为10.0.0.2)
+
+三、CentOS 修改DNS
+
+修改对应网卡的DNS的配置文件
+# vi /etc/resolv.conf
+修改以下内容
+nameserver 8.8.8.8 #google域名服务器
+nameserver 8.8.4.4 #google域名服务器
+
+四、重新启动网络配置
+# service network restart
+或
+# /etc/init.d/network restart
+
+修改 IP 地址
+即时生效:
+# ifconfig eth0 192.168.0.2 netmask 255.255.255.0
+启动生效:
+修改 /etc/sysconfig/network-scripts/ifcfg-eth0
+
+修改网关 Default Gateway
+即时生效:
+# route add default gw 192.168.0.1 dev eth0
+启动生效:
+修改 /etc/sysconfig/network
+
+修改 DNS
+修改/etc/resolv.conf
+修改后可即时生效，启动同样有效
+
+修改 host name
+即时生效:
+# hostname centos1
+启动生效:
+修改/etc/sysconfig/network
+
+
+修改网卡配置
+
+#vi /etc/udev/rules.d/70-persistent-net.rules
+
+
+
 网卡配置文件 
 即时生效（重启后失效）:
 ifconfig eth0 192.168.1.102 netmask 255.255.255.0  //添加IP地址
