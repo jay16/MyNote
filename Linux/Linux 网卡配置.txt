@@ -1,4 +1,27 @@
-﻿修改对应网卡的网关的配置文件
+﻿CentOS中与网络有关的文件主要有以下三个：
+/etc/sysconfig/network-scripts/ifcfg-eth0
+/etc/sysconfig/network
+/etc/resolv.conf
+------------------------------------------------------------------------------
+5.x系统是没有/etc/udev/rules.d/70-persistent-net.rules这个文件
+查看pci
+[root@localhost network-scripts]# lspci | grep Ethernet
+02:01.0 Ethernet controller: Advanced Micro Devices [AMD] 79c970 [PCnet32 LANCE] (rev 10)
+02:05.0 Ethernet controller: Advanced Micro Devices [AMD] 79c970 [PCnet32 LANCE] (rev 10)
+查看指定端口信息
+[root@localhost network-scripts]# ethtool eth0
+Settings for eth0:
+        Current message level: 0x00000007 (7)
+        Link detected: yes
+------------------------------------------------------------------------------
+centos 5.x 修改网卡顺序
+[root@localhost network-scripts]# cat /etc/sysconfig/hwconf 
+------------------------------------------------------------------------------
+就是驱动对应关系的文件:
+
+/etc/modprobe.conf
+------------------------------------------------------------------------------
+修改对应网卡的网关的配置文件
 [root@centos]# vi /etc/sysconfig/network
 
 修改以下内容
