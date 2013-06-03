@@ -16,6 +16,10 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 eth0
 0.0.0.0         192.168.184.1   0.0.0.0         UG        0 0          0 eth0
 
+本机gateway就是192.168.184.1，添加至/etc/resolv.conf 
+echo "nameserver 192.168.184.1" >> /etc/resolv.conf 
+不必重启网络，测试命令ping www.google.com
+
 问题出现:
 再查看DNS时,内容又被写上旧的内容
 [root@localhost ~]# cat /etc/resolv.conf 
@@ -26,7 +30,7 @@ nameserver 192.168.184.1
 
 
 -----------------------------------------------------------------------------------
-[root@localhost home]# yum install gcc gcc-c++ gcc-g77
+[root@localhost home]# yum -y install gcc gcc-c++ gcc-g77
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
 Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=5&arch=i386&repo=addons error was

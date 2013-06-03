@@ -1,0 +1,3 @@
+[root@localhost ~]# nohup yum  -y install gcc gcc-c++ gcc-g77 flex autoconf zlib curl readline-devel libxslt libxml2-devel libxslt-devel zlib-devel curl-devel bzip2 bzip2-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel &
+[root@localhost ~]# jobs
+[1]+  Running                 nohup yum -y install gcc gcc-c++ gcc-g77 flex autoconf zlib curl readline-devel libxslt libxml2-devel libxslt-devel zlib-devel curl-devel bzip2 bzip2-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel &
